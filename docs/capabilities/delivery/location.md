@@ -4,8 +4,8 @@ Location used in delivery bids and asks. A location can include a postal address
 
 ## Fields
 
+- `coordinates` (object, required): Coordinates with latitude and longitude.
 - `postal_address` (object, optional): Postal address using the UCP `postal_address` schema.
-- `coordinates` (object, optional): Coordinates with latitude and longitude.
 
 ## Example (postal address only)
 
