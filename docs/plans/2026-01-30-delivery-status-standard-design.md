@@ -5,21 +5,25 @@
 The Delivery Status Standard defines how delivery providers communicate job progress. It uses a conformance-based model where:
 
 - **Protocol defines a required core** with universal phases
-- **Industry standards extend core** with domain-specific statuses
+- **Standards define statuses** that map to core phases
 - **Businesses declare conformance** to standards they implement
-- **Businesses may add custom statuses** that are not expected to interoperate
 
 The key principle: **if a provider declares conformance to a standard, clients can rely on that standard's statuses being implemented correctly.**
 
-All statuses (including custom) must map to a **phase** from core. This ensures clients can always determine basic state (pending, active, completed, failed) even for unknown statuses.
+Standards can be:
+
+- **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.food`)
+- **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.custom`)
+
+All standards must reference core via the `protocol` field, ensuring every status maps to a phase.
 
 ```
 +---------------------------------------------+
-|  Custom (provider-specific)                 |  <- allowed, not interoperable
+|  Custom Standards (provider-defined)        |  <- same format, provider namespace
 +---------------------------------------------+
-|  Industry Standards (opt-in)                |  <- interoperable if declared
+|  Industry Standards (protocol-governed)     |  <- interoperable across providers
 +---------------------------------------------+
-|  Core (required)                            |  <- universal, guaranteed
+|  Core (required)                            |  <- universal phases
 +---------------------------------------------+
 ```
 
@@ -159,16 +163,46 @@ Providers declare which standards they conform to in their profile. This is how 
 
       "conforms_to": [
         "xyz.localprotocol.delivery.food@1.2.0"
-      ],
-
-      "custom_statuses": {
-        "driver_finishing_nearby_order": {
-          "phase": "active",
-          "description": "Driver completing adjacent delivery first"
-        }
-      }
+      ]
     }
   }
+}
+```
+
+### Custom Standards
+
+Providers can define their own standards following the same format as industry standards. Custom standards must reference core via the `protocol` field:
+
+```json
+{
+  "name": "com.acme.delivery.custom",
+  "version": "1.0.0",
+  "protocol": "xyz.localprotocol.delivery.core@1.0.0",
+  "title": "Acme Custom Delivery",
+  "statuses": {
+    "sorting_at_warehouse": {
+      "phase": "active",
+      "description": "Package being sorted at warehouse"
+    },
+    "on_truck": {
+      "phase": "active",
+      "description": "Package loaded on delivery truck"
+    },
+    "delivered": {
+      "phase": "completed",
+      "description": "Package delivered"
+    }
+  }
+}
+```
+
+The provider then references their custom standard in `conforms_to`:
+
+```json
+{
+  "conforms_to": [
+    "com.acme.delivery.custom@1.0.0"
+  ]
 }
 ```
 
@@ -178,13 +212,13 @@ Providers declare which standards they conform to in their profile. This is how 
 |-------|----------|-------------|
 | `version` | Yes | Provider's capability version |
 | `conforms_to` | Yes | Array of standards (with versions) provider implements |
-| `custom_statuses` | No | Provider-specific statuses (must include phase) |
 
 ### Rules
 
+- Provider MUST conform to at least one standard
+- Standards can be industry standards (e.g., `xyz.localprotocol.delivery.food`) or custom standards (e.g., `com.acme.delivery.custom`)
+- All standards MUST reference core via the `protocol` field
 - Provider MUST fully implement all statuses in declared standards
-- Provider MAY define custom statuses with `phase` and `description`
-- Custom statuses are not expected to interoperate
 - Clients check `conforms_to` to determine compatibility
 
 ## Delivery Object
@@ -211,28 +245,29 @@ When a provider returns a delivery object, it includes status information.
 | `status` | Yes | Current status ID |
 | `phase` | Yes | Core phase (`pending`, `active`, `completed`, `failed`) |
 | `status_description` | Yes | Human-readable description |
-| `status_vocabulary` | No | Which standard defines this status (omit if custom) |
+| `status_vocabulary` | Yes | Which standard defines this status |
 | `updated_at` | Yes | When status last changed (RFC 3339) |
 
 ### Why Include Phase Explicitly?
 
 - Clients can always determine basic state without fetching vocabulary schemas
-- Handles unknown/custom statuses gracefully
+- Handles unknown standards gracefully
 - No lookup required for basic UI (progress indicators, terminal detection)
 
-### Custom Status Example
+### Custom Standard Example
 
 ```json
 {
   "id": "del_789",
-  "status": "driver_finishing_nearby_order",
+  "status": "sorting_at_warehouse",
   "phase": "active",
-  "status_description": "Driver completing adjacent delivery first",
+  "status_description": "Package being sorted at warehouse",
+  "status_vocabulary": "com.acme.delivery.custom@1.0.0",
   "updated_at": "2026-01-30T19:08:00Z"
 }
 ```
 
-No `status_vocabulary` indicates this is a provider-specific custom status.
+Custom standards follow the same format as industry standards and are always referenced in `status_vocabulary`.
 
 ## Future Considerations
 

@@ -12,7 +12,6 @@ The Delivery capability defines objects for negotiating and fulfilling point-to-
 Status standards define how providers communicate delivery progress. The system uses a conformance-based model:
 
 - **Core**: Universal phases all providers must support (pending, active, completed, failed).
-- **Industry Standards**: Domain-specific status vocabularies (e.g., food delivery).
-- **Custom Statuses**: Provider-specific statuses mapped to core phases.
+- **Standards**: Status vocabularies that map to core phases. Can be industry standards (e.g., `xyz.localprotocol.delivery.food`) or custom standards defined by providers.
 
 See [Status Standards](standards/overview.md) for details.
