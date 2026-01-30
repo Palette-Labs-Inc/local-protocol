@@ -3,51 +3,40 @@
   "version": "1.0.0",
   "protocol": "xyz.localprotocol.delivery.core@1.0.0",
   "title": "Food Delivery Standard",
-  "description": "Status vocabulary for restaurant and food delivery.",
+  "description": "Event vocabulary for restaurant and food delivery.",
   "spec": "https://localprotocol.xyz/spec/delivery/food",
-  "statuses": {
+  "events": {
     "order_placed": {
-      "phase": "pending",
       "description": "Order received by merchant"
     },
     "preparing": {
-      "phase": "active",
       "description": "Merchant preparing order"
     },
     "ready_for_pickup": {
-      "phase": "active",
       "description": "Order ready, awaiting courier"
     },
     "courier_assigned": {
-      "phase": "active",
       "description": "Courier assigned to delivery"
     },
     "courier_at_pickup": {
-      "phase": "active",
       "description": "Courier arrived at merchant"
     },
     "picked_up": {
-      "phase": "active",
       "description": "Courier collected order"
     },
     "in_transit": {
-      "phase": "active",
       "description": "Courier en route to customer"
     },
     "courier_at_dropoff": {
-      "phase": "active",
       "description": "Courier arrived at customer"
     },
     "delivered": {
-      "phase": "completed",
       "description": "Order delivered to customer"
     },
     "canceled": {
-      "phase": "failed",
       "description": "Delivery canceled"
     },
     "failed": {
-      "phase": "failed",
       "description": "Delivery attempt unsuccessful"
     }
   }

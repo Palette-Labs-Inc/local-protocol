@@ -1,14 +1,14 @@
-# Status Standards
+# Event Standards
 
-Status standards define how delivery providers communicate job progress. The system uses a conformance-based model with two layers:
+Event standards define how delivery providers communicate job progress. The system uses a conformance-based model:
 
-- **Core**: Required phases that all providers must support (pending, active, completed, failed).
-- **Standards**: Status vocabularies that map to core phases. Can be industry standards or custom standards.
+- **Core**: Required events that all providers must support (pending, active, completed, failed).
+- **Standards**: Event vocabularies for specific domains. Can be industry standards or custom standards.
 
 ## How It Works
 
-1. **Core defines phases**: Universal state categories that every status maps to.
-2. **Standards define statuses**: Concrete status vocabularies for specific domains.
+1. **Core defines events**: Universal events that every provider must support.
+2. **Standards define events**: Domain-specific event vocabularies for specific use cases.
 3. **Providers declare conformance**: Providers list which standards they implement in their profile.
 4. **Clients check compatibility**: Clients verify providers conform to required standards.
 
@@ -35,7 +35,7 @@ Both follow the same format and must reference core via the `protocol` field.
 
 By using the same format for custom and industry standards, custom standards become:
 
-- **Discoverable**: Clients can fetch and understand any provider's status vocabulary
+- **Discoverable**: Clients can fetch and understand any provider's event vocabulary
 - **Reusable**: Other providers can adopt a custom standard
 - **Evolvable**: Popular custom standards can be promoted to industry standards
 - **Interoperable**: Providers using the same standard are automatically compatible
@@ -46,11 +46,11 @@ This creates a path from experimentation to standardization.
 
 Standards use [Semantic Versioning](https://semver.org/):
 
-- **Major**: Breaking changes (removing statuses, changing phases)
-- **Minor**: Backward-compatible additions (new statuses)
+- **Major**: Breaking changes (removing events)
+- **Minor**: Backward-compatible additions (new events)
 - **Patch**: Non-functional changes (description fixes)
 
 ## Available Standards
 
-- [Core](core.md): Universal phases (required)
+- [Core](core.md): Universal events (required)
 - [Food](food.md): Restaurant and food delivery

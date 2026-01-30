@@ -2,10 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://localprotocol.xyz/schemas/delivery/standards/food.json",
   "title": "Food Delivery Standard",
-  "description": "Industry standard defining status vocabulary for restaurant and food delivery.",
+  "description": "Industry standard defining event vocabulary for restaurant and food delivery.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["name", "version", "protocol", "title", "statuses"],
+  "required": ["name", "version", "protocol", "title", "events"],
   "properties": {
     "name": {
       "type": "string",
@@ -34,34 +34,29 @@
       "format": "uri",
       "description": "URL to human-readable specification document."
     },
-    "statuses": {
+    "events": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/$defs/status"
+        "$ref": "#/$defs/event"
       },
-      "description": "Map of status IDs to status definitions."
+      "description": "Map of event IDs to event definitions."
     }
   },
   "$defs": {
-    "status": {
+    "event": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["phase", "description"],
+      "required": ["description"],
       "properties": {
-        "phase": {
-          "type": "string",
-          "enum": ["pending", "active", "completed", "failed"],
-          "description": "Core phase this status maps to."
-        },
         "description": {
           "type": "string",
-          "description": "Human-readable description of the status."
+          "description": "Human-readable description of the event."
         }
       }
     },
     "instance": {
       "title": "Food Delivery Standard Instance",
-      "description": "An instance of the food delivery standard with status definitions.",
+      "description": "An instance of the food delivery standard with event definitions.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -78,88 +73,77 @@
           "const": "Food Delivery Standard"
         },
         "description": {
-          "const": "Status vocabulary for restaurant and food delivery."
+          "const": "Event vocabulary for restaurant and food delivery."
         },
         "spec": {
           "const": "https://localprotocol.xyz/spec/delivery/food"
         },
-        "statuses": {
+        "events": {
           "type": "object",
           "properties": {
             "order_placed": {
               "type": "object",
               "properties": {
-                "phase": { "const": "pending" },
                 "description": { "const": "Order received by merchant" }
               }
             },
             "preparing": {
               "type": "object",
               "properties": {
-                "phase": { "const": "active" },
                 "description": { "const": "Merchant preparing order" }
               }
             },
             "ready_for_pickup": {
               "type": "object",
               "properties": {
-                "phase": { "const": "active" },
                 "description": { "const": "Order ready, awaiting courier" }
               }
             },
             "courier_assigned": {
               "type": "object",
               "properties": {
-                "phase": { "const": "active" },
                 "description": { "const": "Courier assigned to delivery" }
               }
             },
             "courier_at_pickup": {
               "type": "object",
               "properties": {
-                "phase": { "const": "active" },
                 "description": { "const": "Courier arrived at merchant" }
               }
             },
             "picked_up": {
               "type": "object",
               "properties": {
-                "phase": { "const": "active" },
                 "description": { "const": "Courier collected order" }
               }
             },
             "in_transit": {
               "type": "object",
               "properties": {
-                "phase": { "const": "active" },
                 "description": { "const": "Courier en route to customer" }
               }
             },
             "courier_at_dropoff": {
               "type": "object",
               "properties": {
-                "phase": { "const": "active" },
                 "description": { "const": "Courier arrived at customer" }
               }
             },
             "delivered": {
               "type": "object",
               "properties": {
-                "phase": { "const": "completed" },
                 "description": { "const": "Order delivered to customer" }
               }
             },
             "canceled": {
               "type": "object",
               "properties": {
-                "phase": { "const": "failed" },
                 "description": { "const": "Delivery canceled" }
               }
             },
             "failed": {
               "type": "object",
               "properties": {
-                "phase": { "const": "failed" },
                 "description": { "const": "Delivery attempt unsuccessful" }
               }
             }

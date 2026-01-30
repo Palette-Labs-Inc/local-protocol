@@ -2,10 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://localprotocol.xyz/schemas/delivery/standards/core.json",
   "title": "Delivery Core Standard",
-  "description": "Core standard defining universal phases for delivery status tracking.",
+  "description": "Core standard defining universal events for delivery tracking.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["name", "version", "phases"],
+  "required": ["name", "version", "events"],
   "properties": {
     "name": {
       "type": "string",
@@ -16,45 +16,41 @@
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "description": "Semantic version (e.g., 1.0.0)."
     },
-    "phases": {
+    "events": {
       "type": "object",
       "additionalProperties": false,
       "required": ["pending", "active", "completed", "failed"],
       "properties": {
         "pending": {
-          "$ref": "#/$defs/phase"
+          "$ref": "#/$defs/event"
         },
         "active": {
-          "$ref": "#/$defs/phase"
+          "$ref": "#/$defs/event"
         },
         "completed": {
-          "$ref": "#/$defs/phase"
+          "$ref": "#/$defs/event"
         },
         "failed": {
-          "$ref": "#/$defs/phase"
+          "$ref": "#/$defs/event"
         }
       }
     }
   },
   "$defs": {
-    "phase": {
+    "event": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["terminal", "description"],
+      "required": ["description"],
       "properties": {
-        "terminal": {
-          "type": "boolean",
-          "description": "Whether this phase represents a final state."
-        },
         "description": {
           "type": "string",
-          "description": "Human-readable description of the phase."
+          "description": "Human-readable description of the event."
         }
       }
     },
     "instance": {
       "title": "Delivery Core Standard Instance",
-      "description": "An instance of the core standard with phase definitions.",
+      "description": "An instance of the core standard with event definitions.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -64,34 +60,30 @@
         "version": {
           "const": "1.0.0"
         },
-        "phases": {
+        "events": {
           "type": "object",
           "properties": {
             "pending": {
               "type": "object",
               "properties": {
-                "terminal": { "const": false },
                 "description": { "const": "Job accepted, work not started" }
               }
             },
             "active": {
               "type": "object",
               "properties": {
-                "terminal": { "const": false },
                 "description": { "const": "Work in progress" }
               }
             },
             "completed": {
               "type": "object",
               "properties": {
-                "terminal": { "const": true },
                 "description": { "const": "Successfully finished" }
               }
             },
             "failed": {
               "type": "object",
               "properties": {
-                "terminal": { "const": true },
                 "description": { "const": "Unsuccessfully finished" }
               }
             }

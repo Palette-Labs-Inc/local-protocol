@@ -1,32 +1,31 @@
 # Core Standard
 
-The core standard defines universal phases for delivery status tracking. All providers must support these phases, and all statuses (from any standard or custom) must map to exactly one phase.
+The core standard defines universal events for delivery tracking. All providers must support these events.
 
 **Standard**: `xyz.localprotocol.delivery.core`
 **Version**: `1.0.0`
 
-## Phases
+## Events
 
-| Phase | Terminal | Description |
-|-------|----------|-------------|
-| `pending` | No | Job accepted, work not started |
-| `active` | No | Work in progress |
-| `completed` | Yes | Successfully finished |
-| `failed` | Yes | Unsuccessfully finished |
+| Event | Description |
+|-------|-------------|
+| `pending` | Job accepted, work not started |
+| `active` | Work in progress |
+| `completed` | Successfully finished |
+| `failed` | Unsuccessfully finished |
 
 ## Fields
 
 - `name` (string, required): Standard identifier (`xyz.localprotocol.delivery.core`).
 - `version` (string, required): Semantic version (e.g., `1.0.0`).
-- `phases` (object, required): Map of phase IDs to phase definitions.
-  - `pending` (object, required): Phase definition.
-  - `active` (object, required): Phase definition.
-  - `completed` (object, required): Phase definition.
-  - `failed` (object, required): Phase definition.
+- `events` (object, required): Map of event IDs to event definitions.
+  - `pending` (object, required): Event definition.
+  - `active` (object, required): Event definition.
+  - `completed` (object, required): Event definition.
+  - `failed` (object, required): Event definition.
 
-### Phase Definition
+### Event Definition
 
-- `terminal` (boolean, required): Whether this phase represents a final state.
 - `description` (string, required): Human-readable description.
 
 ## Example
@@ -35,30 +34,26 @@ The core standard defines universal phases for delivery status tracking. All pro
 {
   "name": "xyz.localprotocol.delivery.core",
   "version": "1.0.0",
-  "phases": {
+  "events": {
     "pending": {
-      "terminal": false,
       "description": "Job accepted, work not started"
     },
     "active": {
-      "terminal": false,
       "description": "Work in progress"
     },
     "completed": {
-      "terminal": true,
       "description": "Successfully finished"
     },
     "failed": {
-      "terminal": true,
       "description": "Unsuccessfully finished"
     }
   }
 }
 ```
 
-## Phase Transitions
+## Event Transitions
 
-Phases follow a simple progression:
+Events follow a simple progression:
 
 ```
 pending -> active -> completed

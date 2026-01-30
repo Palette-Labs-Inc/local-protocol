@@ -7,11 +7,11 @@ The Delivery capability defines objects for negotiating and fulfilling point-to-
 - **Ask**: A requester-defined job, including pickup/dropoff locations and requested times.
 - **Bid**: A provider-defined offer to complete the job, including price, locations, and estimated timing.
 
-## Status Standards
+## Event Standards
 
-Status standards define how providers communicate delivery progress. The system uses a conformance-based model:
+Event standards define how providers communicate delivery progress. The system uses a conformance-based model:
 
-- **Core**: Universal phases all providers must support (pending, active, completed, failed).
-- **Standards**: Status vocabularies that map to core phases. Can be industry standards (e.g., `xyz.localprotocol.delivery.food`) or custom standards defined by providers.
+- **Core**: Universal events all providers must support (pending, active, completed, failed).
+- **Standards**: Event vocabularies for specific domains. Can be industry standards (e.g., `xyz.localprotocol.delivery.food`) or custom standards defined by providers.
 
-See [Status Standards](standards/overview.md) for details.
+See [Event Standards](standards/overview.md) for details.

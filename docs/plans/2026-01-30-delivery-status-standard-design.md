@@ -1,27 +1,27 @@
-# Delivery Status Standard Design
+# Delivery Event Standard Design
 
 ## Overview
 
-The Delivery Status Standard defines how delivery providers communicate job progress. It uses a conformance-based model where:
+The Delivery Event Standard defines how delivery providers communicate job progress. It uses a conformance-based model where:
 
-- **Protocol defines a required core** with universal phases
-- **Standards define statuses** that map to core phases
+- **Protocol defines a required core** with universal events
+- **Standards define events** for specific domains
 - **Businesses declare conformance** to standards they implement
 
-The key principle: **if a provider declares conformance to a standard, clients can rely on that standard's statuses being implemented correctly.**
+The key principle: **if a provider declares conformance to a standard, clients can rely on that standard's events being implemented correctly.**
 
 Standards can be:
 
 - **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.food`)
 - **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.custom`)
 
-All standards must reference core via the `protocol` field, ensuring every status maps to a phase.
+All standards must reference core via the `protocol` field.
 
 ### Why Everything Is a Standard
 
-By making custom statuses follow the same format as industry standards, they become:
+By making custom events follow the same format as industry standards, they become:
 
-- **Discoverable**: Clients can fetch and understand any provider's status vocabulary
+- **Discoverable**: Clients can fetch and understand any provider's event vocabulary
 - **Reusable**: A custom standard can be adopted by other providers
 - **Evolvable**: Popular custom standards can be promoted to industry standards
 - **Interoperable**: Two providers using the same custom standard are automatically compatible
@@ -34,28 +34,28 @@ This creates a path from experimentation to standardization: providers can innov
 +---------------------------------------------+
 |  Industry Standards (protocol-governed)     |  <- interoperable across providers
 +---------------------------------------------+
-|  Core (required)                            |  <- universal phases
+|  Core (required)                            |  <- universal events
 +---------------------------------------------+
 ```
 
 ## Core Standard
 
-The core standard defines only **phases** - the universal state categories. All concrete statuses come from industry standards or custom definitions.
+The core standard defines universal events for delivery tracking. All providers must support these events.
 
-### Phases
+### Events
 
-| Phase | Terminal | Description |
-|-------|----------|-------------|
-| `pending` | No | Job accepted, work not started |
-| `active` | No | Work in progress |
-| `completed` | Yes | Successfully finished |
-| `failed` | Yes | Unsuccessfully finished |
+| Event | Description |
+|-------|-------------|
+| `pending` | Job accepted, work not started |
+| `active` | Work in progress |
+| `completed` | Successfully finished |
+| `failed` | Unsuccessfully finished |
 
 ### Rules
 
-- Every status (from any standard or custom) must map to exactly one phase
-- Clients can always determine basic state from phase, even for unknown statuses
-- Phase transitions follow: `pending` -> `active` -> `completed` | `failed`
+- Every provider must support the core events
+- Clients can always determine basic state from core events
+- Event transitions follow: `pending` -> `active` -> `completed` | `failed`
 
 ### Schema
 
@@ -65,18 +65,18 @@ The core standard defines only **phases** - the universal state categories. All 
   "name": "xyz.localprotocol.delivery.core",
   "version": "1.0.0",
 
-  "phases": {
-    "pending":   {"terminal": false, "description": "Job accepted, work not started"},
-    "active":    {"terminal": false, "description": "Work in progress"},
-    "completed": {"terminal": true,  "description": "Successfully finished"},
-    "failed":    {"terminal": true,  "description": "Unsuccessfully finished"}
+  "events": {
+    "pending":   {"description": "Job accepted, work not started"},
+    "active":    {"description": "Work in progress"},
+    "completed": {"description": "Successfully finished"},
+    "failed":    {"description": "Unsuccessfully finished"}
   }
 }
 ```
 
 ## Industry Standards
 
-Industry standards define concrete statuses for specific domains. They are governed by the protocol, industry consortiums, or recognized working groups.
+Industry standards define domain-specific events. They are governed by the protocol, industry consortiums, or recognized working groups.
 
 ### Standard Structure
 
@@ -89,20 +89,20 @@ Industry standards define concrete statuses for specific domains. They are gover
   "spec": "https://localprotocol.xyz/spec/delivery/food",
 
   "title": "Food Delivery Standard",
-  "description": "Status vocabulary for restaurant and food delivery",
+  "description": "Event vocabulary for restaurant and food delivery",
 
-  "statuses": {
-    "order_placed":       {"phase": "pending",   "description": "Order received by merchant"},
-    "preparing":          {"phase": "active",    "description": "Merchant preparing order"},
-    "ready_for_pickup":   {"phase": "active",    "description": "Order ready, awaiting courier"},
-    "courier_assigned":   {"phase": "active",    "description": "Courier assigned to delivery"},
-    "courier_at_pickup":  {"phase": "active",    "description": "Courier arrived at merchant"},
-    "picked_up":          {"phase": "active",    "description": "Courier collected order"},
-    "in_transit":         {"phase": "active",    "description": "Courier en route to customer"},
-    "courier_at_dropoff": {"phase": "active",    "description": "Courier arrived at customer"},
-    "delivered":          {"phase": "completed", "description": "Order delivered to customer"},
-    "canceled":           {"phase": "failed",    "description": "Delivery canceled"},
-    "failed":             {"phase": "failed",    "description": "Delivery attempt unsuccessful"}
+  "events": {
+    "order_placed":       {"description": "Order received by merchant"},
+    "preparing":          {"description": "Merchant preparing order"},
+    "ready_for_pickup":   {"description": "Order ready, awaiting courier"},
+    "courier_assigned":   {"description": "Courier assigned to delivery"},
+    "courier_at_pickup":  {"description": "Courier arrived at merchant"},
+    "picked_up":          {"description": "Courier collected order"},
+    "in_transit":         {"description": "Courier en route to customer"},
+    "courier_at_dropoff": {"description": "Courier arrived at customer"},
+    "delivered":          {"description": "Order delivered to customer"},
+    "canceled":           {"description": "Delivery canceled"},
+    "failed":             {"description": "Delivery attempt unsuccessful"}
   }
 }
 ```
@@ -110,7 +110,6 @@ Industry standards define concrete statuses for specific domains. They are gover
 ### Requirements
 
 - Must reference core protocol version via `protocol` field
-- Must map every status to a core phase
 - Must include human-readable descriptions
 - Must be versioned using semver
 
@@ -134,18 +133,17 @@ Local-protocol uses [Semantic Versioning](https://semver.org/) for standards.
 
 | Change | Bump | Example |
 |--------|------|---------|
-| Add new status | Minor | `1.0.0` -> `1.1.0` |
-| Add optional field to status | Minor | `1.0.0` -> `1.1.0` |
+| Add new event | Minor | `1.0.0` -> `1.1.0` |
+| Add optional field to event | Minor | `1.0.0` -> `1.1.0` |
 | Fix description typo | Patch | `1.0.0` -> `1.0.1` |
-| Remove a status | **Major** | `1.0.0` -> `2.0.0` |
-| Change a status's phase | **Major** | `1.0.0` -> `2.0.0` |
-| Rename a status ID | **Major** | `1.0.0` -> `2.0.0` |
+| Remove an event | **Major** | `1.0.0` -> `2.0.0` |
+| Rename an event ID | **Major** | `1.0.0` -> `2.0.0` |
 | Change required field to optional | **Major** | `1.0.0` -> `2.0.0` |
 
 ### Compatibility Rules
 
 - **Patch versions** are always backward compatible
-- **Minor versions** are backward compatible (clients handle unknown statuses via phase)
+- **Minor versions** are backward compatible (clients handle unknown events gracefully)
 - **Major versions** may break clients expecting the previous version
 
 ### Protocol Reference
@@ -190,17 +188,14 @@ Providers can define their own standards following the same format as industry s
   "version": "1.0.0",
   "protocol": "xyz.localprotocol.delivery.core@1.0.0",
   "title": "Acme Custom Delivery",
-  "statuses": {
+  "events": {
     "sorting_at_warehouse": {
-      "phase": "active",
       "description": "Package being sorted at warehouse"
     },
     "on_truck": {
-      "phase": "active",
       "description": "Package loaded on delivery truck"
     },
     "delivered": {
-      "phase": "completed",
       "description": "Package delivered"
     }
   }
@@ -229,22 +224,21 @@ The provider then references their custom standard in `conforms_to`:
 - Provider MUST conform to at least one standard
 - Standards can be industry standards (e.g., `xyz.localprotocol.delivery.food`) or custom standards (e.g., `com.acme.delivery.custom`)
 - All standards MUST reference core via the `protocol` field
-- Provider MUST fully implement all statuses in declared standards
+- Provider MUST fully implement all events in declared standards
 - Clients check `conforms_to` to determine compatibility
 
 ## Delivery Object
 
-When a provider returns a delivery object, it includes status information.
+When a provider returns a delivery object, it includes event information.
 
 ### Structure
 
 ```json
 {
   "id": "del_789",
-  "status": "courier_at_pickup",
-  "phase": "active",
-  "status_description": "Courier arrived at merchant",
-  "status_vocabulary": "xyz.localprotocol.delivery.food@1.2.0",
+  "event": "courier_at_pickup",
+  "event_description": "Courier arrived at merchant",
+  "event_vocabulary": "xyz.localprotocol.delivery.food@1.2.0",
   "updated_at": "2026-01-30T19:12:00Z"
 }
 ```
@@ -253,32 +247,24 @@ When a provider returns a delivery object, it includes status information.
 
 | Field | Required | Description |
 |-------|----------|-------------|
-| `status` | Yes | Current status ID |
-| `phase` | Yes | Core phase (`pending`, `active`, `completed`, `failed`) |
-| `status_description` | Yes | Human-readable description |
-| `status_vocabulary` | Yes | Which standard defines this status |
-| `updated_at` | Yes | When status last changed (RFC 3339) |
-
-### Why Include Phase Explicitly?
-
-- Clients can always determine basic state without fetching vocabulary schemas
-- Handles unknown standards gracefully
-- No lookup required for basic UI (progress indicators, terminal detection)
+| `event` | Yes | Current event ID |
+| `event_description` | Yes | Human-readable description |
+| `event_vocabulary` | Yes | Which standard defines this event |
+| `updated_at` | Yes | When event last changed (RFC 3339) |
 
 ### Custom Standard Example
 
 ```json
 {
   "id": "del_789",
-  "status": "sorting_at_warehouse",
-  "phase": "active",
-  "status_description": "Package being sorted at warehouse",
-  "status_vocabulary": "com.acme.delivery.custom@1.0.0",
+  "event": "sorting_at_warehouse",
+  "event_description": "Package being sorted at warehouse",
+  "event_vocabulary": "com.acme.delivery.custom@1.0.0",
   "updated_at": "2026-01-30T19:08:00Z"
 }
 ```
 
-Custom standards follow the same format as industry standards and are always referenced in `status_vocabulary`.
+Custom standards follow the same format as industry standards and are always referenced in `event_vocabulary`.
 
 ## Future Considerations
 
