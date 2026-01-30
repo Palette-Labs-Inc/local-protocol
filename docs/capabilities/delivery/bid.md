@@ -7,8 +7,8 @@ Delivery bid offered by a provider, including price, route, and estimated timing
 - `id` (string, required): Unique bid identifier.
 - `price` (integer, required): Price in minor currency units.
 - `currency` (string, required): ISO 4217 currency code.
-- `pickup_location` (object, required): Pickup location (postal address with optional coordinates).
-- `dropoff_location` (object, required): Dropoff location (postal address with optional coordinates).
+- `pickup_location` (object, required): Pickup location (postal address or coordinates).
+- `dropoff_location` (object, required): Dropoff location (postal address or coordinates).
 - `pickup_estimate` (string, required): Estimated pickup time (RFC 3339).
 - `dropoff_estimate` (string, required): Estimated dropoff time (RFC 3339).
 

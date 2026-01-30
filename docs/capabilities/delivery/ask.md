@@ -5,8 +5,8 @@ Delivery ask posted by a requester, including route and requested timing.
 ## Fields
 
 - `id` (string, required): Unique ask identifier.
-- `pickup_location` (object, required): Pickup location (postal address with optional coordinates).
-- `dropoff_location` (object, required): Dropoff location (postal address with optional coordinates).
+- `pickup_location` (object, required): Pickup location (postal address or coordinates).
+- `dropoff_location` (object, required): Dropoff location (postal address or coordinates).
 - `pickup_time` (string, required): Requested pickup time (RFC 3339).
 - `dropoff_time` (string, required): Requested dropoff time (RFC 3339).
 

@@ -13,7 +13,16 @@
       "description": "Coordinates for the location."
     }
   },
-  "required": [
-    "postal_address"
+  "anyOf": [
+    {
+      "required": [
+        "postal_address"
+      ]
+    },
+    {
+      "required": [
+        "coordinates"
+      ]
+    }
   ]
 }

@@ -1,11 +1,12 @@
 # Delivery Location
 
-Location used in delivery bids and asks. A location requires a postal address and can include optional coordinates.
+Location used in delivery bids and asks. A location must include a postal address or coordinates (or both).
 
 ## Fields
 
-- `postal_address` (object, required): Postal address using the UCP `postal_address` schema.
+- `postal_address` (object, optional): Postal address using the UCP `postal_address` schema.
 - `coordinates` (object, optional): Coordinates with latitude and longitude.
+  - At least one of `postal_address` or `coordinates` is required.
 
 ## Example (postal address only)
 
