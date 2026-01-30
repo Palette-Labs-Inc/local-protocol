@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/delivery/standards/core.json",
+  "title": "Delivery Core Standard",
+  "description": "Core standard defining universal phases for delivery status tracking.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "version", "phases"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "const": "xyz.localprotocol.delivery.core"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version (e.g., 1.0.0)."
+    },
+    "phases": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pending", "active", "completed", "failed"],
+      "properties": {
+        "pending": {
+          "$ref": "#/$defs/phase"
+        },
+        "active": {
+          "$ref": "#/$defs/phase"
+        },
+        "completed": {
+          "$ref": "#/$defs/phase"
+        },
+        "failed": {
+          "$ref": "#/$defs/phase"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "phase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["terminal", "description"],
+      "properties": {
+        "terminal": {
+          "type": "boolean",
+          "description": "Whether this phase represents a final state."
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the phase."
+        }
+      }
+    },
+    "instance": {
+      "title": "Delivery Core Standard Instance",
+      "description": "An instance of the core standard with phase definitions.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "xyz.localprotocol.delivery.core"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "phases": {
+          "type": "object",
+          "properties": {
+            "pending": {
+              "type": "object",
+              "properties": {
+                "terminal": { "const": false },
+                "description": { "const": "Job accepted, work not started" }
+              }
+            },
+            "active": {
+              "type": "object",
+              "properties": {
+                "terminal": { "const": false },
+                "description": { "const": "Work in progress" }
+              }
+            },
+            "completed": {
+              "type": "object",
+              "properties": {
+                "terminal": { "const": true },
+                "description": { "const": "Successfully finished" }
+              }
+            },
+            "failed": {
+              "type": "object",
+              "properties": {
+                "terminal": { "const": true },
+                "description": { "const": "Unsuccessfully finished" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

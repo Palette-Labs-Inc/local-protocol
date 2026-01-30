@@ -1,0 +1,22 @@
+{
+  "name": "xyz.localprotocol.delivery.core",
+  "version": "1.0.0",
+  "phases": {
+    "pending": {
+      "terminal": false,
+      "description": "Job accepted, work not started"
+    },
+    "active": {
+      "terminal": false,
+      "description": "Work in progress"
+    },
+    "completed": {
+      "terminal": true,
+      "description": "Successfully finished"
+    },
+    "failed": {
+      "terminal": true,
+      "description": "Unsuccessfully finished"
+    }
+  }
+}
