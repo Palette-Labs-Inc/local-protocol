@@ -1,0 +1,65 @@
+.landing-page p {
+  font-size: 0.8rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.landing-page h2 {
+  font-size: 2rem;
+  font-weight: 450;
+  color: #202124;
+  margin: 0 auto 36px 0;
+}
+
+.landing-page h3 {
+  font-size: 1rem;
+  margin: 0 0 16px;
+  font-weight: 450;
+}
+
+.hero-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 26.8rem;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  line-height: 1.12;
+  font-weight: 450;
+  color: #202124;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-logo {
+  display: block;
+  max-width: 320px;
+  width: min(70vw, 320px);
+  height: auto;
+}
+
+p.hero-subheading {
+  font-size: 1.5rem;
+  line-height: 1.28;
+  color: #3c4043;
+  margin: 0 0 1rem;
+}
+
+p.hero-description {
+  line-height: 1.4;
+  margin: 0;
+}
+
+.hero-subheading a {
+  color: inherit;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.15em;
+}
