@@ -17,6 +17,17 @@ Standards can be:
 
 All standards must reference core via the `protocol` field, ensuring every status maps to a phase.
 
+### Why Everything Is a Standard
+
+By making custom statuses follow the same format as industry standards, they become:
+
+- **Discoverable**: Clients can fetch and understand any provider's status vocabulary
+- **Reusable**: A custom standard can be adopted by other providers
+- **Evolvable**: Popular custom standards can be promoted to industry standards
+- **Interoperable**: Two providers using the same custom standard are automatically compatible
+
+This creates a path from experimentation to standardization: providers can innovate with custom standards, and successful patterns can be adopted more widely.
+
 ```
 +---------------------------------------------+
 |  Custom Standards (provider-defined)        |  <- same format, provider namespace

@@ -31,6 +31,17 @@ Both follow the same format and must reference core via the `protocol` field.
 +---------------------------------------------+
 ```
 
+## Why Everything Is a Standard
+
+By using the same format for custom and industry standards, custom standards become:
+
+- **Discoverable**: Clients can fetch and understand any provider's status vocabulary
+- **Reusable**: Other providers can adopt a custom standard
+- **Evolvable**: Popular custom standards can be promoted to industry standards
+- **Interoperable**: Providers using the same standard are automatically compatible
+
+This creates a path from experimentation to standardization.
+
 ## Versioning
 
 Standards use [Semantic Versioning](https://semver.org/):
