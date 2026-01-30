@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DeliveryQuote",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "currency", "total", "eta_window", "expires_at"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Provider-generated quote identifier."
+    },
+    "currency": {
+      "type": "string",
+      "description": "ISO 4217 currency code.",
+      "minLength": 3,
+      "maxLength": 3
+    },
+    "total": {
+      "type": "number",
+      "description": "Total quoted amount including fees and taxes.",
+      "minimum": 0
+    },
+    "fees": {
+      "type": "array",
+      "description": "Optional fee breakdown.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "amount"],
+        "properties": {
+          "type": { "type": "string" },
+          "amount": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "eta_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min_minutes", "max_minutes"],
+      "properties": {
+        "min_minutes": { "type": "integer", "minimum": 0 },
+        "max_minutes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "expires_at": {
+      "type": "string",
+      "description": "RFC 3339 timestamp when the quote expires.",
+      "format": "date-time"
+    },
+    "service_level": {
+      "type": "string",
+      "description": "Optional service level, e.g., standard or priority."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Provider notes relevant to this quote."
+    }
+  }
+}
