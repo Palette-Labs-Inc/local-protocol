@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Location",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "postal_address": {
+      "$ref": "https://ucp.dev/schemas/shopping/types/postal_address.json",
+      "description": "Postal address for the location."
+    },
+    "coordinates": {
+      "$ref": "coordinates.json",
+      "description": "Coordinates for the location."
+    }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "postal_address"
+      ]
+    },
+    {
+      "required": [
+        "coordinates"
+      ]
+    }
+  ]
+}

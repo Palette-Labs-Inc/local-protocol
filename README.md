@@ -1,7 +1,7 @@
 # Local Protocol
 
 Local Protocol is a modular, decentralized commerce protocol. The initial
-capability focuses on delivery quotes.
+capability focuses on delivery bids and asks.
 
 ## Layout
 

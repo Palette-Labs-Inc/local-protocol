@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DeliveryBid",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique bid identifier."
+    },
+    "price": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Price in minor currency units."
+    },
+    "currency": {
+      "type": "string",
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "pickup_location": {
+      "$ref": "types/location.json",
+      "description": "Pickup location for the delivery."
+    },
+    "dropoff_location": {
+      "$ref": "types/location.json",
+      "description": "Dropoff location for the delivery."
+    },
+    "pickup_estimate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Estimated pickup time (RFC 3339)."
+    },
+    "dropoff_estimate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Estimated dropoff time (RFC 3339)."
+    }
+  },
+  "required": [
+    "id",
+    "price",
+    "currency",
+    "pickup_location",
+    "dropoff_location",
+    "pickup_estimate",
+    "dropoff_estimate"
+  ]
+}
