@@ -1,20 +1,12 @@
 # Local Protocol
 
-Local Protocol is a modular, decentralized commerce protocol. The initial
-capability focuses on delivery bids and asks.
-
-## Layout
-
-- `docs/` — human-readable documentation by domain
-- `schemas/` — JSON Schemas by domain
-- `bindings/` — protocol bindings for other ecosystems
-  - `bindings/ucp/` — UCP-specific discovery and integration notes
+Specification and documentation site for Local Protocol.
 
 ## Docs
 
 This repo uses MkDocs. To run locally:
 
 ```
-pip install mkdocs mkdocs-material
-mkdocs serve
+uv sync
+uv run mkdocs serve
 ```
