@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DeliveryAsk",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique ask identifier."
+    },
+    "pickup_location": {
+      "$ref": "types/location.json",
+      "description": "Pickup location for the delivery."
+    },
+    "dropoff_location": {
+      "$ref": "types/location.json",
+      "description": "Dropoff location for the delivery."
+    },
+    "pickup_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Requested pickup time (RFC 3339)."
+    },
+    "dropoff_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Requested dropoff time (RFC 3339)."
+    }
+  },
+  "required": [
+    "id",
+    "pickup_location",
+    "dropoff_location",
+    "pickup_time",
+    "dropoff_time"
+  ]
+}
