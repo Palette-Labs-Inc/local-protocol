@@ -1,11 +1,11 @@
 # Delivery Location
 
-Location used in delivery bids and asks. A location can include a postal address, coordinates, or both.
+Location used in delivery bids and asks. A location requires a postal address and can include optional coordinates.
 
 ## Fields
 
-- `coordinates` (object, required): Coordinates with latitude and longitude.
-- `postal_address` (object, optional): Postal address using the UCP `postal_address` schema.
+- `postal_address` (object, required): Postal address using the UCP `postal_address` schema.
+- `coordinates` (object, optional): Coordinates with latitude and longitude.
 
 ## Example (postal address only)
 
@@ -17,17 +17,6 @@ Location used in delivery bids and asks. A location can include a postal address
     "address_region": "CA",
     "postal_code": "94103",
     "address_country": "US"
-  }
-}
-```
-
-## Example (coordinates only)
-
-```json
-{
-  "coordinates": {
-    "lat": 37.7818,
-    "lng": -122.4056
   }
 }
 ```

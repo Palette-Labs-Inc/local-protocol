@@ -5,8 +5,8 @@ Delivery ask posted by a requester, including route and requested timing.
 ## Fields
 
 - `id` (string, required): Unique ask identifier.
-- `pickup_location` (object, required): Pickup location (postal address or coordinates).
-- `dropoff_location` (object, required): Dropoff location (postal address or coordinates).
+- `pickup_location` (object, required): Pickup location (postal address with optional coordinates).
+- `dropoff_location` (object, required): Dropoff location (postal address with optional coordinates).
 - `pickup_time` (string, required): Requested pickup time (RFC 3339).
 - `dropoff_time` (string, required): Requested dropoff time (RFC 3339).
 
@@ -16,9 +16,12 @@ Delivery ask posted by a requester, including route and requested timing.
 {
   "id": "ask_456",
   "pickup_location": {
-    "coordinates": {
-      "lat": 37.7765,
-      "lng": -122.4167
+    "postal_address": {
+      "street_address": "123 Market St",
+      "address_locality": "San Francisco",
+      "address_region": "CA",
+      "postal_code": "94103",
+      "address_country": "US"
     }
   },
   "dropoff_location": {
