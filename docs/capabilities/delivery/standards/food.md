@@ -4,20 +4,11 @@ Industry standard defining event vocabulary for restaurant and food delivery.
 
 **Standard**: `xyz.localprotocol.delivery.food`
 **Version**: `1.0.0`
-**Extends**: `xyz.localprotocol.delivery.core@1.0.0`
+**Extends**: `["xyz.localprotocol.delivery.core@1.0.0"]`
+
+This standard extends core and adds domain-specific events. The full vocabulary is the union of core events and the events defined here.
 
 ## Events
-
-All standards must include core events. Domain-specific events extend core.
-
-### Core Events (required)
-
-| Event | Description |
-|-------|-------------|
-| `pending` | Job accepted, work not started |
-| `active` | Work in progress |
-| `completed` | Successfully finished |
-| `failed` | Unsuccessfully finished |
 
 ### Domain Events
 
@@ -38,11 +29,11 @@ All standards must include core events. Domain-specific events extend core.
 
 - `name` (string, required): Standard identifier (`xyz.localprotocol.delivery.food`).
 - `version` (string, required): Semantic version (e.g., `1.0.0`).
-- `extends` (string, required): Parent standard this extends (e.g., `xyz.localprotocol.delivery.core@1.0.0`).
+- `extends` (array, required): Parent standards this extends (e.g., `xyz.localprotocol.delivery.core@1.0.0`).
 - `title` (string, required): Human-readable title.
 - `description` (string, optional): Human-readable description.
 - `spec` (string, optional): URL to specification document.
-- `events` (object, required): Map of event IDs to event definitions. Must include core events.
+- `events` (object, required): Map of event IDs to event definitions defined by this standard.
 
 ### Event Definition
 
@@ -54,31 +45,40 @@ All standards must include core events. Domain-specific events extend core.
 {
   "name": "xyz.localprotocol.delivery.food",
   "version": "1.0.0",
-  "extends": "xyz.localprotocol.delivery.core@1.0.0",
+  "extends": ["xyz.localprotocol.delivery.core@1.0.0"],
   "title": "Food Delivery Standard",
   "description": "Event vocabulary for restaurant and food delivery.",
   "spec": "https://localprotocol.xyz/spec/delivery/food",
   "events": {
-    "pending": {
-      "description": "Job accepted, work not started"
-    },
-    "active": {
-      "description": "Work in progress"
-    },
-    "completed": {
-      "description": "Successfully finished"
-    },
-    "failed": {
-      "description": "Unsuccessfully finished"
-    },
     "order_placed": {
       "description": "Order received by merchant"
     },
     "preparing": {
       "description": "Merchant preparing order"
     },
+    "ready_for_pickup": {
+      "description": "Order ready, awaiting courier"
+    },
+    "courier_assigned": {
+      "description": "Courier assigned to delivery"
+    },
+    "courier_at_pickup": {
+      "description": "Courier arrived at merchant"
+    },
+    "picked_up": {
+      "description": "Courier collected order"
+    },
+    "in_transit": {
+      "description": "Courier en route to customer"
+    },
+    "courier_at_dropoff": {
+      "description": "Courier arrived at customer"
+    },
     "delivered": {
       "description": "Order delivered to customer"
+    },
+    "canceled": {
+      "description": "Delivery canceled"
     }
   }
 }
@@ -86,10 +86,12 @@ All standards must include core events. Domain-specific events extend core.
 
 ## Typical Progression
 
+A typical progression (core + food) looks like:
+
 ```
 pending -> order_placed -> preparing -> ready_for_pickup -> courier_assigned
         -> courier_at_pickup -> picked_up -> in_transit
         -> courier_at_dropoff -> delivered -> completed
 ```
 
-At any point, the delivery may transition to `canceled` or `failed`.
+At any point, the delivery may transition to `canceled` (food) or `failed` (core).

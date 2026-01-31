@@ -1,60 +1,34 @@
 # Event Standards
 
-Event standards define how delivery providers communicate job progress. The system uses a conformance-based model:
+Event standards define event vocabularies for delivery domains. The system uses a conformance-based model:
 
-- **Core**: Required events that all providers must support (pending, active, completed, failed).
-- **Standards**: Event vocabularies that extend core with domain-specific events.
-
-## Enforcement Mechanism
-
-All standards must include core events. This is enforced via JSON Schema - the `events` object requires `pending`, `active`, `completed`, and `failed` keys.
-
-```json
-{
-  "events": {
-    "required": ["pending", "active", "completed", "failed"]
-  }
-}
-```
-
-This ensures any client that understands core can work with any conforming standard.
+- **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.food`).
+- **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.custom`).
 
 ## How It Works
 
-1. **Core defines events**: Universal events that every standard must include.
-2. **Standards extend core**: Domain-specific events alongside required core events.
+1. **Standards define events**: Each standard lists the events it defines.
+2. **Extensions add events**: A standard can extend one or more parent standards by referencing `name@version` in `extends`.
 3. **Providers declare conformance**: Providers list which standards they implement in their profile.
-4. **Clients check compatibility**: Clients verify providers conform to required standards.
+4. **Clients merge vocabularies**: Clients compute the full event set by merging events across the extension chain.
 
-## Standards
+## Extensions
 
-Standards can be:
+Extensions must reference semver versions of the standards they extend:
 
-- **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.food`)
-- **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.custom`)
-
-Both follow the same format, must reference core via the `extends` field, and must include core events.
-
-```
-+---------------------------------------------+
-|  Custom Standards (provider-defined)        |
-+---------------------------------------------+
-|  Industry Standards (protocol-governed)     |
-+---------------------------------------------+
-|  Core (required)                            |
-+---------------------------------------------+
+```json
+{
+  "extends": [
+    "xyz.localprotocol.delivery.core@1.0.0",
+    "xyz.localprotocol.delivery.food@1.0.0"
+  ]
+}
 ```
 
-## Why Everything Is a Standard
+## Core Standard (Optional)
 
-By using the same format for custom and industry standards, custom standards become:
-
-- **Discoverable**: Clients can fetch and understand any provider's event vocabulary
-- **Reusable**: Other providers can adopt a custom standard
-- **Evolvable**: Popular custom standards can be promoted to industry standards
-- **Interoperable**: Providers using the same standard are automatically compatible
-
-This creates a path from experimentation to standardization.
+The protocol provides a minimal core standard that other standards may extend. Core is optional but provides a shared baseline for interoperability.
+Standards may extend core, extend other standards, or define events without extending anything.
 
 ## Versioning
 
@@ -66,5 +40,5 @@ Standards use [Semantic Versioning](https://semver.org/):
 
 ## Available Standards
 
-- [Core](core.md): Universal events (required)
+- [Core](core.md): Minimal universal events (optional baseline)
 - [Food](food.md): Restaurant and food delivery

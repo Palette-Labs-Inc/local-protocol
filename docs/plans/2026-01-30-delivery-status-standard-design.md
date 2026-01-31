@@ -2,22 +2,20 @@
 
 ## Overview
 
-The Delivery Event Standard defines how delivery providers communicate job progress. It uses a conformance-based model where:
+The Delivery Event Standard defines how delivery providers communicate job progress using domain-specific event vocabularies. It uses a conformance-based model where:
 
-- **Protocol defines a required core** with universal events
 - **Standards define events** for specific domains
-- **Businesses declare conformance** to standards they implement
+- **Businesses declare conformance** to the standards they implement
+- **Extensions add events** by referencing parent standards with semver
 
-The key principle: **if a provider declares conformance to a standard, clients can rely on that standard's events being implemented correctly.**
+The key principle: **if a provider declares conformance to a standard, clients can rely on that standard's events (and its ancestors) being implemented correctly.**
 
 Standards can be:
 
 - **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.food`)
 - **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.custom`)
 
-All standards must reference core via the `extends` field.
-
-### Why Everything Is a Standard
+## Why Everything Is a Standard
 
 By making custom events follow the same format as industry standards, they become:
 
@@ -26,7 +24,7 @@ By making custom events follow the same format as industry standards, they becom
 - **Evolvable**: Popular custom standards can be promoted to industry standards
 - **Interoperable**: Two providers using the same custom standard are automatically compatible
 
-This creates a path from experimentation to standardization: providers can innovate with custom standards, and successful patterns can be adopted more widely.
+This creates a path from experimentation to standardization.
 
 ```
 +---------------------------------------------+
@@ -34,13 +32,14 @@ This creates a path from experimentation to standardization: providers can innov
 +---------------------------------------------+
 |  Industry Standards (protocol-governed)     |  <- interoperable across providers
 +---------------------------------------------+
-|  Core (required)                            |  <- universal events
+|  Core (optional baseline)                   |  <- minimal universal events
 +---------------------------------------------+
 ```
 
-## Core Standard
+## Core Standard (Optional)
 
-The core standard defines universal events for delivery tracking. All domain standards must include these events.
+The core standard defines minimal universal events for delivery tracking. Other standards may extend core, but it is optional.
+Providers can include core in `conforms_to` to advertise a shared baseline.
 
 ### Events
 
@@ -51,26 +50,6 @@ The core standard defines universal events for delivery tracking. All domain sta
 | `completed` | Successfully finished |
 | `failed` | Unsuccessfully finished |
 
-### Enforcement
-
-Domain standards must include core events in their `events` object. This is enforced via JSON Schema:
-
-```json
-{
-  "events": {
-    "required": ["pending", "active", "completed", "failed"]
-  }
-}
-```
-
-This ensures any client that understands core can work with any conforming standard.
-
-### Rules
-
-- Every domain standard must include core events (schema-enforced)
-- Clients can always determine basic state from core events
-- Event transitions follow: `pending` -> `active` -> `completed` | `failed`
-
 ### Schema
 
 ```json
@@ -78,7 +57,6 @@ This ensures any client that understands core can work with any conforming stand
   "$id": "https://localprotocol.xyz/standards/delivery/core.json",
   "name": "xyz.localprotocol.delivery.core",
   "version": "1.0.0",
-
   "events": {
     "pending":   {"description": "Job accepted, work not started"},
     "active":    {"description": "Work in progress"},
@@ -90,7 +68,8 @@ This ensures any client that understands core can work with any conforming stand
 
 ## Industry Standards
 
-Industry standards define domain-specific events. They are governed by the protocol, industry consortiums, or recognized working groups.
+Industry standards define domain-specific events and can extend core or other standards.
+Extending core is optional; some standards may define events without any parent.
 
 ### Standard Structure
 
@@ -99,17 +78,13 @@ Industry standards define domain-specific events. They are governed by the proto
   "$id": "https://localprotocol.xyz/standards/delivery/food.json",
   "name": "xyz.localprotocol.delivery.food",
   "version": "1.0.0",
-  "extends": "xyz.localprotocol.delivery.core@1.0.0",
+  "extends": ["xyz.localprotocol.delivery.core@1.0.0"],
   "spec": "https://localprotocol.xyz/spec/delivery/food",
 
   "title": "Food Delivery Standard",
   "description": "Event vocabulary for restaurant and food delivery",
 
   "events": {
-    "pending":            {"description": "Job accepted, work not started"},
-    "active":             {"description": "Work in progress"},
-    "completed":          {"description": "Successfully finished"},
-    "failed":             {"description": "Unsuccessfully finished"},
     "order_placed":       {"description": "Order received by merchant"},
     "preparing":          {"description": "Merchant preparing order"},
     "ready_for_pickup":   {"description": "Order ready, awaiting courier"},
@@ -126,9 +101,9 @@ Industry standards define domain-specific events. They are governed by the proto
 
 ### Requirements
 
-- Must reference core via `extends` field
 - Must include human-readable descriptions
 - Must be versioned using semver
+- Extensions must reference parent standards with `name@version`
 
 ### Namespace Governance
 
@@ -137,6 +112,45 @@ Industry standards define domain-specific events. They are governed by the proto
 | `xyz.localprotocol.delivery.*` | Protocol working groups |
 | `org.opendelivery.*` | Industry consortium (hypothetical) |
 | `com.business.*` | Individual business (custom) |
+
+## Extensions
+
+Custom standards can extend industry standards and add events. This makes custom vocabularies reusable and allows them to gain traction over time.
+
+```json
+{
+  "name": "com.acme.delivery.food",
+  "version": "1.2.0",
+  "extends": ["xyz.localprotocol.delivery.food@1.0.0"],
+  "title": "Acme Food Extension",
+  "events": {
+    "bagged": {
+      "description": "Order sealed by merchant"
+    },
+    "handoff_window_opened": {
+      "description": "Customer opened handoff window"
+    }
+  }
+}
+```
+
+### Standard Without Core
+
+```json
+{
+  "name": "xyz.localprotocol.delivery.ocean",
+  "version": "1.0.0",
+  "title": "Ocean Freight Standard",
+  "description": "Event vocabulary for international shipping by sea",
+  "events": {
+    "booking_confirmed": { "description": "Cargo booking confirmed" },
+    "loaded_on_vessel": { "description": "Container loaded onto vessel" },
+    "arrived_at_port": { "description": "Vessel arrived at destination port" }
+  }
+}
+```
+
+Clients compute the full event vocabulary by merging the events from a standard and all of its ancestors.
 
 ## Versioning
 
@@ -151,23 +165,15 @@ Local-protocol uses [Semantic Versioning](https://semver.org/) for standards.
 | Change | Bump | Example |
 |--------|------|---------|
 | Add new event | Minor | `1.0.0` -> `1.1.0` |
-| Add optional field to event | Minor | `1.0.0` -> `1.1.0` |
 | Fix description typo | Patch | `1.0.0` -> `1.0.1` |
 | Remove an event | **Major** | `1.0.0` -> `2.0.0` |
 | Rename an event ID | **Major** | `1.0.0` -> `2.0.0` |
-| Change required field to optional | **Major** | `1.0.0` -> `2.0.0` |
-
-### Compatibility Rules
-
-- **Patch versions** are always backward compatible
-- **Minor versions** are backward compatible (clients handle unknown events gracefully)
-- **Major versions** may break clients expecting the previous version
 
 ### Extends Reference
 
 ```json
 {
-  "extends": "xyz.localprotocol.delivery.core@1.0.0"
+  "extends": ["xyz.localprotocol.delivery.core@1.0.0"]
 }
 ```
 
@@ -188,71 +194,20 @@ Providers declare which standards they conform to in their profile. This is how 
       "schema": "https://localprotocol.xyz/schemas/delivery.json",
 
       "conforms_to": [
-        "xyz.localprotocol.delivery.food@1.2.0"
+        "xyz.localprotocol.delivery.food@1.0.0",
+        "com.acme.delivery.food@1.2.0"
       ]
     }
   }
 }
 ```
 
-### Custom Standards
-
-Providers can define their own standards following the same format as industry standards. Custom standards must reference core via the `extends` field and include core events:
-
-```json
-{
-  "name": "com.acme.delivery.custom",
-  "version": "1.0.0",
-  "extends": "xyz.localprotocol.delivery.core@1.0.0",
-  "title": "Acme Custom Delivery",
-  "events": {
-    "pending": {
-      "description": "Job accepted, work not started"
-    },
-    "active": {
-      "description": "Work in progress"
-    },
-    "completed": {
-      "description": "Successfully finished"
-    },
-    "failed": {
-      "description": "Unsuccessfully finished"
-    },
-    "sorting_at_warehouse": {
-      "description": "Package being sorted at warehouse"
-    },
-    "on_truck": {
-      "description": "Package loaded on delivery truck"
-    },
-    "delivered": {
-      "description": "Package delivered"
-    }
-  }
-}
-```
-
-The provider then references their custom standard in `conforms_to`:
-
-```json
-{
-  "conforms_to": [
-    "com.acme.delivery.custom@1.0.0"
-  ]
-}
-```
-
-### Fields
-
-| Field | Required | Description |
-|-------|----------|-------------|
-| `version` | Yes | Provider's capability version |
-| `conforms_to` | Yes | Array of standards (with versions) provider implements |
-
 ### Rules
 
 - Provider MUST conform to at least one standard
 - Standards can be industry standards (e.g., `xyz.localprotocol.delivery.food`) or custom standards (e.g., `com.acme.delivery.custom`)
-- All standards MUST reference core via the `extends` field
+- Extensions MUST reference parent standards via `extends`
+- Conformance to core is optional
 - Provider MUST fully implement all events in declared standards
 - Clients check `conforms_to` to determine compatibility
 
@@ -267,7 +222,7 @@ When a provider returns a delivery object, it includes event information.
   "id": "del_789",
   "event": "courier_at_pickup",
   "event_description": "Courier arrived at merchant",
-  "event_vocabulary": "xyz.localprotocol.delivery.food@1.2.0",
+  "event_vocabulary": "xyz.localprotocol.delivery.food@1.0.0",
   "updated_at": "2026-01-30T19:12:00Z"
 }
 ```
@@ -286,9 +241,9 @@ When a provider returns a delivery object, it includes event information.
 ```json
 {
   "id": "del_789",
-  "event": "sorting_at_warehouse",
-  "event_description": "Package being sorted at warehouse",
-  "event_vocabulary": "com.acme.delivery.custom@1.0.0",
+  "event": "bagged",
+  "event_description": "Order sealed by merchant",
+  "event_vocabulary": "com.acme.delivery.food@1.2.0",
   "updated_at": "2026-01-30T19:08:00Z"
 }
 ```

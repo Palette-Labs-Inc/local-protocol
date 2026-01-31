@@ -17,9 +17,13 @@
       "description": "Semantic version (e.g., 1.0.0)."
     },
     "extends": {
-      "type": "string",
-      "pattern": "^xyz\\.localprotocol\\.delivery\\.core@\\d+\\.\\d+\\.\\d+$",
-      "description": "Parent standard this extends (e.g., xyz.localprotocol.delivery.core@1.0.0)."
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "const": "xyz.localprotocol.delivery.core@1.0.0"
+      },
+      "description": "Parent standards this extends. Each reference must include a semver version."
     },
     "title": {
       "type": "string",
@@ -36,17 +40,32 @@
     },
     "events": {
       "type": "object",
-      "required": ["pending", "active", "completed", "failed"],
-      "additionalProperties": {
-        "$ref": "#/$defs/event"
-      },
+      "additionalProperties": false,
+      "required": [
+        "order_placed",
+        "preparing",
+        "ready_for_pickup",
+        "courier_assigned",
+        "courier_at_pickup",
+        "picked_up",
+        "in_transit",
+        "courier_at_dropoff",
+        "delivered",
+        "canceled"
+      ],
       "properties": {
-        "pending": { "$ref": "#/$defs/event" },
-        "active": { "$ref": "#/$defs/event" },
-        "completed": { "$ref": "#/$defs/event" },
-        "failed": { "$ref": "#/$defs/event" }
+        "order_placed": { "$ref": "#/$defs/event" },
+        "preparing": { "$ref": "#/$defs/event" },
+        "ready_for_pickup": { "$ref": "#/$defs/event" },
+        "courier_assigned": { "$ref": "#/$defs/event" },
+        "courier_at_pickup": { "$ref": "#/$defs/event" },
+        "picked_up": { "$ref": "#/$defs/event" },
+        "in_transit": { "$ref": "#/$defs/event" },
+        "courier_at_dropoff": { "$ref": "#/$defs/event" },
+        "delivered": { "$ref": "#/$defs/event" },
+        "canceled": { "$ref": "#/$defs/event" }
       },
-      "description": "Map of event IDs to event definitions. Must include core events (pending, active, completed, failed)."
+      "description": "Map of event IDs to event definitions defined by this standard."
     }
   },
   "$defs": {

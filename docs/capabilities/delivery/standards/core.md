@@ -1,6 +1,7 @@
 # Core Standard
 
-The core standard defines universal events for delivery tracking. All domain standards must include these events - this is enforced via JSON Schema.
+The core standard defines minimal universal events for delivery tracking. Other standards may extend core, but it is optional.
+Providers may list core in `conforms_to` to advertise a shared baseline.
 
 **Standard**: `xyz.localprotocol.delivery.core`
 **Version**: `1.0.0`
@@ -13,20 +14,6 @@ The core standard defines universal events for delivery tracking. All domain sta
 | `active` | Work in progress |
 | `completed` | Successfully finished |
 | `failed` | Unsuccessfully finished |
-
-## Enforcement
-
-Domain standards must include core events in their `events` object. The JSON Schema enforces this:
-
-```json
-{
-  "events": {
-    "required": ["pending", "active", "completed", "failed"]
-  }
-}
-```
-
-This ensures any client that understands core can work with any conforming standard.
 
 ## Fields
 
