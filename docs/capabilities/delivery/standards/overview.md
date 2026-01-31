@@ -33,7 +33,7 @@ Standards can be:
 - **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.food`)
 - **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.custom`)
 
-Both follow the same format, must reference core via the `protocol` field, and must include core events.
+Both follow the same format, must reference core via the `extends` field, and must include core events.
 
 ```
 +---------------------------------------------+

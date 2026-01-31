@@ -15,7 +15,7 @@ Standards can be:
 - **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.food`)
 - **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.custom`)
 
-All standards must reference core via the `protocol` field.
+All standards must reference core via the `extends` field.
 
 ### Why Everything Is a Standard
 
@@ -99,7 +99,7 @@ Industry standards define domain-specific events. They are governed by the proto
   "$id": "https://localprotocol.xyz/standards/delivery/food.json",
   "name": "xyz.localprotocol.delivery.food",
   "version": "1.0.0",
-  "protocol": "xyz.localprotocol.delivery.core@1.0.0",
+  "extends": "xyz.localprotocol.delivery.core@1.0.0",
   "spec": "https://localprotocol.xyz/spec/delivery/food",
 
   "title": "Food Delivery Standard",
@@ -126,7 +126,7 @@ Industry standards define domain-specific events. They are governed by the proto
 
 ### Requirements
 
-- Must reference core protocol version via `protocol` field
+- Must reference core via `extends` field
 - Must include human-readable descriptions
 - Must be versioned using semver
 
@@ -197,13 +197,13 @@ Providers declare which standards they conform to in their profile. This is how 
 
 ### Custom Standards
 
-Providers can define their own standards following the same format as industry standards. Custom standards must reference core via the `protocol` field and include core events:
+Providers can define their own standards following the same format as industry standards. Custom standards must reference core via the `extends` field and include core events:
 
 ```json
 {
   "name": "com.acme.delivery.custom",
   "version": "1.0.0",
-  "protocol": "xyz.localprotocol.delivery.core@1.0.0",
+  "extends": "xyz.localprotocol.delivery.core@1.0.0",
   "title": "Acme Custom Delivery",
   "events": {
     "pending": {
@@ -252,7 +252,7 @@ The provider then references their custom standard in `conforms_to`:
 
 - Provider MUST conform to at least one standard
 - Standards can be industry standards (e.g., `xyz.localprotocol.delivery.food`) or custom standards (e.g., `com.acme.delivery.custom`)
-- All standards MUST reference core via the `protocol` field
+- All standards MUST reference core via the `extends` field
 - Provider MUST fully implement all events in declared standards
 - Clients check `conforms_to` to determine compatibility
 

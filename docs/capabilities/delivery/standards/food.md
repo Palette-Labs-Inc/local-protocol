@@ -4,7 +4,7 @@ Industry standard defining event vocabulary for restaurant and food delivery.
 
 **Standard**: `xyz.localprotocol.delivery.food`
 **Version**: `1.0.0`
-**Protocol**: `xyz.localprotocol.delivery.core@1.0.0`
+**Extends**: `xyz.localprotocol.delivery.core@1.0.0`
 
 ## Events
 
@@ -38,7 +38,7 @@ All standards must include core events. Domain-specific events extend core.
 
 - `name` (string, required): Standard identifier (`xyz.localprotocol.delivery.food`).
 - `version` (string, required): Semantic version (e.g., `1.0.0`).
-- `protocol` (string, required): Core protocol reference (e.g., `xyz.localprotocol.delivery.core@1.0.0`).
+- `extends` (string, required): Parent standard this extends (e.g., `xyz.localprotocol.delivery.core@1.0.0`).
 - `title` (string, required): Human-readable title.
 - `description` (string, optional): Human-readable description.
 - `spec` (string, optional): URL to specification document.
@@ -54,7 +54,7 @@ All standards must include core events. Domain-specific events extend core.
 {
   "name": "xyz.localprotocol.delivery.food",
   "version": "1.0.0",
-  "protocol": "xyz.localprotocol.delivery.core@1.0.0",
+  "extends": "xyz.localprotocol.delivery.core@1.0.0",
   "title": "Food Delivery Standard",
   "description": "Event vocabulary for restaurant and food delivery.",
   "spec": "https://localprotocol.xyz/spec/delivery/food",
