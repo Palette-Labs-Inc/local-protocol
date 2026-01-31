@@ -6,6 +6,18 @@
   "description": "Event vocabulary for restaurant and food delivery.",
   "spec": "https://localprotocol.xyz/spec/delivery/food",
   "events": {
+    "pending": {
+      "description": "Job accepted, work not started"
+    },
+    "active": {
+      "description": "Work in progress"
+    },
+    "completed": {
+      "description": "Successfully finished"
+    },
+    "failed": {
+      "description": "Unsuccessfully finished"
+    },
     "order_placed": {
       "description": "Order received by merchant"
     },
@@ -35,9 +47,6 @@
     },
     "canceled": {
       "description": "Delivery canceled"
-    },
-    "failed": {
-      "description": "Delivery attempt unsuccessful"
     }
   }
 }

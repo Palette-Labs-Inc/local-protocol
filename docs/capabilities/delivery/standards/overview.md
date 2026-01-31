@@ -3,12 +3,26 @@
 Event standards define how delivery providers communicate job progress. The system uses a conformance-based model:
 
 - **Core**: Required events that all providers must support (pending, active, completed, failed).
-- **Standards**: Event vocabularies for specific domains. Can be industry standards or custom standards.
+- **Standards**: Event vocabularies that extend core with domain-specific events.
+
+## Enforcement Mechanism
+
+All standards must include core events. This is enforced via JSON Schema - the `events` object requires `pending`, `active`, `completed`, and `failed` keys.
+
+```json
+{
+  "events": {
+    "required": ["pending", "active", "completed", "failed"]
+  }
+}
+```
+
+This ensures any client that understands core can work with any conforming standard.
 
 ## How It Works
 
-1. **Core defines events**: Universal events that every provider must support.
-2. **Standards define events**: Domain-specific event vocabularies for specific use cases.
+1. **Core defines events**: Universal events that every standard must include.
+2. **Standards extend core**: Domain-specific events alongside required core events.
 3. **Providers declare conformance**: Providers list which standards they implement in their profile.
 4. **Clients check compatibility**: Clients verify providers conform to required standards.
 
@@ -19,7 +33,7 @@ Standards can be:
 - **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.food`)
 - **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.custom`)
 
-Both follow the same format and must reference core via the `protocol` field.
+Both follow the same format, must reference core via the `protocol` field, and must include core events.
 
 ```
 +---------------------------------------------+

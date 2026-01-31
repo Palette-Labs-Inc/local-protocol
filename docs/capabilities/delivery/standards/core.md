@@ -1,6 +1,6 @@
 # Core Standard
 
-The core standard defines universal events for delivery tracking. All providers must support these events.
+The core standard defines universal events for delivery tracking. All domain standards must include these events - this is enforced via JSON Schema.
 
 **Standard**: `xyz.localprotocol.delivery.core`
 **Version**: `1.0.0`
@@ -14,15 +14,25 @@ The core standard defines universal events for delivery tracking. All providers 
 | `completed` | Successfully finished |
 | `failed` | Unsuccessfully finished |
 
+## Enforcement
+
+Domain standards must include core events in their `events` object. The JSON Schema enforces this:
+
+```json
+{
+  "events": {
+    "required": ["pending", "active", "completed", "failed"]
+  }
+}
+```
+
+This ensures any client that understands core can work with any conforming standard.
+
 ## Fields
 
 - `name` (string, required): Standard identifier (`xyz.localprotocol.delivery.core`).
 - `version` (string, required): Semantic version (e.g., `1.0.0`).
 - `events` (object, required): Map of event IDs to event definitions.
-  - `pending` (object, required): Event definition.
-  - `active` (object, required): Event definition.
-  - `completed` (object, required): Event definition.
-  - `failed` (object, required): Event definition.
 
 ### Event Definition
 

@@ -8,6 +8,19 @@ Industry standard defining event vocabulary for restaurant and food delivery.
 
 ## Events
 
+All standards must include core events. Domain-specific events extend core.
+
+### Core Events (required)
+
+| Event | Description |
+|-------|-------------|
+| `pending` | Job accepted, work not started |
+| `active` | Work in progress |
+| `completed` | Successfully finished |
+| `failed` | Unsuccessfully finished |
+
+### Domain Events
+
 | Event | Description |
 |-------|-------------|
 | `order_placed` | Order received by merchant |
@@ -20,7 +33,6 @@ Industry standard defining event vocabulary for restaurant and food delivery.
 | `courier_at_dropoff` | Courier arrived at customer |
 | `delivered` | Order delivered to customer |
 | `canceled` | Delivery canceled |
-| `failed` | Delivery attempt unsuccessful |
 
 ## Fields
 
@@ -30,7 +42,7 @@ Industry standard defining event vocabulary for restaurant and food delivery.
 - `title` (string, required): Human-readable title.
 - `description` (string, optional): Human-readable description.
 - `spec` (string, optional): URL to specification document.
-- `events` (object, required): Map of event IDs to event definitions.
+- `events` (object, required): Map of event IDs to event definitions. Must include core events.
 
 ### Event Definition
 
@@ -47,38 +59,26 @@ Industry standard defining event vocabulary for restaurant and food delivery.
   "description": "Event vocabulary for restaurant and food delivery.",
   "spec": "https://localprotocol.xyz/spec/delivery/food",
   "events": {
+    "pending": {
+      "description": "Job accepted, work not started"
+    },
+    "active": {
+      "description": "Work in progress"
+    },
+    "completed": {
+      "description": "Successfully finished"
+    },
+    "failed": {
+      "description": "Unsuccessfully finished"
+    },
     "order_placed": {
       "description": "Order received by merchant"
     },
     "preparing": {
       "description": "Merchant preparing order"
     },
-    "ready_for_pickup": {
-      "description": "Order ready, awaiting courier"
-    },
-    "courier_assigned": {
-      "description": "Courier assigned to delivery"
-    },
-    "courier_at_pickup": {
-      "description": "Courier arrived at merchant"
-    },
-    "picked_up": {
-      "description": "Courier collected order"
-    },
-    "in_transit": {
-      "description": "Courier en route to customer"
-    },
-    "courier_at_dropoff": {
-      "description": "Courier arrived at customer"
-    },
     "delivered": {
       "description": "Order delivered to customer"
-    },
-    "canceled": {
-      "description": "Delivery canceled"
-    },
-    "failed": {
-      "description": "Delivery attempt unsuccessful"
     }
   }
 }
@@ -87,9 +87,9 @@ Industry standard defining event vocabulary for restaurant and food delivery.
 ## Typical Progression
 
 ```
-order_placed -> preparing -> ready_for_pickup -> courier_assigned
-             -> courier_at_pickup -> picked_up -> in_transit
-             -> courier_at_dropoff -> delivered
+pending -> order_placed -> preparing -> ready_for_pickup -> courier_assigned
+        -> courier_at_pickup -> picked_up -> in_transit
+        -> courier_at_dropoff -> delivered -> completed
 ```
 
 At any point, the delivery may transition to `canceled` or `failed`.

@@ -40,7 +40,7 @@ This creates a path from experimentation to standardization: providers can innov
 
 ## Core Standard
 
-The core standard defines universal events for delivery tracking. All providers must support these events.
+The core standard defines universal events for delivery tracking. All domain standards must include these events.
 
 ### Events
 
@@ -51,9 +51,23 @@ The core standard defines universal events for delivery tracking. All providers 
 | `completed` | Successfully finished |
 | `failed` | Unsuccessfully finished |
 
+### Enforcement
+
+Domain standards must include core events in their `events` object. This is enforced via JSON Schema:
+
+```json
+{
+  "events": {
+    "required": ["pending", "active", "completed", "failed"]
+  }
+}
+```
+
+This ensures any client that understands core can work with any conforming standard.
+
 ### Rules
 
-- Every provider must support the core events
+- Every domain standard must include core events (schema-enforced)
 - Clients can always determine basic state from core events
 - Event transitions follow: `pending` -> `active` -> `completed` | `failed`
 
@@ -92,6 +106,10 @@ Industry standards define domain-specific events. They are governed by the proto
   "description": "Event vocabulary for restaurant and food delivery",
 
   "events": {
+    "pending":            {"description": "Job accepted, work not started"},
+    "active":             {"description": "Work in progress"},
+    "completed":          {"description": "Successfully finished"},
+    "failed":             {"description": "Unsuccessfully finished"},
     "order_placed":       {"description": "Order received by merchant"},
     "preparing":          {"description": "Merchant preparing order"},
     "ready_for_pickup":   {"description": "Order ready, awaiting courier"},
@@ -101,8 +119,7 @@ Industry standards define domain-specific events. They are governed by the proto
     "in_transit":         {"description": "Courier en route to customer"},
     "courier_at_dropoff": {"description": "Courier arrived at customer"},
     "delivered":          {"description": "Order delivered to customer"},
-    "canceled":           {"description": "Delivery canceled"},
-    "failed":             {"description": "Delivery attempt unsuccessful"}
+    "canceled":           {"description": "Delivery canceled"}
   }
 }
 ```
@@ -180,7 +197,7 @@ Providers declare which standards they conform to in their profile. This is how 
 
 ### Custom Standards
 
-Providers can define their own standards following the same format as industry standards. Custom standards must reference core via the `protocol` field:
+Providers can define their own standards following the same format as industry standards. Custom standards must reference core via the `protocol` field and include core events:
 
 ```json
 {
@@ -189,6 +206,18 @@ Providers can define their own standards following the same format as industry s
   "protocol": "xyz.localprotocol.delivery.core@1.0.0",
   "title": "Acme Custom Delivery",
   "events": {
+    "pending": {
+      "description": "Job accepted, work not started"
+    },
+    "active": {
+      "description": "Work in progress"
+    },
+    "completed": {
+      "description": "Successfully finished"
+    },
+    "failed": {
+      "description": "Unsuccessfully finished"
+    },
     "sorting_at_warehouse": {
       "description": "Package being sorted at warehouse"
     },

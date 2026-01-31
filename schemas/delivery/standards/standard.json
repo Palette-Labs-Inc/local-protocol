@@ -1,15 +1,16 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.xyz/schemas/delivery/standards/food.json",
-  "title": "Food Delivery Standard",
-  "description": "Industry standard defining event vocabulary for restaurant and food delivery.",
+  "$id": "https://localprotocol.xyz/schemas/delivery/standards/standard.json",
+  "title": "Delivery Event Standard",
+  "description": "Schema for delivery event standards. All standards must include core events.",
   "type": "object",
   "additionalProperties": false,
   "required": ["name", "version", "protocol", "title", "events"],
   "properties": {
     "name": {
       "type": "string",
-      "const": "xyz.localprotocol.delivery.food"
+      "pattern": "^[a-z]+\\.[a-z]+\\.[a-z]+\\.[a-z]+$",
+      "description": "Standard identifier in reverse-domain notation (e.g., xyz.localprotocol.delivery.food)."
     },
     "version": {
       "type": "string",
