@@ -163,11 +163,11 @@ Local-protocol uses [Semantic Versioning](https://semver.org/) for standards.
 - **Minor versions** are backward compatible (clients handle unknown events gracefully)
 - **Major versions** may break clients expecting the previous version
 
-### Protocol Reference
+### Extends Reference
 
 ```json
 {
-  "protocol": "xyz.localprotocol.delivery.core@1.0.0"
+  "extends": "xyz.localprotocol.delivery.core@1.0.0"
 }
 ```
 
