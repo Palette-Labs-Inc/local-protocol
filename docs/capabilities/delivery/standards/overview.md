@@ -7,28 +7,31 @@ Event standards define event vocabularies for delivery domains. The system uses 
 
 ## How It Works
 
-1. **Standards define events**: Each standard lists the events it defines.
-2. **Extensions add events**: A standard can extend one or more parent standards by referencing `name@version` in `extends`.
-3. **Providers declare conformance**: Providers list which standards they implement in their profile.
-4. **Clients merge vocabularies**: Clients compute the full event set by merging events across the extension chain.
+1. **Standards define events**: Each standard lists its full event vocabulary in `events` (including inherited events).
+2. **Extensions add lineage**: A standard can extend a single parent standard by referencing `name@version` in `extends`.
+3. **Providers declare conformance**: Providers list which standards they implement in their profile capability `config.conforms_to` for discovery.
+4. **Clients read events directly**: Clients fetch the standard and use its `events` map; no recursive traversal is required.
 
 ## Extensions
 
-Extensions must reference semver versions of the standards they extend:
+Extensions must reference a semver version of the single parent they extend:
 
 ```json
 {
-  "extends": [
-    "xyz.localprotocol.delivery.core@1.0.0",
-    "xyz.localprotocol.delivery.food@1.0.0"
-  ]
+  "extends": ["xyz.localprotocol.delivery.core@1.0.0"]
 }
 ```
+
+## Materialized Vocabularies
+
+- The `events` map is the standard's declaration of conformance and must be complete, including any inherited events.
+- `extends` indicates lineage and compatibility for discovery; it is not required to compute the vocabulary.
+- If a child standard redefines an event ID from its parent, the child definition is authoritative.
 
 ## Core Standard (Optional)
 
 The protocol provides a minimal core standard that other standards may extend. Core is optional but provides a shared baseline for interoperability.
-Standards may extend core, extend other standards, or define events without extending anything.
+Standards may extend core or another single parent standard, or define events without extending anything.
 
 ## Versioning
 

@@ -6,9 +6,18 @@ Industry standard defining event vocabulary for restaurant and food delivery.
 **Version**: `1.0.0`
 **Extends**: `["xyz.localprotocol.delivery.core@1.0.0"]`
 
-This standard extends core and adds domain-specific events. The full vocabulary is the union of core events and the events defined here.
+This standard extends core for lineage and discovery and includes the core events in its `events` map alongside domain-specific events. The `events` list is self-contained.
 
 ## Events
+
+### Core Events
+
+| Event | Description |
+|-------|-------------|
+| `pending` | Job accepted, work not started |
+| `active` | Work in progress |
+| `completed` | Successfully finished |
+| `failed` | Unsuccessfully finished |
 
 ### Domain Events
 
@@ -29,11 +38,11 @@ This standard extends core and adds domain-specific events. The full vocabulary 
 
 - `name` (string, required): Standard identifier (`xyz.localprotocol.delivery.food`).
 - `version` (string, required): Semantic version (e.g., `1.0.0`).
-- `extends` (array, required): Parent standards this extends (e.g., `xyz.localprotocol.delivery.core@1.0.0`).
+- `extends` (array, required): Single parent standard this extends (for lineage and discovery) (e.g., `xyz.localprotocol.delivery.core@1.0.0`).
 - `title` (string, required): Human-readable title.
 - `description` (string, optional): Human-readable description.
 - `spec` (string, optional): URL to specification document.
-- `events` (object, required): Map of event IDs to event definitions defined by this standard.
+- `events` (object, required): Map of all event IDs supported by this standard, including inherited events.
 
 ### Event Definition
 
@@ -50,6 +59,18 @@ This standard extends core and adds domain-specific events. The full vocabulary 
   "description": "Event vocabulary for restaurant and food delivery.",
   "spec": "https://localprotocol.xyz/spec/delivery/food",
   "events": {
+    "pending": {
+      "description": "Job accepted, work not started"
+    },
+    "active": {
+      "description": "Work in progress"
+    },
+    "completed": {
+      "description": "Successfully finished"
+    },
+    "failed": {
+      "description": "Unsuccessfully finished"
+    },
     "order_placed": {
       "description": "Order received by merchant"
     },

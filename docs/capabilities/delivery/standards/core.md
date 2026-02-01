@@ -1,7 +1,8 @@
 # Core Standard
 
 The core standard defines minimal universal events for delivery tracking. Other standards may extend core, but it is optional.
-Providers may list core in `conforms_to` to advertise a shared baseline.
+Providers may list core in the delivery capability `config.conforms_to` to advertise a shared baseline.
+Standards that extend core must include these events in their `events` map so the standard is self-contained.
 
 **Standard**: `xyz.localprotocol.delivery.core`
 **Version**: `1.0.0`
@@ -19,7 +20,7 @@ Providers may list core in `conforms_to` to advertise a shared baseline.
 
 - `name` (string, required): Standard identifier (`xyz.localprotocol.delivery.core`).
 - `version` (string, required): Semantic version (e.g., `1.0.0`).
-- `events` (object, required): Map of event IDs to event definitions.
+- `events` (object, required): Map of all event IDs supported by this standard.
 
 ### Event Definition
 

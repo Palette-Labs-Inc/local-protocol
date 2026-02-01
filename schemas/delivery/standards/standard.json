@@ -20,13 +20,14 @@
     "extends": {
       "type": "array",
       "minItems": 1,
+      "maxItems": 1,
       "uniqueItems": true,
       "items": {
         "type": "string",
         "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)+@\\d+\\.\\d+\\.\\d+$",
         "description": "Standard reference with semver (e.g., xyz.localprotocol.delivery.core@1.0.0)."
       },
-      "description": "Parent standards this standard extends (optional). Each reference must include a semver version."
+      "description": "Parent standard this standard extends (optional). Only one parent is allowed; the reference must include a semver version. Used for lineage and discovery."
     },
     "title": {
       "type": "string",
@@ -47,7 +48,7 @@
       "additionalProperties": {
         "$ref": "#/$defs/event"
       },
-      "description": "Map of event IDs to event definitions."
+      "description": "Map of all event IDs supported by this standard, including inherited events."
     }
   },
   "$defs": {

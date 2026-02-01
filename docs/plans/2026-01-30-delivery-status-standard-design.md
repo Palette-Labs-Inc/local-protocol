@@ -4,11 +4,11 @@
 
 The Delivery Event Standard defines how delivery providers communicate job progress using domain-specific event vocabularies. It uses a conformance-based model where:
 
-- **Standards define events** for specific domains
-- **Businesses declare conformance** to the standards they implement
-- **Extensions add events** by referencing parent standards with semver
+- **Standards define full event vocabularies** for specific domains (self-contained)
+- **Businesses declare conformance** to the standards they implement for discovery
+- **Extensions add lineage** by referencing a single parent standard with semver; child standards still list all events
 
-The key principle: **if a provider declares conformance to a standard, clients can rely on that standard's events (and its ancestors) being implemented correctly.**
+The key principle: **if a provider declares conformance to a standard, clients can rely on that standard's events because the standard is self-contained; `extends` is for lineage and discovery, not vocabulary computation.**
 
 Standards can be:
 
@@ -39,7 +39,8 @@ This creates a path from experimentation to standardization.
 ## Core Standard (Optional)
 
 The core standard defines minimal universal events for delivery tracking. Other standards may extend core, but it is optional.
-Providers can include core in `conforms_to` to advertise a shared baseline.
+Providers can include core in `config.conforms_to` to advertise a shared baseline.
+Standards that extend core must include these events in their `events` map.
 
 ### Events
 
@@ -68,7 +69,8 @@ Providers can include core in `conforms_to` to advertise a shared baseline.
 
 ## Industry Standards
 
-Industry standards define domain-specific events and can extend core or other standards.
+Industry standards define domain-specific events and can extend core or another single parent standard.
+When they extend, their `events` map is a full vocabulary that includes the parent events.
 Extending core is optional; some standards may define events without any parent.
 
 ### Standard Structure
@@ -85,6 +87,10 @@ Extending core is optional; some standards may define events without any parent.
   "description": "Event vocabulary for restaurant and food delivery",
 
   "events": {
+    "pending":   {"description": "Job accepted, work not started"},
+    "active":    {"description": "Work in progress"},
+    "completed": {"description": "Successfully finished"},
+    "failed":    {"description": "Unsuccessfully finished"},
     "order_placed":       {"description": "Order received by merchant"},
     "preparing":          {"description": "Merchant preparing order"},
     "ready_for_pickup":   {"description": "Order ready, awaiting courier"},
@@ -102,8 +108,9 @@ Extending core is optional; some standards may define events without any parent.
 ### Requirements
 
 - Must include human-readable descriptions
+- Must list the full event vocabulary in `events`, which serves as the declaration of conformance for the standard (including inherited events)
 - Must be versioned using semver
-- Extensions must reference parent standards with `name@version`
+- Extensions must reference a single parent standard with `name@version`
 
 ### Namespace Governance
 
@@ -115,7 +122,7 @@ Extending core is optional; some standards may define events without any parent.
 
 ## Extensions
 
-Custom standards can extend industry standards and add events. This makes custom vocabularies reusable and allows them to gain traction over time.
+Custom standards can extend a single industry standard and add events. The child `events` map must include the full parent vocabulary. This makes custom vocabularies reusable and allows them to gain traction over time.
 
 ```json
 {
@@ -124,6 +131,48 @@ Custom standards can extend industry standards and add events. This makes custom
   "extends": ["xyz.localprotocol.delivery.food@1.0.0"],
   "title": "Acme Food Extension",
   "events": {
+    "pending": {
+      "description": "Job accepted, work not started"
+    },
+    "active": {
+      "description": "Work in progress"
+    },
+    "completed": {
+      "description": "Successfully finished"
+    },
+    "failed": {
+      "description": "Unsuccessfully finished"
+    },
+    "order_placed": {
+      "description": "Order received by merchant"
+    },
+    "preparing": {
+      "description": "Merchant preparing order"
+    },
+    "ready_for_pickup": {
+      "description": "Order ready, awaiting courier"
+    },
+    "courier_assigned": {
+      "description": "Courier assigned to delivery"
+    },
+    "courier_at_pickup": {
+      "description": "Courier arrived at merchant"
+    },
+    "picked_up": {
+      "description": "Courier collected order"
+    },
+    "in_transit": {
+      "description": "Courier en route to customer"
+    },
+    "courier_at_dropoff": {
+      "description": "Courier arrived at customer"
+    },
+    "delivered": {
+      "description": "Order delivered to customer"
+    },
+    "canceled": {
+      "description": "Delivery canceled"
+    },
     "bagged": {
       "description": "Order sealed by merchant"
     },
@@ -150,7 +199,7 @@ Custom standards can extend industry standards and add events. This makes custom
 }
 ```
 
-Clients compute the full event vocabulary by merging the events from a standard and all of its ancestors.
+Clients read the event vocabulary directly from the standard's `events` map; no traversal is required. `extends` is for lineage and discovery, and if a child redefines an event ID, the child definition is authoritative.
 
 ## Versioning
 
@@ -181,23 +230,30 @@ Providers MAY support version ranges in future (e.g., `>=1.0.0 <2.0.0`), but ini
 
 ## Provider Conformance
 
-Providers declare which standards they conform to in their profile. This is how clients discover compatibility.
+Providers declare which standards they conform to in their discovery profile capability config. This is how clients discover compatibility.
 
 ### Profile Structure
 
+In UCP discovery, this appears in `ucp.capabilities` as a capability object (other required fields omitted for brevity).
+
 ```json
 {
-  "capabilities": {
-    "xyz.localprotocol.delivery": {
-      "version": "1.0.0",
-      "spec": "https://localprotocol.xyz/spec/delivery",
-      "schema": "https://localprotocol.xyz/schemas/delivery.json",
-
-      "conforms_to": [
-        "xyz.localprotocol.delivery.food@1.0.0",
-        "com.acme.delivery.food@1.2.0"
-      ]
-    }
+  "ucp": {
+    "version": "YYYY-MM-DD",
+    "capabilities": [
+      {
+        "name": "xyz.localprotocol.delivery",
+        "version": "1.0.0",
+        "spec": "https://localprotocol.xyz/spec/delivery",
+        "schema": "https://localprotocol.xyz/schemas/delivery.json",
+        "config": {
+          "conforms_to": [
+            "xyz.localprotocol.delivery.food@1.0.0",
+            "com.acme.delivery.food@1.2.0"
+          ]
+        }
+      }
+    ]
   }
 }
 ```
@@ -206,10 +262,11 @@ Providers declare which standards they conform to in their profile. This is how 
 
 - Provider MUST conform to at least one standard
 - Standards can be industry standards (e.g., `xyz.localprotocol.delivery.food`) or custom standards (e.g., `com.acme.delivery.custom`)
-- Extensions MUST reference parent standards via `extends`
+- Extensions MUST reference a single parent standard via `extends`
 - Conformance to core is optional
 - Provider MUST fully implement all events in declared standards
-- Clients check `conforms_to` to determine compatibility
+- Clients check `config.conforms_to` to determine compatibility
+- `config.conforms_to` is for discovery; clients read the standard's `events` map directly and do not traverse `extends`
 
 ## Delivery Object
 

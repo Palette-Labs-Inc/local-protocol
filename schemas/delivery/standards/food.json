@@ -23,7 +23,7 @@
       "items": {
         "const": "xyz.localprotocol.delivery.core@1.0.0"
       },
-      "description": "Parent standards this extends. Each reference must include a semver version."
+      "description": "Parent standard this extends (lineage and discovery). The reference must include a semver version."
     },
     "title": {
       "type": "string",
@@ -42,6 +42,10 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
+        "pending",
+        "active",
+        "completed",
+        "failed",
         "order_placed",
         "preparing",
         "ready_for_pickup",
@@ -54,6 +58,10 @@
         "canceled"
       ],
       "properties": {
+        "pending": { "$ref": "#/$defs/event" },
+        "active": { "$ref": "#/$defs/event" },
+        "completed": { "$ref": "#/$defs/event" },
+        "failed": { "$ref": "#/$defs/event" },
         "order_placed": { "$ref": "#/$defs/event" },
         "preparing": { "$ref": "#/$defs/event" },
         "ready_for_pickup": { "$ref": "#/$defs/event" },
@@ -65,7 +73,7 @@
         "delivered": { "$ref": "#/$defs/event" },
         "canceled": { "$ref": "#/$defs/event" }
       },
-      "description": "Map of event IDs to event definitions defined by this standard."
+      "description": "Map of all event IDs supported by this standard, including inherited events."
     }
   },
   "$defs": {
