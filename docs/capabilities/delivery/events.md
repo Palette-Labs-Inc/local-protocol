@@ -6,20 +6,23 @@ The courier standard defines events for pickup-and-deliver workflows.
 
 ## Event Types
 
-| Event | Description |
-|-------|-------------|
-| `created` | Delivery created |
-| `assigned` | Courier assigned |
-| `arrived_pickup` | Courier at pickup location |
-| `collected` | Courier picked up |
-| `arrived_dropoff` | Courier at dropoff location |
-| `delivered` | Courier completed dropoff |
-| `canceled` | Delivery canceled |
+Events use fully qualified names: `{namespace}.{event}@{version}`
+
+| Event | Fully Qualified | Description |
+|-------|-----------------|-------------|
+| `created` | `xyz.localprotocol.delivery.courier.created@2026-01-30` | Delivery created |
+| `assigned` | `xyz.localprotocol.delivery.courier.assigned@2026-01-30` | Courier assigned |
+| `enroute_pickup` | `xyz.localprotocol.delivery.courier.enroute_pickup@2026-01-30` | Courier heading to pickup |
+| `arrived_pickup` | `xyz.localprotocol.delivery.courier.arrived_pickup@2026-01-30` | Courier at pickup location |
+| `collected` | `xyz.localprotocol.delivery.courier.collected@2026-01-30` | Courier picked up |
+| `arrived_dropoff` | `xyz.localprotocol.delivery.courier.arrived_dropoff@2026-01-30` | Courier at dropoff location |
+| `delivered` | `xyz.localprotocol.delivery.courier.delivered@2026-01-30` | Courier completed dropoff |
+| `canceled` | `xyz.localprotocol.delivery.courier.canceled@2026-01-30` | Delivery canceled |
 
 ## Typical Progression
 
 ```
-created -> assigned -> arrived_pickup -> collected -> arrived_dropoff -> delivered
+created -> assigned -> enroute_pickup -> arrived_pickup -> collected -> arrived_dropoff -> delivered
 ```
 
 At any point, the delivery may transition to `canceled`.
@@ -31,19 +34,15 @@ When returning an event:
 ```json
 {
   "id": "del_789",
-  "event": "arrived_pickup",
-  "event_description": "Courier at pickup location",
-  "event_vocabulary": "xyz.localprotocol.delivery.courier@2026-01-30",
+  "event": "xyz.localprotocol.delivery.courier.arrived_pickup@2026-01-30",
   "updated_at": "2026-01-30T19:12:00Z"
 }
 ```
 
 | Field | Description |
 |-------|-------------|
-| `event` | Current event ID from the vocabulary |
-| `event_description` | Human-readable description |
-| `event_vocabulary` | Standard that defines this event (`name@version`) |
-| `updated_at` | When event last changed (RFC 3339) |
+| `event` | Fully qualified event identifier (`{namespace}.{event}@{version}`) |
+| `updated_at` | When event occurred (RFC 3339) |
 
 ## Conformance
 

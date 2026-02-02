@@ -11,6 +11,9 @@
     "assigned": {
       "description": "Courier assigned"
     },
+    "enroute_pickup": {
+      "description": "Courier heading to pickup"
+    },
     "arrived_pickup": {
       "description": "Courier at pickup location"
     },
