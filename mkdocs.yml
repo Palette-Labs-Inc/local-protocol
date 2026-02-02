@@ -17,9 +17,7 @@ nav:
           - Types:
               - Location: capabilities/delivery/location.md
               - Coordinates: capabilities/delivery/coordinates.md
-          - Standards:
-              - Overview: capabilities/delivery/standards/overview.md
-              - Courier: capabilities/delivery/standards/courier.md
+          - Events: capabilities/delivery/events.md
 
 theme:
   name: material
