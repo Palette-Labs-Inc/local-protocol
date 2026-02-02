@@ -4,13 +4,8 @@ Industry standard defining event vocabulary for restaurant and food delivery.
 
 **Standard**: `xyz.localprotocol.delivery.food`
 **Version**: `2026-01-30`
-**Extends**: `["xyz.localprotocol.delivery.core@2026-01-30"]`
-
-This standard extends core for lineage and discovery and includes the core events in its `events` map alongside domain-specific events. The `events` list is self-contained.
 
 ## Events
-
-### Core Events
 
 | Event | Description |
 |-------|-------------|
@@ -18,11 +13,6 @@ This standard extends core for lineage and discovery and includes the core event
 | `active` | Work in progress |
 | `completed` | Successfully finished |
 | `failed` | Unsuccessfully finished |
-
-### Domain Events
-
-| Event | Description |
-|-------|-------------|
 | `order_placed` | Order received by merchant |
 | `preparing` | Merchant preparing order |
 | `ready_for_pickup` | Order ready, awaiting courier |
@@ -38,11 +28,11 @@ This standard extends core for lineage and discovery and includes the core event
 
 - `name` (string, required): Standard identifier (`xyz.localprotocol.delivery.food`).
 - `version` (string, required): Version in YYYY-MM-DD format (e.g., `2026-01-30`).
-- `extends` (array, required): Single parent standard this extends (for lineage and discovery) (e.g., `xyz.localprotocol.delivery.core@2026-01-30`).
+- `extends` (array, optional): Single parent standard this extends for lineage and discovery.
 - `title` (string, required): Human-readable title.
 - `description` (string, optional): Human-readable description.
 - `spec` (string, optional): URL to specification document.
-- `events` (object, required): Map of all event IDs supported by this standard, including inherited events.
+- `events` (object, required): Map of all event IDs supported by this standard.
 
 ### Event Definition
 
@@ -54,7 +44,6 @@ This standard extends core for lineage and discovery and includes the core event
 {
   "name": "xyz.localprotocol.delivery.food",
   "version": "2026-01-30",
-  "extends": ["xyz.localprotocol.delivery.core@2026-01-30"],
   "title": "Food Delivery Standard",
   "description": "Event vocabulary for restaurant and food delivery.",
   "spec": "https://localprotocol.xyz/spec/delivery/food",
@@ -107,12 +96,10 @@ This standard extends core for lineage and discovery and includes the core event
 
 ## Typical Progression
 
-A typical progression (core + food) looks like:
-
 ```
 pending -> order_placed -> preparing -> ready_for_pickup -> courier_assigned
         -> courier_at_pickup -> picked_up -> in_transit
         -> courier_at_dropoff -> delivered -> completed
 ```
 
-At any point, the delivery may transition to `canceled` (food) or `failed` (core).
+At any point, the delivery may transition to `canceled` or `failed`.

@@ -1,7 +1,6 @@
 {
   "name": "xyz.localprotocol.delivery.food",
   "version": "2026-01-30",
-  "extends": ["xyz.localprotocol.delivery.core@2026-01-30"],
   "title": "Food Delivery Standard",
   "description": "Event vocabulary for restaurant and food delivery.",
   "spec": "https://localprotocol.xyz/spec/delivery/food",

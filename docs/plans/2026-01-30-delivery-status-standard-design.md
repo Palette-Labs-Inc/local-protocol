@@ -11,7 +11,7 @@ The Delivery Event Standard defines how delivery providers communicate job progr
 Standards can be:
 
 - **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.food`)
-- **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.custom`)
+- **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.food`)
 
 ## Why Everything Is a Standard
 
@@ -30,65 +30,28 @@ This creates a path from experimentation to standardization.
 +---------------------------------------------+
 |  Industry Standards (protocol-governed)     |  <- interoperable across providers
 +---------------------------------------------+
-|  Core (optional baseline)                   |  <- minimal universal events
-+---------------------------------------------+
-```
-
-## Core Standard (Optional)
-
-The core standard defines minimal universal events for delivery tracking. Other standards may extend core, but it is optional.
-Providers can include core in `config.conforms_to` to advertise a shared baseline.
-Standards that extend core must include these events in their `events` map.
-
-### Events
-
-| Event | Description |
-|-------|-------------|
-| `pending` | Job accepted, work not started |
-| `active` | Work in progress |
-| `completed` | Successfully finished |
-| `failed` | Unsuccessfully finished |
-
-### Schema
-
-```json
-{
-  "$id": "https://localprotocol.xyz/schemas/delivery/standards/core.json",
-  "name": "xyz.localprotocol.delivery.core",
-  "version": "2026-01-30",
-  "events": {
-    "pending":   {"description": "Job accepted, work not started"},
-    "active":    {"description": "Work in progress"},
-    "completed": {"description": "Successfully finished"},
-    "failed":    {"description": "Unsuccessfully finished"}
-  }
-}
 ```
 
 ## Industry Standards
 
-Industry standards define domain-specific events and can extend core or another single parent standard.
-When they extend, their `events` map is a full vocabulary that includes the parent events.
-Extending core is optional; some standards may define events without any parent.
+Industry standards define domain-specific events. Standards list all their events in the `events` map, making them self-contained.
 
-### Standard Structure
+### Food Delivery Standard
 
 ```json
 {
-  "$id": "https://localprotocol.xyz/schemas/delivery/standards/food.json",
   "name": "xyz.localprotocol.delivery.food",
   "version": "2026-01-30",
-  "extends": ["xyz.localprotocol.delivery.core@2026-01-30"],
   "spec": "https://localprotocol.xyz/spec/delivery/food",
 
   "title": "Food Delivery Standard",
   "description": "Event vocabulary for restaurant and food delivery",
 
   "events": {
-    "pending":   {"description": "Job accepted, work not started"},
-    "active":    {"description": "Work in progress"},
-    "completed": {"description": "Successfully finished"},
-    "failed":    {"description": "Unsuccessfully finished"},
+    "pending":            {"description": "Job accepted, work not started"},
+    "active":             {"description": "Work in progress"},
+    "completed":          {"description": "Successfully finished"},
+    "failed":             {"description": "Unsuccessfully finished"},
     "order_placed":       {"description": "Order received by merchant"},
     "preparing":          {"description": "Merchant preparing order"},
     "ready_for_pickup":   {"description": "Order ready, awaiting courier"},
@@ -106,7 +69,7 @@ Extending core is optional; some standards may define events without any parent.
 ### Requirements
 
 - Must include human-readable descriptions
-- Must list the full event vocabulary in `events`, which serves as the declaration of conformance for the standard (including inherited events)
+- Must list the full event vocabulary in `events`
 - Must be versioned using YYYY-MM-DD format
 - Extensions must reference a single parent standard with `name@version`
 
@@ -120,7 +83,7 @@ Extending core is optional; some standards may define events without any parent.
 
 ## Extensions
 
-Custom standards can extend a single industry standard and add events. The child `events` map must include the full parent vocabulary. This makes custom vocabularies reusable and allows them to gain traction over time.
+Custom standards can extend an industry standard and add events. The child `events` map must include the full parent vocabulary. This makes custom vocabularies reusable and allows them to gain traction over time.
 
 ```json
 {
@@ -181,7 +144,9 @@ Custom standards can extend a single industry standard and add events. The child
 }
 ```
 
-### Standard Without Core
+### Standalone Standards
+
+Standards can also define events without extending anything:
 
 ```json
 {
@@ -213,7 +178,7 @@ Each version represents a snapshot of the standard on that date. Breaking change
 
 ```json
 {
-  "extends": ["xyz.localprotocol.delivery.core@2026-01-30"]
+  "extends": ["xyz.localprotocol.delivery.food@2026-01-30"]
 }
 ```
 
@@ -252,9 +217,8 @@ In UCP discovery, this appears in `ucp.capabilities` as a capability object (oth
 ### Rules
 
 - Provider MUST conform to at least one standard
-- Standards can be industry standards (e.g., `xyz.localprotocol.delivery.food`) or custom standards (e.g., `com.acme.delivery.custom`)
+- Standards can be industry standards (e.g., `xyz.localprotocol.delivery.food`) or custom standards (e.g., `com.acme.delivery.food`)
 - Extensions MUST reference a single parent standard via `extends`
-- Conformance to core is optional
 - Provider MUST fully implement all events in declared standards
 - Clients check `config.conforms_to` to determine compatibility
 - `config.conforms_to` is for discovery; clients read the standard's `events` map directly and do not traverse `extends`
