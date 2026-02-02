@@ -39,8 +39,57 @@ try:
     "test_data/delivery",
     "Directory containing test data.",
   )
+  flags.DEFINE_string(
+    "standards_dir",
+    "test_data/standards",
+    "Directory containing standard definition fixtures.",
+  )
+  flags.DEFINE_string(
+    "schema_dir",
+    None,
+    "Directory containing JSON schemas for validation.",
+  )
 except flags.DuplicateFlagError:
   pass
+
+
+def load_standard(name: str) -> dict[str, Any]:
+  """Load a standard definition from the test fixtures.
+
+  Args:
+      name: The standard name (e.g., 'core', 'food').
+
+  Returns:
+      The standard definition as a dictionary.
+
+  Raises:
+      FileNotFoundError: If the standard file doesn't exist.
+
+  """
+  standards_path = Path(FLAGS.standards_dir)
+  standard_file = standards_path / f"{name}.json"
+  with standard_file.open() as f:
+    return json.load(f)
+
+
+def load_schema(schema_path: str) -> dict[str, Any]:
+  """Load a JSON schema from the schemas directory.
+
+  Args:
+      schema_path: Relative path to the schema (e.g., 'delivery/events.json').
+
+  Returns:
+      The schema definition as a dictionary.
+
+  Raises:
+      FileNotFoundError: If the schema file doesn't exist.
+
+  """
+  if FLAGS.schema_dir is None:
+    raise ValueError("--schema_dir flag must be set for schema validation tests")
+  schema_file = Path(FLAGS.schema_dir) / schema_path
+  with schema_file.open() as f:
+    return json.load(f)
 
 
 def get_headers(request_id: str | None = None) -> dict[str, str]:
@@ -76,14 +125,26 @@ class MockWebhookServer:
     self._server: uvicorn.Server | None = None
     self._thread: threading.Thread | None = None
 
+  @property
+  def url(self) -> str:
+    """Return the base URL of the webhook server."""
+    return f"http://localhost:{self.port}/webhook"
+
   def _setup_routes(self) -> None:
     """Set up the routes for the mock server."""
+
+    @self.app.post("/webhook")
+    async def webhook_receiver(request: Request) -> dict[str, str]:
+      """Record an incoming webhook event."""
+      payload = await request.json()
+      self.events.append(payload)
+      return {"status": "ok"}
 
     @self.app.post("/webhooks/delivery/{delivery_id}/status")
     async def delivery_status(
       delivery_id: str, request: Request
     ) -> dict[str, str]:
-      """Record an incoming delivery status event."""
+      """Record an incoming delivery status event (legacy endpoint)."""
       payload = await request.json()
       self.events.append({"delivery_id": delivery_id, "payload": payload})
       return {"status": "ok"}
@@ -92,6 +153,10 @@ class MockWebhookServer:
     async def health_check() -> dict[str, str]:
       """Return a simple health check response."""
       return {"status": "ok"}
+
+  def get_events(self) -> list[dict[str, Any]]:
+    """Return all recorded events."""
+    return self.events.copy()
 
   def start(self) -> None:
     """Start the mock server in a background thread."""
@@ -166,6 +231,30 @@ class IntegrationTestBase(absltest.TestCase):
   def get_headers(self, request_id: str | None = None) -> dict[str, str]:
     """Generate headers for requests (instance method)."""
     return get_headers(request_id)
+
+  def load_standard(self, name: str) -> dict[str, Any]:
+    """Load a standard definition from the test fixtures.
+
+    Args:
+        name: The standard name (e.g., 'core', 'food').
+
+    Returns:
+        The standard definition as a dictionary.
+
+    """
+    return load_standard(name)
+
+  def load_schema(self, schema_path: str) -> dict[str, Any]:
+    """Load a JSON schema from the schemas directory.
+
+    Args:
+        schema_path: Relative path to the schema.
+
+    Returns:
+        The schema definition as a dictionary.
+
+    """
+    return load_schema(schema_path)
 
   def assert_response_status(
     self, response: httpx.Response, expected_code: int | list[int]
@@ -348,4 +437,120 @@ class IntegrationTestBase(absltest.TestCase):
       f"/asks/{ask_id}/bids",
       json=bid_payload,
       headers=request_headers,
+    )
+
+  # -------------------------------------------------------------------------
+  # Delivery-specific helpers
+  # -------------------------------------------------------------------------
+
+  def create_delivery_payload(
+    self,
+    ask_id: str,
+    bid_id: str,
+    webhook_url: str | None = None,
+    event_vocabulary: str = "xyz.localprotocol.delivery.food@1.0.0",
+  ) -> dict[str, Any]:
+    """Create a valid delivery creation payload.
+
+    Args:
+        ask_id: The ask ID.
+        bid_id: The bid ID.
+        webhook_url: Optional webhook URL for event notifications.
+        event_vocabulary: The event vocabulary to use.
+
+    Returns:
+        A dictionary for creating a delivery.
+
+    """
+    payload: dict[str, Any] = {
+      "ask_id": ask_id,
+      "bid_id": bid_id,
+      "event_vocabulary": event_vocabulary,
+    }
+    if webhook_url:
+      payload["webhook_url"] = webhook_url
+    return payload
+
+  def post_delivery(
+    self,
+    ask_id: str,
+    bid_id: str,
+    webhook_url: str | None = None,
+    headers: dict[str, str] | None = None,
+  ) -> httpx.Response:
+    """Create a delivery from an accepted bid.
+
+    Args:
+        ask_id: The ask ID.
+        bid_id: The bid ID.
+        webhook_url: Optional webhook URL for event notifications.
+        headers: Optional headers to include.
+
+    Returns:
+        The httpx response.
+
+    """
+    payload = self.create_delivery_payload(ask_id, bid_id, webhook_url)
+
+    request_headers = self.get_headers()
+    if headers:
+      request_headers.update(headers)
+
+    return self.client.post(
+      "/deliveries",
+      json=payload,
+      headers=request_headers,
+    )
+
+  def create_delivery(
+    self,
+    webhook_url: str | None = None,
+  ) -> dict[str, Any]:
+    """Create an ask, bid, and delivery (full flow).
+
+    Args:
+        webhook_url: Optional webhook URL for event notifications.
+
+    Returns:
+        The created delivery object.
+
+    """
+    # Create ask
+    ask_response = self.post_ask()
+    self.assert_response_status(ask_response, 201)
+    ask = ask_response.json()
+
+    # Create bid
+    bid_response = self.post_bid(ask["id"])
+    self.assert_response_status(bid_response, 201)
+    bid = bid_response.json()
+
+    # Create delivery
+    delivery_response = self.post_delivery(ask["id"], bid["id"], webhook_url)
+    self.assert_response_status(delivery_response, 201)
+    return delivery_response.json()
+
+  def update_delivery_event(
+    self,
+    delivery_id: str,
+    event: str,
+    event_description: str | None = None,
+  ) -> httpx.Response:
+    """Update a delivery's event.
+
+    Args:
+        delivery_id: The delivery ID.
+        event: The new event ID.
+        event_description: The new event description (auto-generated if None).
+
+    Returns:
+        The httpx response.
+
+    """
+    if event_description is None:
+      event_description = f"Event changed to {event}"
+
+    return self.client.patch(
+      f"/deliveries/{delivery_id}/event",
+      json={"event": event, "event_description": event_description},
     )

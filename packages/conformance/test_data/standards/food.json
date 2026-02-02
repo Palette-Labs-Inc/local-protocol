@@ -1,0 +1,51 @@
+{
+  "name": "xyz.localprotocol.delivery.food",
+  "version": "1.0.0",
+  "extends": ["xyz.localprotocol.delivery.core@1.0.0"],
+  "title": "Food Delivery Standard",
+  "description": "Industry standard defining event vocabulary for restaurant and food delivery.",
+  "events": {
+    "pending": {
+      "description": "Job accepted, work not started"
+    },
+    "active": {
+      "description": "Work in progress"
+    },
+    "completed": {
+      "description": "Successfully finished"
+    },
+    "failed": {
+      "description": "Unsuccessfully finished"
+    },
+    "order_placed": {
+      "description": "Order has been placed with the merchant"
+    },
+    "preparing": {
+      "description": "Merchant is preparing the order"
+    },
+    "ready_for_pickup": {
+      "description": "Order is ready for courier pickup"
+    },
+    "courier_assigned": {
+      "description": "Courier has been assigned to the delivery"
+    },
+    "courier_at_pickup": {
+      "description": "Courier has arrived at the pickup location"
+    },
+    "picked_up": {
+      "description": "Order has been picked up by courier"
+    },
+    "in_transit": {
+      "description": "Order is in transit to delivery location"
+    },
+    "courier_at_dropoff": {
+      "description": "Courier has arrived at the delivery location"
+    },
+    "delivered": {
+      "description": "Order has been delivered to recipient"
+    },
+    "canceled": {
+      "description": "Order has been canceled"
+    }
+  }
+}

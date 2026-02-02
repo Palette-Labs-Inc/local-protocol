@@ -28,6 +28,10 @@ uv run server.py --port 8000
 | POST | `/asks/{id}/bids` | Create bid for ask |
 | GET | `/asks/{id}/bids` | List bids for ask |
 | GET | `/asks/{id}/bids/{bid_id}` | Get specific bid |
+| POST | `/deliveries` | Create delivery from accepted bid |
+| GET | `/deliveries` | List all deliveries |
+| GET | `/deliveries/{id}` | Get delivery by ID |
+| PATCH | `/deliveries/{id}/event` | Update delivery event |
 
 ## Example Usage
 
@@ -77,6 +81,30 @@ curl -X POST http://localhost:8000/asks/ask-001/bids \
 curl http://localhost:8000/asks/ask-001/bids
 ```
 
+### Create a Delivery
+
+```bash
+curl -X POST http://localhost:8000/deliveries \
+  -H "Content-Type: application/json" \
+  -H "idempotency-key: del-123" \
+  -d '{
+    "ask_id": "ask-001",
+    "bid_id": "bid-001",
+    "webhook_url": "http://example.com/webhook"
+  }'
+```
+
+### Update Delivery Event
+
+```bash
+curl -X PATCH http://localhost:8000/deliveries/del_abc123/event \
+  -H "Content-Type: application/json" \
+  -d '{
+    "event": "in_transit",
+    "event_description": "Order is in transit to delivery location"
+  }'
+```
+
 ## Running Conformance Tests
 
 ```bash
@@ -93,6 +121,8 @@ just test-conformance http://localhost:8000
 - Idempotency support via required `nonce` field in payloads
 - Input validation with detailed error messages
 - CORS enabled for browser clients
+- Delivery event standard conformance (core + food)
+- Webhook event delivery for status updates
 
 ## Development
 

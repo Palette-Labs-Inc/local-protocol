@@ -6,7 +6,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routes import asks, bids, discovery
+from routes import asks, bids, deliveries, discovery
 
 app = FastAPI(
   title="Local Protocol Sample Server",
@@ -27,6 +27,7 @@ app.add_middleware(
 app.include_router(discovery.router)
 app.include_router(asks.router)
 app.include_router(bids.router)
+app.include_router(deliveries.router)
 
 
 def main() -> None:
