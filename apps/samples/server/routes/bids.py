@@ -79,6 +79,13 @@ async def create_bid(
       detail={"errors": errors},
     )
 
+  # Check for duplicate bid ID
+  if db.get_bid(bid["id"]):
+    raise HTTPException(
+      status_code=status.HTTP_409_CONFLICT,
+      detail="Bid ID already exists",
+    )
+
   # Create
   created = db.create_bid(ask_id, bid)
 
