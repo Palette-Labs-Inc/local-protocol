@@ -78,6 +78,73 @@ uv run python delivery_event_test.py --server_url=http://localhost:8000
 - Multiple transition handling
 - No webhook when URL not provided
 
+## Webhook Testing
+
+The webhook tests validate that servers correctly push event notifications when delivery state changes.
+
+### How It Works
+
+1. **Mock webhook server** starts on `--mock_webhook_port` (default 8284)
+2. Tests create a delivery with `webhook_url` pointing to the mock server
+3. Tests trigger event transitions via `PATCH /deliveries/{id}/event`
+4. The server under test POSTs to the webhook URL
+5. Tests verify the mock server received the expected payloads
+
+### Test Sequence
+
+Each webhook test follows this sequence:
+
+```
+┌─────────────────┐     POST /deliveries          ┌─────────────────┐
+│  Test Suite     │  ─────────────────────────►   │  Server Under   │
+│                 │   {webhook_url: mock:8284}    │     Test        │
+└─────────────────┘                               └─────────────────┘
+        │                                                  │
+        │         PATCH /deliveries/{id}/event             │
+        │  ─────────────────────────────────────────────►  │
+        │         {event: "in_transit"}                    │
+        │                                                  │
+        │                                    ┌─────────────┴───────────┐
+        │                                    │  Server sends webhook   │
+        │                                    └─────────────┬───────────┘
+        │                                                  │
+┌───────┴─────────┐    POST /webhook                       │
+│  Mock Webhook   │  ◄─────────────────────────────────────┘
+│    Server       │   {event_type, delivery_id, event, ...}
+└─────────────────┘
+        │
+        │  Test asserts webhook was received with correct payload
+        ▼
+```
+
+### Expected Webhook Payload
+
+When an event transition occurs, the server MUST POST this payload:
+
+```json
+{
+  "event_type": "delivery_event",
+  "delivery_id": "del_abc123",
+  "event": "in_transit",
+  "event_description": "Order is on the way",
+  "event_vocabulary": "xyz.localprotocol.delivery.food@1.0.0",
+  "updated_at": "2024-01-15T10:30:00Z"
+}
+```
+
+### Running Webhook Tests
+
+```bash
+# Run only webhook tests
+cd packages/conformance
+uv run python webhook_delivery_test.py --server_url=http://localhost:8000
+
+# With custom webhook port (if 8284 is in use)
+uv run python webhook_delivery_test.py \
+  --server_url=http://localhost:8000 \
+  --mock_webhook_port=9999
+```
+
 ## Writing Custom Tests
 
 Extend `IntegrationTestBase` for access to helpers:
