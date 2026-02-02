@@ -4,7 +4,7 @@ The courier standard defines events for pickup-and-deliver workflows.
 
 **Standard**: `xyz.localprotocol.delivery.courier@2026-01-30`
 
-## Events
+## Event Types
 
 | Event | Description |
 |-------|-------------|
@@ -24,9 +24,9 @@ created -> assigned -> arrived_pickup -> collected -> arrived_dropoff -> deliver
 
 At any point, the delivery may transition to `canceled`.
 
-## Delivery Object
+## Event Object
 
-When a provider returns a delivery, it includes event information:
+When returning an event:
 
 ```json
 {
