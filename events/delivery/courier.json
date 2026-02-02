@@ -5,8 +5,8 @@
   "description": "Event vocabulary for courier-based pickup and delivery.",
   "spec": "https://localprotocol.xyz/spec/delivery/courier",
   "events": {
-    "order_placed": {
-      "description": "Order received by merchant"
+    "pending": {
+      "description": "Delivery accepted, awaiting courier assignment"
     },
     "preparing": {
       "description": "Merchant preparing order"
