@@ -8,21 +8,18 @@ The courier standard defines events for pickup-and-deliver workflows.
 
 | Event | Description |
 |-------|-------------|
-| `pending` | Delivery accepted, awaiting courier assignment |
-| `ready_for_pickup` | Pickup ready, awaiting courier |
-| `courier_assigned` | Courier assigned to delivery |
-| `courier_at_pickup` | Courier arrived at merchant |
-| `picked_up` | Courier completed pickup |
-| `in_transit` | Courier en route to customer |
-| `courier_at_dropoff` | Courier arrived at customer |
+| `created` | Delivery created |
+| `assigned` | Courier assigned |
+| `arrived_pickup` | Courier at pickup location |
+| `collected` | Courier picked up |
+| `arrived_dropoff` | Courier at dropoff location |
 | `delivered` | Courier completed dropoff |
 | `canceled` | Delivery canceled |
 
 ## Typical Progression
 
 ```
-pending -> ready_for_pickup -> courier_assigned -> courier_at_pickup
-        -> picked_up -> in_transit -> courier_at_dropoff -> delivered
+created -> assigned -> arrived_pickup -> collected -> arrived_dropoff -> delivered
 ```
 
 At any point, the delivery may transition to `canceled`.
@@ -34,8 +31,8 @@ When a provider returns a delivery, it includes event information:
 ```json
 {
   "id": "del_789",
-  "event": "courier_at_pickup",
-  "event_description": "Courier arrived at merchant",
+  "event": "arrived_pickup",
+  "event_description": "Courier at pickup location",
   "event_vocabulary": "xyz.localprotocol.delivery.courier@2026-01-30",
   "updated_at": "2026-01-30T19:12:00Z"
 }

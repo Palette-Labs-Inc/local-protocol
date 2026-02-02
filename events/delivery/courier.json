@@ -5,26 +5,20 @@
   "description": "Event vocabulary for courier-based pickup and delivery.",
   "spec": "https://localprotocol.xyz/spec/delivery/courier",
   "events": {
-    "pending": {
-      "description": "Delivery accepted, awaiting courier assignment"
+    "created": {
+      "description": "Delivery created"
     },
-    "ready_for_pickup": {
-      "description": "Pickup ready, awaiting courier"
+    "assigned": {
+      "description": "Courier assigned"
     },
-    "courier_assigned": {
-      "description": "Courier assigned to delivery"
+    "arrived_pickup": {
+      "description": "Courier at pickup location"
     },
-    "courier_at_pickup": {
-      "description": "Courier arrived at merchant"
+    "collected": {
+      "description": "Courier picked up"
     },
-    "picked_up": {
-      "description": "Courier completed pickup"
-    },
-    "in_transit": {
-      "description": "Courier en route to customer"
-    },
-    "courier_at_dropoff": {
-      "description": "Courier arrived at customer"
+    "arrived_dropoff": {
+      "description": "Courier at dropoff location"
     },
     "delivered": {
       "description": "Courier completed dropoff"
