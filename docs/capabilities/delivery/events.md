@@ -9,13 +9,13 @@ The courier standard defines events for pickup-and-deliver workflows.
 | Event | Description |
 |-------|-------------|
 | `pending` | Delivery accepted, awaiting courier assignment |
-| `ready_for_pickup` | Order ready, awaiting courier |
+| `ready_for_pickup` | Pickup ready, awaiting courier |
 | `courier_assigned` | Courier assigned to delivery |
 | `courier_at_pickup` | Courier arrived at merchant |
-| `picked_up` | Courier collected order |
+| `picked_up` | Courier completed pickup |
 | `in_transit` | Courier en route to customer |
 | `courier_at_dropoff` | Courier arrived at customer |
-| `delivered` | Order delivered to customer |
+| `delivered` | Courier completed dropoff |
 | `canceled` | Delivery canceled |
 
 ## Typical Progression

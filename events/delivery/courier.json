@@ -9,7 +9,7 @@
       "description": "Delivery accepted, awaiting courier assignment"
     },
     "ready_for_pickup": {
-      "description": "Order ready, awaiting courier"
+      "description": "Pickup ready, awaiting courier"
     },
     "courier_assigned": {
       "description": "Courier assigned to delivery"
@@ -18,7 +18,7 @@
       "description": "Courier arrived at merchant"
     },
     "picked_up": {
-      "description": "Courier collected order"
+      "description": "Courier completed pickup"
     },
     "in_transit": {
       "description": "Courier en route to customer"
@@ -27,7 +27,7 @@
       "description": "Courier arrived at customer"
     },
     "delivered": {
-      "description": "Order delivered to customer"
+      "description": "Courier completed dropoff"
     },
     "canceled": {
       "description": "Delivery canceled"
