@@ -15,6 +15,7 @@ async def well_known() -> dict:
       "delivery": {
         "asks": True,
         "bids": True,
+        "conforms_to": ["xyz.localprotocol.delivery.courier@2026-01-30"],
       }
     },
     "endpoints": {
