@@ -8,8 +8,6 @@ The Delivery Event Standard defines how delivery providers communicate job progr
 - **Businesses declare conformance** to the standards they implement for discovery
 - **Extensions add lineage** by referencing a single parent standard with semver; child standards still list all events
 
-The key principle: **if a provider declares conformance to a standard, clients can rely on that standard's events because the standard is self-contained; `extends` is for lineage and discovery, not vocabulary computation.**
-
 Standards can be:
 
 - **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.food`)
@@ -55,7 +53,7 @@ Standards that extend core must include these events in their `events` map.
 
 ```json
 {
-  "$id": "https://localprotocol.xyz/standards/delivery/core.json",
+  "$id": "https://localprotocol.xyz/schemas/delivery/standards/core.json",
   "name": "xyz.localprotocol.delivery.core",
   "version": "1.0.0",
   "events": {
@@ -77,7 +75,7 @@ Extending core is optional; some standards may define events without any parent.
 
 ```json
 {
-  "$id": "https://localprotocol.xyz/standards/delivery/food.json",
+  "$id": "https://localprotocol.xyz/schemas/delivery/standards/food.json",
   "name": "xyz.localprotocol.delivery.food",
   "version": "1.0.0",
   "extends": ["xyz.localprotocol.delivery.core@1.0.0"],
