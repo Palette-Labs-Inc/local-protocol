@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.xyz/schemas/delivery/standards/standard.json",
-  "title": "Delivery Event Standard",
-  "description": "Schema for delivery event standards.",
+  "$id": "https://localprotocol.xyz/schemas/delivery/events.json",
+  "title": "Delivery Event Vocabulary",
+  "description": "Schema for delivery event vocabularies.",
   "type": "object",
   "additionalProperties": false,
   "required": ["name", "version", "title", "events"],
