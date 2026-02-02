@@ -3,8 +3,8 @@
 Industry standard defining event vocabulary for restaurant and food delivery.
 
 **Standard**: `xyz.localprotocol.delivery.food`
-**Version**: `1.0.0`
-**Extends**: `["xyz.localprotocol.delivery.core@1.0.0"]`
+**Version**: `2026-01-30`
+**Extends**: `["xyz.localprotocol.delivery.core@2026-01-30"]`
 
 This standard extends core for lineage and discovery and includes the core events in its `events` map alongside domain-specific events. The `events` list is self-contained.
 
@@ -37,8 +37,8 @@ This standard extends core for lineage and discovery and includes the core event
 ## Fields
 
 - `name` (string, required): Standard identifier (`xyz.localprotocol.delivery.food`).
-- `version` (string, required): Semantic version (e.g., `1.0.0`).
-- `extends` (array, required): Single parent standard this extends (for lineage and discovery) (e.g., `xyz.localprotocol.delivery.core@1.0.0`).
+- `version` (string, required): Version in YYYY-MM-DD format (e.g., `2026-01-30`).
+- `extends` (array, required): Single parent standard this extends (for lineage and discovery) (e.g., `xyz.localprotocol.delivery.core@2026-01-30`).
 - `title` (string, required): Human-readable title.
 - `description` (string, optional): Human-readable description.
 - `spec` (string, optional): URL to specification document.
@@ -53,8 +53,8 @@ This standard extends core for lineage and discovery and includes the core event
 ```json
 {
   "name": "xyz.localprotocol.delivery.food",
-  "version": "1.0.0",
-  "extends": ["xyz.localprotocol.delivery.core@1.0.0"],
+  "version": "2026-01-30",
+  "extends": ["xyz.localprotocol.delivery.core@2026-01-30"],
   "title": "Food Delivery Standard",
   "description": "Event vocabulary for restaurant and food delivery.",
   "spec": "https://localprotocol.xyz/spec/delivery/food",

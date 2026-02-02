@@ -12,13 +12,24 @@ Event standards define event vocabularies for delivery domains. The system uses 
 3. **Providers declare conformance**: Providers list which standards they implement in their profile capability `config.conforms_to` for discovery.
 4. **Clients read events directly**: Clients fetch the standard and use its `events` map; no recursive traversal is required.
 
+## Repository Structure
+
+The repository separates validation rules from standard definitions:
+
+| Path | Purpose |
+|------|---------|
+| `schemas/delivery/standards/standard.json` | Shared JSON Schema that validates any delivery standard |
+| `standards/delivery/*.json` | Actual standard documents (instance data) |
+
+The schema defines *what a valid standard looks like* (required fields, types, patterns). The standard files *are* the standards themselves and serve as the source of truth for event vocabularies. There is one shared schema for all standards rather than per-standard schemas, since the standard documents already declare their event vocabularies.
+
 ## Extensions
 
-Extensions must reference a semver version of the single parent they extend:
+Extensions must reference a version date of the single parent they extend:
 
 ```json
 {
-  "extends": ["xyz.localprotocol.delivery.core@1.0.0"]
+  "extends": ["xyz.localprotocol.delivery.core@2026-01-30"]
 }
 ```
 
@@ -35,11 +46,7 @@ Standards may extend core or another single parent standard, or define events wi
 
 ## Versioning
 
-Standards use [Semantic Versioning](https://semver.org/):
-
-- **Major**: Breaking changes (removing events)
-- **Minor**: Backward-compatible additions (new events)
-- **Patch**: Non-functional changes (description fixes)
+Standards use date-based versioning in `YYYY-MM-DD` format, consistent with UCP. Each version represents a snapshot of the standard on that date. Breaking changes require a new version date.
 
 ## Available Standards
 

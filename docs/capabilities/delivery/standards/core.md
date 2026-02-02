@@ -5,7 +5,7 @@ Providers may list core in the delivery capability `config.conforms_to` to adver
 Standards that extend core must include these events in their `events` map so the standard is self-contained.
 
 **Standard**: `xyz.localprotocol.delivery.core`
-**Version**: `1.0.0`
+**Version**: `2026-01-30`
 
 ## Events
 
@@ -19,7 +19,7 @@ Standards that extend core must include these events in their `events` map so th
 ## Fields
 
 - `name` (string, required): Standard identifier (`xyz.localprotocol.delivery.core`).
-- `version` (string, required): Semantic version (e.g., `1.0.0`).
+- `version` (string, required): Version in YYYY-MM-DD format (e.g., `2026-01-30`).
 - `events` (object, required): Map of all event IDs supported by this standard.
 
 ### Event Definition
@@ -31,7 +31,7 @@ Standards that extend core must include these events in their `events` map so th
 ```json
 {
   "name": "xyz.localprotocol.delivery.core",
-  "version": "1.0.0",
+  "version": "2026-01-30",
   "events": {
     "pending": {
       "description": "Job accepted, work not started"

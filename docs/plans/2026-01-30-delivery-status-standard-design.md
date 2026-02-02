@@ -6,7 +6,7 @@ The Delivery Event Standard defines how delivery providers communicate job progr
 
 - **Standards define full event vocabularies** for specific domains (self-contained)
 - **Businesses declare conformance** to the standards they implement for discovery
-- **Extensions add lineage** by referencing a single parent standard with semver; child standards still list all events
+- **Extensions add lineage** by referencing a single parent standard with version date; child standards still list all events
 
 Standards can be:
 
@@ -55,7 +55,7 @@ Standards that extend core must include these events in their `events` map.
 {
   "$id": "https://localprotocol.xyz/schemas/delivery/standards/core.json",
   "name": "xyz.localprotocol.delivery.core",
-  "version": "1.0.0",
+  "version": "2026-01-30",
   "events": {
     "pending":   {"description": "Job accepted, work not started"},
     "active":    {"description": "Work in progress"},
@@ -77,8 +77,8 @@ Extending core is optional; some standards may define events without any parent.
 {
   "$id": "https://localprotocol.xyz/schemas/delivery/standards/food.json",
   "name": "xyz.localprotocol.delivery.food",
-  "version": "1.0.0",
-  "extends": ["xyz.localprotocol.delivery.core@1.0.0"],
+  "version": "2026-01-30",
+  "extends": ["xyz.localprotocol.delivery.core@2026-01-30"],
   "spec": "https://localprotocol.xyz/spec/delivery/food",
 
   "title": "Food Delivery Standard",
@@ -107,7 +107,7 @@ Extending core is optional; some standards may define events without any parent.
 
 - Must include human-readable descriptions
 - Must list the full event vocabulary in `events`, which serves as the declaration of conformance for the standard (including inherited events)
-- Must be versioned using semver
+- Must be versioned using YYYY-MM-DD format
 - Extensions must reference a single parent standard with `name@version`
 
 ### Namespace Governance
@@ -125,8 +125,8 @@ Custom standards can extend a single industry standard and add events. The child
 ```json
 {
   "name": "com.acme.delivery.food",
-  "version": "1.2.0",
-  "extends": ["xyz.localprotocol.delivery.food@1.0.0"],
+  "version": "2026-01-30",
+  "extends": ["xyz.localprotocol.delivery.food@2026-01-30"],
   "title": "Acme Food Extension",
   "events": {
     "pending": {
@@ -186,7 +186,7 @@ Custom standards can extend a single industry standard and add events. The child
 ```json
 {
   "name": "xyz.localprotocol.delivery.ocean",
-  "version": "1.0.0",
+  "version": "2026-01-30",
   "title": "Ocean Freight Standard",
   "description": "Event vocabulary for international shipping by sea",
   "events": {
@@ -201,30 +201,23 @@ Clients read the event vocabulary directly from the standard's `events` map; no 
 
 ## Versioning
 
-Local-protocol uses [Semantic Versioning](https://semver.org/) for standards.
+Local-protocol uses date-based versioning in `YYYY-MM-DD` format, consistent with UCP.
 
 ### Format
 
-`MAJOR.MINOR.PATCH` (e.g., `1.2.0`)
+`YYYY-MM-DD` (e.g., `2026-01-30`)
 
-### Version Bump Rules
-
-| Change | Bump | Example |
-|--------|------|---------|
-| Add new event | Minor | `1.0.0` -> `1.1.0` |
-| Fix description typo | Patch | `1.0.0` -> `1.0.1` |
-| Remove an event | **Major** | `1.0.0` -> `2.0.0` |
-| Rename an event ID | **Major** | `1.0.0` -> `2.0.0` |
+Each version represents a snapshot of the standard on that date. Breaking changes require a new version date.
 
 ### Extends Reference
 
 ```json
 {
-  "extends": ["xyz.localprotocol.delivery.core@1.0.0"]
+  "extends": ["xyz.localprotocol.delivery.core@2026-01-30"]
 }
 ```
 
-Providers MAY support version ranges in future (e.g., `>=1.0.0 <2.0.0`), but initially exact version match is required.
+Initially, exact version match is required.
 
 ## Provider Conformance
 
@@ -241,13 +234,13 @@ In UCP discovery, this appears in `ucp.capabilities` as a capability object (oth
     "capabilities": [
       {
         "name": "xyz.localprotocol.delivery",
-        "version": "1.0.0",
+        "version": "2026-01-30",
         "spec": "https://localprotocol.xyz/spec/delivery",
         "schema": "https://localprotocol.xyz/schemas/delivery.json",
         "config": {
           "conforms_to": [
-            "xyz.localprotocol.delivery.food@1.0.0",
-            "com.acme.delivery.food@1.2.0"
+            "xyz.localprotocol.delivery.food@2026-01-30",
+            "com.acme.delivery.food@2026-01-30"
           ]
         }
       }
@@ -277,7 +270,7 @@ When a provider returns a delivery object, it includes event information.
   "id": "del_789",
   "event": "courier_at_pickup",
   "event_description": "Courier arrived at merchant",
-  "event_vocabulary": "xyz.localprotocol.delivery.food@1.0.0",
+  "event_vocabulary": "xyz.localprotocol.delivery.food@2026-01-30",
   "updated_at": "2026-01-30T19:12:00Z"
 }
 ```
@@ -298,7 +291,7 @@ When a provider returns a delivery object, it includes event information.
   "id": "del_789",
   "event": "bagged",
   "event_description": "Order sealed by merchant",
-  "event_vocabulary": "com.acme.delivery.food@1.2.0",
+  "event_vocabulary": "com.acme.delivery.food@2026-01-30",
   "updated_at": "2026-01-30T19:08:00Z"
 }
 ```

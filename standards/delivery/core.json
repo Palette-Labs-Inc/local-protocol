@@ -1,6 +1,6 @@
 {
   "name": "xyz.localprotocol.delivery.core",
-  "version": "1.0.0",
+  "version": "2026-01-30",
   "events": {
     "pending": {
       "description": "Job accepted, work not started"
