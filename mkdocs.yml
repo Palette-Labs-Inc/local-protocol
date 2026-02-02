@@ -19,8 +19,7 @@ nav:
               - Coordinates: capabilities/delivery/coordinates.md
           - Standards:
               - Overview: capabilities/delivery/standards/overview.md
-              - Core: capabilities/delivery/standards/core.md
-              - Food: capabilities/delivery/standards/food.md
+              - Courier: capabilities/delivery/standards/courier.md
 
 theme:
   name: material
