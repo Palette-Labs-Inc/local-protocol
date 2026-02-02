@@ -4,13 +4,13 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "lat": {
+    "latitude": {
       "type": "number",
       "minimum": -90,
       "maximum": 90,
       "description": "Latitude in decimal degrees."
     },
-    "lng": {
+    "longitude": {
       "type": "number",
       "minimum": -180,
       "maximum": 180,
@@ -18,7 +18,7 @@
     }
   },
   "required": [
-    "lat",
-    "lng"
+    "latitude",
+    "longitude"
   ]
 }
