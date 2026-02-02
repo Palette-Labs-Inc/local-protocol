@@ -9,6 +9,7 @@ root_dir := justfile_directory()
 py_sdk_dir := root_dir / "packages/python-sdk"
 conformance_dir := root_dir / "packages/conformance"
 schema_dir := root_dir / "schemas"
+server_dir := root_dir / "apps/samples/server"
 
 # --- SDK & Code Generation ---
 
@@ -20,6 +21,16 @@ build-python-sdk:
   @echo "Generating Python SDK from schemas..."
   @chmod +x "{{py_sdk_dir}}/generate_models.sh"
   @cd "{{py_sdk_dir}}" && ./generate_models.sh
+
+# --- Server ---
+
+# Run sample server
+run-server port="8000":
+  @cd "{{server_dir}}" && uv run server.py --port {{port}}
+
+# Run sample server with auto-reload
+run-server-dev port="8000":
+  @cd "{{server_dir}}" && uv run server.py --port {{port}} --reload
 
 # --- Testing ---
 
@@ -39,12 +50,14 @@ fmt:
   @echo "Formatting Python code..."
   @cd "{{py_sdk_dir}}" && uv run ruff format .
   @cd "{{conformance_dir}}" && uv run ruff format .
+  @cd "{{server_dir}}" && uv run ruff format .
 
 # Lint Python code
 lint:
   @echo "Linting Python code..."
   @cd "{{py_sdk_dir}}" && uv run ruff check .
   @cd "{{conformance_dir}}" && uv run ruff check .
+  @cd "{{server_dir}}" && uv run ruff check .
 
 # --- Cleanup ---
 
