@@ -10,8 +10,8 @@ The Delivery Event Standard defines how delivery providers communicate job progr
 
 Standards can be:
 
-- **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.food`)
-- **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.food`)
+- **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.courier`)
+- **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.courier`)
 
 ## Why Everything Is a Standard
 
@@ -36,16 +36,16 @@ This creates a path from experimentation to standardization.
 
 Industry standards define domain-specific events. Standards list all their events in the `events` map, making them self-contained.
 
-### Food Delivery Standard
+### Courier Delivery Standard
 
 ```json
 {
-  "name": "xyz.localprotocol.delivery.food",
+  "name": "xyz.localprotocol.delivery.courier",
   "version": "2026-01-30",
-  "spec": "https://localprotocol.xyz/spec/delivery/food",
+  "spec": "https://localprotocol.xyz/spec/delivery/courier",
 
-  "title": "Food Delivery Standard",
-  "description": "Event vocabulary for restaurant and food delivery",
+  "title": "Courier Delivery Standard",
+  "description": "Event vocabulary for courier-based pickup and delivery",
 
   "events": {
     "pending":            {"description": "Job accepted, work not started"},
@@ -87,10 +87,10 @@ Custom standards can extend an industry standard and add events. The child `even
 
 ```json
 {
-  "name": "com.acme.delivery.food",
+  "name": "com.acme.delivery.courier",
   "version": "2026-01-30",
-  "extends": ["xyz.localprotocol.delivery.food@2026-01-30"],
-  "title": "Acme Food Extension",
+  "extends": ["xyz.localprotocol.delivery.courier@2026-01-30"],
+  "title": "Acme Courier Extension",
   "events": {
     "pending": {
       "description": "Job accepted, work not started"
@@ -178,7 +178,7 @@ Each version represents a snapshot of the standard on that date. Breaking change
 
 ```json
 {
-  "extends": ["xyz.localprotocol.delivery.food@2026-01-30"]
+  "extends": ["xyz.localprotocol.delivery.courier@2026-01-30"]
 }
 ```
 
@@ -204,8 +204,8 @@ In UCP discovery, this appears in `ucp.capabilities` as a capability object (oth
         "schema": "https://localprotocol.xyz/schemas/delivery.json",
         "config": {
           "conforms_to": [
-            "xyz.localprotocol.delivery.food@2026-01-30",
-            "com.acme.delivery.food@2026-01-30"
+            "xyz.localprotocol.delivery.courier@2026-01-30",
+            "com.acme.delivery.courier@2026-01-30"
           ]
         }
       }
@@ -217,7 +217,7 @@ In UCP discovery, this appears in `ucp.capabilities` as a capability object (oth
 ### Rules
 
 - Provider MUST conform to at least one standard
-- Standards can be industry standards (e.g., `xyz.localprotocol.delivery.food`) or custom standards (e.g., `com.acme.delivery.food`)
+- Standards can be industry standards (e.g., `xyz.localprotocol.delivery.courier`) or custom standards (e.g., `com.acme.delivery.courier`)
 - Extensions MUST reference a single parent standard via `extends`
 - Provider MUST fully implement all events in declared standards
 - Clients check `config.conforms_to` to determine compatibility
@@ -234,7 +234,7 @@ When a provider returns a delivery object, it includes event information.
   "id": "del_789",
   "event": "courier_at_pickup",
   "event_description": "Courier arrived at merchant",
-  "event_vocabulary": "xyz.localprotocol.delivery.food@2026-01-30",
+  "event_vocabulary": "xyz.localprotocol.delivery.courier@2026-01-30",
   "updated_at": "2026-01-30T19:12:00Z"
 }
 ```
@@ -255,7 +255,7 @@ When a provider returns a delivery object, it includes event information.
   "id": "del_789",
   "event": "bagged",
   "event_description": "Order sealed by merchant",
-  "event_vocabulary": "com.acme.delivery.food@2026-01-30",
+  "event_vocabulary": "com.acme.delivery.courier@2026-01-30",
   "updated_at": "2026-01-30T19:08:00Z"
 }
 ```

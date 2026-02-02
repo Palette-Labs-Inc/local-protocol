@@ -10,7 +10,7 @@
     "name": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)+$",
-      "description": "Standard identifier in reverse-domain notation (e.g., xyz.localprotocol.delivery.food)."
+      "description": "Standard identifier in reverse-domain notation (e.g., xyz.localprotocol.delivery.courier)."
     },
     "version": {
       "type": "string",
@@ -25,7 +25,7 @@
       "items": {
         "type": "string",
         "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)+@\\d{4}-\\d{2}-\\d{2}$",
-        "description": "Standard reference with version (e.g., xyz.localprotocol.delivery.food@2026-01-30)."
+        "description": "Standard reference with version (e.g., xyz.localprotocol.delivery.courier@2026-01-30)."
       },
       "description": "Parent standard this standard extends (optional). Only one parent is allowed; the reference must include a version date. Used for lineage and discovery."
     },

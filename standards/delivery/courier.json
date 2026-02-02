@@ -1,9 +1,9 @@
 {
-  "name": "xyz.localprotocol.delivery.food",
+  "name": "xyz.localprotocol.delivery.courier",
   "version": "2026-01-30",
-  "title": "Food Delivery Standard",
-  "description": "Event vocabulary for restaurant and food delivery.",
-  "spec": "https://localprotocol.xyz/spec/delivery/food",
+  "title": "Courier Delivery Standard",
+  "description": "Event vocabulary for courier-based pickup and delivery.",
+  "spec": "https://localprotocol.xyz/spec/delivery/courier",
   "events": {
     "pending": {
       "description": "Job accepted, work not started"

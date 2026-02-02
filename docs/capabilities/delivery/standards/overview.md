@@ -2,8 +2,8 @@
 
 Event standards define event vocabularies for delivery domains. The system uses a conformance-based model:
 
-- **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.food`).
-- **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.food`).
+- **Industry standards**: Governed by the protocol or industry consortiums (e.g., `xyz.localprotocol.delivery.courier`).
+- **Custom standards**: Defined by individual providers (e.g., `com.acme.delivery.courier`).
 
 ## How It Works
 
@@ -29,10 +29,10 @@ Standards can extend another standard to indicate lineage and compatibility. The
 
 ```json
 {
-  "name": "com.acme.delivery.food",
+  "name": "com.acme.delivery.courier",
   "version": "2026-01-30",
-  "extends": ["xyz.localprotocol.delivery.food@2026-01-30"],
-  "title": "Acme Food Extension",
+  "extends": ["xyz.localprotocol.delivery.courier@2026-01-30"],
+  "title": "Acme Courier Extension",
   "events": {
     "pending": { "description": "Job accepted, work not started" },
     "order_placed": { "description": "Order received by merchant" },
@@ -53,4 +53,4 @@ Standards use date-based versioning in `YYYY-MM-DD` format, consistent with UCP.
 
 ## Available Standards
 
-- [Food](food.md): Restaurant and food delivery
+- [Courier](courier.md): Courier-based pickup and delivery

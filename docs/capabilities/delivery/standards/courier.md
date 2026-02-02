@@ -1,8 +1,8 @@
-# Food Delivery Standard
+# Courier Delivery Standard
 
-Industry standard defining event vocabulary for restaurant and food delivery.
+Industry standard defining event vocabulary for courier-based pickup and delivery.
 
-**Standard**: `xyz.localprotocol.delivery.food`
+**Standard**: `xyz.localprotocol.delivery.courier`
 **Version**: `2026-01-30`
 
 ## Events
@@ -26,7 +26,7 @@ Industry standard defining event vocabulary for restaurant and food delivery.
 
 ## Fields
 
-- `name` (string, required): Standard identifier (`xyz.localprotocol.delivery.food`).
+- `name` (string, required): Standard identifier (`xyz.localprotocol.delivery.courier`).
 - `version` (string, required): Version in YYYY-MM-DD format (e.g., `2026-01-30`).
 - `extends` (array, optional): Single parent standard this extends for lineage and discovery.
 - `title` (string, required): Human-readable title.
@@ -42,11 +42,11 @@ Industry standard defining event vocabulary for restaurant and food delivery.
 
 ```json
 {
-  "name": "xyz.localprotocol.delivery.food",
+  "name": "xyz.localprotocol.delivery.courier",
   "version": "2026-01-30",
-  "title": "Food Delivery Standard",
-  "description": "Event vocabulary for restaurant and food delivery.",
-  "spec": "https://localprotocol.xyz/spec/delivery/food",
+  "title": "Courier Delivery Standard",
+  "description": "Event vocabulary for courier-based pickup and delivery.",
+  "spec": "https://localprotocol.xyz/spec/delivery/courier",
   "events": {
     "pending": {
       "description": "Job accepted, work not started"
