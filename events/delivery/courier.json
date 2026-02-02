@@ -8,9 +8,6 @@
     "pending": {
       "description": "Delivery accepted, awaiting courier assignment"
     },
-    "preparing": {
-      "description": "Merchant preparing order"
-    },
     "ready_for_pickup": {
       "description": "Order ready, awaiting courier"
     },
