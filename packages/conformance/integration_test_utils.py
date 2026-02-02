@@ -136,6 +136,12 @@ class IntegrationTestBase(absltest.TestCase):
   def setUp(self) -> None:
     """Set up the test case, including clients and mock servers."""
     super().setUp()
+    if not FLAGS.server_url:
+      self.fail(
+        "Missing required flag: --server_url. "
+        "Provide the base URL of the server under test, "
+        "e.g., --server_url=http://localhost:8000"
+      )
     self.base_url = FLAGS.server_url
     self.client = httpx.Client(base_url=self.base_url)
 

@@ -99,16 +99,18 @@ class BidLifecycleTest(IntegrationTestBase):
     """Server MUST allow listing bids for an ask."""
     # Create ask
     ask_payload = self.create_ask_payload()
-    self.post_ask(ask_payload)
+    ask_response = self.post_ask(ask_payload)
+    self.assert_response_status(ask_response, [200, 201])
+    ask_id = ask_response.json()["id"]
 
     # Create multiple bids
     for i in range(3):
       bid_payload = self.create_bid_payload(price=1000 + i * 100)
-      self.post_bid(ask_payload["id"], bid_payload)
+      self.post_bid(ask_id, bid_payload)
 
     # List bids
     response = self.client.get(
-      f"/asks/{ask_payload['id']}/bids",
+      f"/asks/{ask_id}/bids",
       headers=self.get_headers(),
     )
     self.assert_response_status(response, 200)
