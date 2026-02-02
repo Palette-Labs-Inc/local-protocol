@@ -34,8 +34,8 @@ Standards can extend another standard to indicate lineage and compatibility. The
   "extends": ["xyz.localprotocol.delivery.courier@2026-01-30"],
   "title": "Acme Courier Extension",
   "events": {
-    "pending": { "description": "Job accepted, work not started" },
     "order_placed": { "description": "Order received by merchant" },
+    "preparing": { "description": "Merchant preparing order" },
     "bagged": { "description": "Order sealed by merchant" }
   }
 }

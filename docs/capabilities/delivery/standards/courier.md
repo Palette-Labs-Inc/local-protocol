@@ -9,10 +9,6 @@ Industry standard defining event vocabulary for courier-based pickup and deliver
 
 | Event | Description |
 |-------|-------------|
-| `pending` | Job accepted, work not started |
-| `active` | Work in progress |
-| `completed` | Successfully finished |
-| `failed` | Unsuccessfully finished |
 | `order_placed` | Order received by merchant |
 | `preparing` | Merchant preparing order |
 | `ready_for_pickup` | Order ready, awaiting courier |
@@ -48,18 +44,6 @@ Industry standard defining event vocabulary for courier-based pickup and deliver
   "description": "Event vocabulary for courier-based pickup and delivery.",
   "spec": "https://localprotocol.xyz/spec/delivery/courier",
   "events": {
-    "pending": {
-      "description": "Job accepted, work not started"
-    },
-    "active": {
-      "description": "Work in progress"
-    },
-    "completed": {
-      "description": "Successfully finished"
-    },
-    "failed": {
-      "description": "Unsuccessfully finished"
-    },
     "order_placed": {
       "description": "Order received by merchant"
     },
@@ -97,9 +81,9 @@ Industry standard defining event vocabulary for courier-based pickup and deliver
 ## Typical Progression
 
 ```
-pending -> order_placed -> preparing -> ready_for_pickup -> courier_assigned
-        -> courier_at_pickup -> picked_up -> in_transit
-        -> courier_at_dropoff -> delivered -> completed
+order_placed -> preparing -> ready_for_pickup -> courier_assigned
+             -> courier_at_pickup -> picked_up -> in_transit
+             -> courier_at_dropoff -> delivered
 ```
 
-At any point, the delivery may transition to `canceled` or `failed`.
+At any point, the delivery may transition to `canceled`.

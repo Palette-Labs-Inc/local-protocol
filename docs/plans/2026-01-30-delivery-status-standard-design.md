@@ -48,10 +48,6 @@ Industry standards define domain-specific events. Standards list all their event
   "description": "Event vocabulary for courier-based pickup and delivery",
 
   "events": {
-    "pending":            {"description": "Job accepted, work not started"},
-    "active":             {"description": "Work in progress"},
-    "completed":          {"description": "Successfully finished"},
-    "failed":             {"description": "Unsuccessfully finished"},
     "order_placed":       {"description": "Order received by merchant"},
     "preparing":          {"description": "Merchant preparing order"},
     "ready_for_pickup":   {"description": "Order ready, awaiting courier"},
@@ -92,18 +88,6 @@ Custom standards can extend an industry standard and add events. The child `even
   "extends": ["xyz.localprotocol.delivery.courier@2026-01-30"],
   "title": "Acme Courier Extension",
   "events": {
-    "pending": {
-      "description": "Job accepted, work not started"
-    },
-    "active": {
-      "description": "Work in progress"
-    },
-    "completed": {
-      "description": "Successfully finished"
-    },
-    "failed": {
-      "description": "Unsuccessfully finished"
-    },
     "order_placed": {
       "description": "Order received by merchant"
     },
