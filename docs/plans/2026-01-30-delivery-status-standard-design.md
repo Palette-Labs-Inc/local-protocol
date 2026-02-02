@@ -116,7 +116,7 @@ Extending core is optional; some standards may define events without any parent.
 |-----------|------------|
 | `xyz.localprotocol.delivery.*` | Protocol working groups |
 | `org.opendelivery.*` | Industry consortium (hypothetical) |
-| `com.business.*` | Individual business (custom) |
+| `com.<company>.*` | Individual business (custom) |
 
 ## Extensions
 
