@@ -8,6 +8,8 @@ This package provides:
 
 - **Integration test base class** with helpers for common operations
 - **Protocol tests** validating core ask/bid lifecycle
+- **Delivery event tests** validating event lifecycle and webhook delivery
+- **Standard schema tests** validating conformance to delivery standards
 - **Validation tests** ensuring schema compliance
 - **Mock webhook server** for testing async callbacks
 
@@ -16,10 +18,13 @@ This package provides:
 ### Against a Running Server
 
 ```bash
-# From repository root
-make test-conformance SERVER_URL=http://localhost:8000
+# Start the server in one terminal
+just run-server
 
-# Or directly
+# Run tests in another terminal (from repository root)
+just test-conformance http://localhost:8000
+
+# Or run the script directly
 ./scripts/run_conformance.sh http://localhost:8000
 ```
 
@@ -29,6 +34,7 @@ make test-conformance SERVER_URL=http://localhost:8000
 cd packages/conformance
 uv run python protocol_test.py --server_url=http://localhost:8000
 uv run python validation_test.py --server_url=http://localhost:8000
+uv run python delivery_event_test.py --server_url=http://localhost:8000
 ```
 
 ## Test Categories
@@ -40,9 +46,37 @@ uv run python validation_test.py --server_url=http://localhost:8000
 - Idempotency behavior
 
 ### `validation_test.py`
-- Required field validation
+- Required field validation for asks and bids
 - Data format validation (dates, currency codes)
 - Constraint validation (non-negative prices)
+
+### `delivery_event_test.py`
+- Delivery creation from ask/bid
+- Event vocabulary and versioning
+- Timestamp fields (created_at, updated_at)
+- Event state management
+
+### `event_lifecycle_test.py`
+- Core event transitions (pending, active, completed, failed)
+- Food delivery specific events (order_placed, preparing, in_transit, delivered, canceled)
+- Full lifecycle progression
+
+### `discovery_conformance_test.py`
+- Standard conformance declarations
+- Version format validation (semver)
+- Standard inheritance (food extends core)
+
+### `standard_schema_test.py`
+- Core standard structure validation
+- Food standard structure validation
+- Event definitions and descriptions
+- Standard extension relationships
+
+### `webhook_delivery_test.py`
+- Webhook POST on event transitions
+- Webhook payload structure
+- Multiple transition handling
+- No webhook when URL not provided
 
 ## Writing Custom Tests
 
@@ -62,6 +96,17 @@ class MyCustomTest(IntegrationTestBase):
         bid = self.create_bid_payload(price=2000)
         response = self.post_bid(ask["id"], bid)
         self.assert_response_status(response, [200, 201])
+
+        # Create a delivery with webhook
+        delivery = self.create_delivery(webhook_url="http://example.com/hook")
+
+        # Update delivery event
+        response = self.update_delivery_event(
+            delivery["id"],
+            "in_transit",
+            "Order is on the way"
+        )
+        self.assert_response_status(response, 200)
 ```
 
 ## Configuration
@@ -72,6 +117,8 @@ Tests accept these flags:
 |------|-------------|---------|
 | `--server_url` | Base URL of server under test | Required |
 | `--conformance_input` | Path to test config JSON | `test_data/delivery/conformance_input.json` |
+| `--standards_dir` | Directory with standard fixtures | `test_data/standards` |
+| `--schema_dir` | Directory with JSON schemas | None |
 | `--verbose_http` | Log HTTP requests | `False` |
 | `--mock_webhook_port` | Port for mock webhook server | `8284` |
 
