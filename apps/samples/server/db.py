@@ -11,6 +11,25 @@ from typing import Any
 _PENDING = object()
 
 
+def validate_nonce(nonce: str | None) -> str:
+  """Validate and normalize a nonce value.
+
+  Args:
+      nonce: The nonce to validate.
+
+  Returns:
+      The trimmed nonce.
+
+  Raises:
+      ValueError: If nonce is missing or empty after trimming.
+
+  """
+  trimmed = nonce.strip() if nonce else ""
+  if not trimmed:
+    raise ValueError("nonce is required and cannot be empty")
+  return trimmed
+
+
 class Database:
   """Simple in-memory database for asks, bids, and deliveries."""
 

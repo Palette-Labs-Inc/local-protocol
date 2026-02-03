@@ -4,7 +4,7 @@ from typing import Any
 
 from fastapi import APIRouter, HTTPException, status
 
-from db import db
+from db import db, validate_nonce
 
 router = APIRouter(prefix="/asks", tags=["asks"])
 
@@ -46,7 +46,10 @@ async def create_ask(ask: dict[str, Any]) -> dict[str, Any]:
     )
 
   # Check idempotency using nonce
-  nonce = ask["nonce"]
+  try:
+    nonce = validate_nonce(ask.get("nonce"))
+  except ValueError as e:
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
   key = f"ask:{nonce}"
   claimed, cached = db.claim_idempotency(key)
 

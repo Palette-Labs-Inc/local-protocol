@@ -8,7 +8,7 @@ import httpx
 from fastapi import APIRouter, BackgroundTasks, HTTPException
 from pydantic import BaseModel
 
-from db import db
+from db import db, validate_nonce
 
 logger = logging.getLogger(__name__)
 
@@ -96,12 +96,10 @@ async def create_delivery(
 ) -> dict[str, Any]:
   """Create a new delivery from an accepted bid."""
   # Validate and normalize nonce
-  nonce = request.nonce.strip() if request.nonce else ""
-  if not nonce:
-    raise HTTPException(
-      status_code=400,
-      detail="nonce is required and cannot be empty",
-    )
+  try:
+    nonce = validate_nonce(request.nonce)
+  except ValueError as e:
+    raise HTTPException(status_code=400, detail=str(e))
 
   # Check idempotency using nonce
   key = f"delivery:{nonce}"

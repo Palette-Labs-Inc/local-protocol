@@ -5,7 +5,7 @@ from typing import Any
 
 from fastapi import APIRouter, HTTPException, status
 
-from db import db
+from db import db, validate_nonce
 
 router = APIRouter(prefix="/asks/{ask_id}/bids", tags=["bids"])
 
@@ -71,7 +71,10 @@ async def create_bid(ask_id: str, bid: dict[str, Any]) -> dict[str, Any]:
     )
 
   # Check idempotency using nonce
-  nonce = bid["nonce"]
+  try:
+    nonce = validate_nonce(bid.get("nonce"))
+  except ValueError as e:
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
   key = f"bid:{ask_id}:{nonce}"
   claimed, cached = db.claim_idempotency(key)
 
