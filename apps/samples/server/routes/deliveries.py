@@ -95,8 +95,15 @@ async def create_delivery(
   request: CreateDeliveryRequest,
 ) -> dict[str, Any]:
   """Create a new delivery from an accepted bid."""
+  # Validate and normalize nonce
+  nonce = request.nonce.strip() if request.nonce else ""
+  if not nonce:
+    raise HTTPException(
+      status_code=400,
+      detail="nonce is required and cannot be empty",
+    )
+
   # Check idempotency using nonce
-  nonce = request.nonce
   key = f"delivery:{nonce}"
   claimed, cached = db.claim_idempotency(key)
 
