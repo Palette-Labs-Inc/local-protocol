@@ -32,6 +32,9 @@ class UpdateEventRequest(BaseModel):
   event_description: str
 
 
+# Frozen dataclass captures delivery state at update time. The background task
+# receives this snapshot instead of the mutable delivery dict, preventing race
+# conditions where delivery could be mutated again before the webhook fires.
 @dataclass(frozen=True)
 class WebhookEventSnapshot:
   """Immutable snapshot of delivery data for webhook delivery."""

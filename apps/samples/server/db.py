@@ -6,7 +6,8 @@ from datetime import datetime, timezone
 from typing import Any
 
 
-# Sentinel for in-progress idempotency claims
+# Sentinel for in-progress idempotency claims. Using a unique object instance
+# allows distinguishing "request in progress" from "no cached response" (None).
 _PENDING = object()
 
 
@@ -19,6 +20,8 @@ class Database:
     self.ask_bids: dict[str, list[str]] = {}  # ask_id -> [bid_ids]
     self.deliveries: dict[str, dict[str, Any]] = {}  # delivery_id -> delivery
     self.idempotency_cache: dict[str, dict[str, Any] | object] = {}
+    # Lock prevents race conditions where concurrent requests with the same nonce
+    # could both pass the "not in cache" check before either sets _PENDING.
     self._idempotency_lock = threading.Lock()
 
   def create_ask(self, ask: dict[str, Any]) -> dict[str, Any]:
@@ -72,6 +75,7 @@ class Database:
         value = self.idempotency_cache[key]
         if value is _PENDING:
           return False, None  # In progress
+        # Return a deep copy so callers can't mutate the cached response.
         return False, copy.deepcopy(value)  # type: ignore[return-value]
       self.idempotency_cache[key] = _PENDING
       return True, None
@@ -79,6 +83,8 @@ class Database:
   def complete_idempotency(self, key: str, response: dict[str, Any]) -> None:
     """Set the final response for a claimed idempotency key."""
     with self._idempotency_lock:
+      # Store a deep copy so later mutations to the original (e.g., in
+      # update_delivery_event) don't affect the cached idempotent response.
       self.idempotency_cache[key] = copy.deepcopy(response)
 
   def release_idempotency(self, key: str) -> None:
