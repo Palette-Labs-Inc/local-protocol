@@ -174,6 +174,39 @@ class WebhookDeliveryTest(IntegrationTestBase):
     self.assertEqual(events[0]["event"], "assigned")
     self.assertEqual(events[1]["event"], "delivered")
 
+  def test_full_lifecycle_sends_webhooks(self) -> None:
+    """Full courier lifecycle MUST send webhook for each transition."""
+    delivery = self.create_delivery(webhook_url=self.webhook_server.url)
+
+    lifecycle = [
+      ("assigned", "Courier assigned"),
+      ("enroute_pickup", "Courier heading to pickup"),
+      ("arrived_pickup", "Courier at pickup location"),
+      ("collected", "Courier picked up"),
+      ("arrived_dropoff", "Courier at dropoff location"),
+      ("delivered", "Courier completed dropoff"),
+    ]
+
+    for event, description in lifecycle:
+      self.webhook_server.clear_events()
+      response = self.update_delivery_event(delivery["id"], event, description)
+      self.assert_response_status(response, 200)
+
+      # Wait for background task
+      time.sleep(0.3)
+
+      events = self.webhook_server.get_events()
+      self.assertEqual(
+        len(events),
+        1,
+        f"Expected 1 webhook for {event}, got {len(events)}",
+      )
+      self.assertEqual(
+        events[0]["event"],
+        event,
+        f"Webhook event mismatch: expected {event}, got {events[0]['event']}",
+      )
+
 
 if __name__ == "__main__":
   absltest.main()
