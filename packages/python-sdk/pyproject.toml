@@ -1,23 +1,20 @@
 [project]
-name = "local-protocol"
+name = "local-protocol-sdk"
 version = "0.1.0"
-description = "Local Protocol docs and schemas"
+description = "Python SDK for Local Protocol - generated from JSON schemas"
 readme = "README.md"
 requires-python = ">=3.10"
+authors = [
+    { name = "Local Protocol Team" }
+]
 dependencies = [
-  "mkdocs>=1.6.0",
-  "mkdocs-material>=9.5.0",
+    "pydantic>=2.0.0",
 ]
 
 [dependency-groups]
 dev = [
-  "datamodel-code-generator[http]>=0.50.0",
-  "ruff>=0.14.0",
-  "absl-py>=1.0.0",
-  "httpx>=0.26.0",
-  "pydantic>=2.0.0",
-  "fastapi>=0.109.0",
-  "uvicorn[standard]>=0.27.0",
+    "datamodel-code-generator[http]>=0.50.0",
+    "ruff>=0.14.0",
 ]
 
 [build-system]
@@ -25,14 +22,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-# Treat this as a docs/spec artifact, not a Python package.
-only-include = [
-  "docs",
-  "schemas",
-  "bindings",
-  "mkdocs.yml",
-  "README.md",
-]
+packages = ["src/local_protocol_sdk"]
 
 [tool.ruff]
 line-length = 80

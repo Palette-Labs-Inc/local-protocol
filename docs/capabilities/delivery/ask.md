@@ -5,6 +5,7 @@ Delivery ask posted by a requester, including route and requested timing.
 ## Fields
 
 - `id` (string, required): Unique ask identifier.
+- `nonce` (string, required): Client-generated idempotency key.
 - `pickup_location` (object, required): Pickup location (postal address or coordinates).
 - `dropoff_location` (object, required): Dropoff location (postal address or coordinates).
 - `pickup_time` (string, required): Requested pickup time (RFC 3339).
@@ -15,6 +16,7 @@ Delivery ask posted by a requester, including route and requested timing.
 ```json
 {
   "id": "ask_456",
+  "nonce": "ask-nonce-456",
   "pickup_location": {
     "postal_address": {
       "street_address": "123 Market St",

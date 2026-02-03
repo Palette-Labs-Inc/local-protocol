@@ -1,0 +1,30 @@
+{
+  "version": "1.0.0",
+  "currency": "USD",
+  "default_pickup": {
+    "latitude": 37.7749,
+    "longitude": -122.4194,
+    "address": "123 Market St, San Francisco, CA"
+  },
+  "default_dropoff": {
+    "latitude": 37.7849,
+    "longitude": -122.4094,
+    "address": "456 Mission St, San Francisco, CA"
+  },
+  "test_scenarios": {
+    "basic_delivery": {
+      "description": "Simple point-to-point delivery",
+      "expected_price_range": {
+        "min": 500,
+        "max": 5000
+      }
+    },
+    "express_delivery": {
+      "description": "Time-sensitive delivery with premium pricing",
+      "expected_price_range": {
+        "min": 1000,
+        "max": 10000
+      }
+    }
+  }
+}

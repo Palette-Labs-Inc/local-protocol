@@ -8,6 +8,10 @@
       "type": "string",
       "description": "Unique bid identifier."
     },
+    "nonce": {
+      "type": "string",
+      "description": "Client-generated idempotency key."
+    },
     "price": {
       "type": "integer",
       "minimum": 0,
@@ -39,6 +43,7 @@
   },
   "required": [
     "id",
+    "nonce",
     "price",
     "currency",
     "pickup_location",
