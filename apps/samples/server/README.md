@@ -33,6 +33,61 @@ uv run server.py --port 8000
 | GET | `/deliveries/{id}` | Get delivery by ID |
 | PATCH | `/deliveries/{id}/event` | Update delivery event |
 
+## Protocol Flow
+
+The delivery lifecycle follows this sequence:
+
+```
+┌──────────────┐                              ┌──────────────┐                              ┌──────────────┐
+│   Consumer   │                              │    Server    │                              │   Provider   │
+└──────┬───────┘                              └──────┬───────┘                              └──────┬───────┘
+       │                                             │                                             │
+       │  POST /asks                                 │                                             │
+       │  {nonce, pickup, dropoff, times}            │                                             │
+       │────────────────────────────────────────────►│                                             │
+       │                                             │                                             │
+       │  201 {id, status: "open"}                   │                                             │
+       │◄────────────────────────────────────────────│                                             │
+       │                                             │                                             │
+       │                                             │  GET /asks                                  │
+       │                                             │◄────────────────────────────────────────────│
+       │                                             │                                             │
+       │                                             │  [{id, pickup, dropoff, ...}]               │
+       │                                             │────────────────────────────────────────────►│
+       │                                             │                                             │
+       │                                             │  POST /asks/{id}/bids                       │
+       │                                             │  {nonce, price, currency, estimates}        │
+       │                                             │◄────────────────────────────────────────────│
+       │                                             │                                             │
+       │                                             │  201 {bid_id, status: "pending"}            │
+       │                                             │────────────────────────────────────────────►│
+       │                                             │                                             │
+       │  GET /asks/{id}/bids                        │                                             │
+       │────────────────────────────────────────────►│                                             │
+       │                                             │                                             │
+       │  [{bid_id, price, currency, ...}]           │                                             │
+       │◄────────────────────────────────────────────│                                             │
+       │                                             │                                             │
+       │  POST /deliveries                           │                                             │
+       │  {nonce, ask_id, bid_id, webhook_url}       │                                             │
+       │────────────────────────────────────────────►│                                             │
+       │                                             │                                             │
+       │  201 {delivery_id, event: "created"}        │                                             │
+       │◄────────────────────────────────────────────│                                             │
+       │                                             │                                             │
+       │                                             │  PATCH /deliveries/{id}/event               │
+       │                                             │  {event: "assigned"}                        │
+       │                                             │◄────────────────────────────────────────────│
+       │                                             │                                             │
+       │  POST webhook_url                           │                                             │
+       │  {event: "assigned", delivery_id, ...}      │                                             │
+       │◄────────────────────────────────────────────│                                             │
+       │                                             │                                             │
+       ▼                                             ▼                                             ▼
+```
+
+**Idempotency**: Each `POST` requires a `nonce` field. Retrying with the same nonce returns the original response without creating duplicates.
+
 ## Example Usage
 
 ### Create an Ask

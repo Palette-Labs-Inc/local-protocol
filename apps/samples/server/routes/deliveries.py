@@ -53,10 +53,18 @@ async def push_webhook_event(delivery: dict[str, Any]) -> None:
 
   try:
     async with httpx.AsyncClient() as client:
-      await client.post(webhook_url, json=payload, timeout=5.0)
+      response = await client.post(webhook_url, json=payload, timeout=5.0)
+      if response.is_error:
+        logger.warning(
+          f"Webhook returned error: status={response.status_code} "
+          f"body={response.text} url={webhook_url} delivery_id={delivery['id']}"
+        )
   except Exception as e:
     # Webhook failures should not block event transitions
-    logger.warning(f"Failed to push webhook event: {e}")
+    logger.warning(
+      f"Failed to push webhook event: {e} url={webhook_url} "
+      f"delivery_id={delivery['id']}"
+    )
 
 
 @router.post("/deliveries", status_code=201)
