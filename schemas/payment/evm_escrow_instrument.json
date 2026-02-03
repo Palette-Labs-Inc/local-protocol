@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.dev/schemas/payment/evm_escrow_instrument.json",
+  "title": "EVM Escrow Instrument",
+  "description": "Payment instrument for neutral smart-contract escrow on EVM chains.",
+  "allOf": [
+    { "$ref": "https://ucp.dev/schemas/shopping/types/payment_instrument.json" },
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "escrow_id",
+        "chain_id",
+        "contract_address",
+        "token",
+        "amount",
+        "order_reference"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "evm_escrow"
+        },
+        "escrow_id": {
+          "type": "string",
+          "description": "Escrow identifier assigned by the escrow contract or coordinator."
+        },
+        "chain_id": {
+          "type": "integer",
+          "description": "EVM chain id for the escrow contract.",
+          "minimum": 1
+        },
+        "contract_address": {
+          "type": "string",
+          "description": "Escrow contract address on the target chain.",
+          "pattern": "^0x[a-fA-F0-9]{40}$"
+        },
+        "token": {
+          "$ref": "types/evm_token.json"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Human-readable amount in token units (decimal string).",
+          "pattern": "^[0-9]+(\\.[0-9]+)?$"
+        },
+        "order_reference": {
+          "type": "string",
+          "description": "External order or agreement reference that binds the escrow to a transaction."
+        },
+        "expires_at": {
+          "type": "string",
+          "description": "Escrow expiration timestamp (RFC 3339).",
+          "format": "date-time"
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Free-form key/value metadata.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  ]
+}

@@ -17,6 +17,9 @@ nav:
           - Types:
               - Location: capabilities/delivery/location.md
               - Coordinates: capabilities/delivery/coordinates.md
+  - Payment:
+      - Overview: payment/overview.md
+      - On Chain Escrow: payment/escrow.md
 
 theme:
   name: material
