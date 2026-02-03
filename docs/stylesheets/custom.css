@@ -63,3 +63,14 @@ p.hero-description {
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.15em;
 }
+
+/* Prevent text wrapping in table cells */
+.nowrap {
+  white-space: nowrap;
+}
+
+/* Prevent wrapping in table code cells (columns 1 and 2) */
+.md-typeset table td:nth-child(1) code,
+.md-typeset table td:nth-child(2) code {
+  white-space: nowrap;
+}

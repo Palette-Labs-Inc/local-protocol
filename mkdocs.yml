@@ -17,6 +17,7 @@ nav:
           - Types:
               - Location: capabilities/delivery/location.md
               - Coordinates: capabilities/delivery/coordinates.md
+          - Events: capabilities/delivery/events.md
   - Payment:
       - Overview: payment/overview.md
       - On Chain Escrow: payment/escrow.md

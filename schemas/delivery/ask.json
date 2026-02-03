@@ -8,6 +8,10 @@
       "type": "string",
       "description": "Unique ask identifier."
     },
+    "nonce": {
+      "type": "string",
+      "description": "Client-generated idempotency key."
+    },
     "pickup_location": {
       "$ref": "types/location.json",
       "description": "Pickup location for the delivery."
@@ -29,6 +33,7 @@
   },
   "required": [
     "id",
+    "nonce",
     "pickup_location",
     "dropoff_location",
     "pickup_time",
