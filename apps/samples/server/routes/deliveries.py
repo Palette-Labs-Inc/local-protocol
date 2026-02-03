@@ -80,6 +80,13 @@ async def create_delivery(
   if bid is None:
     raise HTTPException(status_code=404, detail="Bid not found")
 
+  # Verify bid belongs to the ask
+  if bid.get("ask_id") != request.ask_id:
+    raise HTTPException(
+      status_code=400,
+      detail=f"Bid {request.bid_id} does not belong to ask {request.ask_id}",
+    )
+
   # Create delivery
   delivery = db.create_delivery(
     ask_id=request.ask_id,
