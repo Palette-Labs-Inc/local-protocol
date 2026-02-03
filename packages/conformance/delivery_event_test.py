@@ -58,8 +58,8 @@ class DeliveryEventTest(IntegrationTestBase):
       f"event_vocabulary missing version: {vocabulary}",
     )
 
-  def test_event_vocabulary_version_is_semver(self) -> None:
-    """event_vocabulary version MUST be valid semver."""
+  def test_event_vocabulary_version_is_date_format(self) -> None:
+    """event_vocabulary version MUST be valid YYYY-MM-DD format."""
     delivery = self.create_delivery()
     vocabulary = delivery["event_vocabulary"]
     parts = vocabulary.split("@")
@@ -70,8 +70,8 @@ class DeliveryEventTest(IntegrationTestBase):
     )
     self.assertRegex(
       parts[1],
-      r"^\d+\.\d+\.\d+$",
-      f"Invalid semver in event_vocabulary: {vocabulary}",
+      r"^\d{4}-\d{2}-\d{2}$",
+      f"Invalid date version in event_vocabulary: {vocabulary}",
     )
 
   def test_event_exists_in_vocabulary(self) -> None:
@@ -79,7 +79,7 @@ class DeliveryEventTest(IntegrationTestBase):
     delivery = self.create_delivery()
     vocabulary_ref = delivery["event_vocabulary"]
 
-    # Extract standard name from reference (e.g., "xyz.localprotocol.delivery.food@1.0.0" -> "food")
+    # Extract standard name from reference (e.g., "xyz.localprotocol.delivery.courier@2026-01-30" -> "courier")
     standard_name = vocabulary_ref.split("@")[0].split(".")[-1]
 
     # Load the standard and check that the event exists
@@ -101,13 +101,13 @@ class DeliveryEventTest(IntegrationTestBase):
     except ValueError:
       self.fail(f"updated_at is not valid ISO 8601: {updated_at}")
 
-  def test_initial_event_is_pending(self) -> None:
-    """New delivery MUST start with 'pending' event."""
+  def test_initial_event_is_created(self) -> None:
+    """New delivery MUST start with 'created' event."""
     delivery = self.create_delivery()
     self.assertEqual(
       delivery["event"],
-      "pending",
-      "New delivery should start in 'pending' state",
+      "created",
+      "New delivery should start in 'created' state",
     )
 
   def test_get_delivery_by_id(self) -> None:

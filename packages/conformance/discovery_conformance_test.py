@@ -57,8 +57,8 @@ class DiscoveryConformanceTest(IntegrationTestBase):
         f"Standard reference missing version: {ref}",
       )
 
-  def test_conforms_to_version_is_semver(self) -> None:
-    """Standard reference versions MUST be valid semver."""
+  def test_conforms_to_version_is_date_format(self) -> None:
+    """Standard reference versions MUST be valid YYYY-MM-DD format."""
     response = self.client.get("/.well-known/local-protocol")
     data = response.json()
     conforms_to = data["capabilities"]["delivery"]["conforms_to"]
@@ -71,8 +71,8 @@ class DiscoveryConformanceTest(IntegrationTestBase):
       )
       self.assertRegex(
         parts[1],
-        r"^\d+\.\d+\.\d+$",
-        f"Invalid semver in reference: {ref}",
+        r"^\d{4}-\d{2}-\d{2}$",
+        f"Invalid date version in reference: {ref}",
       )
 
   def test_conforms_to_references_known_standards(self) -> None:
@@ -82,8 +82,7 @@ class DiscoveryConformanceTest(IntegrationTestBase):
     conforms_to = data["capabilities"]["delivery"]["conforms_to"]
 
     known_standard_prefixes = [
-      "xyz.localprotocol.delivery.core",
-      "xyz.localprotocol.delivery.food",
+      "xyz.localprotocol.delivery.courier",
     ]
 
     for ref in conforms_to:
@@ -95,28 +94,20 @@ class DiscoveryConformanceTest(IntegrationTestBase):
         f"Known standards: {known_standard_prefixes}",
       )
 
-  def test_conforms_to_food_implies_core(self) -> None:
-    """If conforms_to includes food, it SHOULD also include core (or food extends core)."""
+  def test_conforms_to_courier_standard(self) -> None:
+    """conforms_to SHOULD include courier standard."""
     response = self.client.get("/.well-known/local-protocol")
     data = response.json()
     conforms_to = data["capabilities"]["delivery"]["conforms_to"]
 
-    has_food = any(
-      ref.startswith("xyz.localprotocol.delivery.food@")
+    has_courier = any(
+      ref.startswith("xyz.localprotocol.delivery.courier@")
       for ref in conforms_to
     )
-    has_core = any(
-      ref.startswith("xyz.localprotocol.delivery.core@")
-      for ref in conforms_to
+    self.assertTrue(
+      has_courier,
+      "Courier standard should be declared in conforms_to",
     )
-
-    if has_food:
-      # Food extends core, so declaring food is sufficient
-      # But declaring both is also valid
-      self.assertTrue(
-        has_food,
-        "Food standard should be declared",
-      )
 
 
 if __name__ == "__main__":

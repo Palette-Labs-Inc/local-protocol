@@ -20,7 +20,7 @@ class CreateDeliveryRequest(BaseModel):
   ask_id: str
   bid_id: str
   webhook_url: str | None = None
-  event_vocabulary: str = "xyz.localprotocol.delivery.food@1.0.0"
+  event_vocabulary: str = "xyz.localprotocol.delivery.courier@2026-01-30"
 
 
 class UpdateEventRequest(BaseModel):

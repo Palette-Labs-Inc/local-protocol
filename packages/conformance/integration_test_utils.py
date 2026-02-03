@@ -57,7 +57,7 @@ def load_standard(name: str) -> dict[str, Any]:
   """Load a standard definition from the test fixtures.
 
   Args:
-      name: The standard name (e.g., 'core', 'food').
+      name: The standard name (e.g., 'courier').
 
   Returns:
       The standard definition as a dictionary.
@@ -76,7 +76,7 @@ def load_schema(schema_path: str) -> dict[str, Any]:
   """Load a JSON schema from the schemas directory.
 
   Args:
-      schema_path: Relative path to the schema (e.g., 'delivery/events.json').
+      schema_path: Relative path to the schema (e.g., 'delivery/ask.json').
 
   Returns:
       The schema definition as a dictionary.
@@ -236,7 +236,7 @@ class IntegrationTestBase(absltest.TestCase):
     """Load a standard definition from the test fixtures.
 
     Args:
-        name: The standard name (e.g., 'core', 'food').
+        name: The standard name (e.g., 'courier').
 
     Returns:
         The standard definition as a dictionary.
@@ -448,7 +448,7 @@ class IntegrationTestBase(absltest.TestCase):
     ask_id: str,
     bid_id: str,
     webhook_url: str | None = None,
-    event_vocabulary: str = "xyz.localprotocol.delivery.food@1.0.0",
+    event_vocabulary: str = "xyz.localprotocol.delivery.courier@2026-01-30",
   ) -> dict[str, Any]:
     """Create a valid delivery creation payload.
 

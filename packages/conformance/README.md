@@ -9,7 +9,7 @@ This package provides:
 - **Integration test base class** with helpers for common operations
 - **Protocol tests** validating core ask/bid lifecycle
 - **Delivery event tests** validating event lifecycle and webhook delivery
-- **Standard schema tests** validating conformance to delivery standards
+- **Standard schema tests** validating conformance to courier event vocabulary
 - **Validation tests** ensuring schema compliance
 - **Mock webhook server** for testing async callbacks
 
@@ -43,7 +43,7 @@ uv run python delivery_event_test.py --server_url=http://localhost:8000
 - Discovery endpoint tests (`.well-known/local-protocol`)
 - Ask lifecycle (create, get, list)
 - Bid lifecycle (create for ask, list)
-- Idempotency behavior
+- Idempotency behavior via nonce field
 
 ### `validation_test.py`
 - Required field validation for asks and bids
@@ -52,25 +52,23 @@ uv run python delivery_event_test.py --server_url=http://localhost:8000
 
 ### `delivery_event_test.py`
 - Delivery creation from ask/bid
-- Event vocabulary and versioning
+- Event vocabulary and versioning (date-based format)
 - Timestamp fields (created_at, updated_at)
 - Event state management
 
 ### `event_lifecycle_test.py`
-- Core event transitions (pending, active, completed, failed)
-- Food delivery specific events (order_placed, preparing, in_transit, delivered, canceled)
+- Courier event transitions (created, assigned, enroute_pickup, collected, delivered, canceled)
 - Full lifecycle progression
 
 ### `discovery_conformance_test.py`
 - Standard conformance declarations
-- Version format validation (semver)
-- Standard inheritance (food extends core)
+- Version format validation (YYYY-MM-DD date format)
+- Courier standard references
 
 ### `standard_schema_test.py`
-- Core standard structure validation
-- Food standard structure validation
+- Courier standard structure validation
 - Event definitions and descriptions
-- Standard extension relationships
+- Required fields and format validation
 
 ### `webhook_delivery_test.py`
 - Webhook POST on event transitions
@@ -102,7 +100,7 @@ Each webhook test follows this sequence:
         │                                                  │
         │         PATCH /deliveries/{id}/event             │
         │  ─────────────────────────────────────────────►  │
-        │         {event: "in_transit"}                    │
+        │         {event: "assigned"}                      │
         │                                                  │
         │                                    ┌─────────────┴───────────┐
         │                                    │  Server sends webhook   │
@@ -125,10 +123,10 @@ When an event transition occurs, the server MUST POST this payload:
 {
   "event_type": "delivery_event",
   "delivery_id": "del_abc123",
-  "event": "in_transit",
-  "event_description": "Order is on the way",
-  "event_vocabulary": "xyz.localprotocol.delivery.food@1.0.0",
-  "updated_at": "2024-01-15T10:30:00Z"
+  "event": "assigned",
+  "event_description": "Courier assigned",
+  "event_vocabulary": "xyz.localprotocol.delivery.courier@2026-01-30",
+  "updated_at": "2026-01-30T10:30:00Z"
 }
 ```
 
@@ -170,8 +168,8 @@ class MyCustomTest(IntegrationTestBase):
         # Update delivery event
         response = self.update_delivery_event(
             delivery["id"],
-            "in_transit",
-            "Order is on the way"
+            "assigned",
+            "Courier assigned"
         )
         self.assert_response_status(response, 200)
 ```

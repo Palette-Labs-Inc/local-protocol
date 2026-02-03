@@ -1,59 +1,105 @@
 """Tests for delivery event state transitions."""
 
-from datetime import datetime
-
 from absl.testing import absltest
 
 from integration_test_utils import IntegrationTestBase
 
 
 class EventLifecycleTest(IntegrationTestBase):
-  """Tests for delivery event state transitions."""
+  """Tests for delivery event state transitions using courier vocabulary."""
 
-  def test_initial_event_is_pending(self) -> None:
-    """New delivery MUST start in 'pending' state."""
+  def test_initial_event_is_created(self) -> None:
+    """New delivery MUST start in 'created' state."""
     delivery = self.create_delivery()
-    self.assertEqual(delivery["event"], "pending")
+    self.assertEqual(delivery["event"], "created")
     self.assertEqual(
       delivery["event_description"],
-      "Job accepted, work not started",
+      "Delivery created",
     )
 
-  def test_event_can_transition_to_active(self) -> None:
-    """Delivery CAN transition from pending to active."""
+  def test_event_can_transition_to_assigned(self) -> None:
+    """Delivery CAN transition from created to assigned."""
     delivery = self.create_delivery()
     response = self.update_delivery_event(
       delivery["id"],
-      "active",
-      "Work in progress",
+      "assigned",
+      "Courier assigned",
     )
     self.assert_response_status(response, 200)
     updated = response.json()
-    self.assertEqual(updated["event"], "active")
+    self.assertEqual(updated["event"], "assigned")
 
-  def test_event_can_transition_to_completed(self) -> None:
-    """Delivery CAN transition to completed."""
+  def test_event_can_transition_to_enroute_pickup(self) -> None:
+    """Delivery CAN transition to enroute_pickup."""
     delivery = self.create_delivery()
     response = self.update_delivery_event(
       delivery["id"],
-      "completed",
-      "Successfully finished",
+      "enroute_pickup",
+      "Courier heading to pickup",
     )
     self.assert_response_status(response, 200)
     updated = response.json()
-    self.assertEqual(updated["event"], "completed")
+    self.assertEqual(updated["event"], "enroute_pickup")
 
-  def test_event_can_transition_to_failed(self) -> None:
-    """Delivery CAN transition to failed."""
+  def test_event_can_transition_to_arrived_pickup(self) -> None:
+    """Delivery CAN transition to arrived_pickup."""
     delivery = self.create_delivery()
     response = self.update_delivery_event(
       delivery["id"],
-      "failed",
-      "Unsuccessfully finished",
+      "arrived_pickup",
+      "Courier at pickup location",
     )
     self.assert_response_status(response, 200)
     updated = response.json()
-    self.assertEqual(updated["event"], "failed")
+    self.assertEqual(updated["event"], "arrived_pickup")
+
+  def test_event_can_transition_to_collected(self) -> None:
+    """Delivery CAN transition to collected."""
+    delivery = self.create_delivery()
+    response = self.update_delivery_event(
+      delivery["id"],
+      "collected",
+      "Courier picked up",
+    )
+    self.assert_response_status(response, 200)
+    updated = response.json()
+    self.assertEqual(updated["event"], "collected")
+
+  def test_event_can_transition_to_arrived_dropoff(self) -> None:
+    """Delivery CAN transition to arrived_dropoff."""
+    delivery = self.create_delivery()
+    response = self.update_delivery_event(
+      delivery["id"],
+      "arrived_dropoff",
+      "Courier at dropoff location",
+    )
+    self.assert_response_status(response, 200)
+    updated = response.json()
+    self.assertEqual(updated["event"], "arrived_dropoff")
+
+  def test_event_can_transition_to_delivered(self) -> None:
+    """Delivery CAN transition to delivered."""
+    delivery = self.create_delivery()
+    response = self.update_delivery_event(
+      delivery["id"],
+      "delivered",
+      "Courier completed dropoff",
+    )
+    self.assert_response_status(response, 200)
+    updated = response.json()
+    self.assertEqual(updated["event"], "delivered")
+
+  def test_event_can_transition_to_canceled(self) -> None:
+    """Delivery CAN transition to canceled."""
+    delivery = self.create_delivery()
+    response = self.update_delivery_event(
+      delivery["id"],
+      "canceled",
+      "Delivery canceled",
+    )
+    self.assert_response_status(response, 200)
+    updated = response.json()
+    self.assertEqual(updated["event"], "canceled")
 
   def test_updated_at_changes_on_transition(self) -> None:
     """updated_at MUST change when event transitions."""
@@ -66,8 +112,8 @@ class EventLifecycleTest(IntegrationTestBase):
 
     response = self.update_delivery_event(
       delivery["id"],
-      "active",
-      "Work in progress",
+      "assigned",
+      "Courier assigned",
     )
     self.assert_response_status(response, 200)
     updated = response.json()
@@ -78,94 +124,18 @@ class EventLifecycleTest(IntegrationTestBase):
       "updated_at should change on event transition",
     )
 
-  def test_food_delivery_order_placed(self) -> None:
-    """Food delivery CAN transition to order_placed."""
-    delivery = self.create_delivery()
-    response = self.update_delivery_event(
-      delivery["id"],
-      "order_placed",
-      "Order has been placed with the merchant",
-    )
-    self.assert_response_status(response, 200)
-    updated = response.json()
-    self.assertEqual(updated["event"], "order_placed")
-
-  def test_food_delivery_preparing(self) -> None:
-    """Food delivery CAN transition to preparing."""
-    delivery = self.create_delivery()
-    response = self.update_delivery_event(
-      delivery["id"],
-      "preparing",
-      "Merchant is preparing the order",
-    )
-    self.assert_response_status(response, 200)
-    updated = response.json()
-    self.assertEqual(updated["event"], "preparing")
-
-  def test_food_delivery_courier_assigned(self) -> None:
-    """Food delivery CAN transition to courier_assigned."""
-    delivery = self.create_delivery()
-    response = self.update_delivery_event(
-      delivery["id"],
-      "courier_assigned",
-      "Courier has been assigned to the delivery",
-    )
-    self.assert_response_status(response, 200)
-    updated = response.json()
-    self.assertEqual(updated["event"], "courier_assigned")
-
-  def test_food_delivery_in_transit(self) -> None:
-    """Food delivery CAN transition to in_transit."""
-    delivery = self.create_delivery()
-    response = self.update_delivery_event(
-      delivery["id"],
-      "in_transit",
-      "Order is in transit to delivery location",
-    )
-    self.assert_response_status(response, 200)
-    updated = response.json()
-    self.assertEqual(updated["event"], "in_transit")
-
-  def test_food_delivery_delivered(self) -> None:
-    """Food delivery CAN transition to delivered."""
-    delivery = self.create_delivery()
-    response = self.update_delivery_event(
-      delivery["id"],
-      "delivered",
-      "Order has been delivered to recipient",
-    )
-    self.assert_response_status(response, 200)
-    updated = response.json()
-    self.assertEqual(updated["event"], "delivered")
-
-  def test_food_delivery_canceled(self) -> None:
-    """Food delivery CAN transition to canceled."""
-    delivery = self.create_delivery()
-    response = self.update_delivery_event(
-      delivery["id"],
-      "canceled",
-      "Order has been canceled",
-    )
-    self.assert_response_status(response, 200)
-    updated = response.json()
-    self.assertEqual(updated["event"], "canceled")
-
-  def test_full_food_lifecycle(self) -> None:
-    """Food delivery CAN follow full lifecycle sequence."""
+  def test_full_courier_lifecycle(self) -> None:
+    """Courier delivery CAN follow full lifecycle sequence."""
     delivery = self.create_delivery()
 
-    # Full food delivery lifecycle
+    # Full courier delivery lifecycle
     lifecycle = [
-      ("order_placed", "Order has been placed with the merchant"),
-      ("preparing", "Merchant is preparing the order"),
-      ("ready_for_pickup", "Order is ready for courier pickup"),
-      ("courier_assigned", "Courier has been assigned to the delivery"),
-      ("courier_at_pickup", "Courier has arrived at the pickup location"),
-      ("picked_up", "Order has been picked up by courier"),
-      ("in_transit", "Order is in transit to delivery location"),
-      ("courier_at_dropoff", "Courier has arrived at the delivery location"),
-      ("delivered", "Order has been delivered to recipient"),
-      ("completed", "Successfully finished"),
+      ("assigned", "Courier assigned"),
+      ("enroute_pickup", "Courier heading to pickup"),
+      ("arrived_pickup", "Courier at pickup location"),
+      ("collected", "Courier picked up"),
+      ("arrived_dropoff", "Courier at dropoff location"),
+      ("delivered", "Courier completed dropoff"),
     ]
 
     for event, description in lifecycle:
@@ -182,7 +152,7 @@ class EventLifecycleTest(IntegrationTestBase):
     final_response = self.client.get(f"/deliveries/{delivery['id']}")
     self.assert_response_status(final_response, 200)
     final = final_response.json()
-    self.assertEqual(final["event"], "completed")
+    self.assertEqual(final["event"], "delivered")
 
 
 if __name__ == "__main__":

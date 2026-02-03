@@ -67,7 +67,7 @@ class Database:
     ask_id: str,
     bid_id: str,
     webhook_url: str | None = None,
-    event_vocabulary: str = "xyz.localprotocol.delivery.food@1.0.0",
+    event_vocabulary: str = "xyz.localprotocol.delivery.courier@2026-01-30",
   ) -> dict[str, Any]:
     """Create a new delivery from an accepted bid.
 
@@ -90,8 +90,8 @@ class Database:
       "id": delivery_id,
       "ask_id": ask_id,
       "bid_id": bid_id,
-      "event": "pending",
-      "event_description": "Job accepted, work not started",
+      "event": "created",
+      "event_description": "Delivery created",
       "event_vocabulary": event_vocabulary,
       "webhook_url": webhook_url,
       "created_at": now,

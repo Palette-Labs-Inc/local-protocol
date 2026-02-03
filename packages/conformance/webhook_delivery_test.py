@@ -40,8 +40,8 @@ class WebhookDeliveryTest(IntegrationTestBase):
     # Update event
     response = self.update_delivery_event(
       delivery["id"],
-      "active",
-      "Work in progress",
+      "assigned",
+      "Courier assigned",
     )
     self.assert_response_status(response, 200)
 
@@ -50,7 +50,7 @@ class WebhookDeliveryTest(IntegrationTestBase):
 
     events = self.webhook_server.get_events()
     self.assertEqual(len(events), 1, f"Expected 1 event, got {len(events)}")
-    self.assertEqual(events[0]["event"], "active")
+    self.assertEqual(events[0]["event"], "assigned")
 
   def test_webhook_payload_has_required_fields(self) -> None:
     """Webhook payload MUST include required fields."""
@@ -58,8 +58,8 @@ class WebhookDeliveryTest(IntegrationTestBase):
 
     response = self.update_delivery_event(
       delivery["id"],
-      "active",
-      "Work in progress",
+      "assigned",
+      "Courier assigned",
     )
     self.assert_response_status(response, 200)
 
@@ -86,8 +86,8 @@ class WebhookDeliveryTest(IntegrationTestBase):
 
     response = self.update_delivery_event(
       delivery["id"],
-      "preparing",
-      "Merchant is preparing the order",
+      "enroute_pickup",
+      "Courier heading to pickup",
     )
     self.assert_response_status(response, 200)
     updated_delivery = response.json()
@@ -116,8 +116,8 @@ class WebhookDeliveryTest(IntegrationTestBase):
 
     response = self.update_delivery_event(
       delivery["id"],
-      "active",
-      "Work in progress",
+      "assigned",
+      "Courier assigned",
     )
     self.assert_response_status(response, 200)
 
@@ -135,8 +135,8 @@ class WebhookDeliveryTest(IntegrationTestBase):
 
     response = self.update_delivery_event(
       delivery["id"],
-      "active",
-      "Work in progress",
+      "assigned",
+      "Courier assigned",
     )
     self.assert_response_status(response, 200)
 
@@ -153,16 +153,16 @@ class WebhookDeliveryTest(IntegrationTestBase):
     # First transition
     response1 = self.update_delivery_event(
       delivery["id"],
-      "active",
-      "Work in progress",
+      "assigned",
+      "Courier assigned",
     )
     self.assert_response_status(response1, 200)
 
     # Second transition
     response2 = self.update_delivery_event(
       delivery["id"],
-      "completed",
-      "Successfully finished",
+      "delivered",
+      "Courier completed dropoff",
     )
     self.assert_response_status(response2, 200)
 
@@ -171,8 +171,8 @@ class WebhookDeliveryTest(IntegrationTestBase):
 
     events = self.webhook_server.get_events()
     self.assertEqual(len(events), 2, f"Expected 2 events, got {len(events)}")
-    self.assertEqual(events[0]["event"], "active")
-    self.assertEqual(events[1]["event"], "completed")
+    self.assertEqual(events[0]["event"], "assigned")
+    self.assertEqual(events[1]["event"], "delivered")
 
 
 if __name__ == "__main__":
