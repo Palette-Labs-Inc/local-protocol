@@ -141,10 +141,10 @@ curl http://localhost:8000/asks/ask-001/bids
 ```bash
 curl -X POST http://localhost:8000/deliveries \
   -H "Content-Type: application/json" \
-  -H "idempotency-key: del-123" \
   -d '{
     "ask_id": "ask-001",
     "bid_id": "bid-001",
+    "nonce": "del-nonce-001",
     "webhook_url": "http://example.com/webhook"
   }'
 ```
