@@ -4,7 +4,7 @@ import logging
 from typing import Any
 
 import httpx
-from fastapi import APIRouter, BackgroundTasks, Header, HTTPException
+from fastapi import APIRouter, BackgroundTasks, HTTPException
 from pydantic import BaseModel
 
 from db import db
@@ -19,6 +19,7 @@ class CreateDeliveryRequest(BaseModel):
 
   ask_id: str
   bid_id: str
+  nonce: str
   webhook_url: str | None = None
   event_vocabulary: str = "xyz.localprotocol.delivery.courier@2026-01-30"
 
@@ -61,14 +62,13 @@ async def push_webhook_event(delivery: dict[str, Any]) -> None:
 @router.post("/deliveries", status_code=201)
 async def create_delivery(
   request: CreateDeliveryRequest,
-  idempotency_key: str | None = Header(None, alias="idempotency-key"),
 ) -> dict[str, Any]:
   """Create a new delivery from an accepted bid."""
-  # Check idempotency
-  if idempotency_key:
-    cached = db.get_idempotent_response(f"delivery:{idempotency_key}")
-    if cached:
-      return cached
+  # Check idempotency using nonce
+  nonce = request.nonce
+  cached = db.get_idempotent_response(f"delivery:{nonce}")
+  if cached:
+    return cached
 
   # Verify ask exists
   ask = db.get_ask(request.ask_id)
@@ -96,8 +96,7 @@ async def create_delivery(
   )
 
   # Cache for idempotency
-  if idempotency_key:
-    db.set_idempotent_response(f"delivery:{idempotency_key}", delivery)
+  db.set_idempotent_response(f"delivery:{nonce}", delivery)
 
   return delivery
 

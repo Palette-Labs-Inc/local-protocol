@@ -465,6 +465,7 @@ class IntegrationTestBase(absltest.TestCase):
     payload: dict[str, Any] = {
       "ask_id": ask_id,
       "bid_id": bid_id,
+      "nonce": str(uuid.uuid4()),
       "event_vocabulary": event_vocabulary,
     }
     if webhook_url:
