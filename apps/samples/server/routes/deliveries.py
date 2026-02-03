@@ -80,6 +80,16 @@ async def push_webhook_event(snapshot: WebhookEventSnapshot) -> None:
     )
 
 
+def _canonical_delivery_payload(request: CreateDeliveryRequest) -> dict[str, Any]:
+  """Extract canonical payload fields for idempotency comparison."""
+  return {
+    "ask_id": request.ask_id,
+    "bid_id": request.bid_id,
+    "webhook_url": request.webhook_url,
+    "event_vocabulary": request.event_vocabulary,
+  }
+
+
 @router.post("/deliveries", status_code=201)
 async def create_delivery(
   request: CreateDeliveryRequest,
@@ -90,9 +100,19 @@ async def create_delivery(
   key = f"delivery:{nonce}"
   claimed, cached = db.claim_idempotency(key)
 
+  canonical_payload = _canonical_delivery_payload(request)
+
   if not claimed:
     if cached is not None:
-      return cached
+      # Verify the request payload matches what was originally submitted.
+      # Reusing a nonce with different parameters is an error.
+      stored_payload = cached.get("request_payload")
+      if stored_payload != canonical_payload:
+        raise HTTPException(
+          status_code=409,
+          detail="Nonce reuse with different payload",
+        )
+      return cached["response"]
     raise HTTPException(
       status_code=409,
       detail="Request with this nonce is already being processed",
@@ -124,7 +144,8 @@ async def create_delivery(
       event_vocabulary=request.event_vocabulary,
     )
 
-    db.complete_idempotency(key, delivery)
+    # Store both the response and canonical payload for future comparisons
+    db.complete_idempotency(key, {"response": delivery, "request_payload": canonical_payload})
     return delivery
   except Exception:
     db.release_idempotency(key)
