@@ -1,6 +1,7 @@
 """Delivery endpoints for the sample server."""
 
 import logging
+from dataclasses import dataclass
 from typing import Any
 
 import httpx
@@ -31,39 +32,48 @@ class UpdateEventRequest(BaseModel):
   event_description: str
 
 
-async def push_webhook_event(delivery: dict[str, Any]) -> None:
+@dataclass(frozen=True)
+class WebhookEventSnapshot:
+  """Immutable snapshot of delivery data for webhook delivery."""
+
+  delivery_id: str
+  event: str
+  event_description: str
+  event_vocabulary: str
+  updated_at: str
+  webhook_url: str
+
+
+async def push_webhook_event(snapshot: WebhookEventSnapshot) -> None:
   """Push event notification to registered webhook URL.
 
   Args:
-      delivery: The delivery object with updated event.
+      snapshot: Immutable snapshot of delivery event data.
 
   """
-  webhook_url = delivery.get("webhook_url")
-  if not webhook_url:
-    return
-
   payload = {
     "event_type": "delivery_event",
-    "delivery_id": delivery["id"],
-    "event": delivery["event"],
-    "event_description": delivery["event_description"],
-    "event_vocabulary": delivery["event_vocabulary"],
-    "updated_at": delivery["updated_at"],
+    "delivery_id": snapshot.delivery_id,
+    "event": snapshot.event,
+    "event_description": snapshot.event_description,
+    "event_vocabulary": snapshot.event_vocabulary,
+    "updated_at": snapshot.updated_at,
   }
 
   try:
     async with httpx.AsyncClient() as client:
-      response = await client.post(webhook_url, json=payload, timeout=5.0)
+      response = await client.post(snapshot.webhook_url, json=payload, timeout=5.0)
       if response.is_error:
         logger.warning(
           f"Webhook returned error: status={response.status_code} "
-          f"body={response.text} url={webhook_url} delivery_id={delivery['id']}"
+          f"body={response.text} url={snapshot.webhook_url} "
+          f"delivery_id={snapshot.delivery_id}"
         )
   except Exception as e:
     # Webhook failures should not block event transitions
     logger.warning(
-      f"Failed to push webhook event: {e} url={webhook_url} "
-      f"delivery_id={delivery['id']}"
+      f"Failed to push webhook event: {e} url={snapshot.webhook_url} "
+      f"delivery_id={snapshot.delivery_id}"
     )
 
 
@@ -148,7 +158,17 @@ async def update_delivery_event(
   if delivery is None:
     raise HTTPException(status_code=404, detail="Delivery not found")
 
-  # Push webhook event in background
-  background_tasks.add_task(push_webhook_event, delivery)
+  # Push webhook event in background with immutable snapshot
+  webhook_url = delivery.get("webhook_url")
+  if webhook_url:
+    snapshot = WebhookEventSnapshot(
+      delivery_id=delivery["id"],
+      event=delivery["event"],
+      event_description=delivery["event_description"],
+      event_vocabulary=delivery["event_vocabulary"],
+      updated_at=delivery["updated_at"],
+      webhook_url=webhook_url,
+    )
+    background_tasks.add_task(push_webhook_event, snapshot)
 
   return delivery
