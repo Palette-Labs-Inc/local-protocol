@@ -66,39 +66,48 @@ async def create_delivery(
   """Create a new delivery from an accepted bid."""
   # Check idempotency using nonce
   nonce = request.nonce
-  cached = db.get_idempotent_response(f"delivery:{nonce}")
-  if cached:
-    return cached
+  key = f"delivery:{nonce}"
+  claimed, cached = db.claim_idempotency(key)
 
-  # Verify ask exists
-  ask = db.get_ask(request.ask_id)
-  if ask is None:
-    raise HTTPException(status_code=404, detail="Ask not found")
-
-  # Verify bid exists
-  bid = db.get_bid(request.bid_id)
-  if bid is None:
-    raise HTTPException(status_code=404, detail="Bid not found")
-
-  # Verify bid belongs to the ask
-  if bid.get("ask_id") != request.ask_id:
+  if not claimed:
+    if cached is not None:
+      return cached
     raise HTTPException(
-      status_code=400,
-      detail=f"Bid {request.bid_id} does not belong to ask {request.ask_id}",
+      status_code=409,
+      detail="Request with this nonce is already being processed",
     )
 
-  # Create delivery
-  delivery = db.create_delivery(
-    ask_id=request.ask_id,
-    bid_id=request.bid_id,
-    webhook_url=request.webhook_url,
-    event_vocabulary=request.event_vocabulary,
-  )
+  try:
+    # Verify ask exists
+    ask = db.get_ask(request.ask_id)
+    if ask is None:
+      raise HTTPException(status_code=404, detail="Ask not found")
 
-  # Cache for idempotency
-  db.set_idempotent_response(f"delivery:{nonce}", delivery)
+    # Verify bid exists
+    bid = db.get_bid(request.bid_id)
+    if bid is None:
+      raise HTTPException(status_code=404, detail="Bid not found")
 
-  return delivery
+    # Verify bid belongs to the ask
+    if bid.get("ask_id") != request.ask_id:
+      raise HTTPException(
+        status_code=400,
+        detail=f"Bid {request.bid_id} does not belong to ask {request.ask_id}",
+      )
+
+    # Create delivery
+    delivery = db.create_delivery(
+      ask_id=request.ask_id,
+      bid_id=request.bid_id,
+      webhook_url=request.webhook_url,
+      event_vocabulary=request.event_vocabulary,
+    )
+
+    db.complete_idempotency(key, delivery)
+    return delivery
+  except Exception:
+    db.release_idempotency(key)
+    raise
 
 
 @router.get("/deliveries/{delivery_id}")

@@ -1,7 +1,12 @@
 """In-memory database for sample server."""
 
+import threading
 from datetime import datetime, timezone
 from typing import Any
+
+
+# Sentinel for in-progress idempotency claims
+_PENDING = object()
 
 
 class Database:
@@ -12,7 +17,8 @@ class Database:
     self.bids: dict[str, dict[str, Any]] = {}  # bid_id -> bid
     self.ask_bids: dict[str, list[str]] = {}  # ask_id -> [bid_ids]
     self.deliveries: dict[str, dict[str, Any]] = {}  # delivery_id -> delivery
-    self.idempotency_cache: dict[str, dict[str, Any]] = {}
+    self.idempotency_cache: dict[str, dict[str, Any] | object] = {}
+    self._idempotency_lock = threading.Lock()
 
   def create_ask(self, ask: dict[str, Any]) -> dict[str, Any]:
     """Create a new ask."""
@@ -50,17 +56,35 @@ class Database:
     bid_ids = self.ask_bids.get(ask_id, [])
     return [self.bids[bid_id] for bid_id in bid_ids if bid_id in self.bids]
 
-  def get_idempotent_response(
-    self, key: str
-  ) -> dict[str, Any] | None:
-    """Get cached response for idempotency key."""
-    return self.idempotency_cache.get(key)
+  def claim_idempotency(self, key: str) -> tuple[bool, dict[str, Any] | None]:
+    """Atomically claim an idempotency key or return cached response.
 
-  def set_idempotent_response(
-    self, key: str, response: dict[str, Any]
-  ) -> None:
-    """Cache response for idempotency key."""
-    self.idempotency_cache[key] = response
+    Returns:
+        (claimed, response) where:
+        - (True, None): Key claimed, caller should proceed with creation
+        - (False, dict): Cached response exists, return it
+        - (False, None): Key is being processed by another request
+
+    """
+    with self._idempotency_lock:
+      if key in self.idempotency_cache:
+        value = self.idempotency_cache[key]
+        if value is _PENDING:
+          return False, None  # In progress
+        return False, value  # type: ignore[return-value]
+      self.idempotency_cache[key] = _PENDING
+      return True, None
+
+  def complete_idempotency(self, key: str, response: dict[str, Any]) -> None:
+    """Set the final response for a claimed idempotency key."""
+    with self._idempotency_lock:
+      self.idempotency_cache[key] = response
+
+  def release_idempotency(self, key: str) -> None:
+    """Release a claim on failure, allowing retry with same key."""
+    with self._idempotency_lock:
+      if self.idempotency_cache.get(key) is _PENDING:
+        del self.idempotency_cache[key]
 
   def create_delivery(
     self,

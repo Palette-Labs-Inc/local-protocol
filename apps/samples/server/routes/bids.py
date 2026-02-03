@@ -72,24 +72,32 @@ async def create_bid(ask_id: str, bid: dict[str, Any]) -> dict[str, Any]:
 
   # Check idempotency using nonce
   nonce = bid["nonce"]
-  cached = db.get_idempotent_response(f"bid:{ask_id}:{nonce}")
-  if cached:
-    return cached
+  key = f"bid:{ask_id}:{nonce}"
+  claimed, cached = db.claim_idempotency(key)
 
-  # Check for duplicate bid ID
-  if db.get_bid(bid["id"]):
+  if not claimed:
+    if cached is not None:
+      return cached
     raise HTTPException(
       status_code=status.HTTP_409_CONFLICT,
-      detail="Bid ID already exists",
+      detail="Request with this nonce is already being processed",
     )
 
-  # Create
-  created = db.create_bid(ask_id, bid)
+  try:
+    # Check for duplicate bid ID
+    if db.get_bid(bid["id"]):
+      raise HTTPException(
+        status_code=status.HTTP_409_CONFLICT,
+        detail="Bid ID already exists",
+      )
 
-  # Cache for idempotency
-  db.set_idempotent_response(f"bid:{ask_id}:{nonce}", created)
-
-  return created
+    # Create
+    created = db.create_bid(ask_id, bid)
+    db.complete_idempotency(key, created)
+    return created
+  except Exception:
+    db.release_idempotency(key)
+    raise
 
 
 @router.get("")
