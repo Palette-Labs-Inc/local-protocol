@@ -1,5 +1,6 @@
 """In-memory database for sample server."""
 
+import copy
 import threading
 from datetime import datetime, timezone
 from typing import Any
@@ -71,14 +72,14 @@ class Database:
         value = self.idempotency_cache[key]
         if value is _PENDING:
           return False, None  # In progress
-        return False, value  # type: ignore[return-value]
+        return False, copy.deepcopy(value)  # type: ignore[return-value]
       self.idempotency_cache[key] = _PENDING
       return True, None
 
   def complete_idempotency(self, key: str, response: dict[str, Any]) -> None:
     """Set the final response for a claimed idempotency key."""
     with self._idempotency_lock:
-      self.idempotency_cache[key] = response
+      self.idempotency_cache[key] = copy.deepcopy(response)
 
   def release_idempotency(self, key: str) -> None:
     """Release a claim on failure, allowing retry with same key."""
