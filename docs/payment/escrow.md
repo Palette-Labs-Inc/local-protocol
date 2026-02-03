@@ -1,4 +1,4 @@
-# On Chain Escrow
+# On-Chain Escrow
 
 A neutral smart-contract escrow for B2B settlement on EVM chains. The requester
 (payer, "Platform") locks funds in escrow, submits an escrow instrument at
