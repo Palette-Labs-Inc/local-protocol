@@ -3,7 +3,7 @@
 import re
 from typing import Any
 
-from fastapi import APIRouter, Header, HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 
 from db import db
 
@@ -17,6 +17,7 @@ def validate_bid(bid: dict[str, Any]) -> list[str]:
   errors = []
   required_fields = [
     "id",
+    "nonce",
     "price",
     "currency",
     "pickup_location",
@@ -51,11 +52,7 @@ def validate_bid(bid: dict[str, Any]) -> list[str]:
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
-async def create_bid(
-  ask_id: str,
-  bid: dict[str, Any],
-  idempotency_key: str | None = Header(None, alias="idempotency-key"),
-) -> dict[str, Any]:
+async def create_bid(ask_id: str, bid: dict[str, Any]) -> dict[str, Any]:
   """Create a new bid for an ask."""
   # Check ask exists
   ask = db.get_ask(ask_id)
@@ -65,12 +62,6 @@ async def create_bid(
       detail=f"Ask {ask_id} not found",
     )
 
-  # Check idempotency
-  if idempotency_key:
-    cached = db.get_idempotent_response(f"bid:{ask_id}:{idempotency_key}")
-    if cached:
-      return cached
-
   # Validate
   errors = validate_bid(bid)
   if errors:
@@ -78,6 +69,12 @@ async def create_bid(
       status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
       detail={"errors": errors},
     )
+
+  # Check idempotency using nonce
+  nonce = bid["nonce"]
+  cached = db.get_idempotent_response(f"bid:{ask_id}:{nonce}")
+  if cached:
+    return cached
 
   # Check for duplicate bid ID
   if db.get_bid(bid["id"]):
@@ -90,8 +87,7 @@ async def create_bid(
   created = db.create_bid(ask_id, bid)
 
   # Cache for idempotency
-  if idempotency_key:
-    db.set_idempotent_response(f"bid:{ask_id}:{idempotency_key}", created)
+  db.set_idempotent_response(f"bid:{ask_id}:{nonce}", created)
 
   return created
 

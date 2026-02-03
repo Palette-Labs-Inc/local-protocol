@@ -14,6 +14,10 @@ class DeliveryBid(BaseModel):
   """
     Unique bid identifier.
     """
+  nonce: str
+  """
+    Client-generated idempotency key.
+    """
   price: int = Field(..., ge=0)
   """
     Price in minor currency units.

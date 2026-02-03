@@ -36,9 +36,9 @@ uv run server.py --port 8000
 ```bash
 curl -X POST http://localhost:8000/asks \
   -H "Content-Type: application/json" \
-  -H "idempotency-key: ask-123" \
   -d '{
     "id": "ask-001",
+    "nonce": "ask-nonce-001",
     "pickup_location": {
       "coordinates": {"latitude": 37.7749, "longitude": -122.4194}
     },
@@ -55,9 +55,9 @@ curl -X POST http://localhost:8000/asks \
 ```bash
 curl -X POST http://localhost:8000/asks/ask-001/bids \
   -H "Content-Type: application/json" \
-  -H "idempotency-key: bid-123" \
   -d '{
     "id": "bid-001",
+    "nonce": "bid-nonce-001",
     "price": 1500,
     "currency": "USD",
     "pickup_location": {
@@ -90,7 +90,7 @@ just test-conformance http://localhost:8000
 ## Features
 
 - In-memory storage (resets on restart)
-- Idempotency support via `idempotency-key` header
+- Idempotency support via required `nonce` field in payloads
 - Input validation with detailed error messages
 - CORS enabled for browser clients
 

@@ -43,13 +43,10 @@ except flags.DuplicateFlagError:
   pass
 
 
-def get_headers(
-  idempotency_key: str | None = None, request_id: str | None = None
-) -> dict[str, str]:
+def get_headers(request_id: str | None = None) -> dict[str, str]:
   """Generate headers for Local Protocol requests.
 
   Args:
-      idempotency_key: Optional specific idempotency key.
       request_id: Optional specific request ID.
 
   Returns:
@@ -58,7 +55,6 @@ def get_headers(
   """
   return {
     "Content-Type": "application/json",
-    "idempotency-key": idempotency_key or str(uuid.uuid4()),
     "request-id": request_id or str(uuid.uuid4()),
   }
 
@@ -167,11 +163,9 @@ class IntegrationTestBase(absltest.TestCase):
     self.client.close()
     super().tearDown()
 
-  def get_headers(
-    self, idempotency_key: str | None = None, request_id: str | None = None
-  ) -> dict[str, str]:
+  def get_headers(self, request_id: str | None = None) -> dict[str, str]:
     """Generate headers for requests (instance method)."""
-    return get_headers(idempotency_key, request_id)
+    return get_headers(request_id)
 
   def assert_response_status(
     self, response: httpx.Response, expected_code: int | list[int]
@@ -235,6 +229,7 @@ class IntegrationTestBase(absltest.TestCase):
 
     return {
       "id": ask_id or str(uuid.uuid4()),
+      "nonce": str(uuid.uuid4()),
       "pickup_location": {
         "coordinates": {"latitude": pickup_lat, "longitude": pickup_lng},
       },
@@ -282,6 +277,7 @@ class IntegrationTestBase(absltest.TestCase):
 
     return {
       "id": bid_id or str(uuid.uuid4()),
+      "nonce": str(uuid.uuid4()),
       "price": price,
       "currency": currency,
       "pickup_location": {

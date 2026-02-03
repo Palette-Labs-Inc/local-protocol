@@ -20,7 +20,7 @@ async def well_known() -> dict:
     },
     "endpoints": {
       "asks": "/asks",
-      "bids": "/bids",
+      "bids": "/asks/{ask_id}/bids",
       "health": "/healthz",
     },
   }

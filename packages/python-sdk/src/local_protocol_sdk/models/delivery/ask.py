@@ -14,6 +14,10 @@ class DeliveryAsk(BaseModel):
   """
     Unique ask identifier.
     """
+  nonce: str
+  """
+    Client-generated idempotency key.
+    """
   pickup_location: location.Location
   """
     Pickup location for the delivery.

@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from fastapi import APIRouter, Header, HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 
 from db import db
 
@@ -14,6 +14,7 @@ def validate_ask(ask: dict[str, Any]) -> list[str]:
   errors = []
   required_fields = [
     "id",
+    "nonce",
     "pickup_location",
     "dropoff_location",
     "pickup_time",
@@ -34,17 +35,8 @@ def validate_ask(ask: dict[str, Any]) -> list[str]:
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
-async def create_ask(
-  ask: dict[str, Any],
-  idempotency_key: str | None = Header(None, alias="idempotency-key"),
-) -> dict[str, Any]:
+async def create_ask(ask: dict[str, Any]) -> dict[str, Any]:
   """Create a new delivery ask."""
-  # Check idempotency
-  if idempotency_key:
-    cached = db.get_idempotent_response(f"ask:{idempotency_key}")
-    if cached:
-      return cached
-
   # Validate
   errors = validate_ask(ask)
   if errors:
@@ -52,6 +44,12 @@ async def create_ask(
       status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
       detail={"errors": errors},
     )
+
+  # Check idempotency using nonce
+  nonce = ask["nonce"]
+  cached = db.get_idempotent_response(f"ask:{nonce}")
+  if cached:
+    return cached
 
   # Check for duplicate ID
   if db.get_ask(ask["id"]):
@@ -64,8 +62,7 @@ async def create_ask(
   created = db.create_ask(ask)
 
   # Cache for idempotency
-  if idempotency_key:
-    db.set_idempotent_response(f"ask:{idempotency_key}", created)
+  db.set_idempotent_response(f"ask:{nonce}", created)
 
   return created
 

@@ -122,21 +122,18 @@ class BidLifecycleTest(IntegrationTestBase):
 class IdempotencyTest(IntegrationTestBase):
   """Tests for idempotency behavior."""
 
-  def test_duplicate_ask_with_same_idempotency_key(self) -> None:
-    """Duplicate requests with same idempotency-key MUST return same result."""
+  def test_duplicate_ask_with_same_nonce(self) -> None:
+    """Duplicate requests with same nonce MUST return same result."""
     ask_payload = self.create_ask_payload()
-    idempotency_key = "test-idempotency-key-123"
+    # Use a fixed nonce for both requests
+    ask_payload["nonce"] = "test-nonce-123"
 
     # First request
-    response1 = self.post_ask(
-      ask_payload, headers={"idempotency-key": idempotency_key}
-    )
+    response1 = self.post_ask(ask_payload)
     self.assert_response_status(response1, [200, 201])
 
-    # Second request with same key
-    response2 = self.post_ask(
-      ask_payload, headers={"idempotency-key": idempotency_key}
-    )
+    # Second request with same nonce
+    response2 = self.post_ask(ask_payload)
     self.assert_response_status(response2, [200, 201])
 
     # Should return the same ask
