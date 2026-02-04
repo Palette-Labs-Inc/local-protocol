@@ -4,7 +4,7 @@
   "title": "Delivery",
   "description": "Delivery resource created when a bid is accepted.",
   "type": "object",
-  "required": ["id", "ask_id", "bid_id", "payment_instrument_id", "event", "created_at"],
+  "required": ["id", "ask_id", "bid_id", "payment_instrument_id", "created_at"],
   "properties": {
     "id": {
       "type": "string",
@@ -21,10 +21,6 @@
     "payment_instrument_id": {
       "type": "string",
       "description": "Reference to the payment instrument used to create this delivery."
-    },
-    "event": {
-      "type": "string",
-      "description": "Current delivery event from the negotiated event vocabulary."
     },
     "created_at": {
       "type": "string",
