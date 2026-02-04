@@ -36,6 +36,8 @@ SERVER_URL="${1:-}"
 CONFORMANCE_DIR="${ROOT_DIR}/packages/conformance"
 PY_SDK_DIR="${ROOT_DIR}/packages/python-sdk"
 CONFORMANCE_INPUT="${CONFORMANCE_DIR}/test_data/delivery/conformance_input.json"
+STANDARDS_DIR="${CONFORMANCE_DIR}/test_data/standards"
+SCHEMA_DIR="${ROOT_DIR}/schemas"
 
 UV_BIN="$(resolve_uv)"
 
@@ -63,7 +65,9 @@ for test_file in "${CONFORMANCE_DIR}"/*_test.py; do
   echo "Running $(basename "${test_file}")..."
   (cd "${CONFORMANCE_DIR}" && "${UV_BIN}" run python "${test_file}" \
     --server_url="${SERVER_URL}" \
-    --conformance_input="${CONFORMANCE_INPUT}")
+    --conformance_input="${CONFORMANCE_INPUT}" \
+    --standards_dir="${STANDARDS_DIR}" \
+    --schema_dir="${SCHEMA_DIR}")
 done
 
 echo "Conformance tests completed."

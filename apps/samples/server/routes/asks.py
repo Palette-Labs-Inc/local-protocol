@@ -4,7 +4,7 @@ from typing import Any
 
 from fastapi import APIRouter, HTTPException, status
 
-from db import db
+from db import db, validate_nonce
 
 router = APIRouter(prefix="/asks", tags=["asks"])
 
@@ -46,25 +46,36 @@ async def create_ask(ask: dict[str, Any]) -> dict[str, Any]:
     )
 
   # Check idempotency using nonce
-  nonce = ask["nonce"]
-  cached = db.get_idempotent_response(f"ask:{nonce}")
-  if cached:
-    return cached
+  try:
+    nonce = validate_nonce(ask.get("nonce"))
+  except ValueError as e:
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+  key = f"ask:{nonce}"
+  claimed, cached = db.claim_idempotency(key)
 
-  # Check for duplicate ID
-  if db.get_ask(ask["id"]):
+  if not claimed:
+    if cached is not None:
+      return cached
     raise HTTPException(
       status_code=status.HTTP_409_CONFLICT,
-      detail=f"Ask with id {ask['id']} already exists",
+      detail="Request with this nonce is already being processed",
     )
 
-  # Create
-  created = db.create_ask(ask)
+  try:
+    # Check for duplicate ID
+    if db.get_ask(ask["id"]):
+      raise HTTPException(
+        status_code=status.HTTP_409_CONFLICT,
+        detail=f"Ask with id {ask['id']} already exists",
+      )
 
-  # Cache for idempotency
-  db.set_idempotent_response(f"ask:{nonce}", created)
-
-  return created
+    # Create
+    created = db.create_ask(ask)
+    db.complete_idempotency(key, created)
+    return created
+  except Exception:
+    db.release_idempotency(key)
+    raise
 
 
 @router.get("/{ask_id}")
