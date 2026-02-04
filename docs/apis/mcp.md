@@ -77,17 +77,21 @@ Capabilities map to MCP tools. A typical pattern is:
     ```json
     {
       "jsonrpc": "2.0",
-      "method": "create_delivery_ask",
+      "id": 1,
+      "method": "tools/call",
       "params": {
-        "meta": {
-          "ucp-agent": {
-            "profile": "https://platform.example/profiles/delivery-agent.json"
+        "name": "create_delivery_ask",
+        "arguments": {
+          "meta": {
+            "ucp-agent": {
+              "profile": "https://platform.example/profiles/delivery-agent.json"
+            }
+          },
+          "ask": {
+            "pickup": { "address": "123 Market St" },
+            "dropoff": { "address": "555 Mission St" },
+            "ready_at": "2026-02-05T18:30:00Z"
           }
-        },
-        "ask": {
-          "pickup": { "address": "123 Market St" },
-          "dropoff": { "address": "555 Mission St" },
-          "ready_at": "2026-02-05T18:30:00Z"
         }
       }
     }
