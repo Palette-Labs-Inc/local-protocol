@@ -30,11 +30,6 @@
       "type": "string",
       "format": "date-time",
       "description": "Delivery creation timestamp (RFC 3339)."
-    },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Last update timestamp (RFC 3339)."
     }
   },
   "additionalProperties": false
