@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/delivery/delivery_create_request.json",
+  "title": "DeliveryCreateRequest",
+  "description": "Request to create a delivery by accepting a bid with payment.",
+  "type": "object",
+  "required": ["ask_id", "bid_id", "payment_data"],
+  "properties": {
+    "ask_id": {
+      "type": "string",
+      "description": "The ask being fulfilled."
+    },
+    "bid_id": {
+      "type": "string",
+      "description": "The bid being accepted."
+    },
+    "payment_data": {
+      "$ref": "../payment/payment_instrument.json",
+      "description": "Payment instrument acquired using the bid's payment handler."
+    }
+  },
+  "additionalProperties": false
+}
