@@ -15,7 +15,7 @@
       "description": "The bid being accepted."
     },
     "payment_data": {
-      "$ref": "../payment/payment_instrument.json",
+      "$ref": "https://localprotocol.xyz/schemas/payment/payment_instrument.json",
       "description": "Payment instrument acquired using the bid's payment handler."
     }
   },
