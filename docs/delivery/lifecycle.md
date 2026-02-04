@@ -1,28 +1,28 @@
 # Delivery Lifecycle
 
-This document describes the delivery lifecycle from ask to payment release.
+This document describes the delivery lifecycle from request to payment release.
 
 ## Overview
 
 ```
-Ask → Bid (with payment.handlers) → Instrument Acquisition → Delivery Creation → Events → Payment Release
+Request → Quote (with payment.handlers) → Instrument Acquisition → Delivery Creation → Events → Payment Release
 ```
 
-1. **Ask** - Requester posts delivery need (pickup, dropoff, times)
-2. **Bid** - Provider responds with price and payment handlers
+1. **Request** - Requester posts delivery need (pickup, dropoff, times)
+2. **Quote** - Provider responds with price and payment handlers
 3. **Instrument Acquisition** - Requester approves/permits allowance or deposits funds using handler config
-4. **Delivery Creation** - Requester accepts bid with payment instrument
+4. **Delivery Creation** - Requester accepts quote with payment instrument
 5. **Events** - Delivery progresses through courier event vocabulary
 6. **Payment Release** - `delivered` event triggers timeout, then auto-release
 
-## Ask
+## Request
 
 Requester posts a delivery request with pickup/dropoff locations and times.
 
 ```json
-POST /asks
+POST /requests
 {
-  "id": "ask_123",
+  "id": "request_123",
   "nonce": "req-abc",
   "pickup_location": {
     "postal_address": {
@@ -47,16 +47,16 @@ POST /asks
 }
 ```
 
-## Bid
+## Quote
 
 Provider responds with price, time estimates, and payment handlers. The `payment`
 field is required and contains handlers that describe how to acquire a payment
 instrument.
 
 ```json
-POST /asks/ask_123/bids
+POST /requests/request_123/quotes
 {
-  "id": "bid_456",
+  "id": "quote_456",
   "nonce": "prov-xyz",
   "price": 599,
   "currency": "USD",
@@ -96,12 +96,12 @@ POST /asks/ask_123/bids
 
 ## Instrument Acquisition
 
-After receiving a bid, the requester uses the handler config to acquire a
+After receiving a quote, the requester uses the handler config to acquire a
 payment instrument. For the EVM auth/capture escrow handler, this means
 approving (or permitting) the escrow contract to spend up to the authorized
 amount, or depositing funds into escrow, on-chain.
 
-1. Read `payment.handlers[]` from the bid
+1. Read `payment.handlers[]` from the quote
 2. Select a handler (e.g., `courier_escrow_prod`)
 3. Use `handler.config` to interact with the escrow contract
 4. Approve/permit allowance or deposit funds on-chain
@@ -112,13 +112,13 @@ execution.
 
 ## Delivery Creation
 
-Requester accepts a bid by submitting the ask ID, bid ID, and payment instrument.
+Requester accepts a quote by submitting the request ID, quote ID, and payment instrument.
 
 ```json
 POST /deliveries
 {
-  "ask_id": "ask_123",
-  "bid_id": "bid_456",
+  "request_id": "request_123",
+  "quote_id": "quote_456",
   "payment_data": {
     "id": "instr_001",
     "handler_id": "courier_escrow_prod",
@@ -146,16 +146,16 @@ POST /deliveries
 
 **Validation:**
 
-- `bid_id` must reference a bid for the given `ask_id`
-- `payment_data.handler_id` must match one of `bid.payment.handlers[].id`
+- `quote_id` must reference a quote for the given `request_id`
+- `payment_data.handler_id` must match one of `quote.payment.handlers[].id`
 
 **Response:**
 
 ```json
 {
   "id": "del_789",
-  "ask_id": "ask_123",
-  "bid_id": "bid_456",
+  "request_id": "request_123",
+  "quote_id": "quote_456",
   "payment_instrument_id": "instr_001",
   "event": "created",
   "created_at": "2026-02-04T17:55:00Z"
@@ -197,10 +197,10 @@ The operator captures funds from the escrow contract after the timeout expires.
 ```
 Requester                    Provider                    Escrow Contract
     |                           |                           |
-    |  1. POST /asks            |                           |
+    |  1. POST /requests        |                           |
     |-------------------------->|                           |
     |                           |                           |
-    |  2. POST /asks/{id}/bids  |                           |
+    |  2. POST /requests/{id}/quotes                        |
     |<--------------------------|                           |
     |                           |                           |
     |  3. Authorize on-chain    |                           |

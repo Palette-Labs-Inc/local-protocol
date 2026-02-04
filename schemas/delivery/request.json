@@ -1,26 +1,16 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "DeliveryBid",
+  "title": "DeliveryRequest",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "id": {
       "type": "string",
-      "description": "Unique bid identifier."
+      "description": "Unique request identifier."
     },
     "nonce": {
       "type": "string",
       "description": "Client-generated idempotency key."
-    },
-    "price": {
-      "type": "integer",
-      "minimum": 0,
-      "description": "Price in minor currency units."
-    },
-    "currency": {
-      "type": "string",
-      "description": "ISO 4217 currency code.",
-      "pattern": "^[A-Z]{3}$"
     },
     "pickup_location": {
       "$ref": "types/location.json",
@@ -30,30 +20,23 @@
       "$ref": "types/location.json",
       "description": "Dropoff location for the delivery."
     },
-    "pickup_estimate": {
+    "pickup_time": {
       "type": "string",
       "format": "date-time",
-      "description": "Estimated pickup time (RFC 3339)."
+      "description": "Requested pickup time (RFC 3339)."
     },
-    "dropoff_estimate": {
+    "dropoff_time": {
       "type": "string",
       "format": "date-time",
-      "description": "Estimated dropoff time (RFC 3339)."
-    },
-    "payment": {
-      "$ref": "https://ucp.dev/schemas/shopping/payment.json",
-      "description": "Payment handlers available for accepting this bid."
+      "description": "Requested dropoff time (RFC 3339)."
     }
   },
   "required": [
     "id",
     "nonce",
-    "price",
-    "currency",
     "pickup_location",
     "dropoff_location",
-    "pickup_estimate",
-    "dropoff_estimate",
-    "payment"
+    "pickup_time",
+    "dropoff_time"
   ]
 }

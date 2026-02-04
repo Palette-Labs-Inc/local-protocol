@@ -1,4 +1,4 @@
-"""Ask endpoints."""
+"""Request endpoints."""
 
 from typing import Any
 
@@ -6,11 +6,11 @@ from fastapi import APIRouter, HTTPException, status
 
 from db import db, validate_nonce
 
-router = APIRouter(prefix="/asks", tags=["asks"])
+router = APIRouter(prefix="/requests", tags=["requests"])
 
 
-def validate_ask(ask: dict[str, Any]) -> list[str]:
-  """Validate ask payload and return list of errors."""
+def validate_request(request: dict[str, Any]) -> list[str]:
+  """Validate request payload and return list of errors."""
   errors = []
   required_fields = [
     "id",
@@ -21,13 +21,13 @@ def validate_ask(ask: dict[str, Any]) -> list[str]:
     "dropoff_time",
   ]
   for field in required_fields:
-    if field not in ask:
+    if field not in request:
       errors.append(f"Missing required field: {field}")
 
   # Validate time format (basic check)
   for time_field in ["pickup_time", "dropoff_time"]:
-    if time_field in ask:
-      value = ask[time_field]
+    if time_field in request:
+      value = request[time_field]
       if not isinstance(value, str) or "T" not in value:
         errors.append(f"Invalid datetime format for {time_field}")
 
@@ -35,10 +35,10 @@ def validate_ask(ask: dict[str, Any]) -> list[str]:
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
-async def create_ask(ask: dict[str, Any]) -> dict[str, Any]:
-  """Create a new delivery ask."""
+async def create_request(request: dict[str, Any]) -> dict[str, Any]:
+  """Create a new delivery request."""
   # Validate
-  errors = validate_ask(ask)
+  errors = validate_request(request)
   if errors:
     raise HTTPException(
       status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
@@ -47,10 +47,10 @@ async def create_ask(ask: dict[str, Any]) -> dict[str, Any]:
 
   # Check idempotency using nonce
   try:
-    nonce = validate_nonce(ask.get("nonce"))
+    nonce = validate_nonce(request.get("nonce"))
   except ValueError as e:
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
-  key = f"ask:{nonce}"
+  key = f"request:{nonce}"
   claimed, cached = db.claim_idempotency(key)
 
   if not claimed:
@@ -63,14 +63,14 @@ async def create_ask(ask: dict[str, Any]) -> dict[str, Any]:
 
   try:
     # Check for duplicate ID
-    if db.get_ask(ask["id"]):
+    if db.get_request(request["id"]):
       raise HTTPException(
         status_code=status.HTTP_409_CONFLICT,
-        detail=f"Ask with id {ask['id']} already exists",
+        detail=f"Request with id {request['id']} already exists",
       )
 
     # Create
-    created = db.create_ask(ask)
+    created = db.create_request(request)
     db.complete_idempotency(key, created)
     return created
   except Exception:
@@ -78,19 +78,19 @@ async def create_ask(ask: dict[str, Any]) -> dict[str, Any]:
     raise
 
 
-@router.get("/{ask_id}")
-async def get_ask(ask_id: str) -> dict[str, Any]:
-  """Get an ask by ID."""
-  ask = db.get_ask(ask_id)
-  if not ask:
+@router.get("/{request_id}")
+async def get_request(request_id: str) -> dict[str, Any]:
+  """Get a request by ID."""
+  request = db.get_request(request_id)
+  if not request:
     raise HTTPException(
       status_code=status.HTTP_404_NOT_FOUND,
-      detail=f"Ask {ask_id} not found",
+      detail=f"Request {request_id} not found",
     )
-  return ask
+  return request
 
 
 @router.get("")
-async def list_asks() -> list[dict[str, Any]]:
-  """List all asks."""
-  return db.list_asks()
+async def list_requests() -> list[dict[str, Any]]:
+  """List all requests."""
+  return db.list_requests()

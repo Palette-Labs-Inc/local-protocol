@@ -7,7 +7,7 @@ Test suite for validating Local Protocol server implementations against the spec
 This package provides:
 
 - **Integration test base class** with helpers for common operations
-- **Protocol tests** validating core ask/bid lifecycle
+- **Protocol tests** validating core request/quote lifecycle
 - **Delivery event tests** validating event lifecycle and webhook delivery
 - **Standard schema tests** validating conformance to courier event vocabulary
 - **Validation tests** ensuring schema compliance
@@ -41,17 +41,17 @@ uv run python delivery_event_test.py --server_url=http://localhost:8000
 
 ### `protocol_test.py`
 - Discovery endpoint tests (`.well-known/local-protocol`)
-- Ask lifecycle (create, get, list)
-- Bid lifecycle (create for ask, list)
+- Request lifecycle (create, get, list)
+- Quote lifecycle (create for request, list)
 - Idempotency behavior via nonce field
 
 ### `validation_test.py`
-- Required field validation for asks and bids
+- Required field validation for requests and quotes
 - Data format validation (dates, currency codes)
 - Constraint validation (non-negative prices)
 
 ### `delivery_event_test.py`
-- Delivery creation from ask/bid
+- Delivery creation from request/quote
 - Event vocabulary and versioning (date-based format)
 - Timestamp fields (created_at, updated_at)
 - Event state management
@@ -89,8 +89,6 @@ The webhook tests validate that servers correctly push event notifications when 
 5. Tests verify the mock server received the expected payloads
 
 ### Test Sequence
-
-Each webhook test follows this sequence:
 
 ```
 ┌─────────────────┐     POST /deliveries          ┌─────────────────┐
@@ -152,14 +150,14 @@ from integration_test_utils import IntegrationTestBase
 
 class MyCustomTest(IntegrationTestBase):
     def test_my_scenario(self):
-        # Create an ask
-        ask = self.create_ask_payload()
-        response = self.post_ask(ask)
+        # Create a request
+        request = self.create_request_payload()
+        response = self.post_request(request)
         self.assert_response_status(response, [200, 201])
 
-        # Create a bid
-        bid = self.create_bid_payload(price=2000)
-        response = self.post_bid(ask["id"], bid)
+        # Create a quote
+        quote = self.create_quote_payload(price=2000)
+        response = self.post_quote(request["id"], quote)
         self.assert_response_status(response, [200, 201])
 
         # Create a delivery with webhook

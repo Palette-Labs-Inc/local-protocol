@@ -18,8 +18,8 @@ router = APIRouter()
 class CreateDeliveryRequest(BaseModel):
   """Request body for creating a delivery."""
 
-  ask_id: str
-  bid_id: str
+  request_id: str
+  quote_id: str
   nonce: str
   webhook_url: str | None = None
   event_vocabulary: str = "xyz.localprotocol.delivery.courier@2026-01-30"
@@ -83,8 +83,8 @@ async def push_webhook_event(snapshot: WebhookEventSnapshot) -> None:
 def _canonical_delivery_payload(request: CreateDeliveryRequest) -> dict[str, Any]:
   """Extract canonical payload fields for idempotency comparison."""
   return {
-    "ask_id": request.ask_id,
-    "bid_id": request.bid_id,
+    "request_id": request.request_id,
+    "quote_id": request.quote_id,
     "webhook_url": request.webhook_url,
     "event_vocabulary": request.event_vocabulary,
   }
@@ -94,7 +94,7 @@ def _canonical_delivery_payload(request: CreateDeliveryRequest) -> dict[str, Any
 async def create_delivery(
   request: CreateDeliveryRequest,
 ) -> dict[str, Any]:
-  """Create a new delivery from an accepted bid."""
+  """Create a new delivery from an accepted quote."""
   # Validate and normalize nonce
   try:
     nonce = validate_nonce(request.nonce)
@@ -124,27 +124,27 @@ async def create_delivery(
     )
 
   try:
-    # Verify ask exists
-    ask = db.get_ask(request.ask_id)
-    if ask is None:
-      raise HTTPException(status_code=404, detail="Ask not found")
+    # Verify request exists
+    req = db.get_request(request.request_id)
+    if req is None:
+      raise HTTPException(status_code=404, detail="Request not found")
 
-    # Verify bid exists
-    bid = db.get_bid(request.bid_id)
-    if bid is None:
-      raise HTTPException(status_code=404, detail="Bid not found")
+    # Verify quote exists
+    quote = db.get_quote(request.quote_id)
+    if quote is None:
+      raise HTTPException(status_code=404, detail="Quote not found")
 
-    # Verify bid belongs to the ask
-    if bid.get("ask_id") != request.ask_id:
+    # Verify quote belongs to the request
+    if quote.get("request_id") != request.request_id:
       raise HTTPException(
         status_code=400,
-        detail=f"Bid {request.bid_id} does not belong to ask {request.ask_id}",
+        detail=f"Quote {request.quote_id} does not belong to request {request.request_id}",
       )
 
     # Create delivery
     delivery = db.create_delivery(
-      ask_id=request.ask_id,
-      bid_id=request.bid_id,
+      request_id=request.request_id,
+      quote_id=request.quote_id,
       webhook_url=request.webhook_url,
       event_vocabulary=request.event_vocabulary,
     )

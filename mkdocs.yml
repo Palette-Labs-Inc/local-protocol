@@ -16,8 +16,8 @@ nav:
       - Delivery:
           - Overview: capabilities/delivery/overview.md
           - Objects:
-              - Ask: capabilities/delivery/ask.md
-              - Bid: capabilities/delivery/bid.md
+              - Request: capabilities/delivery/request.md
+              - Quote: capabilities/delivery/quote.md
               - Delivery: capabilities/delivery/delivery.md
           - Types:
               - Location: capabilities/delivery/location.md

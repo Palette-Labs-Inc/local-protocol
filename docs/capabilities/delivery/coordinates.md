@@ -4,14 +4,14 @@ Latitude/longitude coordinates used within delivery locations.
 
 ## Fields
 
-- `lat` (number, required): Latitude in decimal degrees (min -90, max 90).
-- `lng` (number, required): Longitude in decimal degrees (min -180, max 180).
+- `latitude` (number, required): Latitude in decimal degrees (min -90, max 90).
+- `longitude` (number, required): Longitude in decimal degrees (min -180, max 180).
 
 ## Example
 
 ```json
 {
-  "lat": 37.7818,
-  "lng": -122.4056
+  "latitude": 37.7818,
+  "longitude": -122.4056
 }
 ```

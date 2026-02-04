@@ -76,7 +76,7 @@ def load_schema(schema_path: str) -> dict[str, Any]:
   """Load a JSON schema from the schemas directory.
 
   Args:
-      schema_path: Relative path to the schema (e.g., 'delivery/ask.json').
+      schema_path: Relative path to the schema (e.g., 'delivery/request.json').
 
   Returns:
       The schema definition as a dictionary.
@@ -287,9 +287,9 @@ class IntegrationTestBase(absltest.TestCase):
   # Delivery-specific helpers
   # -------------------------------------------------------------------------
 
-  def create_ask_payload(
+  def create_request_payload(
     self,
-    ask_id: str | None = None,
+    request_id: str | None = None,
     pickup_lat: float = 37.7749,
     pickup_lng: float = -122.4194,
     dropoff_lat: float = 37.7849,
@@ -297,10 +297,10 @@ class IntegrationTestBase(absltest.TestCase):
     pickup_time: str | None = None,
     dropoff_time: str | None = None,
   ) -> dict[str, Any]:
-    """Create a valid delivery ask payload.
+    """Create a valid delivery request payload.
 
     Args:
-        ask_id: Unique ask ID. Auto-generated if None.
+        request_id: Unique request ID. Auto-generated if None.
         pickup_lat: Pickup latitude.
         pickup_lng: Pickup longitude.
         dropoff_lat: Dropoff latitude.
@@ -309,7 +309,7 @@ class IntegrationTestBase(absltest.TestCase):
         dropoff_time: RFC3339 dropoff time. Auto-generated if None.
 
     Returns:
-        A dictionary representing a DeliveryAsk.
+        A dictionary representing a DeliveryRequest.
 
     """
     from datetime import datetime, timedelta, timezone
@@ -317,7 +317,7 @@ class IntegrationTestBase(absltest.TestCase):
     now = datetime.now(timezone.utc)
 
     return {
-      "id": ask_id or str(uuid.uuid4()),
+      "id": request_id or str(uuid.uuid4()),
       "nonce": str(uuid.uuid4()),
       "pickup_location": {
         "coordinates": {"latitude": pickup_lat, "longitude": pickup_lng},
@@ -331,9 +331,9 @@ class IntegrationTestBase(absltest.TestCase):
       or (now + timedelta(minutes=60)).isoformat(),
     }
 
-  def create_bid_payload(
+  def create_quote_payload(
     self,
-    bid_id: str | None = None,
+    quote_id: str | None = None,
     price: int = 1500,
     currency: str = "USD",
     pickup_lat: float = 37.7749,
@@ -343,10 +343,10 @@ class IntegrationTestBase(absltest.TestCase):
     pickup_estimate: str | None = None,
     dropoff_estimate: str | None = None,
   ) -> dict[str, Any]:
-    """Create a valid delivery bid payload.
+    """Create a valid delivery quote payload.
 
     Args:
-        bid_id: Unique bid ID. Auto-generated if None.
+        quote_id: Unique quote ID. Auto-generated if None.
         price: Price in minor currency units (e.g., cents).
         currency: ISO 4217 currency code.
         pickup_lat: Pickup latitude.
@@ -357,7 +357,7 @@ class IntegrationTestBase(absltest.TestCase):
         dropoff_estimate: RFC3339 estimated dropoff time.
 
     Returns:
-        A dictionary representing a DeliveryBid.
+        A dictionary representing a DeliveryQuote.
 
     """
     from datetime import datetime, timedelta, timezone
@@ -365,7 +365,7 @@ class IntegrationTestBase(absltest.TestCase):
     now = datetime.now(timezone.utc)
 
     return {
-      "id": bid_id or str(uuid.uuid4()),
+      "id": quote_id or str(uuid.uuid4()),
       "nonce": str(uuid.uuid4()),
       "price": price,
       "currency": currency,
@@ -381,80 +381,80 @@ class IntegrationTestBase(absltest.TestCase):
       or (now + timedelta(minutes=55)).isoformat(),
     }
 
-  def post_ask(
+  def post_request(
     self,
-    ask_payload: dict[str, Any] | None = None,
+    request_payload: dict[str, Any] | None = None,
     headers: dict[str, str] | None = None,
   ) -> httpx.Response:
-    """Post a delivery ask to the server.
+    """Post a delivery request to the server.
 
     Args:
-        ask_payload: The ask payload. Uses default if None.
+        request_payload: The request payload. Uses default if None.
         headers: Optional headers to include.
 
     Returns:
         The httpx response.
 
     """
-    if ask_payload is None:
-      ask_payload = self.create_ask_payload()
+    if request_payload is None:
+      request_payload = self.create_request_payload()
 
     request_headers = self.get_headers()
     if headers:
       request_headers.update(headers)
 
     return self.client.post(
-      "/asks",
-      json=ask_payload,
+      "/requests",
+      json=request_payload,
       headers=request_headers,
     )
 
-  def post_bid(
+  def post_quote(
     self,
-    ask_id: str,
-    bid_payload: dict[str, Any] | None = None,
+    request_id: str,
+    quote_payload: dict[str, Any] | None = None,
     headers: dict[str, str] | None = None,
   ) -> httpx.Response:
-    """Post a delivery bid for an ask.
+    """Post a delivery quote for a request.
 
     Args:
-        ask_id: The ask ID to bid on.
-        bid_payload: The bid payload. Uses default if None.
+        request_id: The request ID to quote on.
+        quote_payload: The quote payload. Uses default if None.
         headers: Optional headers to include.
 
     Returns:
         The httpx response.
 
     """
-    if bid_payload is None:
-      bid_payload = self.create_bid_payload()
+    if quote_payload is None:
+      quote_payload = self.create_quote_payload()
 
     request_headers = self.get_headers()
     if headers:
       request_headers.update(headers)
 
     return self.client.post(
-      f"/asks/{ask_id}/bids",
-      json=bid_payload,
+      f"/requests/{request_id}/quotes",
+      json=quote_payload,
       headers=request_headers,
     )
 
   # -------------------------------------------------------------------------
-  # Delivery-specific helpers
+  # Delivery creation helpers
   # -------------------------------------------------------------------------
 
   def create_delivery_payload(
     self,
-    ask_id: str,
-    bid_id: str,
+    request_id: str,
+    quote_id: str,
     webhook_url: str | None = None,
     event_vocabulary: str = "xyz.localprotocol.delivery.courier@2026-01-30",
   ) -> dict[str, Any]:
     """Create a valid delivery creation payload.
 
     Args:
-        ask_id: The ask ID.
-        bid_id: The bid ID.
+        request_id: The request ID.
+        quote_id: The quote ID.
         webhook_url: Optional webhook URL for event notifications.
         event_vocabulary: The event vocabulary to use.
 
@@ -463,8 +463,8 @@ class IntegrationTestBase(absltest.TestCase):
 
     """
     payload: dict[str, Any] = {
-      "ask_id": ask_id,
-      "bid_id": bid_id,
+      "request_id": request_id,
+      "quote_id": quote_id,
       "nonce": str(uuid.uuid4()),
       "event_vocabulary": event_vocabulary,
     }
@@ -474,16 +474,16 @@ class IntegrationTestBase(absltest.TestCase):
 
   def post_delivery(
     self,
-    ask_id: str,
-    bid_id: str,
+    request_id: str,
+    quote_id: str,
     webhook_url: str | None = None,
     headers: dict[str, str] | None = None,
   ) -> httpx.Response:
-    """Create a delivery from an accepted bid.
+    """Create a delivery from an accepted quote.
 
     Args:
-        ask_id: The ask ID.
-        bid_id: The bid ID.
+        request_id: The request ID.
+        quote_id: The quote ID.
         webhook_url: Optional webhook URL for event notifications.
         headers: Optional headers to include.
 
@@ -491,7 +491,7 @@ class IntegrationTestBase(absltest.TestCase):
         The httpx response.
 
     """
-    payload = self.create_delivery_payload(ask_id, bid_id, webhook_url)
+    payload = self.create_delivery_payload(request_id, quote_id, webhook_url)
 
     request_headers = self.get_headers()
     if headers:
@@ -507,7 +507,7 @@ class IntegrationTestBase(absltest.TestCase):
     self,
     webhook_url: str | None = None,
   ) -> dict[str, Any]:
-    """Create an ask, bid, and delivery (full flow).
+    """Create a request, quote, and delivery (full flow).
 
     Args:
         webhook_url: Optional webhook URL for event notifications.
@@ -516,18 +516,18 @@ class IntegrationTestBase(absltest.TestCase):
         The created delivery object.
 
     """
-    # Create ask
-    ask_response = self.post_ask()
-    self.assert_response_status(ask_response, 201)
-    ask = ask_response.json()
+    # Create request
+    request_response = self.post_request()
+    self.assert_response_status(request_response, 201)
+    req = request_response.json()
 
-    # Create bid
-    bid_response = self.post_bid(ask["id"])
-    self.assert_response_status(bid_response, 201)
-    bid = bid_response.json()
+    # Create quote
+    quote_response = self.post_quote(req["id"])
+    self.assert_response_status(quote_response, 201)
+    quote = quote_response.json()
 
     # Create delivery
-    delivery_response = self.post_delivery(ask["id"], bid["id"], webhook_url)
+    delivery_response = self.post_delivery(req["id"], quote["id"], webhook_url)
     self.assert_response_status(delivery_response, 201)
     return delivery_response.json()
 

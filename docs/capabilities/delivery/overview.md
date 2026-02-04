@@ -4,8 +4,8 @@ The Delivery capability defines objects for negotiating and fulfilling point-to-
 
 ## Objects
 
-- **[Ask](ask.md)**: A requester-defined job, including pickup/dropoff locations and requested times.
-- **[Bid](bid.md)**: A provider-defined offer to complete the job, including price, locations, and estimated timing.
+- **[Request](request.md)**: A requester-defined job, including pickup/dropoff locations and requested times.
+- **[Quote](quote.md)**: A provider-defined offer to complete the job, including price, locations, and estimated timing.
 
 ## Types
 

@@ -31,12 +31,12 @@ make build-python-sdk
 ## Usage
 
 ```python
-from local_protocol_sdk.models.delivery.ask import DeliveryAsk
-from local_protocol_sdk.models.delivery.bid import DeliveryBid
+from local_protocol_sdk.models.delivery.request import DeliveryRequest
+from local_protocol_sdk.models.delivery.quote import DeliveryQuote
 
-# Create an ask
-ask = DeliveryAsk(
-    id="ask-123",
+# Create a request
+request = DeliveryRequest(
+    id="request-123",
     pickup_location={"coordinates": {"latitude": 37.77, "longitude": -122.41}},
     dropoff_location={"coordinates": {"latitude": 37.78, "longitude": -122.40}},
     pickup_time="2024-01-15T10:00:00Z",
@@ -44,7 +44,7 @@ ask = DeliveryAsk(
 )
 
 # Serialize to JSON
-ask_json = ask.model_dump_json()
+request_json = request.model_dump_json()
 ```
 
 ## Requirements

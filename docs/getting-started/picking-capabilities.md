@@ -4,11 +4,11 @@ Start by choosing the smallest set of capabilities your product needs. Each capa
 
 ## How to choose
 
-1. List the user actions you need to support (e.g., request a delivery, provide a delivery bid).
-2. Map each action to a capability (Delivery covers bids/asks; Payment covers auth/capture settlement).
+1. List the user actions you need to support (e.g., create a delivery request, provide a delivery quote).
+2. Map each action to a capability (Delivery covers quotes/requests; Payment covers auth/capture settlement).
 3. Implement the minimum objects you need to exchange, then add more as your flow grows.
 
 ## Next steps
 
 - Read the capability overview you selected (Delivery overview or Payment auth/capture overview).
-- Review the core objects (Bid/Ask) and supporting types (Location/Coordinates).
+- Review the core objects (Quote/Request) and supporting types (Location/Coordinates).
