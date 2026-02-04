@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD046 -->
+
 # MCP APIs
 
 Model Context Protocol (MCP) bindings expose capabilities as tools that
