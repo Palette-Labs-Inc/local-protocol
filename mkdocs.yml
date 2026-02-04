@@ -8,6 +8,10 @@ nav:
   - Getting Started:
       - Picking Capabilities: getting-started/picking-capabilities.md
       - Add UCP Discovery: getting-started/ucp-setup.md
+      - APIs:
+          - REST: apis/rest.md
+          - MCP: apis/mcp.md
+          - A2A: apis/a2a.md
   - Capabilities:
       - Delivery:
           - Overview: capabilities/delivery/overview.md
