@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/payment/payment_instrument.json",
+  "title": "Payment Instrument",
+  "description": "Payment instruments accepted by local-protocol.",
+  "oneOf": [
+    { "$ref": "evm_auth_capture_escrow_instrument.json" }
+  ]
+}
