@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/delivery/delivery.json",
+  "title": "Delivery",
+  "description": "Delivery resource created when a bid is accepted.",
+  "type": "object",
+  "required": ["id", "ask_id", "bid_id", "payment_instrument_id", "event", "created_at"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique delivery identifier."
+    },
+    "ask_id": {
+      "type": "string",
+      "description": "Reference to the original ask."
+    },
+    "bid_id": {
+      "type": "string",
+      "description": "Reference to the accepted bid."
+    },
+    "payment_instrument_id": {
+      "type": "string",
+      "description": "Reference to the payment instrument used to create this delivery."
+    },
+    "event": {
+      "type": "string",
+      "description": "Current delivery event from the negotiated event vocabulary."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Delivery creation timestamp (RFC 3339)."
+    }
+  },
+  "additionalProperties": false
+}

@@ -39,6 +39,10 @@
       "type": "string",
       "format": "date-time",
       "description": "Estimated dropoff time (RFC 3339)."
+    },
+    "payment": {
+      "$ref": "https://ucp.dev/schemas/shopping/payment.json",
+      "description": "Payment handlers available for accepting this bid."
     }
   },
   "required": [
@@ -49,6 +53,7 @@
     "pickup_location",
     "dropoff_location",
     "pickup_estimate",
-    "dropoff_estimate"
+    "dropoff_estimate",
+    "payment"
   ]
 }
