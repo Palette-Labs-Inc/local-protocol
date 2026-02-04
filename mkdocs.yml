@@ -18,6 +18,9 @@ nav:
               - Location: capabilities/delivery/location.md
               - Coordinates: capabilities/delivery/coordinates.md
           - Events: capabilities/delivery/events.md
+  - Payment:
+      - Overview: payment/overview.md
+      - EVM Auth/Capture Payments: payment/escrow.md
 
 theme:
   name: material
