@@ -1,0 +1,109 @@
+# MCP APIs
+
+Model Context Protocol (MCP) bindings expose capabilities as tools that
+agents can call directly. MCP is best for AI-driven workflows and structured
+tool invocation.
+
+## Protocol Fundamentals
+
+### Discovery
+
+Businesses advertise MCP transport support in the UCP profile at
+`/.well-known/ucp`. The MCP service entry supplies the `endpoint` for the
+server and optionally an OpenRPC schema reference.
+
+```json
+{
+  "ucp": {
+    "version": "YYYY-MM-DD",
+    "services": {
+      "dev.example.local": [
+        {
+          "version": "YYYY-MM-DD",
+          "spec": "https://example.com/specs/local-protocol",
+          "transport": "mcp",
+          "schema": "https://example.com/schemas/local-protocol/openrpc.json",
+          "endpoint": "https://business.example.com/mcp"
+        }
+      ]
+    }
+  }
+}
+```
+
+### Request Metadata
+
+MCP requests should include a `meta` object with protocol metadata:
+
+- `ucp-agent.profile`: the caller profile URI for capability negotiation.
+- `idempotency-key`: required for non-idempotent operations.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "create_delivery_ask",
+    "arguments": {
+      "meta": {
+        "ucp-agent": {
+          "profile": "https://platform.example/profiles/delivery-agent.json"
+        },
+        "idempotency-key": "550e8400-e29b-41d4-a716-446655440000"
+      },
+      "ask": { "pickup": {}, "dropoff": {} }
+    }
+  }
+}
+```
+
+## Tool Mapping
+
+Capabilities map to MCP tools. A typical pattern is:
+
+| Tool Name              | Operation | Description                     |
+| :--------------------- | :-------- | :------------------------------ |
+| `create_<resource>`    | Create    | Create a new resource.          |
+| `get_<resource>`       | Get       | Retrieve a resource by id.      |
+| `update_<resource>`    | Update    | Replace or modify a resource.   |
+| `cancel_<resource>`    | Cancel    | Cancel a resource or workflow.  |
+| `complete_<resource>`  | Complete  | Finalize a workflow.            |
+
+## Example (Create Delivery Ask)
+
+=== "Request"
+
+    ```json
+    {
+      "jsonrpc": "2.0",
+      "method": "create_delivery_ask",
+      "params": {
+        "meta": {
+          "ucp-agent": {
+            "profile": "https://platform.example/profiles/delivery-agent.json"
+          }
+        },
+        "ask": {
+          "pickup": { "address": "123 Market St" },
+          "dropoff": { "address": "555 Mission St" },
+          "ready_at": "2026-02-05T18:30:00Z"
+        }
+      }
+    }
+    ```
+
+=== "Response"
+
+    ```json
+    {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "ask": {
+          "id": "ask_123",
+          "status": "open"
+        }
+      }
+    }
+    ```
