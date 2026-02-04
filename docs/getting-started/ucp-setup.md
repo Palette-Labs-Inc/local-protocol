@@ -32,7 +32,7 @@ Publish a UCP discovery profile so platforms can find your services and capabili
         "name": "com.example.delivery",
         "version": "YYYY-MM-DD",
         "spec": "https://example.com/specs/local-protocol/delivery",
-        "schema": "https://example.com/schemas/local-protocol/delivery/bid.json"
+        "schema": "https://example.com/schemas/local-protocol/delivery/quote.json"
       }
     ],
     "payment_handlers": {}

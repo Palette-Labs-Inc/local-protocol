@@ -31,53 +31,53 @@ def validate_nonce(nonce: str | None) -> str:
 
 
 class Database:
-  """Simple in-memory database for asks, bids, and deliveries."""
+  """Simple in-memory database for requests, quotes, and deliveries."""
 
   def __init__(self) -> None:
-    self.asks: dict[str, dict[str, Any]] = {}
-    self.bids: dict[str, dict[str, Any]] = {}  # bid_id -> bid
-    self.ask_bids: dict[str, list[str]] = {}  # ask_id -> [bid_ids]
+    self.requests: dict[str, dict[str, Any]] = {}
+    self.quotes: dict[str, dict[str, Any]] = {}  # quote_id -> quote
+    self.request_quotes: dict[str, list[str]] = {}  # request_id -> [quote_ids]
     self.deliveries: dict[str, dict[str, Any]] = {}  # delivery_id -> delivery
     self.idempotency_cache: dict[str, dict[str, Any] | object] = {}
     # Lock prevents race conditions where concurrent requests with the same nonce
     # could both pass the "not in cache" check before either sets _PENDING.
     self._idempotency_lock = threading.Lock()
 
-  def create_ask(self, ask: dict[str, Any]) -> dict[str, Any]:
-    """Create a new ask."""
-    ask_id = ask["id"]
-    ask["created_at"] = datetime.now(timezone.utc).isoformat()
-    ask["status"] = "open"
-    self.asks[ask_id] = ask
-    self.ask_bids[ask_id] = []
-    return ask
+  def create_request(self, request: dict[str, Any]) -> dict[str, Any]:
+    """Create a new request."""
+    request_id = request["id"]
+    request["created_at"] = datetime.now(timezone.utc).isoformat()
+    request["status"] = "open"
+    self.requests[request_id] = request
+    self.request_quotes[request_id] = []
+    return request
 
-  def get_ask(self, ask_id: str) -> dict[str, Any] | None:
-    """Get an ask by ID."""
-    return self.asks.get(ask_id)
+  def get_request(self, request_id: str) -> dict[str, Any] | None:
+    """Get a request by ID."""
+    return self.requests.get(request_id)
 
-  def list_asks(self) -> list[dict[str, Any]]:
-    """List all asks."""
-    return list(self.asks.values())
+  def list_requests(self) -> list[dict[str, Any]]:
+    """List all requests."""
+    return list(self.requests.values())
 
-  def create_bid(self, ask_id: str, bid: dict[str, Any]) -> dict[str, Any]:
-    """Create a new bid for an ask."""
-    bid_id = bid["id"]
-    bid["ask_id"] = ask_id
-    bid["created_at"] = datetime.now(timezone.utc).isoformat()
-    bid["status"] = "pending"
-    self.bids[bid_id] = bid
-    self.ask_bids[ask_id].append(bid_id)
-    return bid
+  def create_quote(self, request_id: str, quote: dict[str, Any]) -> dict[str, Any]:
+    """Create a new quote for a request."""
+    quote_id = quote["id"]
+    quote["request_id"] = request_id
+    quote["created_at"] = datetime.now(timezone.utc).isoformat()
+    quote["status"] = "pending"
+    self.quotes[quote_id] = quote
+    self.request_quotes[request_id].append(quote_id)
+    return quote
 
-  def get_bid(self, bid_id: str) -> dict[str, Any] | None:
-    """Get a bid by ID."""
-    return self.bids.get(bid_id)
+  def get_quote(self, quote_id: str) -> dict[str, Any] | None:
+    """Get a quote by ID."""
+    return self.quotes.get(quote_id)
 
-  def list_bids_for_ask(self, ask_id: str) -> list[dict[str, Any]]:
-    """List all bids for an ask."""
-    bid_ids = self.ask_bids.get(ask_id, [])
-    return [self.bids[bid_id] for bid_id in bid_ids if bid_id in self.bids]
+  def list_quotes_for_request(self, request_id: str) -> list[dict[str, Any]]:
+    """List all quotes for a request."""
+    quote_ids = self.request_quotes.get(request_id, [])
+    return [self.quotes[quote_id] for quote_id in quote_ids if quote_id in self.quotes]
 
   def claim_idempotency(self, key: str) -> tuple[bool, dict[str, Any] | None]:
     """Atomically claim an idempotency key or return cached response.
@@ -114,16 +114,16 @@ class Database:
 
   def create_delivery(
     self,
-    ask_id: str,
-    bid_id: str,
+    request_id: str,
+    quote_id: str,
     webhook_url: str | None = None,
     event_vocabulary: str = "xyz.localprotocol.delivery.courier@2026-01-30",
   ) -> dict[str, Any]:
-    """Create a new delivery from an accepted bid.
+    """Create a new delivery from an accepted quote.
 
     Args:
-        ask_id: The ask ID.
-        bid_id: The bid ID.
+        request_id: The request ID.
+        quote_id: The quote ID.
         webhook_url: Optional webhook URL for event notifications.
         event_vocabulary: The event vocabulary to use.
 
@@ -138,8 +138,8 @@ class Database:
 
     delivery = {
       "id": delivery_id,
-      "ask_id": ask_id,
-      "bid_id": bid_id,
+      "request_id": request_id,
+      "quote_id": quote_id,
       "event": "created",
       "event_description": "Delivery created",
       "event_vocabulary": event_vocabulary,

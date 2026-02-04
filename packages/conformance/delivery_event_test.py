@@ -42,11 +42,11 @@ class DeliveryEventTest(IntegrationTestBase):
     self.assertIn("created_at", delivery)
     self.assertIsInstance(delivery["created_at"], str)
 
-  def test_delivery_has_ask_and_bid_ids(self) -> None:
-    """Delivery object MUST include ask_id and bid_id."""
+  def test_delivery_has_request_and_quote_ids(self) -> None:
+    """Delivery object MUST include request_id and quote_id."""
     delivery = self.create_delivery()
-    self.assertIn("ask_id", delivery)
-    self.assertIn("bid_id", delivery)
+    self.assertIn("request_id", delivery)
+    self.assertIn("quote_id", delivery)
 
   def test_event_vocabulary_includes_version(self) -> None:
     """event_vocabulary MUST include @version."""

@@ -40,17 +40,17 @@ Write operations should accept an idempotency key to allow safe retries.
 The header name and behavior are defined by the service entry or capability
 specification.
 
-## Example (Delivery Ask)
+## Example (Delivery Request)
 
 === "Request"
 
     ```json
-    POST /capabilities/delivery/asks HTTP/1.1
+    POST /capabilities/delivery/requests HTTP/1.1
     UCP-Agent: profile="https://platform.example/profiles/delivery.json"
     Content-Type: application/json
 
     {
-      "ask": {
+      "request": {
         "pickup": {
           "address": "123 Market St, San Francisco, CA"
         },
@@ -69,8 +69,8 @@ specification.
     Content-Type: application/json
 
     {
-      "ask": {
-        "id": "ask_123",
+      "request": {
+        "id": "request_123",
         "status": "open",
         "pickup": {
           "address": "123 Market St, San Francisco, CA"

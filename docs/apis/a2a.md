@@ -62,7 +62,7 @@ agent to keep state consistent across turns.
 A2A platforms should include stable message identifiers so the business agent
 can detect retries and avoid duplicate operations.
 
-## Example (Delivery Ask via A2A Message)
+## Example (Delivery Request via A2A Message)
 
 ```json
 {

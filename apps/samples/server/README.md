@@ -22,13 +22,13 @@ uv run server.py --port 8000
 |--------|------|-------------|
 | GET | `/.well-known/local-protocol` | Service discovery |
 | GET | `/healthz` | Health check |
-| POST | `/asks` | Create delivery ask |
-| GET | `/asks` | List all asks |
-| GET | `/asks/{id}` | Get ask by ID |
-| POST | `/asks/{id}/bids` | Create bid for ask |
-| GET | `/asks/{id}/bids` | List bids for ask |
-| GET | `/asks/{id}/bids/{bid_id}` | Get specific bid |
-| POST | `/deliveries` | Create delivery from accepted bid |
+| POST | `/requests` | Create delivery request |
+| GET | `/requests` | List all requests |
+| GET | `/requests/{id}` | Get request by ID |
+| POST | `/requests/{id}/quotes` | Create quote for request |
+| GET | `/requests/{id}/quotes` | List quotes for request |
+| GET | `/requests/{id}/quotes/{quote_id}` | Get specific quote |
+| POST | `/deliveries` | Create delivery from accepted quote |
 | GET | `/deliveries` | List all deliveries |
 | GET | `/deliveries/{id}` | Get delivery by ID |
 | PATCH | `/deliveries/{id}/event` | Update delivery event |
@@ -42,34 +42,34 @@ The delivery lifecycle follows this sequence:
 │   Consumer   │                              │    Server    │                              │   Provider   │
 └──────┬───────┘                              └──────┬───────┘                              └──────┬───────┘
        │                                             │                                             │
-       │  POST /asks                                 │                                             │
+       │  POST /requests                             │                                             │
        │  {nonce, pickup, dropoff, times}            │                                             │
        │────────────────────────────────────────────►│                                             │
        │                                             │                                             │
        │  201 {id, status: "open"}                   │                                             │
        │◄────────────────────────────────────────────│                                             │
        │                                             │                                             │
-       │                                             │  GET /asks                                  │
+       │                                             │  GET /requests                              │
        │                                             │◄────────────────────────────────────────────│
        │                                             │                                             │
        │                                             │  [{id, pickup, dropoff, ...}]               │
        │                                             │────────────────────────────────────────────►│
        │                                             │                                             │
-       │                                             │  POST /asks/{id}/bids                       │
+       │                                             │  POST /requests/{id}/quotes                 │
        │                                             │  {nonce, price, currency, estimates}        │
        │                                             │◄────────────────────────────────────────────│
        │                                             │                                             │
-       │                                             │  201 {bid_id, status: "pending"}            │
+       │                                             │  201 {quote_id, status: "pending"}          │
        │                                             │────────────────────────────────────────────►│
        │                                             │                                             │
-       │  GET /asks/{id}/bids                        │                                             │
+       │  GET /requests/{id}/quotes                  │                                             │
        │────────────────────────────────────────────►│                                             │
        │                                             │                                             │
-       │  [{bid_id, price, currency, ...}]           │                                             │
+       │  [{quote_id, price, currency, ...}]         │                                             │
        │◄────────────────────────────────────────────│                                             │
        │                                             │                                             │
        │  POST /deliveries                           │                                             │
-       │  {nonce, ask_id, bid_id, webhook_url}       │                                             │
+       │  {nonce, request_id, quote_id, webhook_url} │                                             │
        │────────────────────────────────────────────►│                                             │
        │                                             │                                             │
        │  201 {delivery_id, event: "created"}        │                                             │
@@ -90,14 +90,14 @@ The delivery lifecycle follows this sequence:
 
 ## Example Usage
 
-### Create an Ask
+### Create a Request
 
 ```bash
-curl -X POST http://localhost:8000/asks \
+curl -X POST http://localhost:8000/requests \
   -H "Content-Type: application/json" \
   -d '{
-    "id": "ask-001",
-    "nonce": "ask-nonce-001",
+    "id": "request-001",
+    "nonce": "request-nonce-001",
     "pickup_location": {
       "coordinates": {"latitude": 37.7749, "longitude": -122.4194}
     },
@@ -109,14 +109,14 @@ curl -X POST http://localhost:8000/asks \
   }'
 ```
 
-### Create a Bid
+### Create a Quote
 
 ```bash
-curl -X POST http://localhost:8000/asks/ask-001/bids \
+curl -X POST http://localhost:8000/requests/request-001/quotes \
   -H "Content-Type: application/json" \
   -d '{
-    "id": "bid-001",
-    "nonce": "bid-nonce-001",
+    "id": "quote-001",
+    "nonce": "quote-nonce-001",
     "price": 1500,
     "currency": "USD",
     "pickup_location": {
@@ -130,10 +130,10 @@ curl -X POST http://localhost:8000/asks/ask-001/bids \
   }'
 ```
 
-### List Bids for Ask
+### List Quotes for Request
 
 ```bash
-curl http://localhost:8000/asks/ask-001/bids
+curl http://localhost:8000/requests/request-001/quotes
 ```
 
 ### Create a Delivery
@@ -142,8 +142,8 @@ curl http://localhost:8000/asks/ask-001/bids
 curl -X POST http://localhost:8000/deliveries \
   -H "Content-Type: application/json" \
   -d '{
-    "ask_id": "ask-001",
-    "bid_id": "bid-001",
+    "request_id": "request-001",
+    "quote_id": "quote-001",
     "nonce": "del-nonce-001",
     "webhook_url": "http://example.com/webhook"
   }'

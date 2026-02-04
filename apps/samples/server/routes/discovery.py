@@ -13,14 +13,14 @@ async def well_known() -> dict:
     "name": "Local Protocol Sample Server",
     "capabilities": {
       "delivery": {
-        "asks": True,
-        "bids": True,
+        "requests": True,
+        "quotes": True,
         "conforms_to": ["xyz.localprotocol.delivery.courier@2026-01-30"],
       }
     },
     "endpoints": {
-      "asks": "/asks",
-      "bids": "/asks/{ask_id}/bids",
+      "requests": "/requests",
+      "quotes": "/requests/{request_id}/quotes",
       "deliveries": "/deliveries",
       "health": "/healthz",
     },

@@ -1,6 +1,6 @@
 # Delivery Location
 
-Location used in delivery bids and asks. A location must include a postal address or coordinates (or both).
+Location used in delivery quotes and requests. A location must include a postal address or coordinates (or both).
 
 ## Fields
 
@@ -34,8 +34,8 @@ Location used in delivery bids and asks. A location must include a postal addres
     "address_country": "US"
   },
   "coordinates": {
-    "lat": 37.7897,
-    "lng": -122.3961
+    "latitude": 37.7897,
+    "longitude": -122.3961
   }
 }
 ```

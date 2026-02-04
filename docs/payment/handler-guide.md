@@ -5,12 +5,12 @@ This document explains how payment handlers work in local-protocol.
 ## Overview
 
 Payment handlers define how payment instruments are acquired for a transaction.
-They are discovered in the bid response and used by the requester to approve or
+They are discovered in the quote response and used by the requester to approve or
 deposit funds before creating a delivery.
 
 ## Handler Discovery
 
-Payment handlers are included in every bid response under `payment.handlers[]`.
+Payment handlers are included in every quote response under `payment.handlers[]`.
 Each handler provides the information needed to acquire a payment instrument.
 
 ```json
@@ -49,9 +49,9 @@ The handler structure follows UCP's `payment_handler.json` schema.
 
 ## Instrument Acquisition
 
-After receiving a bid, the requester acquires a payment instrument:
+After receiving a quote, the requester acquires a payment instrument:
 
-1. **Select handler** - Choose from `bid.payment.handlers[]`
+1. **Select handler** - Choose from `quote.payment.handlers[]`
 2. **Read config** - Use `handler.config` for handler-specific parameters
 3. **Execute protocol** - Perform handler-specific actions (e.g., on-chain approval/permit or escrow deposit)
 4. **Build instrument** - Create instrument conforming to `handler.instrument_schemas[]`
@@ -59,11 +59,11 @@ After receiving a bid, the requester acquires a payment instrument:
 
 ## Binding Requirements
 
-Payment instruments bind to the accepted bid:
+Payment instruments bind to the accepted quote:
 
-- `payment_data.handler_id` must match one of `bid.payment.handlers[].id`
-- The instrument is tied to the specific bid being accepted
-- Multiple bids may have different handlers; the requester chooses which bid to accept
+- `payment_data.handler_id` must match one of `quote.payment.handlers[].id`
+- The instrument is tied to the specific quote being accepted
+- Multiple quotes may have different handlers; the requester chooses which quote to accept
 
 ## EVM Auth/Capture Escrow Handler
 

@@ -1,10 +1,10 @@
-# Delivery Bid
+# Delivery Quote
 
-Delivery bid offered by a provider, including price, route, and estimated timing.
+Delivery quote offered by a provider, including price, route, and estimated timing.
 
 ## Fields
 
-- `id` (string, required): Unique bid identifier.
+- `id` (string, required): Unique quote identifier.
 - `nonce` (string, required): Client-generated idempotency key.
 - `price` (integer, required): Price in minor currency units.
 - `currency` (string, required): ISO 4217 currency code.
@@ -17,8 +17,8 @@ Delivery bid offered by a provider, including price, route, and estimated timing
 
 ```json
 {
-  "id": "bid_123",
-  "nonce": "bid-nonce-123",
+  "id": "quote_123",
+  "nonce": "quote-nonce-123",
   "price": 1299,
   "currency": "USD",
   "pickup_location": {
@@ -39,8 +39,8 @@ Delivery bid offered by a provider, including price, route, and estimated timing
       "address_country": "US"
     },
     "coordinates": {
-      "lat": 37.7818,
-      "lng": -122.4056
+      "latitude": 37.7818,
+      "longitude": -122.4056
     }
   },
   "pickup_estimate": "2026-01-30T19:15:00Z",

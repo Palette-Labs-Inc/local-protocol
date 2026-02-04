@@ -2,21 +2,21 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://localprotocol.xyz/schemas/delivery/delivery.json",
   "title": "Delivery",
-  "description": "Delivery resource created when a bid is accepted.",
+  "description": "Delivery resource created when a quote is accepted.",
   "type": "object",
-  "required": ["id", "ask_id", "bid_id", "payment_instrument_id", "created_at"],
+  "required": ["id", "request_id", "quote_id", "payment_instrument_id", "created_at"],
   "properties": {
     "id": {
       "type": "string",
       "description": "Unique delivery identifier."
     },
-    "ask_id": {
+    "request_id": {
       "type": "string",
-      "description": "Reference to the original ask."
+      "description": "Reference to the original request."
     },
-    "bid_id": {
+    "quote_id": {
       "type": "string",
-      "description": "Reference to the accepted bid."
+      "description": "Reference to the accepted quote."
     },
     "payment_instrument_id": {
       "type": "string",

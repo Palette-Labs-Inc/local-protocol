@@ -24,93 +24,93 @@ class DiscoveryTest(IntegrationTestBase):
     self.assert_response_status(response, 200)
 
 
-class AskLifecycleTest(IntegrationTestBase):
-  """Tests for delivery ask lifecycle."""
+class RequestLifecycleTest(IntegrationTestBase):
+  """Tests for delivery request lifecycle."""
 
-  def test_create_ask_returns_201(self) -> None:
-    """Creating a valid ask MUST return 201."""
-    ask_payload = self.create_ask_payload()
-    response = self.post_ask(ask_payload)
+  def test_create_request_returns_201(self) -> None:
+    """Creating a valid request MUST return 201."""
+    request_payload = self.create_request_payload()
+    response = self.post_request(request_payload)
     self.assert_response_status(response, [200, 201])
     data = response.json()
-    self.assertEqual(data["id"], ask_payload["id"])
+    self.assertEqual(data["id"], request_payload["id"])
 
-  def test_create_ask_missing_required_field_returns_4xx(self) -> None:
-    """Creating an ask without required fields MUST return 4xx."""
+  def test_create_request_missing_required_field_returns_4xx(self) -> None:
+    """Creating a request without required fields MUST return 4xx."""
     invalid_payload = {"id": "test-invalid"}  # Missing locations and times
     response = self.client.post(
-      "/asks",
+      "/requests",
       json=invalid_payload,
       headers=self.get_headers(),
     )
     self.assertIn(response.status_code, [400, 422])
 
-  def test_get_ask_by_id(self) -> None:
-    """Server MUST allow fetching an ask by ID."""
-    ask_payload = self.create_ask_payload()
-    create_response = self.post_ask(ask_payload)
+  def test_get_request_by_id(self) -> None:
+    """Server MUST allow fetching a request by ID."""
+    request_payload = self.create_request_payload()
+    create_response = self.post_request(request_payload)
     self.assert_response_status(create_response, [200, 201])
 
     get_response = self.client.get(
-      f"/asks/{ask_payload['id']}",
+      f"/requests/{request_payload['id']}",
       headers=self.get_headers(),
     )
     self.assert_response_status(get_response, 200)
     data = get_response.json()
-    self.assertEqual(data["id"], ask_payload["id"])
+    self.assertEqual(data["id"], request_payload["id"])
 
-  def test_get_nonexistent_ask_returns_404(self) -> None:
-    """Fetching a nonexistent ask MUST return 404."""
+  def test_get_nonexistent_request_returns_404(self) -> None:
+    """Fetching a nonexistent request MUST return 404."""
     response = self.client.get(
-      "/asks/nonexistent-ask-id",
+      "/requests/nonexistent-request-id",
       headers=self.get_headers(),
     )
     self.assert_response_status(response, 404)
 
 
-class BidLifecycleTest(IntegrationTestBase):
-  """Tests for delivery bid lifecycle."""
+class QuoteLifecycleTest(IntegrationTestBase):
+  """Tests for delivery quote lifecycle."""
 
-  def test_create_bid_for_ask(self) -> None:
-    """Creating a bid for a valid ask MUST succeed."""
-    # First create an ask
-    ask_payload = self.create_ask_payload()
-    ask_response = self.post_ask(ask_payload)
-    self.assert_response_status(ask_response, [200, 201])
+  def test_create_quote_for_request(self) -> None:
+    """Creating a quote for a valid request MUST succeed."""
+    # First create a request
+    request_payload = self.create_request_payload()
+    request_response = self.post_request(request_payload)
+    self.assert_response_status(request_response, [200, 201])
 
-    # Then create a bid
-    bid_payload = self.create_bid_payload()
-    bid_response = self.post_bid(ask_payload["id"], bid_payload)
-    self.assert_response_status(bid_response, [200, 201])
-    data = bid_response.json()
-    self.assertEqual(data["id"], bid_payload["id"])
+    # Then create a quote
+    quote_payload = self.create_quote_payload()
+    quote_response = self.post_quote(request_payload["id"], quote_payload)
+    self.assert_response_status(quote_response, [200, 201])
+    data = quote_response.json()
+    self.assertEqual(data["id"], quote_payload["id"])
 
-  def test_create_bid_for_nonexistent_ask_returns_404(self) -> None:
-    """Creating a bid for nonexistent ask MUST return 404."""
-    bid_payload = self.create_bid_payload()
+  def test_create_quote_for_nonexistent_request_returns_404(self) -> None:
+    """Creating a quote for nonexistent request MUST return 404."""
+    quote_payload = self.create_quote_payload()
     response = self.client.post(
-      "/asks/nonexistent-ask-id/bids",
-      json=bid_payload,
+      "/requests/nonexistent-request-id/quotes",
+      json=quote_payload,
       headers=self.get_headers(),
     )
     self.assert_response_status(response, 404)
 
-  def test_list_bids_for_ask(self) -> None:
-    """Server MUST allow listing bids for an ask."""
-    # Create ask
-    ask_payload = self.create_ask_payload()
-    ask_response = self.post_ask(ask_payload)
-    self.assert_response_status(ask_response, [200, 201])
-    ask_id = ask_response.json()["id"]
+  def test_list_quotes_for_request(self) -> None:
+    """Server MUST allow listing quotes for a request."""
+    # Create request
+    request_payload = self.create_request_payload()
+    request_response = self.post_request(request_payload)
+    self.assert_response_status(request_response, [200, 201])
+    request_id = request_response.json()["id"]
 
-    # Create multiple bids
+    # Create multiple quotes
     for i in range(3):
-      bid_payload = self.create_bid_payload(price=1000 + i * 100)
-      self.post_bid(ask_id, bid_payload)
+      quote_payload = self.create_quote_payload(price=1000 + i * 100)
+      self.post_quote(request_id, quote_payload)
 
-    # List bids
+    # List quotes
     response = self.client.get(
-      f"/asks/{ask_id}/bids",
+      f"/requests/{request_id}/quotes",
       headers=self.get_headers(),
     )
     self.assert_response_status(response, 200)
@@ -122,21 +122,21 @@ class BidLifecycleTest(IntegrationTestBase):
 class IdempotencyTest(IntegrationTestBase):
   """Tests for idempotency behavior."""
 
-  def test_duplicate_ask_with_same_nonce(self) -> None:
+  def test_duplicate_request_with_same_nonce(self) -> None:
     """Duplicate requests with same nonce MUST return same result."""
-    ask_payload = self.create_ask_payload()
+    request_payload = self.create_request_payload()
     # Use a fixed nonce for both requests
-    ask_payload["nonce"] = "test-nonce-123"
+    request_payload["nonce"] = "test-nonce-123"
 
     # First request
-    response1 = self.post_ask(ask_payload)
+    response1 = self.post_request(request_payload)
     self.assert_response_status(response1, [200, 201])
 
     # Second request with same nonce
-    response2 = self.post_ask(ask_payload)
+    response2 = self.post_request(request_payload)
     self.assert_response_status(response2, [200, 201])
 
-    # Should return the same ask
+    # Should return the same request
     self.assertEqual(response1.json()["id"], response2.json()["id"])
 
 

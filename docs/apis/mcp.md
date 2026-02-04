@@ -46,7 +46,7 @@ MCP requests should include a `meta` object with protocol metadata:
   "id": 1,
   "method": "tools/call",
   "params": {
-    "name": "create_delivery_ask",
+    "name": "create_delivery_request",
     "arguments": {
       "meta": {
         "ucp-agent": {
@@ -54,7 +54,7 @@ MCP requests should include a `meta` object with protocol metadata:
         },
         "idempotency-key": "550e8400-e29b-41d4-a716-446655440000"
       },
-      "ask": { "pickup": {}, "dropoff": {} }
+      "request": { "pickup": {}, "dropoff": {} }
     }
   }
 }
@@ -72,7 +72,7 @@ Capabilities map to MCP tools. A typical pattern is:
 | `cancel_<resource>`    | Cancel    | Cancel a resource or workflow.  |
 | `complete_<resource>`  | Complete  | Finalize a workflow.            |
 
-## Example (Create Delivery Ask)
+## Example (Create Delivery Request)
 
 === "Request"
 
@@ -82,14 +82,14 @@ Capabilities map to MCP tools. A typical pattern is:
       "id": 1,
       "method": "tools/call",
       "params": {
-        "name": "create_delivery_ask",
+        "name": "create_delivery_request",
         "arguments": {
           "meta": {
             "ucp-agent": {
               "profile": "https://platform.example/profiles/delivery-agent.json"
             }
           },
-          "ask": {
+          "request": {
             "pickup": { "address": "123 Market St" },
             "dropoff": { "address": "555 Mission St" },
             "ready_at": "2026-02-05T18:30:00Z"
@@ -106,8 +106,8 @@ Capabilities map to MCP tools. A typical pattern is:
       "jsonrpc": "2.0",
       "id": 1,
       "result": {
-        "ask": {
-          "id": "ask_123",
+        "request": {
+          "id": "request_123",
           "status": "open"
         }
       }
