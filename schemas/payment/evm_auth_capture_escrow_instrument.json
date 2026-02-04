@@ -90,7 +90,7 @@
           "type": "string",
           "description": "Amount in atomic units (integer string, token decimals applied).",
           "pattern": "^[0-9]+$"
-        },
+        }
       },
       "additionalProperties": true
     }
