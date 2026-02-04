@@ -1,16 +1,16 @@
 # EVM Auth/Capture Payments
 
 An on-chain auth/capture flow for payments on EVM chains that mirrors the
-classic authorization/capture flow. The requester (payer, "Platform")
+classic authorization/capture flow. The buyer ("Platform")
 authorizes funds into an EVM escrow contract, submits an authorization
-instrument at checkout, and an operator captures funds for the provider
-(payee, "Business"). Refunds are possible within the operator’s policies.
+instrument at checkout, and an operator captures funds for the seller
+("Business"). Refunds are possible within the operator’s policies.
 For background on the flow, see Coinbase’s overview of the Commerce Payments
 Protocol: [blog.base.dev/commerce-payments-protocol](https://blog.base.dev/commerce-payments-protocol).
 
 Handler id: `com.localprotocol.evm_auth_capture_escrow`
 
-## Handler configuration (business discovery)
+## Handler configuration (seller discovery)
 
 Accepted tokens are explicitly listed and should be ERC-20 tokens supported by
 the contract on the specified chain.
@@ -52,8 +52,8 @@ the contract on the specified chain.
 
 ## Authorization instrument
 
-The requester ("Platform") submits a payment instrument that proves an
-authorization exists and binds it to the order.
+The buyer ("Platform") submits a payment instrument that proves an
+authorization exists and binds it to this payment.
 
 The instrument includes all fields required to compute `payment_info_hash`,
 with expiry windows acting as operator-enforced limits for captures and refunds.
@@ -63,12 +63,12 @@ recomputing the hash.
 
 ### Fields
 
-- `id` (string, required): Instrument id assigned by the requester ("Platform").
+- `id` (string, required): Instrument id assigned by the buyer ("Platform").
 - `handler_id` (string, required): Handler instance id from discovery (`ucp.payment_handlers[].id`).
 - `type` (string, required): `evm_auth_capture_escrow`.
 - `payment_info_hash` (string, required): Hash that identifies the on-chain payment authorization.
 - `operator` (string, required): Operator address used to compute the hash.
-- `payer` (string, required): Payer address used to compute the hash.
+- `payer` (string, required): Payer address used to compute the hash (the buyer).
 - `receiver` (string, required): Receiver address used to compute the hash
   (MUST match the handler default receiver or be allowed by operator policy).
 - `token` (object, required): Token identifier used to compute the hash.
