@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/payment/evm_auth_capture_escrow_config.json",
+  "title": "EVM Auth/Capture Escrow Config",
+  "description": "Handler configuration for auth/capture escrow on EVM chains.",
+  "type": "object",
+  "required": [
+    "chain_id",
+    "contract",
+    "operator",
+    "receiver",
+    "accepted_tokens"
+  ],
+  "properties": {
+    "chain_id": {
+      "type": "integer",
+      "description": "EVM chain id for the escrow contract.",
+      "minimum": 1
+    },
+    "contract": {
+      "type": "string",
+      "description": "Escrow contract address on the target chain.",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "operator": {
+      "type": "string",
+      "description": "Operator address authorized to drive state transitions.",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "receiver": {
+      "type": "string",
+      "description": "Default receiver address for captures.",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "accepted_tokens": {
+      "type": "array",
+      "description": "Tokens accepted on the escrow contract chain.",
+      "minItems": 1,
+      "items": { "$ref": "types/evm_token.json" }
+    }
+  },
+  "additionalProperties": true
+}

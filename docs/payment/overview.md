@@ -1,19 +1,14 @@
-# Payment (Escrow)
+# Payment (Auth/Capture)
 
-Local Protocol uses UCP payment handlers to support business-to-business
-settlement. Payments use a neutral smart-contract escrow on EVM chains with
-programmatic dual-signature release: the payer attests "approve" or "dispute"
-and the payee attests "request" or "release." A guarantor provides 100%
-coverage and is only economically exposed on dispute.
-
-This capability does not dictate the token. Each business advertises the tokens
-and chain ids it accepts in its handler configuration.
+Local Protocol uses UCP payment handlers to support payment between
+transacting parties. Any payment handler is supported, but on-chain payment is
+highly recommended for neutral, verifiable settlement.
 
 Core objects:
 
-- **Escrow instrument**: The payment instrument submitted at checkout that
-  proves funds are locked in escrow.
-- **Release attestation**: A signed message from each party that triggers
-  escrow release when both are present.
+- **Authorization instrument**: The payment instrument submitted at checkout
+  that proves funds are authorized into escrow.
+- **Capture / refund**: Operator-driven state transitions that release or
+  return funds based on the authorization window.
 
-See the Escrow handler definition for fields and examples.
+See the Auth/Capture handler definition for fields and examples.

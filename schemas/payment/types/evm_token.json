@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.dev/schemas/payment/types/evm_token.json",
+  "$id": "https://localprotocol.xyz/schemas/payment/types/evm_token.json",
   "title": "EVM Token",
-  "description": "EVM token identifier used for escrow settlement.",
+  "description": "EVM token identifier used for auth/capture settlement.",
   "type": "object",
   "required": ["symbol", "decimals"],
   "properties": {

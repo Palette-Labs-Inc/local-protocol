@@ -20,7 +20,7 @@ nav:
           - Events: capabilities/delivery/events.md
   - Payment:
       - Overview: payment/overview.md
-      - On Chain Escrow: payment/escrow.md
+      - EVM Auth/Capture Payments: payment/escrow.md
 
 theme:
   name: material
