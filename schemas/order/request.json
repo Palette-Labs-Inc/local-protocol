@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrderRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique request identifier."
+    },
+    "intent_id": {
+      "type": "string",
+      "description": "Shared intent identifier for tracing Request → Quote → Order."
+    },
+    "nonce": {
+      "type": "string",
+      "description": "Client-generated idempotency key."
+    }
+  },
+  "required": [
+    "id",
+    "intent_id",
+    "nonce"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrderQuote",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique quote identifier."
+    },
+    "intent_id": {
+      "type": "string",
+      "description": "Shared intent identifier for tracing Request → Quote → Order."
+    },
+    "nonce": {
+      "type": "string",
+      "description": "Client-generated idempotency key."
+    },
+    "price": {
+      "type": "integer",
+      "description": "Price in minor currency units."
+    },
+    "ready_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Estimated readiness time (RFC 3339)."
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Quote expiration time (RFC 3339)."
+    }
+  },
+  "required": [
+    "id",
+    "intent_id",
+    "nonce",
+    "price",
+    "ready_at",
+    "expires_at"
+  ]
+}
