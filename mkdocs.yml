@@ -13,6 +13,24 @@ nav:
           - MCP: apis/mcp.md
           - A2A: apis/a2a.md
   - Capabilities:
+      - Commerce:
+          - Overview: capabilities/commerce/overview.md
+          - Objects:
+              - Restaurant: capabilities/commerce/restaurant.md
+              - Catalog: capabilities/commerce/catalog.md
+              - Menu View: capabilities/commerce/menu_view.md
+          - Types:
+              - Category: capabilities/commerce/category.md
+              - Item: capabilities/commerce/item.md
+              - Modifier Group: capabilities/commerce/modifier_group.md
+              - Modifier Option: capabilities/commerce/modifier_option.md
+              - Modifier Item: capabilities/commerce/modifier_item.md
+              - Menu Group: capabilities/commerce/menu_group.md
+              - Menu Item Reference: capabilities/commerce/menu_item_ref.md
+              - Menu Node: capabilities/commerce/menu_node.md
+              - Availability: capabilities/commerce/availability.md
+              - Availability Interval: capabilities/commerce/availability_interval.md
+              - External ID: capabilities/commerce/external_id.md
       - Delivery:
           - Overview: capabilities/delivery/overview.md
           - Objects:

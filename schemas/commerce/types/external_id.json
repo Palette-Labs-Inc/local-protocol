@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/commerce/types/external_id.json",
+  "title": "External ID",
+  "description": "Provider-specific identifier mapping for a local protocol object.",
+  "type": "object",
+  "required": ["provider", "id"],
+  "properties": {
+    "provider": {
+      "type": "string",
+      "description": "Provider name (e.g., toast, square, google)."
+    },
+    "id": {
+      "type": "string",
+      "description": "Identifier value in the provider system."
+    },
+    "type": {
+      "type": "string",
+      "description": "Identifier type or role (e.g., guid, reference_id, catalog_id)."
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Provider-specific location or merchant id context."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Provider-specific attributes for this identifier.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

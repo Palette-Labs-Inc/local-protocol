@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/commerce/types/menu_node.json",
+  "title": "Menu Node",
+  "description": "Union type for nodes in a menu tree.",
+  "oneOf": [
+    {
+      "$ref": "menu_group.json"
+    },
+    {
+      "$ref": "menu_item_ref.json"
+    }
+  ]
+}

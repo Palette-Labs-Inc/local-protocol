@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/commerce/types/availability.json",
+  "title": "Availability",
+  "description": "Availability schedule for a menu or item.",
+  "type": "object",
+  "required": ["intervals"],
+  "properties": {
+    "timezone": {
+      "type": "string",
+      "description": "IANA timezone for the intervals. Defaults to the restaurant timezone when omitted."
+    },
+    "intervals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "availability_interval.json"
+      },
+      "description": "Weekly availability intervals."
+    }
+  },
+  "additionalProperties": false
+}

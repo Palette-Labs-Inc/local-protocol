@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/commerce/types/menu_group.json",
+  "title": "Menu Group",
+  "description": "Presentation-only grouping in a menu tree.",
+  "type": "object",
+  "required": ["type", "id", "name", "children"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "group",
+      "description": "Node type discriminator."
+    },
+    "id": {
+      "type": "string",
+      "description": "Menu group identifier."
+    },
+    "name": {
+      "type": "string",
+      "description": "Menu group display name."
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional menu group description."
+    },
+    "children": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "menu_node.json"
+      },
+      "description": "Child menu nodes (groups or item references)."
+    },
+    "sort_order": {
+      "type": "integer",
+      "description": "Sort order for group display. Lower values appear first."
+    },
+    "category_id": {
+      "type": "string",
+      "description": "Optional link to a canonical category represented by this group."
+    },
+    "external_ids": {
+      "type": "array",
+      "items": {
+        "$ref": "external_id.json"
+      },
+      "description": "Provider identifiers for this group."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Business-defined custom data extending the group.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

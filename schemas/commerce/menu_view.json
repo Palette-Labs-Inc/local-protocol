@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/commerce/menu_view.json",
+  "title": "Menu View",
+  "description": "Presentation-only menu tree for a catalog. If availability is provided here, it takes precedence over item availability.",
+  "type": "object",
+  "required": ["id", "name", "catalog_id", "tree"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Menu view identifier."
+    },
+    "name": {
+      "type": "string",
+      "description": "Menu view name."
+    },
+    "description": {
+      "type": "string",
+      "description": "Menu view description."
+    },
+    "catalog_id": {
+      "type": "string",
+      "description": "Catalog identifier this menu view presents."
+    },
+    "availability": {
+      "$ref": "types/availability.json",
+      "description": "Menu-level availability. When present, it overrides item availability."
+    },
+    "tree": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "types/menu_node.json"
+      },
+      "description": "Root menu nodes (groups or item references)."
+    },
+    "external_ids": {
+      "type": "array",
+      "items": {
+        "$ref": "types/external_id.json"
+      },
+      "description": "Provider identifiers for this menu view."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Business-defined custom data extending the menu view.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

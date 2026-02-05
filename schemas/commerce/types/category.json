@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/commerce/types/category.json",
+  "title": "Catalog Category",
+  "description": "A canonical category grouping items in a catalog.",
+  "type": "object",
+  "required": ["id", "name", "item_ids"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Category identifier."
+    },
+    "name": {
+      "type": "string",
+      "description": "Category display name."
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional category description."
+    },
+    "item_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "Ordered list of item identifiers in this category."
+    },
+    "sort_order": {
+      "type": "integer",
+      "description": "Sort order for category display. Lower values appear first."
+    },
+    "external_ids": {
+      "type": "array",
+      "items": {
+        "$ref": "external_id.json"
+      },
+      "description": "Provider identifiers for this category."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Business-defined custom data extending the category.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

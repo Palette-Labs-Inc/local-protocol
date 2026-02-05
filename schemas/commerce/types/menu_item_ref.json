@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/commerce/types/menu_item_ref.json",
+  "title": "Menu Item Reference",
+  "description": "Presentation-only reference to an item in a menu tree.",
+  "type": "object",
+  "required": ["type", "item_id"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "item",
+      "description": "Node type discriminator."
+    },
+    "item_id": {
+      "type": "string",
+      "description": "Referenced catalog item identifier."
+    },
+    "sort_order": {
+      "type": "integer",
+      "description": "Sort order for item display within a group. Lower values appear first."
+    },
+    "external_ids": {
+      "type": "array",
+      "items": {
+        "$ref": "external_id.json"
+      },
+      "description": "Provider identifiers for this menu node."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Business-defined custom data extending the menu node.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

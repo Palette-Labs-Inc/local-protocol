@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/commerce/types/modifier_option.json",
+  "title": "Modifier Option",
+  "description": "Selectable option within a modifier group.",
+  "type": "object",
+  "required": ["id", "modifier_item_id"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Modifier option identifier."
+    },
+    "modifier_item_id": {
+      "type": "string",
+      "description": "Modifier item identifier for this option."
+    },
+    "child_modifier_group_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Nested modifier group identifiers required after selecting this option."
+    },
+    "is_default": {
+      "type": "boolean",
+      "description": "Whether this option is selected by default."
+    },
+    "sort_order": {
+      "type": "integer",
+      "description": "Sort order for option display. Lower values appear first."
+    },
+    "external_ids": {
+      "type": "array",
+      "items": {
+        "$ref": "external_id.json"
+      },
+      "description": "Provider identifiers for this modifier option."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Business-defined custom data extending the modifier option.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
