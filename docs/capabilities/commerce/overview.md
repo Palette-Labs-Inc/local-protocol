@@ -57,6 +57,21 @@ Menu views are not authoritative for price or description. They exist to structu
 | Square | `CatalogItem` → item; `CatalogModifierList` → modifier_group; `CatalogModifier` → modifier_item; constraints map to modifier group limits. |
 | Google FoodMenus | menus/sections/items map to `menu_view`/`menu_group`/`menu_item_ref`; rich attributes preserved in `metadata`. |
 
+## Toast v3 Alignment (Why the Hybrid Model)
+
+Toast’s menus v3 payload includes both:
+- **A hierarchical presentation tree** via `menus -> menuGroups -> menuGroups/menuItems` (nested menu groups).
+- **Canonical reference maps** for modifiers using `referenceId` values (menu items link to modifier groups by reference, and modifier groups link to modifier options by reference).
+
+This creates two distinct kinds of data:
+- **Structure and ordering** (best represented as a menu tree).
+- **Reusable entities** (best represented as canonical objects with references).
+
+That’s why Local Protocol keeps **both** canonical catalog objects and a **presentation-only** `menu_view` tree:
+- The menu tree preserves Toast’s nested grouping and ordering.
+- The canonical objects preserve reusable items/modifiers and map cleanly to Toast’s reference maps.
+- Provider identifiers like `guid`, `referenceId`, and `multiLocationId` remain intact via `external_ids`, so multi-location versions and POS IDs are not lost.
+
 ## Decision Record
 
 See `DECISIONS.md` for the full requirements-to-decisions trace.
