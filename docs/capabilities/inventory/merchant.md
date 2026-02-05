@@ -43,7 +43,7 @@ Top-level payload containing canonical catalog objects and catalogs for a mercha
       "id": "item_1",
       "name": "Carnitas Taco",
       "description": { "plain": "Slow-cooked pork with salsa verde." },
-      "price": { "amount": 450, "currency": "USD" },
+      "price": { "amount": "450", "currency": "USD", "decimals": 2 },
       "modifier_group_ids": ["mg_1"]
     }
   ],
@@ -61,8 +61,8 @@ Top-level payload containing canonical catalog objects and catalogs for a mercha
     { "id": "mo_2", "modifier_item_id": "mi_2" }
   ],
   "modifier_items": [
-    { "id": "mi_1", "name": "Salsa Verde", "price": { "amount": 0, "currency": "USD" } },
-    { "id": "mi_2", "name": "Salsa Roja", "price": { "amount": 0, "currency": "USD" } }
+    { "id": "mi_1", "name": "Salsa Verde", "price": { "amount": "0", "currency": "USD", "decimals": 2 } },
+    { "id": "mi_2", "name": "Salsa Roja", "price": { "amount": "0", "currency": "USD", "decimals": 2 } }
   ]
 }
 ```

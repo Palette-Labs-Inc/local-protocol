@@ -1,14 +1,14 @@
 # Inventory
 
-The Inventory capability defines a canonical catalog graph with category-based presentation. This supports POS ingest, customer-facing apps, and downstream integrations without duplicating core data.
+The Inventory capability defines a canonical catalog graph with category-based presentation. This supports POS and commerce platform ingest, customer-facing apps, and downstream integrations without duplicating core data.
 
 ## Design Goals
 
-- Interoperate with major POS systems (Toast, Square, Google menus).
-- Support multiple catalogs per merchant.
+- Interoperate with major POS systems and commerce platforms.
+- Support multiple catalogs per business/merchant.
 - Provide a UI-ready category structure without duplicating canonical data.
 - Keep modifiers reusable and compatible with POS reference models.
-- Allow availability at catalog or item level, with catalog taking precedence.
+- Allow availability at catalog, category, or item level, with catalog taking precedence.
 
 ## Core Model
 
@@ -39,14 +39,16 @@ The Inventory capability defines a canonical catalog graph with category-based p
 
 Intervals are neutral and can be reused by closure schedules.
 
-## Source of Truth and Platform Pricing
+## Source of Truth and Channel Pricing
 
-- The merchant (or its delegate, such as a POS) is the source of truth for catalog data.
-- Platforms or businesses mirroring those menus (Uber Eats, DoorDash, Grubhub, etc.) may apply markups, discounts, or fees.
-- Those platform-specific pricing adjustments are modeled **separately** from the catalog itself (e.g., in checkout totals/adjustments), not by mutating canonical item prices.
-- If a merchant intentionally sets different base prices per platform, that should be represented as distinct catalogs with their own item prices.
+- The merchant/business (or its delegate, such as a POS, ERP, or PIM) is the source of truth for catalog data.
+- Channels or marketplaces that mirror those catalogs may apply markups, discounts, or fees.
+- Those channel-specific pricing adjustments are modeled **separately** from the catalog itself (e.g., in checkout totals/adjustments), not by mutating canonical item prices.
+- If a business intentionally sets different base prices per channel, represent them as distinct catalogs with their own item prices.
 
-## Provider Compatibility
+## Provider Compatibility (Examples)
+
+These mappings are illustrative; the model is intended to support food, retail, and services.
 
 | Provider | Mapping Notes |
 | --- | --- |
@@ -54,9 +56,9 @@ Intervals are neutral and can be reused by closure schedules.
 | Square | `CatalogItem` → item; `CatalogModifierList` → modifier_group; `CatalogModifier` → modifier_item; constraints map to modifier group limits. |
 | Google FoodMenus | menus/sections/items map to catalog/category/item; rich attributes preserved in `metadata`. |
 
-## Toast v3 Alignment (Without Menu Views)
+## Example: Hierarchical Menu Providers (Toast v3)
 
-Toast’s v3 model is a menu tree with nested groups. In the simplified model:
+Some providers expose hierarchical menu trees with nested groups. For Toast v3, the simplified model is:
 - `menus` map to catalogs.
 - `menuGroups` map to categories.
 - Nested groups map to `parent_category_id`.

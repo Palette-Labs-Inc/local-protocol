@@ -112,8 +112,8 @@ local-protocol defines one handler: `com.localprotocol.evm_auth_capture_escrow`.
     "symbol": "USDC",
     "decimals": 6
   },
-  "max_amount": "5990000",
-  "amount": "5990000",
+  "max_amount": { "amount": "5990000", "currency": "USDC", "decimals": 6 },
+  "amount": { "amount": "5990000", "currency": "USDC", "decimals": 6 },
   "preapproval_expires_at": "2026-02-04T18:30:00Z",
   "authorization_expires_at": "2026-02-05T18:30:00Z",
   "refund_expires_at": "2026-03-04T18:30:00Z",

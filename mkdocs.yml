@@ -19,6 +19,7 @@ nav:
               - Merchant: capabilities/inventory/merchant.md
               - Catalog: capabilities/inventory/catalog.md
           - Types:
+              - Price: capabilities/inventory/price.md
               - Category: capabilities/inventory/category.md
               - Item: capabilities/inventory/item.md
               - Modifier Group: capabilities/inventory/modifier_group.md

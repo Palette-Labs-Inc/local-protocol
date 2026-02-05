@@ -62,9 +62,10 @@
           "$ref": "types/evm_token.json"
         },
         "max_amount": {
-          "type": "string",
-          "description": "Maximum amount that can be authorized (atomic units).",
-          "pattern": "^[0-9]+$"
+          "allOf": [
+            { "$ref": "https://localprotocol.xyz/schemas/ucp/types/price.json" }
+          ],
+          "description": "Maximum amount that can be authorized (atomic units). Currency should align with token."
         },
         "preapproval_expires_at": {
           "type": "string",
@@ -87,9 +88,10 @@
           "pattern": "^[0-9]+$"
         },
         "amount": {
-          "type": "string",
-          "description": "Amount in atomic units (integer string, token decimals applied).",
-          "pattern": "^[0-9]+$"
+          "allOf": [
+            { "$ref": "https://localprotocol.xyz/schemas/ucp/types/price.json" }
+          ],
+          "description": "Amount in atomic units. Currency should align with token."
         }
       },
       "additionalProperties": true

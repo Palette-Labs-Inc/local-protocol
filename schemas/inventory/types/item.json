@@ -34,13 +34,13 @@
       "minProperties": 1
     },
     "price": {
-      "$ref": "https://ucp.dev/schemas/shopping/types/price.json",
+      "$ref": "https://localprotocol.xyz/schemas/ucp/types/price.json",
       "description": "Base price for the item."
     },
     "media": {
       "type": "array",
       "items": {
-        "$ref": "https://ucp.dev/schemas/shopping/types/media.json"
+        "$ref": "https://localprotocol.xyz/schemas/ucp/types/media.json"
       },
       "description": "Item media (images, videos, 3D models)."
     },

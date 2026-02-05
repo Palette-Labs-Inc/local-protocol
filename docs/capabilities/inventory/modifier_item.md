@@ -7,7 +7,7 @@ Purchasable modifier item used by one or more modifier options.
 - `id` (string, required): Modifier item identifier.
 - `name` (string, required): Modifier item name.
 - `description` (string, optional): Modifier item description.
-- `price` (object, required): Price in minor units with currency.
+- `price` (object, required): Price in minor units with currency (see [Price](price.md)).
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 ## Example
@@ -16,6 +16,6 @@ Purchasable modifier item used by one or more modifier options.
 {
   "id": "mi_1",
   "name": "Salsa Verde",
-  "price": { "amount": 0, "currency": "USD" }
+  "price": { "amount": "0", "currency": "USD", "decimals": 2 }
 }
 ```

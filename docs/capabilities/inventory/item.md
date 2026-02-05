@@ -7,7 +7,7 @@ Canonical menu item with modifier group references.
 - `id` (string, required): Item identifier.
 - `name` (string, required): Item name.
 - `description` (object, required): Item description in one or more formats.
-- `price` (object, required): Base price in minor units with currency.
+- `price` (object, required): Base price in minor units with currency (see [Price](price.md)).
 - `media` (array, optional): Item media.
 - `modifier_group_ids` (array, optional): Modifier group identifiers available for this item.
 - `modifier_group_overrides` (array, optional): Item-level overrides for modifier groups (selection constraints, quantities, and option ordering/availability).
@@ -21,7 +21,7 @@ Canonical menu item with modifier group references.
   "id": "item_1",
   "name": "Carnitas Taco",
   "description": { "plain": "Slow-cooked pork with salsa verde." },
-  "price": { "amount": 450, "currency": "USD" },
+  "price": { "amount": "450", "currency": "USD", "decimals": 2 },
   "modifier_group_ids": ["mg_1"],
   "modifier_group_overrides": [
     {
@@ -36,4 +36,24 @@ Canonical menu item with modifier group references.
     ]
   }
 }
+```
+
+## Decimal Examples
+
+USD (2 decimals):
+
+```json
+{ "amount": "1099", "currency": "USD", "decimals": 2 }
+```
+
+JPY (0 decimals):
+
+```json
+{ "amount": "5000", "currency": "JPY", "decimals": 0 }
+```
+
+USDC (6 decimals):
+
+```json
+{ "amount": "4250000", "currency": "USDC", "decimals": 6 }
 ```
