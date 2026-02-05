@@ -12,6 +12,10 @@
       "type": "string",
       "description": "Shared intent identifier for tracing Request → Quote → Order."
     },
+    "nonce": {
+      "type": "string",
+      "description": "Client-generated idempotency key."
+    },
     "payment_instrument_id": {
       "type": "string",
       "description": "Reference to the payment instrument used to create this order."
@@ -20,6 +24,7 @@
   "required": [
     "id",
     "intent_id",
+    "nonce",
     "payment_instrument_id"
   ]
 }
