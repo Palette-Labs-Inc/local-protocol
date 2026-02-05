@@ -37,23 +37,3 @@ Canonical menu item with modifier group references.
   }
 }
 ```
-
-## Decimal Examples
-
-USD (2 decimals):
-
-```json
-{ "amount": "1099", "currency": "USD", "decimals": 2 }
-```
-
-JPY (0 decimals):
-
-```json
-{ "amount": "5000", "currency": "JPY", "decimals": 0 }
-```
-
-USDC (6 decimals):
-
-```json
-{ "amount": "4250000", "currency": "USDC", "decimals": 6 }
-```
