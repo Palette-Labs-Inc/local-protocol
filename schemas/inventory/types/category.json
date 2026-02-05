@@ -30,13 +30,6 @@
       "type": "integer",
       "description": "Sort order for category display. Lower values appear first."
     },
-    "external_ids": {
-      "type": "array",
-      "items": {
-        "$ref": "external_id.json"
-      },
-      "description": "Provider identifiers for this category."
-    },
     "metadata": {
       "type": "object",
       "description": "Business-defined custom data extending the category.",

@@ -55,13 +55,6 @@
       "$ref": "availability.json",
       "description": "Item availability. Ignored when the menu view defines availability."
     },
-    "external_ids": {
-      "type": "array",
-      "items": {
-        "$ref": "external_id.json"
-      },
-      "description": "Provider identifiers for this item."
-    },
     "metadata": {
       "type": "object",
       "description": "Business-defined custom data extending the item.",

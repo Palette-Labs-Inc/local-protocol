@@ -8,7 +8,6 @@ Purchasable modifier item used by one or more modifier options.
 - `name` (string, required): Modifier item name.
 - `description` (string, optional): Modifier item description.
 - `price` (object, required): Price in minor units with currency.
-- `external_ids` (array, optional): Provider identifiers for this modifier item.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 ## Example

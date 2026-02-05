@@ -34,13 +34,6 @@
       },
       "description": "Root menu nodes (groups or item references)."
     },
-    "external_ids": {
-      "type": "array",
-      "items": {
-        "$ref": "types/external_id.json"
-      },
-      "description": "Provider identifiers for this menu view."
-    },
     "metadata": {
       "type": "object",
       "description": "Business-defined custom data extending the menu view.",

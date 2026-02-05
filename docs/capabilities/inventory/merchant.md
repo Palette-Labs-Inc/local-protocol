@@ -15,7 +15,6 @@ Top-level payload containing canonical catalog objects and menu views for a merc
 - `modifier_groups` (array, required): Canonical modifier groups.
 - `modifier_options` (array, required): Canonical modifier options.
 - `modifier_items` (array, required): Canonical modifier items.
-- `external_ids` (array, optional): Provider identifiers for this merchant.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 ## Example

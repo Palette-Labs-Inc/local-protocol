@@ -19,13 +19,6 @@
       "type": "integer",
       "description": "Sort order for item display within a group. Lower values appear first."
     },
-    "external_ids": {
-      "type": "array",
-      "items": {
-        "$ref": "external_id.json"
-      },
-      "description": "Provider identifiers for this menu node."
-    },
     "metadata": {
       "type": "object",
       "description": "Business-defined custom data extending the menu node.",

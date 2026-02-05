@@ -11,7 +11,6 @@ Canonical catalog grouping categories, items, and associated menu views.
 - `item_ids` (array, optional): Item identifiers included directly in the catalog (not assigned to a category).
 - `fulfillment_modes` (array, optional): Fulfillment modes supported by this catalog.
 - `menu_view_ids` (array, optional): Menu view identifiers associated with this catalog.
-- `external_ids` (array, optional): Provider identifiers for this catalog.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 ## Example

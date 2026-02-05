@@ -39,13 +39,6 @@
       "type": "string",
       "description": "Optional link to a canonical category represented by this group."
     },
-    "external_ids": {
-      "type": "array",
-      "items": {
-        "$ref": "external_id.json"
-      },
-      "description": "Provider identifiers for this group."
-    },
     "metadata": {
       "type": "object",
       "description": "Business-defined custom data extending the group.",

@@ -11,7 +11,6 @@ Presentation-only grouping within a menu tree.
 - `children` (array, required): Child menu nodes (groups or item references).
 - `sort_order` (integer, optional): Sort order for display.
 - `category_id` (string, optional): Optional link to a canonical category.
-- `external_ids` (array, optional): Provider identifiers for this group.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 ## Example

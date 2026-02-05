@@ -27,5 +27,4 @@ Decisions
 - Keep catalog objects normalized (items, categories, modifier groups, modifier options, modifier items).
 - Model menu trees as `menu_view` nodes that reference canonical items.
 - Encode modifier options separately from modifier groups (option → modifier item).
-- Include `external_ids` on all objects to preserve provider identifiers.
 - Allow item availability but override it with menu-level availability when present.

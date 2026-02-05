@@ -30,7 +30,6 @@ nav:
               - Menu Node: capabilities/inventory/menu_node.md
               - Availability: capabilities/inventory/availability.md
               - Interval: capabilities/inventory/interval.md
-              - External ID: capabilities/inventory/external_id.md
       - Delivery:
           - Overview: capabilities/delivery/overview.md
           - Objects:

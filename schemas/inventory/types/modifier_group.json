@@ -46,13 +46,6 @@
       "type": "string",
       "description": "Modifier group type classification."
     },
-    "external_ids": {
-      "type": "array",
-      "items": {
-        "$ref": "external_id.json"
-      },
-      "description": "Provider identifiers for this modifier group."
-    },
     "metadata": {
       "type": "object",
       "description": "Business-defined custom data extending the modifier group.",

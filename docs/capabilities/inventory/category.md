@@ -9,7 +9,6 @@ Canonical category grouping items in a catalog.
 - `description` (string, optional): Category description.
 - `item_ids` (array, required): Ordered list of item identifiers in this category.
 - `sort_order` (integer, optional): Sort order for category display.
-- `external_ids` (array, optional): Provider identifiers for this category.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 ## Example

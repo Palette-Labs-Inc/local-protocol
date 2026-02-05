@@ -10,7 +10,6 @@ Presentation-only menu tree for a catalog. Menu view availability takes preceden
 - `catalog_id` (string, required): Catalog identifier this menu view presents.
 - `availability` (object, optional): Menu-level availability schedule.
 - `tree` (array, required): Root menu nodes (groups or item references).
-- `external_ids` (array, optional): Provider identifiers for this menu view.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 ## Example

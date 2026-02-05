@@ -47,13 +47,6 @@
       },
       "description": "Menu view identifiers associated with this catalog."
     },
-    "external_ids": {
-      "type": "array",
-      "items": {
-        "$ref": "types/external_id.json"
-      },
-      "description": "Provider identifiers for this catalog."
-    },
     "metadata": {
       "type": "object",
       "description": "Business-defined custom data extending the catalog.",

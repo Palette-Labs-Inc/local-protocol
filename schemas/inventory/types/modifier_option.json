@@ -29,13 +29,6 @@
       "type": "integer",
       "description": "Sort order for option display. Lower values appear first."
     },
-    "external_ids": {
-      "type": "array",
-      "items": {
-        "$ref": "external_id.json"
-      },
-      "description": "Provider identifiers for this modifier option."
-    },
     "metadata": {
       "type": "object",
       "description": "Business-defined custom data extending the modifier option.",

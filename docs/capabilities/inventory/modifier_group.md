@@ -12,7 +12,6 @@ Group of modifier options with selection constraints.
 - `max_per_modifier` (integer, optional): Maximum quantity allowed per modifier option.
 - `modifier_option_ids` (array, required): Modifier option identifiers in this group.
 - `type` (string, optional): Modifier group type classification.
-- `external_ids` (array, optional): Provider identifiers for this modifier group.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 ## Example

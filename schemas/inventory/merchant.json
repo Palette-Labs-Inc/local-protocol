@@ -84,13 +84,6 @@
       },
       "description": "Canonical modifier items."
     },
-    "external_ids": {
-      "type": "array",
-      "items": {
-        "$ref": "types/external_id.json"
-      },
-      "description": "Provider identifiers for this merchant."
-    },
     "metadata": {
       "type": "object",
       "description": "Business-defined custom data extending the merchant.",

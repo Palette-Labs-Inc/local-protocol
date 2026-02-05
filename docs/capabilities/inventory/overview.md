@@ -14,7 +14,6 @@ The Inventory capability defines a canonical catalog graph plus presentation-onl
 
 - A **canonical catalog graph** contains reusable objects: catalogs, categories, items, modifier groups, modifier options, and modifier items.
 - A **menu view** is a presentation-only tree that references canonical items for navigation and display.
-- Provider identifiers are preserved via `external_ids` on every object.
 - Provider-specific fields that are not modeled natively belong in `metadata`.
 
 ## Canonical Objects
@@ -54,7 +53,7 @@ Intervals are neutral and can be reused by closure schedules.
 
 | Provider | Mapping Notes |
 | --- | --- |
-| Toast v3 | `menuGroups` map to `menu_view.tree`; reference maps become canonical modifier objects; identifiers stored in `external_ids`. |
+| Toast v3 | `menuGroups` map to `menu_view.tree`; reference maps become canonical modifier objects. |
 | Square | `CatalogItem` → item; `CatalogModifierList` → modifier_group; `CatalogModifier` → modifier_item; constraints map to modifier group limits. |
 | Google FoodMenus | menus/sections/items map to `menu_view`/`menu_group`/`menu_item_ref`; rich attributes preserved in `metadata`. |
 
@@ -71,7 +70,7 @@ This creates two distinct kinds of data:
 That’s why Local Protocol keeps **both** canonical catalog objects and a **presentation-only** `menu_view` tree:
 - The menu tree preserves Toast’s nested grouping and ordering.
 - The canonical objects preserve reusable items/modifiers and map cleanly to Toast’s reference maps.
-- Provider identifiers like `guid`, `referenceId`, and `multiLocationId` remain intact via `external_ids`, so multi-location versions and POS IDs are not lost.
+- Provider identifiers like `guid`, `referenceId`, and `multiLocationId` can be preserved in `metadata` by the integration layer when needed.
 
 ## Decision Record
 
