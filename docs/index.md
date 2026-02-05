@@ -2,7 +2,7 @@
 hide:
   - toc
 title: Local Protocol
-description: Decentralized logistics network built on the Universal Commerce Protocol.
+description: A protocol for decentralized marketplaces, supporting interoperability and agentic commerce.
 ---
 
 <div class="landing-page">
@@ -12,10 +12,10 @@ description: Decentralized logistics network built on the Universal Commerce Pro
         <img src="assets/local-protocol.svg" alt="Local Protocol" class="hero-logo">
       </h1>
       <p class="hero-subheading">
-        An open coordination layer for local logistics—built on the <a href="https://ucp.dev">Universal Commerce Protocol</a>.
+        A protocol for decentralized marketplaces, supporting modular interoperability and agentic commerce.
       </p>
       <p class="hero-description">
-        Local Protocol lets independent logistics networks interoperate at scale through decentralized trust, unlocking new markets worldwide.
+        An extension of the <a href="https://ucp.dev">Universal Commerce Protocol</a> with discovery, identity, and reputation.
       </p>
     </div>
   </div>

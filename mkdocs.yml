@@ -12,17 +12,20 @@ nav:
           - REST: apis/rest.md
           - MCP: apis/mcp.md
           - A2A: apis/a2a.md
-  - Capabilities:
-      - Delivery:
-          - Overview: capabilities/delivery/overview.md
-          - Objects:
-              - Request: capabilities/delivery/request.md
-              - Quote: capabilities/delivery/quote.md
-              - Delivery: capabilities/delivery/delivery.md
-          - Types:
-              - Location: capabilities/delivery/location.md
-              - Coordinates: capabilities/delivery/coordinates.md
-          - Events: capabilities/delivery/events.md
+  - Domains:
+      - Logistics:
+          - Delivery:
+              - Overview: capabilities/delivery/overview.md
+              - Objects:
+                  - Request: capabilities/delivery/request.md
+                  - Quote: capabilities/delivery/quote.md
+                  - Delivery: capabilities/delivery/delivery.md
+              - Types:
+                  - Location: capabilities/delivery/location.md
+                  - Coordinates: capabilities/delivery/coordinates.md
+              - Events: capabilities/delivery/events.md
+      - Restaurants:
+          - Menus: domains/restaurants/menus.md
   - Payment:
       - Overview: payment/overview.md
       - EVM Auth/Capture Payments: payment/escrow.md
