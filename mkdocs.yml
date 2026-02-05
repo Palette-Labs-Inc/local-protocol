@@ -26,9 +26,11 @@ nav:
       - Order:
           - Overview: capabilities/order/overview.md
           - Objects:
+              - Cart: capabilities/order/cart.md
               - Request: capabilities/order/request.md
               - Quote: capabilities/order/quote.md
               - Order: capabilities/order/order.md
+          - API: capabilities/order/api.md
   - Payment:
       - Overview: payment/overview.md
       - EVM Auth/Capture Payments: payment/escrow.md
