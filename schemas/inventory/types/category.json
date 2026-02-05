@@ -18,17 +18,16 @@
       "type": "string",
       "description": "Optional category description."
     },
+    "parent_category_id": {
+      "type": "string",
+      "description": "Optional parent category identifier for nested category trees."
+    },
     "item_ids": {
       "type": "array",
-      "minItems": 1,
       "items": {
         "type": "string"
       },
       "description": "Ordered list of item identifiers in this category."
-    },
-    "sort_order": {
-      "type": "integer",
-      "description": "Sort order for category display. Lower values appear first."
     },
     "metadata": {
       "type": "object",

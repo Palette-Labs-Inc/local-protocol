@@ -10,7 +10,7 @@ Canonical menu item with modifier group references.
 - `price` (object, required): Base price in minor units with currency.
 - `media` (array, optional): Item media.
 - `modifier_group_ids` (array, optional): Modifier group identifiers available for this item.
-- `availability` (object, optional): Item-level availability schedule.
+- `availability` (object, optional): Item-level availability schedule. Overrides are ignored when the catalog defines availability.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 ## Example

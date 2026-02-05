@@ -1,6 +1,6 @@
 # Merchant
 
-Top-level payload containing canonical catalog objects and menu views for a merchant.
+Top-level payload containing canonical catalog objects and catalogs for a merchant.
 
 ## Fields
 
@@ -9,7 +9,6 @@ Top-level payload containing canonical catalog objects and menu views for a merc
 - `timezone` (string, required): IANA timezone for availability schedules.
 - `last_updated` (string, optional): RFC 3339 timestamp of latest catalog update.
 - `catalogs` (array, required): Catalog definitions.
-- `menu_views` (array, required): Presentation-only menu trees.
 - `categories` (array, required): Canonical categories.
 - `items` (array, required): Canonical items.
 - `modifier_groups` (array, required): Canonical modifier groups.
@@ -29,25 +28,7 @@ Top-level payload containing canonical catalog objects and menu views for a merc
     {
       "id": "cat_1",
       "name": "Main Menu",
-      "category_ids": ["catg_1"],
-      "menu_view_ids": ["mv_1"]
-    }
-  ],
-  "menu_views": [
-    {
-      "id": "mv_1",
-      "name": "Main Menu",
-      "catalog_id": "cat_1",
-      "tree": [
-        {
-          "type": "group",
-          "id": "grp_1",
-          "name": "Tacos",
-          "children": [
-            { "type": "item", "item_id": "item_1" }
-          ]
-        }
-      ]
+      "category_ids": ["catg_1"]
     }
   ],
   "categories": [

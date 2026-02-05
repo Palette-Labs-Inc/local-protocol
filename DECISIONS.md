@@ -16,15 +16,16 @@ Short, LLM-friendly record of notable decisions in this repo.
 Requirements
 - Universal commerce support for customers, POS ingest, and downstream integrations.
 - Multiple catalogs per merchant.
-- Presentation-only menu trees for UI navigation.
+- Category-based presentation with catalog ordering.
 - Modifier options as first-class objects, not embedded in groups.
 - Compatibility with Toast, Square, and other POS providers.
 - Merchant is the source of truth, with mirrors/delegates (POS, apps).
-- Availability may be defined at menu or item level, with menu taking precedence.
+- Availability may be defined at catalog or item level, with catalog taking precedence.
 
 Decisions
-- Adopt a hybrid model: canonical catalog graph plus presentation-only menu views.
+- Adopt a catalog + category model aligned with Square-style catalogs and the backend schema.
 - Keep catalog objects normalized (items, categories, modifier groups, modifier options, modifier items).
-- Model menu trees as `menu_view` nodes that reference canonical items.
+- Use ordered `category_ids` and `item_ids` lists for presentation instead of a separate menu tree.
+- Allow nested categories via `parent_category_id` when needed.
 - Encode modifier options separately from modifier groups (option → modifier item).
-- Allow item availability but override it with menu-level availability when present.
+- Allow item availability but override it with catalog availability when present.

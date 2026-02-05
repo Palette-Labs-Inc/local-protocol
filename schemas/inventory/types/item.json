@@ -53,7 +53,7 @@
     },
     "availability": {
       "$ref": "availability.json",
-      "description": "Item availability. Ignored when the menu view defines availability."
+      "description": "Item availability. Ignored when the catalog defines availability."
     },
     "metadata": {
       "type": "object",

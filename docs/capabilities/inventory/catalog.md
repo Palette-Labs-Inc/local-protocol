@@ -1,17 +1,19 @@
 # Catalog
 
-Canonical catalog grouping categories, items, and associated menu views.
+Canonical catalog grouping categories, items, and availability.
 
 ## Fields
 
 - `id` (string, required): Catalog identifier.
 - `name` (string, required): Catalog name.
 - `description` (string, optional): Catalog description.
-- `category_ids` (array, required): Category identifiers included in this catalog.
+- `category_ids` (array, required): Ordered top-level category identifiers included in this catalog (empty if uncategorized).
 - `item_ids` (array, optional): Item identifiers included directly in the catalog (not assigned to a category).
+- `availability` (object, optional): Catalog-level availability schedule. Overrides item availability.
 - `fulfillment_modes` (array, optional): Fulfillment modes supported by this catalog.
-- `menu_view_ids` (array, optional): Menu view identifiers associated with this catalog.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
+
+Category ordering is defined by `category_ids`, and item ordering is defined by each category's `item_ids`.
 
 ## Example
 
@@ -22,7 +24,12 @@ Canonical catalog grouping categories, items, and associated menu views.
   "description": "Morning menu",
   "category_ids": ["catg_1", "catg_2"],
   "item_ids": ["item_9"],
+  "availability": {
+    "intervals": [
+      { "day": "Saturday", "from_hour": 8, "from_minute": 0, "to_hour": 14, "to_minute": 0 }
+    ]
+  },
   "fulfillment_modes": ["PICKUP", "DELIVERY"],
-  "menu_view_ids": ["mv_breakfast"]
+  "metadata": { "source": "pos" }
 }
 ```
