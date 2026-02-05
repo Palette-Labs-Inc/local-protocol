@@ -23,14 +23,14 @@
       "items": {
         "type": "string"
       },
-      "description": "Ordered top-level category identifiers included in this catalog. Nested categories use parent_category_id."
+      "description": "Ordered top-level category identifiers included in this catalog. Nested categories use parent_category_id and child_category_ids."
     },
     "item_ids": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "Item identifiers included in this catalog that are not assigned to a category."
+      "description": "Ordered item identifiers included in this catalog that are not assigned to a category."
     },
     "availability": {
       "$ref": "types/availability.json",

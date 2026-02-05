@@ -13,7 +13,7 @@ The Inventory capability defines a canonical catalog graph with category-based p
 ## Core Model
 
 - A **canonical catalog graph** contains reusable objects: catalogs, categories, items, modifier groups, modifier options, and modifier items.
-- Catalogs order categories via `category_ids`, and categories order items via `item_ids`.
+- Catalogs order categories via `category_ids`, categories order items via `item_ids`, and parent categories order nested categories via `child_category_ids`.
 - Categories may be nested with `parent_category_id` when a hierarchy is needed.
 - Provider-specific fields that are not modeled natively belong in `metadata`.
 
@@ -29,7 +29,7 @@ The Inventory capability defines a canonical catalog graph with category-based p
 
 ## Availability
 
-- `schemas/inventory/types/availability.json` and `interval.json` define weekly and date-specific schedules.
+- `schemas/inventory/types/availability.json` and `schemas/inventory/types/interval.json` define weekly and date-specific schedules.
 - Availability may be defined on a catalog or an item.
 - If a catalog defines availability, it overrides item availability.
 

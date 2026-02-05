@@ -7,13 +7,13 @@ Canonical catalog grouping categories, items, and availability.
 - `id` (string, required): Catalog identifier.
 - `name` (string, required): Catalog name.
 - `description` (string, optional): Catalog description.
-- `category_ids` (array, required): Ordered top-level category identifiers included in this catalog (empty if uncategorized).
-- `item_ids` (array, optional): Item identifiers included directly in the catalog (not assigned to a category).
+- `category_ids` (array, required): Ordered top-level category identifiers included in this catalog (empty if uncategorized). Nested categories are referenced by parent categories via `child_category_ids`.
+- `item_ids` (array, optional): Ordered item identifiers included directly in the catalog (not assigned to a category).
 - `availability` (object, optional): Catalog-level availability schedule. Overrides item availability.
 - `fulfillment_modes` (array, optional): Fulfillment modes supported by this catalog.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
-Category ordering is defined by `category_ids`, and item ordering is defined by each category's `item_ids`.
+Category ordering is defined by `category_ids`, nested category ordering is defined by parent `child_category_ids`, and item ordering is defined by each category's `item_ids` (or `item_ids` on the catalog for uncategorized items).
 
 ## Example
 
