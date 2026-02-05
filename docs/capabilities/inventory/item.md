@@ -7,7 +7,7 @@ Canonical menu item with modifier group references.
 - `id` (string, required): Item identifier.
 - `name` (string, required): Item name.
 - `description` (object, required): Item description in one or more formats.
-- `price` (object, required): Base price in minor units with currency (see [Price](price.md)).
+- `price` (object, required): Base price in minor units with currency (see [Amount](../../documentation/amount.md)).
 - `media` (array, optional): Item media.
 - `modifier_group_ids` (array, optional): Modifier group identifiers available for this item.
 - `modifier_group_overrides` (array, optional): Item-level overrides for modifier groups (selection constraints, quantities, and option ordering/availability).

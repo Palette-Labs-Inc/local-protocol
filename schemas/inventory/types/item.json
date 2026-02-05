@@ -34,7 +34,7 @@
       "minProperties": 1
     },
     "price": {
-      "$ref": "https://localprotocol.xyz/schemas/ucp/types/price.json",
+      "$ref": "https://localprotocol.xyz/schemas/ucp/types/amount.json",
       "description": "Base price for the item."
     },
     "media": {

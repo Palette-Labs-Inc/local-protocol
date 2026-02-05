@@ -39,12 +39,12 @@ The Inventory capability defines a canonical catalog graph with category-based p
 
 Intervals are neutral and can be reused by closure schedules.
 
-## Source of Truth and Channel Pricing
+## Source of Truth and Platform Pricing
 
 - The merchant/business (or its delegate, such as a POS, ERP, or PIM) is the source of truth for catalog data.
-- Channels or marketplaces that mirror those catalogs may apply markups, discounts, or fees.
-- Those channel-specific pricing adjustments are modeled **separately** from the catalog itself (e.g., in checkout totals/adjustments), not by mutating canonical item prices.
-- If a business intentionally sets different base prices per channel, represent them as distinct catalogs with their own item prices.
+- Platforms or marketplaces that mirror those catalogs may apply markups, discounts, or fees.
+- Those platform-specific pricing adjustments are modeled **separately** from the catalog itself (e.g., in checkout totals/adjustments), not by mutating canonical item prices.
+- If a business intentionally sets different base prices per platform, represent them as distinct catalogs with their own item prices.
 
 ## Provider Compatibility (Examples)
 

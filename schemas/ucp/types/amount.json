@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/ucp/types/amount.json",
+  "title": "Amount",
+  "description": "Amount with explicit currency. Amount is always in minor units (e.g., cents for USD).",
+  "type": "object",
+  "required": [
+    "amount",
+    "currency",
+    "decimals"
+  ],
+  "properties": {
+    "amount": {
+      "type": "string",
+      "description": "Amount in minor currency units as an integer string (e.g., \"1000\" = $10.00 USD). Use \"0\" for free items.",
+      "pattern": "^[0-9]+$"
+    },
+    "currency": {
+      "type": "string",
+      "description": "Currency or token symbol (e.g., 'USD', 'EUR', 'USDC').",
+      "pattern": "^[A-Z0-9_]+$"
+    },
+    "decimals": {
+      "type": "integer",
+      "description": "Decimal places for the currency/token.",
+      "minimum": 0,
+      "maximum": 255
+    }
+  }
+}
