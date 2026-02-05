@@ -17,6 +17,7 @@ The Inventory capability defines a canonical catalog graph with category-based p
 - Categories may be nested with `parent_category_id` when a hierarchy is needed.
 - Provider-specific fields that are not modeled natively belong in `metadata`.
 - Items may appear directly in a catalog via `item_ids` without category membership. If a UI or storage system requires a category, place these items into a synthetic category (for example, "Items" or "Uncategorized").
+- Fulfillment modes use canonical values (`DELIVERY`, `PICKUP`, `DINE_IN`) and allow extensions via `X_`-prefixed uppercase snake case.
 
 ## Canonical Objects
 
