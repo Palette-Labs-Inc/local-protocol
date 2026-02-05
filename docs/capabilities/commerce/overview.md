@@ -42,6 +42,13 @@ Menu views are not authoritative for price or description. They exist to structu
 - Availability may be defined on a menu view or an item.
 - If a menu view defines availability, it overrides item availability.
 
+## Source of Truth and Platform Pricing
+
+- The restaurant (or its delegate, such as a POS) is the source of truth for catalog data.
+- Platforms or businesses mirroring those menus (Uber Eats, DoorDash, Grubhub, etc.) may apply markups, discounts, or fees.
+- Those platform-specific pricing adjustments are modeled **separately** from the catalog itself (e.g., in checkout totals/adjustments), not by mutating canonical item prices.
+- If a restaurant intentionally sets different base prices per platform, that should be represented as distinct catalogs with their own item prices.
+
 ## Provider Compatibility
 
 | Provider | Mapping Notes |
