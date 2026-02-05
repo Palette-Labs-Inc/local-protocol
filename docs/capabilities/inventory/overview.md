@@ -17,7 +17,7 @@ The Inventory capability defines a canonical catalog graph with category-based p
 - Categories may be nested with `parent_category_id` when a hierarchy is needed.
 - Provider-specific fields that are not modeled natively belong in `metadata`.
 - Items may appear directly in a catalog via `item_ids` without category membership. If a UI or storage system requires a category, place these items into a synthetic category (for example, "Items" or "Uncategorized").
-- Fulfillment modes use canonical values (`DELIVERY`, `PICKUP`, `DINE_IN`) and allow extensions via `X_`-prefixed uppercase snake case.
+- Fulfillment modes use canonical values (`DELIVERY`, `PICKUP`, `DINE_IN`), with custom values allowed when needed.
 
 ## Canonical Objects
 
@@ -45,25 +45,3 @@ Intervals are neutral and can be reused by closure schedules.
 - Platforms or marketplaces that mirror those catalogs may apply markups, discounts, or fees.
 - Those platform-specific pricing adjustments are modeled **separately** from the catalog itself (e.g., in checkout totals/adjustments), not by mutating canonical item prices.
 - If a business intentionally sets different base prices per platform, represent them as distinct catalogs with their own item prices.
-
-## Provider Compatibility (Examples)
-
-These mappings are illustrative; the model is intended to support food, retail, and services.
-
-| Provider | Mapping Notes |
-| --- | --- |
-| Toast v3 | `menus` map to catalogs; `menuGroups` map to categories; nested groups map to `parent_category_id`. |
-| Square | `CatalogItem` → item; `CatalogModifierList` → modifier_group; `CatalogModifier` → modifier_item; constraints map to modifier group limits. |
-| Google FoodMenus | menus/sections/items map to catalog/category/item; rich attributes preserved in `metadata`. |
-
-## Example: Hierarchical Menu Providers (Toast v3)
-
-Some providers expose hierarchical menu trees with nested groups. For Toast v3, the simplified model is:
-- `menus` map to catalogs.
-- `menuGroups` map to categories.
-- Nested groups map to `parent_category_id`.
-- Menu item ordering is represented by `item_ids` within each category.
-
-## Decision Record
-
-See `DECISIONS.md` for the full requirements-to-decisions trace.

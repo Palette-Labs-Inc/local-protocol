@@ -39,19 +39,9 @@
     "fulfillment_modes": {
       "type": "array",
       "items": {
-        "anyOf": [
-          {
-            "type": "string",
-            "enum": ["DELIVERY", "PICKUP", "DINE_IN"]
-          },
-          {
-            "type": "string",
-            "pattern": "^X_[A-Z0-9_]+$",
-            "description": "Extension fulfillment mode. Use X_ prefix with uppercase snake case."
-          }
-        ]
+        "type": "string"
       },
-      "description": "Fulfillment modes supported by this catalog. Use canonical values when possible; custom values must use X_ prefix."
+      "description": "Fulfillment modes supported by this catalog."
     },
     "metadata": {
       "type": "object",
