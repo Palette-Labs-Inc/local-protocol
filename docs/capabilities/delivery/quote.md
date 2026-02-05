@@ -12,6 +12,7 @@ Delivery quote offered by a provider, including price, route, and estimated timi
 - `dropoff_location` (object, required): Dropoff location (postal address or coordinates).
 - `pickup_estimate` (string, required): Estimated pickup time (RFC 3339).
 - `dropoff_estimate` (string, required): Estimated dropoff time (RFC 3339).
+- `expires_at` (string, optional): Time when the quote expires (RFC 3339).
 
 ## Example
 
@@ -44,6 +45,7 @@ Delivery quote offered by a provider, including price, route, and estimated timi
     }
   },
   "pickup_estimate": "2026-01-30T19:15:00Z",
-  "dropoff_estimate": "2026-01-30T19:35:00Z"
+  "dropoff_estimate": "2026-01-30T19:35:00Z",
+  "expires_at": "2026-01-30T19:10:00Z"
 }
 ```
