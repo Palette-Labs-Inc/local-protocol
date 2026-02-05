@@ -23,6 +23,13 @@ Canonical menu item with modifier group references.
   "description": { "plain": "Slow-cooked pork with salsa verde." },
   "price": { "amount": 450, "currency": "USD" },
   "modifier_group_ids": ["mg_1"],
+  "modifier_group_overrides": [
+    {
+      "modifier_group_id": "mg_1",
+      "maximum_selections": 2,
+      "modifier_option_ids": ["mo_1", "mo_2"]
+    }
+  ],
   "availability": {
     "intervals": [
       { "day": "Friday", "from_hour": 11, "from_minute": 0, "to_hour": 22, "to_minute": 0 }

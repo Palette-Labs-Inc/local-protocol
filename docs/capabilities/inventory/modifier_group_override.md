@@ -2,6 +2,8 @@
 
 Item-specific overrides for a modifier group.
 
+Use overrides to adjust a canonical modifier group for a specific item without defining a new group.
+
 ## Fields
 
 - `modifier_group_id` (string, required): Modifier group identifier being overridden.
@@ -24,3 +26,8 @@ Item-specific overrides for a modifier group.
   "modifier_option_ids": ["mo_2", "mo_1"]
 }
 ```
+
+Example scenario:
+- Modifier group `mg_1` ("Choose Salsa") normally offers `["mo_1", "mo_2", "mo_3"]` with max 1 selection.
+- Item "Burrito" wants only `["mo_1", "mo_2"]` and allows up to 2 selections.
+- The item references `mg_1` in `modifier_group_ids` and supplies a `modifier_group_override` that narrows and relaxes the constraints.
