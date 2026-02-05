@@ -51,9 +51,16 @@
       },
       "description": "Modifier group identifiers available for this item."
     },
+    "modifier_group_overrides": {
+      "type": "array",
+      "items": {
+        "$ref": "modifier_group_override.json"
+      },
+      "description": "Item-level overrides for modifier groups (selection constraints, quantities, and option ordering/availability)."
+    },
     "availability": {
       "$ref": "availability.json",
-      "description": "Item availability. Ignored when the catalog defines availability."
+      "description": "Item availability. Ignored when the catalog or category defines availability."
     },
     "metadata": {
       "type": "object",

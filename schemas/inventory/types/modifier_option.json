@@ -25,10 +25,6 @@
       "type": "boolean",
       "description": "Whether this option is selected by default."
     },
-    "sort_order": {
-      "type": "integer",
-      "description": "Sort order for option display. Lower values appear first."
-    },
     "metadata": {
       "type": "object",
       "description": "Business-defined custom data extending the modifier option.",

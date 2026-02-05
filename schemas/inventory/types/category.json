@@ -36,6 +36,10 @@
       },
       "description": "Ordered list of item identifiers in this category."
     },
+    "availability": {
+      "$ref": "availability.json",
+      "description": "Category availability. Ignored when the catalog defines availability."
+    },
     "metadata": {
       "type": "object",
       "description": "Business-defined custom data extending the category.",

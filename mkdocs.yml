@@ -24,6 +24,7 @@ nav:
               - Modifier Group: capabilities/inventory/modifier_group.md
               - Modifier Option: capabilities/inventory/modifier_option.md
               - Modifier Item: capabilities/inventory/modifier_item.md
+              - Modifier Group Override: capabilities/inventory/modifier_group_override.md
               - Availability: capabilities/inventory/availability.md
               - Interval: capabilities/inventory/interval.md
       - Delivery:

@@ -28,6 +28,10 @@
       "minimum": 0,
       "description": "Maximum number of selections allowed from this group."
     },
+    "allow_quantities": {
+      "type": "boolean",
+      "description": "Whether modifier options can be selected with quantities greater than 1."
+    },
     "max_per_modifier": {
       "type": "integer",
       "minimum": 0,
@@ -40,7 +44,7 @@
       "items": {
         "type": "string"
       },
-      "description": "Available modifier option identifiers within this group."
+      "description": "Ordered modifier option identifiers within this group. Order should be used for display."
     },
     "type": {
       "type": "string",

@@ -1,13 +1,13 @@
 # Availability
 
-Availability schedule for a catalog or item.
+Availability schedule for a catalog, category, or item.
 
 ## Fields
 
 - `timezone` (string, optional): IANA timezone for the intervals. Defaults to merchant timezone when omitted.
 - `intervals` (array, required): Availability intervals (weekly or date-specific).
 
-Intervals use the `interval` type. Use `day` for weekly schedules and `date` for one-off exceptions (e.g., holiday hours). The same interval shape can be reused for closure schedules. When catalog availability is present, item availability is ignored.
+Intervals use the `interval` type. Use `day` for weekly schedules and `date` for one-off exceptions (e.g., holiday hours). The same interval shape can be reused for closure schedules. When catalog availability is present, category and item availability are ignored. When category availability is present, item availability is ignored.
 
 ## Example
 

@@ -10,6 +10,7 @@ Canonical category grouping items in a catalog.
 - `parent_category_id` (string, optional): Parent category identifier for nested categories.
 - `child_category_ids` (array, optional): Ordered list of child category identifiers for nested categories.
 - `item_ids` (array, required): Ordered list of item identifiers in this category.
+- `availability` (object, optional): Category-level availability schedule. Overrides item availability unless catalog availability is defined.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 Catalogs control top-level category ordering via their `category_ids` list.

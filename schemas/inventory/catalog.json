@@ -30,7 +30,7 @@
       "items": {
         "type": "string"
       },
-      "description": "Ordered item identifiers included in this catalog that are not assigned to a category."
+      "description": "Ordered item identifiers included in this catalog that are not assigned to a category. Consumers that require category membership should place these items into a synthetic category."
     },
     "availability": {
       "$ref": "types/availability.json",

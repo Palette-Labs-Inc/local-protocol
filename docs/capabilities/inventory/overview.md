@@ -16,6 +16,7 @@ The Inventory capability defines a canonical catalog graph with category-based p
 - Catalogs order categories via `category_ids`, categories order items via `item_ids`, and parent categories order nested categories via `child_category_ids`.
 - Categories may be nested with `parent_category_id` when a hierarchy is needed.
 - Provider-specific fields that are not modeled natively belong in `metadata`.
+- Items may appear directly in a catalog via `item_ids` without category membership. If a UI or storage system requires a category, place these items into a synthetic category (for example, "Items" or "Uncategorized").
 
 ## Canonical Objects
 
@@ -26,12 +27,14 @@ The Inventory capability defines a canonical catalog graph with category-based p
 - `schemas/inventory/types/modifier_group.json` defines selection constraints and option membership.
 - `schemas/inventory/types/modifier_option.json` defines option nodes referencing modifier items.
 - `schemas/inventory/types/modifier_item.json` defines purchasable modifier items.
+- `schemas/inventory/types/modifier_group_override.json` defines item-level overrides for modifier groups.
 
 ## Availability
 
 - `schemas/inventory/types/availability.json` and `schemas/inventory/types/interval.json` define weekly and date-specific schedules.
-- Availability may be defined on a catalog or an item.
-- If a catalog defines availability, it overrides item availability.
+- Availability may be defined on a catalog, category, or item.
+- If a catalog defines availability, it overrides category and item availability.
+- If a category defines availability, it overrides item availability.
 
 Intervals are neutral and can be reused by closure schedules.
 
