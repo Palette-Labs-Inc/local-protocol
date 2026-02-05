@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.xyz/schemas/commerce/menu_view.json",
+  "$id": "https://localprotocol.xyz/schemas/inventory/menu_view.json",
   "title": "Menu View",
   "description": "Presentation-only menu tree for a catalog. If availability is provided here, it takes precedence over item availability.",
   "type": "object",

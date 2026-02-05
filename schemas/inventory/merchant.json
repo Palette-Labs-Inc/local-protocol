@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.xyz/schemas/commerce/restaurant.json",
-  "title": "Restaurant",
-  "description": "Restaurant catalog payload containing canonical objects and menu views.",
+  "$id": "https://localprotocol.xyz/schemas/inventory/merchant.json",
+  "title": "Merchant",
+  "description": "Merchant catalog payload containing canonical objects and menu views.",
   "type": "object",
   "required": [
     "id",
@@ -19,11 +19,11 @@
   "properties": {
     "id": {
       "type": "string",
-      "description": "Restaurant identifier."
+      "description": "Merchant identifier."
     },
     "name": {
       "type": "string",
-      "description": "Restaurant name."
+      "description": "Merchant name."
     },
     "timezone": {
       "type": "string",
@@ -40,7 +40,7 @@
       "items": {
         "$ref": "catalog.json"
       },
-      "description": "Catalogs available for the restaurant."
+      "description": "Catalogs available for the merchant."
     },
     "menu_views": {
       "type": "array",
@@ -89,11 +89,11 @@
       "items": {
         "$ref": "types/external_id.json"
       },
-      "description": "Provider identifiers for this restaurant."
+      "description": "Provider identifiers for this merchant."
     },
     "metadata": {
       "type": "object",
-      "description": "Business-defined custom data extending the restaurant.",
+      "description": "Business-defined custom data extending the merchant.",
       "additionalProperties": true
     }
   },

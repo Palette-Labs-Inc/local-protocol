@@ -2,7 +2,7 @@
 
 Specification and documentation site for Local Protocol.
 
-Commerce design notes live in the docs. See `docs/capabilities/commerce/overview.md`.
+Inventory design notes live in the docs. See `docs/capabilities/inventory/overview.md`.
 
 ## Docs
 

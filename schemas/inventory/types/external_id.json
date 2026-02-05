@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.xyz/schemas/commerce/types/external_id.json",
+  "$id": "https://localprotocol.xyz/schemas/inventory/types/external_id.json",
   "title": "External ID",
   "description": "Provider-specific identifier mapping for a local protocol object.",
   "type": "object",

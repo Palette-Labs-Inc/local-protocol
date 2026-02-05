@@ -1,11 +1,11 @@
-# Restaurant
+# Merchant
 
-Top-level payload containing canonical catalog objects and menu views for a restaurant.
+Top-level payload containing canonical catalog objects and menu views for a merchant.
 
 ## Fields
 
-- `id` (string, required): Restaurant identifier.
-- `name` (string, required): Restaurant name.
+- `id` (string, required): Merchant identifier.
+- `name` (string, required): Merchant name.
 - `timezone` (string, required): IANA timezone for availability schedules.
 - `last_updated` (string, optional): RFC 3339 timestamp of latest catalog update.
 - `catalogs` (array, required): Catalog definitions.
@@ -15,14 +15,14 @@ Top-level payload containing canonical catalog objects and menu views for a rest
 - `modifier_groups` (array, required): Canonical modifier groups.
 - `modifier_options` (array, required): Canonical modifier options.
 - `modifier_items` (array, required): Canonical modifier items.
-- `external_ids` (array, optional): Provider identifiers for this restaurant.
+- `external_ids` (array, optional): Provider identifiers for this merchant.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 ## Example
 
 ```json
 {
-  "id": "rest_123",
+  "id": "merchant_123",
   "name": "Mesa Grill",
   "timezone": "America/Denver",
   "last_updated": "2026-02-05T18:30:00Z",
