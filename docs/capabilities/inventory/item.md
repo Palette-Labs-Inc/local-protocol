@@ -11,7 +11,7 @@ Canonical menu item with modifier group references.
 - `media` (array, optional): Item media.
 - `modifier_group_ids` (array, optional): Modifier group identifiers available for this item.
 - `modifier_group_overrides` (array, optional): Item-level overrides for modifier groups (selection constraints, quantities, and option ordering/availability).
-- `availability` (object, optional): Item-level availability schedule. Overrides are ignored when the catalog or category defines availability.
+- `availability` (object, optional): Item-level availability schedule; if a catalog or category defines availability, the entire item-level `availability` object (including any `overrides`) is ignored. Otherwise the item-level `availability` and its `overrides` apply.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 ## Example
