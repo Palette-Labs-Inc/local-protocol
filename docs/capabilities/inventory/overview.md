@@ -37,7 +37,7 @@ The Catalog capability defines a canonical catalog graph with category-based pre
 - If a catalog defines availability, it overrides category and item availability.
 - If a category defines availability, it overrides item availability.
 
-Intervals are neutral and can be reused by closure schedules.
+Intervals are neutral and can be reused by closure schedules (recurring unavailability windows applied at the merchant or location level).
 
 ## Source of Truth and Platform Pricing
 
