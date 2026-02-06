@@ -72,14 +72,14 @@ recomputing the hash.
 - `receiver` (string, required): Receiver address used to compute the hash
   (MUST match the handler default receiver or be allowed by operator policy).
 - `token` (object, required): Token identifier used to compute the hash.
-- `max_amount` (object, required): Maximum authorized amount (atomic units) used to compute the hash. Uses the [Amount](../shared/amount.md) object; `amount.currency` MUST match the token (`chain_id`, `address`, `decimals`).
+- `max_amount` (object, required): Maximum authorized amount (atomic units) used to compute the hash. Uses the [Amount](../shared/amount.md) object; `amount.currency.chain_id` MUST match the instrument `chain_id`, and `amount.currency.address` and `amount.currency.decimals` MUST match `token.address` and `token.decimals`.
 - `preapproval_expires_at` (string, required): Pre-approval expiration timestamp (RFC 3339) used to compute the hash.
 - `authorization_expires_at` (string, required): Authorization expiration timestamp (RFC 3339) used to compute the hash.
 - `refund_expires_at` (string, required): Refund expiration timestamp (RFC 3339) used to compute the hash.
 - `nonce` (string, required): Unique nonce used to compute the hash.
 - `chain_id` (integer, required): EVM chain id.
 - `contract` (string, required): Escrow contract address.
-- `amount` (object, required): Amount in atomic units. Uses the [Amount](../shared/amount.md) object; `amount.currency` MUST match the token (`chain_id`, `address`, `decimals`).
+- `amount` (object, required): Amount in atomic units. Uses the [Amount](../shared/amount.md) object; `amount.currency.chain_id` MUST match the instrument `chain_id`, and `amount.currency.address` and `amount.currency.decimals` MUST match `token.address` and `token.decimals`.
 
 `amount.value` MUST be less than or equal to `max_amount.value`, using numeric comparison: consumers MUST parse both values as base-10 integers (smallest currency unit) per the [Amount](../shared/amount.md) schema (decimal string representing an integer) and MUST reject non-numeric or non-integer strings to avoid lexicographic comparisons.
 
