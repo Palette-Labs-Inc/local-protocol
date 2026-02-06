@@ -23,6 +23,14 @@ nav:
               - Location: capabilities/delivery/location.md
               - Coordinates: capabilities/delivery/coordinates.md
           - Events: capabilities/delivery/events.md
+      - Order:
+          - Overview: capabilities/order/overview.md
+          - Objects:
+              - Cart: capabilities/order/cart.md
+              - Request: capabilities/order/request.md
+              - Quote: capabilities/order/quote.md
+              - Order: capabilities/order/order.md
+          - API: capabilities/order/api.md
   - Payment:
       - Overview: payment/overview.md
       - EVM Auth/Capture Payments: payment/escrow.md
