@@ -2,9 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://localprotocol.xyz/schemas/inventory/catalog.json",
   "title": "Catalog",
-  "description": "A catalog containing categories, items, availability, and fulfillment configuration.",
+  "description": "A catalog containing embedded categories, items, availability, and fulfillment configuration.",
   "type": "object",
-  "required": ["id", "name", "category_ids"],
+  "required": ["id", "name", "categories"],
   "properties": {
     "id": {
       "type": "string",
@@ -18,23 +18,23 @@
       "type": "string",
       "description": "Catalog description."
     },
-    "category_ids": {
+    "categories": {
       "type": "array",
       "items": {
-        "type": "string"
+        "$ref": "types/category.json"
       },
-      "description": "Ordered top-level category identifiers included in this catalog. Nested categories use parent_category_id and child_category_ids."
+      "description": "Ordered top-level categories included in this catalog. Nested categories live under each category's categories array."
     },
-    "item_ids": {
+    "items": {
       "type": "array",
       "items": {
-        "type": "string"
+        "$ref": "types/item.json"
       },
-      "description": "Ordered item identifiers included in this catalog that are not assigned to a category. Consumers that require category membership should place these items into a synthetic category."
+      "description": "Ordered items included in this catalog that are not assigned to a category. Consumers that require category membership should place these items into a synthetic category."
     },
     "availability": {
       "$ref": "types/availability.json",
-      "description": "Catalog availability. When present, it overrides item availability."
+      "description": "Catalog availability. When present, it overrides category and item availability."
     },
     "fulfillment_modes": {
       "type": "array",

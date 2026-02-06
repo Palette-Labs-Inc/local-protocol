@@ -2,18 +2,13 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://localprotocol.xyz/schemas/inventory/merchant.json",
   "title": "Merchant",
-  "description": "Merchant catalog payload containing canonical objects and catalogs.",
+  "description": "Merchant catalog payload containing denormalized catalogs.",
   "type": "object",
   "required": [
     "id",
     "name",
     "timezone",
-    "catalogs",
-    "categories",
-    "items",
-    "modifier_groups",
-    "modifier_options",
-    "modifier_items"
+    "catalogs"
   ],
   "properties": {
     "id": {
@@ -40,41 +35,6 @@
         "$ref": "catalog.json"
       },
       "description": "Catalogs available for the merchant."
-    },
-    "categories": {
-      "type": "array",
-      "items": {
-        "$ref": "types/category.json"
-      },
-      "description": "Canonical catalog categories."
-    },
-    "items": {
-      "type": "array",
-      "items": {
-        "$ref": "types/item.json"
-      },
-      "description": "Canonical catalog items."
-    },
-    "modifier_groups": {
-      "type": "array",
-      "items": {
-        "$ref": "types/modifier_group.json"
-      },
-      "description": "Canonical modifier groups."
-    },
-    "modifier_options": {
-      "type": "array",
-      "items": {
-        "$ref": "types/modifier_option.json"
-      },
-      "description": "Canonical modifier options."
-    },
-    "modifier_items": {
-      "type": "array",
-      "items": {
-        "$ref": "types/modifier_item.json"
-      },
-      "description": "Canonical modifier items."
     },
     "metadata": {
       "type": "object",

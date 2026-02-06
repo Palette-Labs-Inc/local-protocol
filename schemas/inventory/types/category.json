@@ -2,9 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://localprotocol.xyz/schemas/inventory/types/category.json",
   "title": "Catalog Category",
-  "description": "A canonical category grouping items in a catalog.",
+  "description": "A category grouping items in a catalog.",
   "type": "object",
-  "required": ["id", "name", "item_ids"],
+  "required": ["id", "name", "items"],
   "properties": {
     "id": {
       "type": "string",
@@ -18,23 +18,19 @@
       "type": "string",
       "description": "Optional category description."
     },
-    "parent_category_id": {
-      "type": "string",
-      "description": "Optional parent category identifier for nested category trees."
-    },
-    "child_category_ids": {
+    "categories": {
       "type": "array",
       "items": {
-        "type": "string"
+        "$ref": "category.json"
       },
-      "description": "Ordered list of child category identifiers for nested categories."
+      "description": "Ordered list of child categories for nested category trees."
     },
-    "item_ids": {
+    "items": {
       "type": "array",
       "items": {
-        "type": "string"
+        "$ref": "item.json"
       },
-      "description": "Ordered list of item identifiers in this category."
+      "description": "Ordered list of items in this category."
     },
     "availability": {
       "$ref": "availability.json",

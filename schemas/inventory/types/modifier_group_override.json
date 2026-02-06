@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://localprotocol.xyz/schemas/inventory/types/modifier_group_override.json",
-  "title": "Modifier Group Override",
-  "description": "Item-specific overrides for a modifier group.",
+  "title": "Modifier Group Override (Legacy)",
+  "description": "Legacy normalized-model override. In the denormalized catalog, items embed full modifier groups directly instead of using overrides.",
   "type": "object",
   "required": ["modifier_group_id"],
   "properties": {

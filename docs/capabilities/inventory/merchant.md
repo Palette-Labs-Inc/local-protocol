@@ -1,6 +1,6 @@
 # Merchant
 
-Top-level payload containing canonical catalog objects and catalogs for a merchant.
+Top-level payload containing denormalized catalogs for a merchant.
 
 ## Fields
 
@@ -8,12 +8,7 @@ Top-level payload containing canonical catalog objects and catalogs for a mercha
 - `name` (string, required): Merchant name.
 - `timezone` (string, required): IANA timezone for availability schedules.
 - `last_updated` (string, optional): RFC 3339 timestamp of latest catalog update.
-- `catalogs` (array, required): Catalog definitions.
-- `categories` (array, required): Canonical categories.
-- `items` (array, required): Canonical items.
-- `modifier_groups` (array, required): Canonical modifier groups.
-- `modifier_options` (array, required): Canonical modifier options.
-- `modifier_items` (array, required): Canonical modifier items.
+- `catalogs` (array, required): Catalog definitions with embedded categories/items/modifiers.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 ## Example
@@ -28,41 +23,47 @@ Top-level payload containing canonical catalog objects and catalogs for a mercha
     {
       "id": "cat_1",
       "name": "Main Menu",
-      "category_ids": ["catg_1"]
+      "categories": [
+        {
+          "id": "catg_1",
+          "name": "Tacos",
+          "items": [
+            {
+              "id": "item_1",
+              "name": "Carnitas Taco",
+              "description": { "plain": "Slow-cooked pork with salsa verde." },
+              "price": { "value": "450", "currency": { "symbol": "USD" } },
+              "modifier_groups": [
+                {
+                  "id": "mg_1",
+                  "name": "Choose Salsa",
+                  "minimum_selections": 1,
+                  "maximum_selections": 1,
+                  "modifier_options": [
+                    {
+                      "id": "mo_1",
+                      "modifier_item": {
+                        "id": "mi_1",
+                        "name": "Salsa Verde",
+                        "price": { "value": "0", "currency": { "symbol": "USD" } }
+                      }
+                    },
+                    {
+                      "id": "mo_2",
+                      "modifier_item": {
+                        "id": "mi_2",
+                        "name": "Salsa Roja",
+                        "price": { "value": "0", "currency": { "symbol": "USD" } }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
-  ],
-  "categories": [
-    {
-      "id": "catg_1",
-      "name": "Tacos",
-      "item_ids": ["item_1"]
-    }
-  ],
-  "items": [
-    {
-      "id": "item_1",
-      "name": "Carnitas Taco",
-      "description": { "plain": "Slow-cooked pork with salsa verde." },
-      "price": { "value": "450", "currency": { "symbol": "USD" } },
-      "modifier_group_ids": ["mg_1"]
-    }
-  ],
-  "modifier_groups": [
-    {
-      "id": "mg_1",
-      "name": "Choose Salsa",
-      "minimum_selections": 1,
-      "maximum_selections": 1,
-      "modifier_option_ids": ["mo_1", "mo_2"]
-    }
-  ],
-  "modifier_options": [
-    { "id": "mo_1", "modifier_item_id": "mi_1" },
-    { "id": "mo_2", "modifier_item_id": "mi_2" }
-  ],
-  "modifier_items": [
-    { "id": "mi_1", "name": "Salsa Verde", "price": { "value": "0", "currency": { "symbol": "USD" } } },
-    { "id": "mi_2", "name": "Salsa Roja", "price": { "value": "0", "currency": { "symbol": "USD" } } }
   ]
 }
 ```

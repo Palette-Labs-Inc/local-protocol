@@ -4,22 +4,22 @@
   "title": "Modifier Option",
   "description": "Selectable option within a modifier group.",
   "type": "object",
-  "required": ["id", "modifier_item_id"],
+  "required": ["id", "modifier_item"],
   "properties": {
     "id": {
       "type": "string",
       "description": "Modifier option identifier."
     },
-    "modifier_item_id": {
-      "type": "string",
-      "description": "Modifier item identifier for this option."
+    "modifier_item": {
+      "$ref": "modifier_item.json",
+      "description": "Modifier item for this option."
     },
-    "child_modifier_group_ids": {
+    "child_modifier_groups": {
       "type": "array",
       "items": {
-        "type": "string"
+        "$ref": "modifier_group.json"
       },
-      "description": "Nested modifier group identifiers required after selecting this option."
+      "description": "Nested modifier groups required after selecting this option."
     },
     "is_default": {
       "type": "boolean",

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://localprotocol.xyz/schemas/inventory/types/item.json",
   "title": "Catalog Item",
-  "description": "A canonical menu item with modifier group references.",
+  "description": "A menu item with embedded modifier groups.",
   "type": "object",
   "required": ["id", "name", "description", "price"],
   "properties": {
@@ -45,19 +45,12 @@
       },
       "description": "Item media (images, videos, 3D models)."
     },
-    "modifier_group_ids": {
+    "modifier_groups": {
       "type": "array",
       "items": {
-        "type": "string"
+        "$ref": "modifier_group.json"
       },
-      "description": "Modifier group identifiers available for this item."
-    },
-    "modifier_group_overrides": {
-      "type": "array",
-      "items": {
-        "$ref": "modifier_group_override.json"
-      },
-      "description": "Item-level overrides for modifier groups (selection constraints, quantities, and option ordering/availability)."
+      "description": "Modifier groups available for this item."
     },
     "availability": {
       "$ref": "availability.json",

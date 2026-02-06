@@ -29,3 +29,11 @@ Decisions
 - Allow nested categories via `parent_category_id` when needed.
 - Encode modifier options separately from modifier groups (option → modifier item).
 - Allow item availability but override it with catalog availability when present.
+
+## 2026-02-06
+
+Decisions
+- Switch inventory catalog models to denormalized, embedded objects (catalogs contain categories/items; items contain modifier groups/options/items).
+- Use array order for category, item, and modifier ordering instead of `*_ids` membership lists.
+- Keep ids on embedded objects for provider mapping, but do not require cross-object references.
+- Drop modifier group overrides; item-level differences are expressed by embedding the final group definition.

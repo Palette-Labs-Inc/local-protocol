@@ -1,17 +1,12 @@
 # Modifier Option
 
-Selectable option within a modifier group that references a modifier item.
-
-Modifier options are separated from modifier items so that:
-- The same purchasable modifier item (price/name/media) can be reused across multiple groups or contexts.
-- Groups can control option ordering, defaults, and nested follow-on groups without duplicating the item data.
-- POS models (e.g., Square) map cleanly: option nodes reference modifier items rather than embedding them.
+Selectable option within a modifier group that embeds a modifier item.
 
 ## Fields
 
 - `id` (string, required): Modifier option identifier.
-- `modifier_item_id` (string, required): Modifier item identifier for this option.
-- `child_modifier_group_ids` (array, optional): Nested modifier group identifiers required after selecting this option.
+- `modifier_item` (object, required): Modifier item for this option.
+- `child_modifier_groups` (array, optional): Nested modifier groups required after selecting this option.
 - `is_default` (boolean, optional): Whether this option is selected by default.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
@@ -20,8 +15,29 @@ Modifier options are separated from modifier items so that:
 ```json
 {
   "id": "mo_1",
-  "modifier_item_id": "mi_1",
+  "modifier_item": {
+    "id": "mi_1",
+    "name": "Salsa Verde",
+    "price": { "value": "0", "currency": { "symbol": "USD" } }
+  },
   "is_default": true,
-  "child_modifier_group_ids": ["mg_2"]
+  "child_modifier_groups": [
+    {
+      "id": "mg_2",
+      "name": "Heat Level",
+      "minimum_selections": 1,
+      "maximum_selections": 1,
+      "modifier_options": [
+        {
+          "id": "mo_3",
+          "modifier_item": {
+            "id": "mi_3",
+            "name": "Mild",
+            "price": { "value": "0", "currency": { "symbol": "USD" } }
+          }
+        }
+      ]
+    }
+  ]
 }
 ```

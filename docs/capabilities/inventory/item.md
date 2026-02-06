@@ -1,6 +1,6 @@
 # Item
 
-Canonical menu item with modifier group references.
+Menu item with embedded modifier groups.
 
 ## Fields
 
@@ -9,9 +9,8 @@ Canonical menu item with modifier group references.
 - `description` (object, required): Item description in supported formats. Allowed keys are `plain`, `html`, and `markdown` (string values); provide at least one.
 - `price` (object, required): Base price in minor units with currency (see [Amount](../../shared/amount.md)).
 - `media` (array, optional): Optional array of Media objects (see [Media](../../shared/media.md); schema: `schemas/shared/media.json`).
-- `modifier_group_ids` (array, optional): Modifier group identifiers available for this item.
-- `modifier_group_overrides` (array, optional): Item-level overrides for modifier groups (selection constraints, quantities, and option ordering/availability).
-- `availability` (object, optional): Item-level availability schedule; if a catalog or category defines availability, the entire item-level `availability` object (including any `overrides`) is ignored. Otherwise the item-level `availability` and its `overrides` apply.
+- `modifier_groups` (array, optional): Modifier groups available for this item.
+- `availability` (object, optional): Item-level availability schedule; if a catalog or category defines availability, the item-level availability is ignored.
 - `metadata` (object, optional): Provider-specific or business-defined attributes.
 
 ## Example
@@ -22,12 +21,30 @@ Canonical menu item with modifier group references.
   "name": "Carnitas Taco",
   "description": { "plain": "Slow-cooked pork with salsa verde." },
   "price": { "value": "450", "currency": { "symbol": "USD" } },
-  "modifier_group_ids": ["mg_1"],
-  "modifier_group_overrides": [
+  "modifier_groups": [
     {
-      "modifier_group_id": "mg_1",
+      "id": "mg_1",
+      "name": "Choose Salsa",
+      "minimum_selections": 1,
       "maximum_selections": 2,
-      "modifier_option_ids": ["mo_1", "mo_2"]
+      "modifier_options": [
+        {
+          "id": "mo_1",
+          "modifier_item": {
+            "id": "mi_1",
+            "name": "Salsa Verde",
+            "price": { "value": "0", "currency": { "symbol": "USD" } }
+          }
+        },
+        {
+          "id": "mo_2",
+          "modifier_item": {
+            "id": "mi_2",
+            "name": "Salsa Roja",
+            "price": { "value": "0", "currency": { "symbol": "USD" } }
+          }
+        }
+      ]
     }
   ],
   "availability": {
