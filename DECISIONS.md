@@ -13,15 +13,6 @@ Short, LLM-friendly record of notable decisions in this repo.
 
 ## 2026-02-05
 
-Requirements
-- Universal commerce support for customers, POS ingest, and downstream integrations.
-- Multiple catalogs per merchant.
-- Category-based presentation with catalog ordering.
-- Modifier options as first-class objects, not embedded in groups.
-- Compatibility with Toast, Square, and other POS providers.
-- Merchant is the source of truth, with mirrors/delegates (POS, apps).
-- Availability may be defined at catalog or item level, with catalog taking precedence.
-
 Decisions
 - Adopt a catalog + category model aligned with Square-style catalogs and the backend schema.
 - Keep catalog objects normalized (items, categories, modifier groups, modifier options, modifier items).
