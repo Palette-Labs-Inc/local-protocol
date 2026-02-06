@@ -16,6 +16,6 @@ Purchasable modifier item used by one or more modifier options.
 {
   "id": "mi_1",
   "name": "Salsa Verde",
-  "price": { "value": "0", "currency": "USD", "decimals": 2 }
+  "price": { "value": "0", "currency": { "symbol": "USD" } }
 }
 ```

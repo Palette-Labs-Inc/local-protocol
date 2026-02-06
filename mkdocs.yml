@@ -7,6 +7,8 @@ nav:
   - Philosophy: documentation/philosophy.md
   - Shared Types:
       - Amount: shared/amount.md
+      - FiatCurrency: shared/fiat_currency.md
+      - EvmCurrency: shared/evm_currency.md
       - Media: shared/media.md
   - Getting Started:
       - Picking Capabilities: getting-started/picking-capabilities.md

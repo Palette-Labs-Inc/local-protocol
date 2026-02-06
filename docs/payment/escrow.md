@@ -72,14 +72,14 @@ recomputing the hash.
 - `receiver` (string, required): Receiver address used to compute the hash
   (MUST match the handler default receiver or be allowed by operator policy).
 - `token` (object, required): Token identifier used to compute the hash.
-- `max_amount` (object, required): Maximum authorized amount (atomic units) used to compute the hash. Uses the [Amount](../shared/amount.md) object; `currency` should align with `token.symbol` and `decimals` should match `token.decimals`.
+- `max_amount` (object, required): Maximum authorized amount (atomic units) used to compute the hash. Uses the [Amount](../shared/amount.md) object; `amount.currency` should match the token (`chain_id`, `address`, `decimals`).
 - `preapproval_expires_at` (string, required): Pre-approval expiration timestamp (RFC 3339) used to compute the hash.
 - `authorization_expires_at` (string, required): Authorization expiration timestamp (RFC 3339) used to compute the hash.
 - `refund_expires_at` (string, required): Refund expiration timestamp (RFC 3339) used to compute the hash.
 - `nonce` (string, required): Unique nonce used to compute the hash.
 - `chain_id` (integer, required): EVM chain id.
 - `contract` (string, required): Escrow contract address.
-- `amount` (object, required): Amount in atomic units. Uses the [Amount](../shared/amount.md) object; `currency` should align with `token.symbol` and `decimals` with `token.decimals`.
+- `amount` (object, required): Amount in atomic units. Uses the [Amount](../shared/amount.md) object; `amount.currency` should match the token (`chain_id`, `address`, `decimals`).
 
 `amount.value` MUST be less than or equal to `max_amount.value`.
 
@@ -101,12 +101,26 @@ recomputing the hash.
     "symbol": "USDC",
     "decimals": 6
   },
-  "max_amount": { "value": "5000000", "currency": "USDC", "decimals": 6 },
+  "max_amount": {
+    "value": "5000000",
+    "currency": {
+      "chain_id": 8453,
+      "address": "0x2222222222222222222222222222222222222222",
+      "decimals": 6
+    }
+  },
   "preapproval_expires_at": "2026-02-03T00:15:00Z",
   "authorization_expires_at": "2026-02-04T00:15:00Z",
   "refund_expires_at": "2026-03-05T00:15:00Z",
   "nonce": "1",
-  "amount": { "value": "4250000", "currency": "USDC", "decimals": 6 }
+  "amount": {
+    "value": "4250000",
+    "currency": {
+      "chain_id": 8453,
+      "address": "0x2222222222222222222222222222222222222222",
+      "decimals": 6
+    }
+  }
 }
 ```
 
@@ -124,6 +138,13 @@ The operator submits capture or refund transactions to the escrow contract.
 ```json
 {
   "payment_info_hash": "0xaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeeffffffff0000000011111111",
-  "amount": { "value": "4250000", "currency": "USDC", "decimals": 6 }
+  "amount": {
+    "value": "4250000",
+    "currency": {
+      "chain_id": 8453,
+      "address": "0x2222222222222222222222222222222222222222",
+      "decimals": 6
+    }
+  }
 }
 ```

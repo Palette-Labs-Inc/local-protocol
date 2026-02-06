@@ -65,7 +65,7 @@
           "allOf": [
             { "$ref": "https://localprotocol.xyz/schemas/shared/amount.json" }
           ],
-          "description": "Maximum amount that can be authorized (atomic units). Currency should align with token."
+          "description": "Maximum amount that can be authorized (atomic units). Currency should align with the token (chain_id, address, decimals)."
         },
         "preapproval_expires_at": {
           "type": "string",
@@ -91,7 +91,7 @@
           "allOf": [
             { "$ref": "https://localprotocol.xyz/schemas/shared/amount.json" }
           ],
-          "description": "Amount in atomic units. Currency should align with token."
+          "description": "Amount in atomic units. Currency should align with the token (chain_id, address, decimals)."
         }
       },
       "additionalProperties": true

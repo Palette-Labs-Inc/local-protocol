@@ -6,25 +6,20 @@
   "type": "object",
   "required": [
     "value",
-    "currency",
-    "decimals"
+    "currency"
   ],
   "properties": {
     "value": {
       "type": "string",
-      "description": "Value in minor currency units as an integer string (e.g., \"1000\" = $10.00 USD). Use \"0\" for free items.",
+      "description": "Value in minor currency units as an integer string (e.g., \"1000\" = $10.00 USD, or atomic units for EVM tokens). Use \"0\" for free items.",
       "pattern": "^[0-9]+$"
     },
     "currency": {
-      "type": "string",
-      "description": "Currency or token symbol (e.g., 'USD', 'EUR', 'USDC').",
-      "pattern": "^[A-Z0-9_]+$"
-    },
-    "decimals": {
-      "type": "integer",
-      "description": "Decimal places for the currency/token.",
-      "minimum": 0,
-      "maximum": 255
+      "description": "Currency descriptor (fiat or EVM token).",
+      "oneOf": [
+        { "$ref": "https://localprotocol.xyz/schemas/shared/fiat_currency.json" },
+        { "$ref": "https://localprotocol.xyz/schemas/shared/evm_currency.json" }
+      ]
     }
   }
 }

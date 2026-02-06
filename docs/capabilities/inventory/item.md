@@ -21,7 +21,7 @@ Canonical menu item with modifier group references.
   "id": "item_1",
   "name": "Carnitas Taco",
   "description": { "plain": "Slow-cooked pork with salsa verde." },
-  "price": { "value": "450", "currency": "USD", "decimals": 2 },
+  "price": { "value": "450", "currency": { "symbol": "USD" } },
   "modifier_group_ids": ["mg_1"],
   "modifier_group_overrides": [
     {
