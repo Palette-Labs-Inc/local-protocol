@@ -4,11 +4,11 @@
   "title": "EVM Token",
   "description": "EVM token identifier used for auth/capture settlement.",
   "type": "object",
-  "required": ["symbol", "decimals"],
+  "required": ["address", "symbol", "decimals"],
   "properties": {
     "address": {
       "type": "string",
-      "description": "ERC-20 contract address. Omit for native gas token.",
+      "description": "ERC-20 contract address.",
       "pattern": "^0x[a-fA-F0-9]{40}$"
     },
     "symbol": {

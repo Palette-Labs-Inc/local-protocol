@@ -65,7 +65,7 @@
           "allOf": [
             { "$ref": "../shared/amount.json" }
           ],
-          "description": "Maximum amount that can be authorized (atomic units). Currency should align with the token (chain_id, address, decimals)."
+          "description": "Maximum amount that can be authorized (atomic units). Currency chain_id should match the instrument chain_id; currency address and decimals should match token address and decimals."
         },
         "preapproval_expires_at": {
           "type": "string",
@@ -91,7 +91,7 @@
           "allOf": [
             { "$ref": "../shared/amount.json" }
           ],
-          "description": "Amount in atomic units. Currency should align with the token (chain_id, address, decimals)."
+          "description": "Amount in atomic units. Currency chain_id should match the instrument chain_id; currency address and decimals should match token address and decimals."
         }
       },
       "additionalProperties": true
