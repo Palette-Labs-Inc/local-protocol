@@ -10,6 +10,8 @@ Delivery request posted by a requester, including route and requested timing.
 - `dropoff_location` (object, required): Dropoff location (postal address or coordinates).
 - `pickup_time` (string, required): Requested pickup time (RFC 3339).
 - `dropoff_time` (string, required): Requested dropoff time (RFC 3339).
+- `pickup_instructions` (string, optional): Pickup directions, access codes, or handling notes.
+- `dropoff_instructions` (string, optional): Dropoff directions, access codes, or delivery notes.
 
 ## Example
 
@@ -29,6 +31,7 @@ Delivery request posted by a requester, including route and requested timing.
   "dropoff_location": {
     "postal_address": {
       "street_address": "456 Mission St",
+      "extended_address": "Suite 500",
       "address_locality": "San Francisco",
       "address_region": "CA",
       "postal_code": "94105",
@@ -40,6 +43,8 @@ Delivery request posted by a requester, including route and requested timing.
     }
   },
   "pickup_time": "2026-01-30T19:00:00Z",
-  "dropoff_time": "2026-01-30T19:30:00Z"
+  "dropoff_time": "2026-01-30T19:30:00Z",
+  "pickup_instructions": "Back door pickup.",
+  "dropoff_instructions": "Leave with front desk."
 }
 ```

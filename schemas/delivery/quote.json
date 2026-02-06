@@ -40,6 +40,11 @@
       "format": "date-time",
       "description": "Estimated dropoff time (RFC 3339)."
     },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time when the quote expires (RFC 3339)."
+    },
     "payment": {
       "$ref": "https://ucp.dev/schemas/shopping/payment.json",
       "description": "Payment handlers available for accepting this quote."
