@@ -81,7 +81,7 @@ recomputing the hash.
 - `contract` (string, required): Escrow contract address.
 - `amount` (object, required): Amount in atomic units. Uses the [Amount](../shared/amount.md) object; `amount.currency` MUST match the token (`chain_id`, `address`, `decimals`).
 
-`amount.value` MUST be less than or equal to `max_amount.value`.
+`amount.value` MUST be less than or equal to `max_amount.value`, using numeric comparison: consumers MUST parse both values as base-10 integers (smallest currency unit) per the [Amount](../shared/amount.md) schema (decimal string representing an integer) and MUST reject non-numeric or non-integer strings to avoid lexicographic comparisons.
 
 ### Example
 

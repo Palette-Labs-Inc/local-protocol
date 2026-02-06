@@ -17,8 +17,8 @@
     "currency": {
       "description": "Currency descriptor (fiat or EVM token).",
       "oneOf": [
-        { "$ref": "https://localprotocol.xyz/schemas/shared/fiat_currency.json" },
-        { "$ref": "https://localprotocol.xyz/schemas/shared/evm_currency.json" }
+        { "$ref": "fiat_currency.json" },
+        { "$ref": "evm_currency.json" }
       ]
     }
   }

@@ -19,7 +19,7 @@
       "description": "Optional modifier item description."
     },
     "price": {
-      "$ref": "https://localprotocol.xyz/schemas/shared/amount.json",
+      "$ref": "../../shared/amount.json",
       "description": "Price for this modifier item."
     },
     "metadata": {

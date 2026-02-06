@@ -31,16 +31,17 @@
           "description": "Markdown-formatted description."
         }
       },
+      "additionalProperties": false,
       "minProperties": 1
     },
     "price": {
-      "$ref": "https://localprotocol.xyz/schemas/shared/amount.json",
+      "$ref": "../../shared/amount.json",
       "description": "Base price for the item."
     },
     "media": {
       "type": "array",
       "items": {
-        "$ref": "https://localprotocol.xyz/schemas/shared/media.json"
+        "$ref": "../../shared/media.json"
       },
       "description": "Item media (images, videos, 3D models)."
     },
