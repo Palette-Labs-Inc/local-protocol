@@ -7,8 +7,8 @@ Canonical menu item with modifier group references.
 - `id` (string, required): Item identifier.
 - `name` (string, required): Item name.
 - `description` (object, required): Item description in supported formats. Allowed keys are `plain`, `html`, and `markdown` (string values); provide at least one.
-- `price` (object, required): Base price in minor units with currency (see [Amount](../../documentation/amount.md)).
-- `media` (array, optional): Optional array of Media objects (see [Media](../../documentation/media.md); schema: `schemas/ucp/types/media.json`).
+- `price` (object, required): Base price in minor units with currency (see [Amount](../../shared/amount.md)).
+- `media` (array, optional): Optional array of Media objects (see [Media](../../shared/media.md); schema: `schemas/shared/media.json`).
 - `modifier_group_ids` (array, optional): Modifier group identifiers available for this item.
 - `modifier_group_overrides` (array, optional): Item-level overrides for modifier groups (selection constraints, quantities, and option ordering/availability).
 - `availability` (object, optional): Item-level availability schedule; if a catalog or category defines availability, the entire item-level `availability` object (including any `overrides`) is ignored. Otherwise the item-level `availability` and its `overrides` apply.

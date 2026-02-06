@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.xyz/schemas/ucp/types/amount.json",
+  "$id": "https://localprotocol.xyz/schemas/shared/amount.json",
   "title": "Amount",
   "description": "Amount with explicit currency. Amount is always in minor units (e.g., cents for USD).",
   "type": "object",

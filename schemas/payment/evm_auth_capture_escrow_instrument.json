@@ -63,7 +63,7 @@
         },
         "max_amount": {
           "allOf": [
-            { "$ref": "https://localprotocol.xyz/schemas/ucp/types/amount.json" }
+            { "$ref": "https://localprotocol.xyz/schemas/shared/amount.json" }
           ],
           "description": "Maximum amount that can be authorized (atomic units). Currency should align with token."
         },
@@ -89,7 +89,7 @@
         },
         "amount": {
           "allOf": [
-            { "$ref": "https://localprotocol.xyz/schemas/ucp/types/amount.json" }
+            { "$ref": "https://localprotocol.xyz/schemas/shared/amount.json" }
           ],
           "description": "Amount in atomic units. Currency should align with token."
         }

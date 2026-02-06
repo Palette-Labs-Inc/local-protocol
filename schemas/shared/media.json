@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.xyz/schemas/ucp/types/media.json",
+  "$id": "https://localprotocol.xyz/schemas/shared/media.json",
   "title": "Media",
   "description": "Product media item (image, video, etc.).",
   "type": "object",

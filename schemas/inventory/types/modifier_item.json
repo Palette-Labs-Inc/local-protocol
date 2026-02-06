@@ -19,7 +19,7 @@
       "description": "Optional modifier item description."
     },
     "price": {
-      "$ref": "https://localprotocol.xyz/schemas/ucp/types/amount.json",
+      "$ref": "https://localprotocol.xyz/schemas/shared/amount.json",
       "description": "Price for this modifier item."
     },
     "metadata": {

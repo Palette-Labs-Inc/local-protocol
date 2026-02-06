@@ -6,8 +6,8 @@ nav:
   - Home: index.md
   - Philosophy: documentation/philosophy.md
   - Shared Types:
-      - Amount: documentation/amount.md
-      - Media: documentation/media.md
+      - Amount: shared/amount.md
+      - Media: shared/media.md
   - Getting Started:
       - Picking Capabilities: getting-started/picking-capabilities.md
       - Add UCP Discovery: getting-started/ucp-setup.md

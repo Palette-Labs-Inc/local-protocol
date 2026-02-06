@@ -72,14 +72,14 @@ recomputing the hash.
 - `receiver` (string, required): Receiver address used to compute the hash
   (MUST match the handler default receiver or be allowed by operator policy).
 - `token` (object, required): Token identifier used to compute the hash.
-- `max_amount` (object, required): Maximum authorized amount (atomic units) used to compute the hash. Uses the [Amount](../documentation/amount.md) object; `currency` should align with `token.symbol` and `decimals` should match `token.decimals`.
+- `max_amount` (object, required): Maximum authorized amount (atomic units) used to compute the hash. Uses the [Amount](../shared/amount.md) object; `currency` should align with `token.symbol` and `decimals` should match `token.decimals`.
 - `preapproval_expires_at` (string, required): Pre-approval expiration timestamp (RFC 3339) used to compute the hash.
 - `authorization_expires_at` (string, required): Authorization expiration timestamp (RFC 3339) used to compute the hash.
 - `refund_expires_at` (string, required): Refund expiration timestamp (RFC 3339) used to compute the hash.
 - `nonce` (string, required): Unique nonce used to compute the hash.
 - `chain_id` (integer, required): EVM chain id.
 - `contract` (string, required): Escrow contract address.
-- `amount` (object, required): Amount in atomic units. Uses the [Amount](../documentation/amount.md) object; `currency` should align with `token.symbol` and `decimals` with `token.decimals`.
+- `amount` (object, required): Amount in atomic units. Uses the [Amount](../shared/amount.md) object; `currency` should align with `token.symbol` and `decimals` with `token.decimals`.
 
 `amount.amount` MUST be less than or equal to `max_amount.amount`.
 
