@@ -63,9 +63,14 @@
         },
         "max_amount": {
           "allOf": [
-            { "$ref": "../shared/amount.json" }
+            { "$ref": "../shared/amount.json" },
+            {
+              "properties": {
+                "currency": { "$ref": "../shared/evm_currency.json" }
+              }
+            }
           ],
-          "description": "Maximum amount that can be authorized (atomic units). Currency chain_id should match the instrument chain_id; currency address and decimals should match token address and decimals."
+          "description": "Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
         },
         "preapproval_expires_at": {
           "type": "string",
@@ -89,9 +94,14 @@
         },
         "amount": {
           "allOf": [
-            { "$ref": "../shared/amount.json" }
+            { "$ref": "../shared/amount.json" },
+            {
+              "properties": {
+                "currency": { "$ref": "../shared/evm_currency.json" }
+              }
+            }
           ],
-          "description": "Amount in atomic units. Currency chain_id should match the instrument chain_id; currency address and decimals should match token address and decimals."
+          "description": "Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
         }
       },
       "additionalProperties": true
