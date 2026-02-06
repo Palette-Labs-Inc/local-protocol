@@ -29,6 +29,14 @@
       "type": "string",
       "format": "date-time",
       "description": "Requested dropoff time (RFC 3339)."
+    },
+    "pickup_instructions": {
+      "type": "string",
+      "description": "Pickup directions, access codes, or handling notes."
+    },
+    "dropoff_instructions": {
+      "type": "string",
+      "description": "Dropoff directions, access codes, or delivery notes."
     }
   },
   "required": [

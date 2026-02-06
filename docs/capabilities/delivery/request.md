@@ -10,9 +10,8 @@ Delivery request posted by a requester, including route and requested timing.
 - `dropoff_location` (object, required): Dropoff location (postal address or coordinates).
 - `pickup_time` (string, required): Requested pickup time (RFC 3339).
 - `dropoff_time` (string, required): Requested dropoff time (RFC 3339).
-- `schedule_type` (string, optional): Delivery scheduling intent. Values: `ASAP`, `SCHEDULED`.
-- `pickup_window` (object, optional): Requested pickup window with `start` and `end` (RFC 3339).
-- `dropoff_window` (object, optional): Requested dropoff window with `start` and `end` (RFC 3339).
+- `pickup_instructions` (string, optional): Pickup directions, access codes, or handling notes.
+- `dropoff_instructions` (string, optional): Dropoff directions, access codes, or delivery notes.
 
 ## Example
 
@@ -27,8 +26,7 @@ Delivery request posted by a requester, including route and requested timing.
       "address_region": "CA",
       "postal_code": "94103",
       "address_country": "US"
-    },
-    "instructions": "Back door pickup."
+    }
   },
   "dropoff_location": {
     "postal_address": {
@@ -50,14 +48,7 @@ Delivery request posted by a requester, including route and requested timing.
   },
   "pickup_time": "2026-01-30T19:00:00Z",
   "dropoff_time": "2026-01-30T19:30:00Z",
-  "schedule_type": "SCHEDULED",
-  "pickup_window": {
-    "start": "2026-01-30T18:50:00Z",
-    "end": "2026-01-30T19:10:00Z"
-  },
-  "dropoff_window": {
-    "start": "2026-01-30T19:20:00Z",
-    "end": "2026-01-30T19:40:00Z"
-  }
+  "pickup_instructions": "Back door pickup.",
+  "dropoff_instructions": "Leave with front desk."
 }
 ```
