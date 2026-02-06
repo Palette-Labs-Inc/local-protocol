@@ -6,7 +6,7 @@ Menu item with embedded modifier groups.
 
 - `id` (string, required): Item identifier.
 - `name` (string, required): Item name.
-- `description` (object, required): Item description in supported formats. Allowed keys are `plain`, `html`, and `markdown` (string values); provide at least one.
+- `description` (string, required): Item description.
 - `price` (object, required): Base price in minor units with currency (see [Amount](../../shared/amount.md)).
 - `media` (array, optional): Optional array of Media objects (see [Media](../../shared/media.md); schema: `schemas/shared/media.json`).
 - `modifier_groups` (array, optional): Modifier groups available for this item.
@@ -19,7 +19,7 @@ Menu item with embedded modifier groups.
 {
   "id": "item_1",
   "name": "Carnitas Taco",
-  "description": { "plain": "Slow-cooked pork with salsa verde." },
+  "description": "Slow-cooked pork with salsa verde.",
   "price": { "value": "450", "currency": { "symbol": "USD" } },
   "modifier_groups": [
     {

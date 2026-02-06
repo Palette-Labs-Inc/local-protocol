@@ -27,13 +27,13 @@ Use an empty `items` list for categories that are defined but currently have no 
     {
       "id": "item_1",
       "name": "Carnitas Taco",
-      "description": { "plain": "Slow-cooked pork with salsa verde." },
+      "description": "Slow-cooked pork with salsa verde.",
       "price": { "value": "450", "currency": { "symbol": "USD" } }
     },
     {
       "id": "item_2",
       "name": "Veggie Taco",
-      "description": { "plain": "Grilled veggies with pico de gallo." },
+      "description": "Grilled veggies with pico de gallo.",
       "price": { "value": "425", "currency": { "symbol": "USD" } }
     }
   ]

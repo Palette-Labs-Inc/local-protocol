@@ -31,7 +31,7 @@ When rendering or storing uncategorized items, clients should group `items` unde
         {
           "id": "item_1",
           "name": "Carnitas Taco",
-          "description": { "plain": "Slow-cooked pork with salsa verde." },
+          "description": "Slow-cooked pork with salsa verde.",
           "price": { "value": "450", "currency": { "symbol": "USD" } }
         }
       ]
@@ -41,7 +41,7 @@ When rendering or storing uncategorized items, clients should group `items` unde
     {
       "id": "item_9",
       "name": "Fresh OJ",
-      "description": { "plain": "House-pressed orange juice." },
+      "description": "House-pressed orange juice.",
       "price": { "value": "300", "currency": { "symbol": "USD" } }
     }
   ],

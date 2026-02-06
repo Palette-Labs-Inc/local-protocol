@@ -31,7 +31,7 @@ Top-level payload containing denormalized catalogs for a merchant.
             {
               "id": "item_1",
               "name": "Carnitas Taco",
-              "description": { "plain": "Slow-cooked pork with salsa verde." },
+              "description": "Slow-cooked pork with salsa verde.",
               "price": { "value": "450", "currency": { "symbol": "USD" } },
               "modifier_groups": [
                 {

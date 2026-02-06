@@ -15,24 +15,8 @@
       "description": "Item name."
     },
     "description": {
-      "type": "object",
-      "description": "Item description in one or more formats. At least one format must be provided.",
-      "properties": {
-        "plain": {
-          "type": "string",
-          "description": "Plain text description."
-        },
-        "html": {
-          "type": "string",
-          "description": "HTML-formatted description."
-        },
-        "markdown": {
-          "type": "string",
-          "description": "Markdown-formatted description."
-        }
-      },
-      "additionalProperties": false,
-      "minProperties": 1
+      "type": "string",
+      "description": "Item description."
     },
     "price": {
       "$ref": "../../shared/amount.json",
