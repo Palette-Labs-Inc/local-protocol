@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/inventory/merchant.json",
+  "title": "Merchant",
+  "description": "Merchant catalog payload containing denormalized catalogs.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "timezone",
+    "catalogs"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Merchant identifier."
+    },
+    "name": {
+      "type": "string",
+      "description": "Merchant name."
+    },
+    "timezone": {
+      "type": "string",
+      "description": "IANA timezone for availability schedules."
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 timestamp of the latest catalog update."
+    },
+    "catalogs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "catalog.json"
+      },
+      "description": "Catalogs available for the merchant."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Business-defined custom data extending the merchant.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

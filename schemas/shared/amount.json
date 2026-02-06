@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/shared/amount.json",
+  "title": "Amount",
+  "description": "Amount with explicit currency. Value is always in minor units (e.g., cents for USD).",
+  "type": "object",
+  "required": [
+    "value",
+    "currency"
+  ],
+  "properties": {
+    "value": {
+      "type": "string",
+      "description": "Value in minor currency units as an integer string (e.g., \"1000\" = $10.00 USD, or atomic units for EVM tokens). Use \"0\" for free items.",
+      "pattern": "^[0-9]+$"
+    },
+    "currency": {
+      "description": "Currency descriptor (fiat or EVM token).",
+      "oneOf": [
+        { "$ref": "fiat_currency.json" },
+        { "$ref": "evm_currency.json" }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

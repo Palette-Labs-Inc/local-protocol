@@ -5,6 +5,11 @@ docs_dir: docs
 nav:
   - Home: index.md
   - Philosophy: documentation/philosophy.md
+  - Shared Types:
+      - Amount: shared/amount.md
+      - FiatCurrency: shared/fiat_currency.md
+      - EvmCurrency: shared/evm_currency.md
+      - Media: shared/media.md
   - Getting Started:
       - Picking Capabilities: getting-started/picking-capabilities.md
       - Add UCP Discovery: getting-started/ucp-setup.md
@@ -13,6 +18,19 @@ nav:
           - MCP: apis/mcp.md
           - A2A: apis/a2a.md
   - Capabilities:
+      - Catalog:
+          - Overview: capabilities/inventory/overview.md
+          - Objects:
+              - Merchant: capabilities/inventory/merchant.md
+              - Catalog: capabilities/inventory/catalog.md
+          - Types:
+              - Category: capabilities/inventory/category.md
+              - Item: capabilities/inventory/item.md
+              - Modifier Group: capabilities/inventory/modifier_group.md
+              - Modifier Option: capabilities/inventory/modifier_option.md
+              - Modifier Item: capabilities/inventory/modifier_item.md
+              - Availability: capabilities/inventory/availability.md
+              - Interval: capabilities/inventory/interval.md
       - Delivery:
           - Overview: capabilities/delivery/overview.md
           - Objects:

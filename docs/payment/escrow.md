@@ -72,16 +72,16 @@ recomputing the hash.
 - `receiver` (string, required): Receiver address used to compute the hash
   (MUST match the handler default receiver or be allowed by operator policy).
 - `token` (object, required): Token identifier used to compute the hash.
-- `max_amount` (string, required): Maximum authorized amount (atomic units) used to compute the hash.
+- `max_amount` (object, required): Maximum authorized amount (atomic units) used to compute the hash. Uses the [Amount](../shared/amount.md) object; `amount.currency.chain_id` MUST match the instrument `chain_id`, and `amount.currency.address` and `amount.currency.decimals` MUST match `token.address` and `token.decimals`.
 - `preapproval_expires_at` (string, required): Pre-approval expiration timestamp (RFC 3339) used to compute the hash.
 - `authorization_expires_at` (string, required): Authorization expiration timestamp (RFC 3339) used to compute the hash.
 - `refund_expires_at` (string, required): Refund expiration timestamp (RFC 3339) used to compute the hash.
 - `nonce` (string, required): Unique nonce used to compute the hash.
 - `chain_id` (integer, required): EVM chain id.
 - `contract` (string, required): Escrow contract address.
-- `amount` (string, required): Amount in atomic units (integer string, token decimals applied).
+- `amount` (object, required): Amount in atomic units. Uses the [Amount](../shared/amount.md) object; `amount.currency.chain_id` MUST match the instrument `chain_id`, and `amount.currency.address` and `amount.currency.decimals` MUST match `token.address` and `token.decimals`.
 
-`amount` MUST be less than or equal to `max_amount`.
+`amount.value` MUST be less than or equal to `max_amount.value`, using numeric comparison: consumers MUST parse both values as base-10 integers (smallest currency unit) per the [Amount](../shared/amount.md) schema (decimal string representing an integer) and MUST reject non-numeric or non-integer strings to avoid lexicographic comparisons.
 
 ### Example
 
@@ -101,12 +101,26 @@ recomputing the hash.
     "symbol": "USDC",
     "decimals": 6
   },
-  "max_amount": "5000000",
+  "max_amount": {
+    "value": "5000000",
+    "currency": {
+      "chain_id": 8453,
+      "address": "0x2222222222222222222222222222222222222222",
+      "decimals": 6
+    }
+  },
   "preapproval_expires_at": "2026-02-03T00:15:00Z",
   "authorization_expires_at": "2026-02-04T00:15:00Z",
   "refund_expires_at": "2026-03-05T00:15:00Z",
   "nonce": "1",
-  "amount": "4250000"
+  "amount": {
+    "value": "4250000",
+    "currency": {
+      "chain_id": 8453,
+      "address": "0x2222222222222222222222222222222222222222",
+      "decimals": 6
+    }
+  }
 }
 ```
 
@@ -117,13 +131,20 @@ The operator submits capture or refund transactions to the escrow contract.
 ### Fields
 
 - `payment_info_hash` (string, required)
-- `amount` (string, required)
+- `amount` (object, required)
 
 ### Example
 
 ```json
 {
   "payment_info_hash": "0xaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeeffffffff0000000011111111",
-  "amount": "4250000"
+  "amount": {
+    "value": "4250000",
+    "currency": {
+      "chain_id": 8453,
+      "address": "0x2222222222222222222222222222222222222222",
+      "decimals": 6
+    }
+  }
 }
 ```
