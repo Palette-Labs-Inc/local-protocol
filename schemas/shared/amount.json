@@ -21,5 +21,6 @@
         { "$ref": "evm_currency.json" }
       ]
     }
-  }
+  },
+  "additionalProperties": false
 }
