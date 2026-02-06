@@ -1,6 +1,6 @@
-# Inventory
+# Catalog
 
-The Inventory capability defines a canonical catalog graph with category-based presentation. This supports POS and commerce platform ingest, customer-facing apps, and downstream integrations without duplicating core data.
+The Catalog capability defines a canonical catalog graph with category-based presentation. This supports POS and commerce platform ingest, customer-facing apps, and downstream integrations without duplicating core data.
 
 ## Design Goals
 

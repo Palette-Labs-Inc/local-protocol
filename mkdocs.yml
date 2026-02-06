@@ -16,7 +16,7 @@ nav:
           - MCP: apis/mcp.md
           - A2A: apis/a2a.md
   - Capabilities:
-      - Inventory:
+      - Catalog:
           - Overview: capabilities/inventory/overview.md
           - Objects:
               - Merchant: capabilities/inventory/merchant.md
