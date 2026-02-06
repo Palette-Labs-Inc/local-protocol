@@ -81,7 +81,7 @@ recomputing the hash.
 - `contract` (string, required): Escrow contract address.
 - `amount` (object, required): Amount in atomic units. Uses the [Amount](../shared/amount.md) object; `currency` should align with `token.symbol` and `decimals` with `token.decimals`.
 
-`amount.amount` MUST be less than or equal to `max_amount.amount`.
+`amount.value` MUST be less than or equal to `max_amount.value`.
 
 ### Example
 
@@ -101,12 +101,12 @@ recomputing the hash.
     "symbol": "USDC",
     "decimals": 6
   },
-  "max_amount": { "amount": "5000000", "currency": "USDC", "decimals": 6 },
+  "max_amount": { "value": "5000000", "currency": "USDC", "decimals": 6 },
   "preapproval_expires_at": "2026-02-03T00:15:00Z",
   "authorization_expires_at": "2026-02-04T00:15:00Z",
   "refund_expires_at": "2026-03-05T00:15:00Z",
   "nonce": "1",
-  "amount": { "amount": "4250000", "currency": "USDC", "decimals": 6 }
+  "amount": { "value": "4250000", "currency": "USDC", "decimals": 6 }
 }
 ```
 
@@ -124,6 +124,6 @@ The operator submits capture or refund transactions to the escrow contract.
 ```json
 {
   "payment_info_hash": "0xaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeeffffffff0000000011111111",
-  "amount": { "amount": "4250000", "currency": "USDC", "decimals": 6 }
+  "amount": { "value": "4250000", "currency": "USDC", "decimals": 6 }
 }
 ```

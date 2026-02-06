@@ -2,17 +2,17 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://localprotocol.xyz/schemas/shared/amount.json",
   "title": "Amount",
-  "description": "Amount with explicit currency. Amount is always in minor units (e.g., cents for USD).",
+  "description": "Amount with explicit currency. Value is always in minor units (e.g., cents for USD).",
   "type": "object",
   "required": [
-    "amount",
+    "value",
     "currency",
     "decimals"
   ],
   "properties": {
-    "amount": {
+    "value": {
       "type": "string",
-      "description": "Amount in minor currency units as an integer string (e.g., \"1000\" = $10.00 USD). Use \"0\" for free items.",
+      "description": "Value in minor currency units as an integer string (e.g., \"1000\" = $10.00 USD). Use \"0\" for free items.",
       "pattern": "^[0-9]+$"
     },
     "currency": {
