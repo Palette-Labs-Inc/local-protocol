@@ -40,10 +40,6 @@ Delivery request posted by a requester, including route and requested timing.
     "coordinates": {
       "latitude": 37.7897,
       "longitude": -122.3961
-    },
-    "contact": {
-      "name": "Alex Rivera",
-      "phone": "+1-415-555-0123"
     }
   },
   "pickup_time": "2026-01-30T19:00:00Z",

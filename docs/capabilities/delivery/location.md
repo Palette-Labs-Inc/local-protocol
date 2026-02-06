@@ -7,9 +7,6 @@ Location used in delivery quotes and requests. A location must include a postal 
 - `postal_address` (object, optional): Postal address using the UCP `postal_address` schema.
   - Use `extended_address` for apartment/unit/suite, and `phone_number` for a location contact.
 - `coordinates` (object, optional): Coordinates with latitude and longitude.
-- `contact` (object, optional): Contact for this location.
-  - `name` (string, optional)
-  - `phone` (string, optional)
 
 At least one of `postal_address` or `coordinates` is required.
 
@@ -24,10 +21,6 @@ At least one of `postal_address` or `coordinates` is required.
     "address_region": "CA",
     "postal_code": "94103",
     "address_country": "US"
-  },
-  "contact": {
-    "name": "Morgan Lee",
-    "phone": "+1-415-555-0100"
   }
 }
 ```

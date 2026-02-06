@@ -11,21 +11,6 @@
     "coordinates": {
       "$ref": "coordinates.json",
       "description": "Coordinates for the location."
-    },
-    "contact": {
-      "type": "object",
-      "additionalProperties": false,
-      "description": "Contact for this location.",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Contact name."
-        },
-        "phone": {
-          "type": "string",
-          "description": "Contact phone number."
-        }
-      }
     }
   },
   "anyOf": [
