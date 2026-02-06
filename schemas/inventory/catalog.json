@@ -36,13 +36,6 @@
       "$ref": "types/availability.json",
       "description": "Catalog availability. When present, it overrides category and item availability."
     },
-    "fulfillment_modes": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Fulfillment modes supported by this catalog."
-    },
     "metadata": {
       "type": "object",
       "description": "Business-defined custom data extending the catalog.",
