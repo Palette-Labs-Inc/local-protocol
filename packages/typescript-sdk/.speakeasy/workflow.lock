@@ -2,8 +2,8 @@ speakeasyVersion: 1.709.1
 sources:
     Local Protocol:
         sourceNamespace: local-protocol
-        sourceRevisionDigest: sha256:72a4d9604e3f01eca2dcdbc97bfd596c653d2fc5c9dff55c312550109a21826e
-        sourceBlobDigest: sha256:ff0ea543ddc1346e6ba8a335d874681a9dd4ecfb2e9fd533c654e741b968255d
+        sourceRevisionDigest: sha256:a4570ca478b19d434e6751fbd6f02cf6d013a8285da2669c5754be20ed051b61
+        sourceBlobDigest: sha256:bcc2efd9b23e2c76768e1a75285588ba1368a9bf5003b26667c364f15ae062b1
         tags:
             - latest
             - 0.1.0
@@ -11,10 +11,10 @@ targets:
     local-protocol:
         source: Local Protocol
         sourceNamespace: local-protocol
-        sourceRevisionDigest: sha256:72a4d9604e3f01eca2dcdbc97bfd596c653d2fc5c9dff55c312550109a21826e
-        sourceBlobDigest: sha256:ff0ea543ddc1346e6ba8a335d874681a9dd4ecfb2e9fd533c654e741b968255d
+        sourceRevisionDigest: sha256:a4570ca478b19d434e6751fbd6f02cf6d013a8285da2669c5754be20ed051b61
+        sourceBlobDigest: sha256:bcc2efd9b23e2c76768e1a75285588ba1368a9bf5003b26667c364f15ae062b1
         codeSamplesNamespace: local-protocol-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:e1fd1ad8f66c208a4c15e7b54c8bad1d0c4846146aacb2cfe0bf437b3f18ef2f
+        codeSamplesRevisionDigest: sha256:8d9275b9dea816515434a6d21f7bfac52c0ea9b09a7f6b27e1120c0b76d6bf14
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

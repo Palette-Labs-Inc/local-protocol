@@ -8,29 +8,29 @@ import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 
-export const HealthResponseStatus = {
+export const Status = {
   Ok: "ok",
 } as const;
-export type HealthResponseStatus = ClosedEnum<typeof HealthResponseStatus>;
+export type Status = ClosedEnum<typeof Status>;
 
 /**
  * Health check response.
  */
 export type HealthResponse = {
-  status: HealthResponseStatus;
+  status: Status;
 };
 
 /** @internal */
-export const HealthResponseStatus$inboundSchema: z.ZodMiniEnum<
-  typeof HealthResponseStatus
-> = z.enum(HealthResponseStatus);
+export const Status$inboundSchema: z.ZodMiniEnum<typeof Status> = z.enum(
+  Status,
+);
 
 /** @internal */
 export const HealthResponse$inboundSchema: z.ZodMiniType<
   HealthResponse,
   unknown
 > = z.object({
-  status: HealthResponseStatus$inboundSchema,
+  status: Status$inboundSchema,
 });
 
 export function healthResponseFromJSON(

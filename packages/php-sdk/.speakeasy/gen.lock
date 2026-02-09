@@ -1,16 +1,16 @@
 lockVersion: 2.0.0
 id: ebdae54d-9fc7-429a-a953-0a3e67ddff0f
 management:
-  docChecksum: a575e566c3b2986fab8d34d0cbe541e1
+  docChecksum: ffd6f5f6618d292b544ab14114d1a79d
   docVersion: 0.1.0
   speakeasyVersion: 1.709.1
   generationVersion: 2.812.2
-  releaseVersion: 0.3.0
-  configChecksum: ae45bbb571b31012eb5efca592815745
+  releaseVersion: 0.4.0
+  configChecksum: 7c9aeeffcec5062cdf34e96ae953c93b
 persistentEdits:
-  generation_id: 7e393948-4f59-4c18-a368-ea93c3382128
-  pristine_commit_hash: 35d7fd42f79cc207df9db34483eec33d19f3e4f2
-  pristine_tree_hash: 5c6b652f37b25748d6014b5843ce28c485310abf
+  generation_id: 8f6e380d-16b2-453b-b9fb-69bc026078e5
+  pristine_commit_hash: 78e68f1f6047b9f9c45a00872513f0223add840f
+  pristine_tree_hash: 37a1946f1c8adc43eceae6dabf153c849c8f3c48
 features:
   php:
     additionalProperties: 0.1.0
@@ -18,6 +18,7 @@ features:
     core: 3.9.11
     flattening: 2.81.1
     globalServerURLs: 2.83.0
+    includes: 2.81.1
     methodArguments: 0.1.0
     nameOverrides: 2.81.2
     nullables: 1.0.1
@@ -94,28 +95,12 @@ trackedFiles:
     pristine_git_object: 25ed72388c9af33028f4a335463951dc403b6aa9
   docs/Models/Components/DeliveryQuote.md:
     id: 8c68fac7098e
-    last_write_checksum: sha1:54b1c536950622749fd350ba159c712f0b9558ae
-    pristine_git_object: 6d17d283d88255420e83186aaf4f2392fc1d9bf5
-  docs/Models/Components/DeliveryQuoteCreate.md:
-    id: 21eee4623335
-    last_write_checksum: sha1:ef5ebb8bc6fc1e14b07230f508a6907e86255106
-    pristine_git_object: 9e8e9d46300befdebad4d02806c4db138554f62f
-  docs/Models/Components/DeliveryQuoteStatus.md:
-    id: 094f7bbb45d7
-    last_write_checksum: sha1:c47fcdc6ea40a2197d99d8c377c6887b145d3298
-    pristine_git_object: 90cc2f0b163c396a8e4a23ecd22fa5fc9b9e7f9e
+    last_write_checksum: sha1:e31ac5b884a0e7ba411edb42383b05ea69c8a4f5
+    pristine_git_object: f6815584d0f2149a7c65a86751a37cb35a6271cd
   docs/Models/Components/DeliveryRequest.md:
     id: 49d3e2ea16a8
-    last_write_checksum: sha1:ff2e36a24de0cbfcbabedde5d045a4ccd40cbb52
-    pristine_git_object: de2720e8b1db8ca156ec3adf9d4e535b511e956f
-  docs/Models/Components/DeliveryRequestCreate.md:
-    id: 722d1430898b
-    last_write_checksum: sha1:f496a89ef0fd905e353bfbe5e07db8a3704aac76
-    pristine_git_object: 3aff4ca2866157b4520d1b7d1ecdb4a2d5aeba3f
-  docs/Models/Components/DeliveryRequestStatus.md:
-    id: d9f8b8aaf8ac
-    last_write_checksum: sha1:c5d240f8857abeea5fe914c916526b28a5f09f29
-    pristine_git_object: f017f459cbd1ae6b426f221f42c772c8a0670025
+    last_write_checksum: sha1:db87d864c55f05c6beb6f634a13dc8e56eb6a1e7
+    pristine_git_object: d1bb23fd3b63501b944587c6c2e474859518a437
   docs/Models/Components/Detail.md:
     id: 2016be83ec24
     last_write_checksum: sha1:5d331a1690abae9c2692383426d3851663ab220d
@@ -154,12 +139,8 @@ trackedFiles:
     pristine_git_object: 77acbf30bc219d0ce1b29cce176283f2d85f79a6
   docs/Models/Components/HealthResponse.md:
     id: 8646a5fb30fd
-    last_write_checksum: sha1:4e607e1cc7c5a630aca0ce7894fbf012721fa289
-    pristine_git_object: c7107dfc53dc32f942c00cbd3cfcf4fa0a36e468
-  docs/Models/Components/HealthResponseStatus.md:
-    id: 49adadb61697
-    last_write_checksum: sha1:0e2fc597441b7a3a07df62a8e03788fc52b3f7ab
-    pristine_git_object: db1aa41ca262ec169622fa7db5e55643b4ddf35a
+    last_write_checksum: sha1:9a3727f0a2647bb481994cc9866e0038520cd906
+    pristine_git_object: a3eda36c97bff256d5a3c71d323e76b4c398c026
   docs/Models/Components/Interval1.md:
     id: 97a427c4d939
     last_write_checksum: sha1:01d634b1b69591cc57f0d0b1b27f2fd9d8b08aa5
@@ -240,6 +221,10 @@ trackedFiles:
     id: 0bf4323fbc32
     last_write_checksum: sha1:e7812feedd142aa3d24268a66664200062f547e6
     pristine_git_object: d6fa1123e97032603cff52f4c78122547baaf949
+  docs/Models/Components/Status.md:
+    id: 71d0264ee613
+    last_write_checksum: sha1:17eb481b5dcc73577abb070bd3924ff11d52355d
+    pristine_git_object: ebec8e999903d81246efbc883a4b7b117076202f
   docs/Models/Components/Type.md:
     id: 78fd88144819
     last_write_checksum: sha1:21bb8ba39f04f54f7109f8c620e3911f5ee8ed4d
@@ -274,8 +259,8 @@ trackedFiles:
     pristine_git_object: 535bee8e7b7e7d85dc8989108b250b8f7230e516
   docs/Models/Operations/CreateQuoteRequest.md:
     id: 88780e7f9b01
-    last_write_checksum: sha1:0e7af331396e5bd4dfd3b26fd574d694e2ad3a8d
-    pristine_git_object: 282fe0c4f753fd66aa69a039b0aca3351a8be65d
+    last_write_checksum: sha1:ee316a8d9b141583828e38028624e08a39672a5a
+    pristine_git_object: d18a2171126903bdfdab03c8e57172874633163e
   docs/Models/Operations/CreateQuoteResponse.md:
     id: d01c29e97dc1
     last_write_checksum: sha1:481f211b6758f786f36c2bf4aa740224cd258d29
@@ -352,14 +337,6 @@ trackedFiles:
     id: d8bd56312bf5
     last_write_checksum: sha1:96a7dcd4d487167280acf81b934695659c263cce
     pristine_git_object: 2d33cd9fff50dad61cd4d3df9d048d5fcee1314c
-  docs/Models/Operations/ListMerchantPaymentHandlersRequest.md:
-    id: b721b24cde72
-    last_write_checksum: sha1:8eee146956fe45cdb94a0f5a86bfaa4041a810e9
-    pristine_git_object: 407efe1d37659906ce79e3445e35b1ac072c9274
-  docs/Models/Operations/ListMerchantPaymentHandlersResponse.md:
-    id: c945138252b4
-    last_write_checksum: sha1:9f3bb7b580b672000b01f28839dda856eb04445a
-    pristine_git_object: e0878b81393b38429065493666bec454d11408e1
   docs/Models/Operations/ListOrderQuotesRequest.md:
     id: 9fb344cc6abd
     last_write_checksum: sha1:ae02a8fb0b0ed8ef2ddd3fd351b09a4308ff81fb
@@ -402,8 +379,8 @@ trackedFiles:
     pristine_git_object: a453d8bac206d1824a2994baffaaf42128e329aa
   docs/sdks/merchants/README.md:
     id: 965df3a0ecc8
-    last_write_checksum: sha1:dc6ac78c9dea3a03b9e3701e81debdb2feed03f0
-    pristine_git_object: 4fd17b679ccad59a52300fdb247e40304131bc8b
+    last_write_checksum: sha1:c6deffa3a831a14887374dc603bb842d0ae325b6
+    pristine_git_object: 12ee7dae9f8f5de3beb4fddca4d9e4a65508f9d6
   docs/sdks/orders/README.md:
     id: fc5b2caf3cb2
     last_write_checksum: sha1:7697212f1811e4b36f571f7ee3a7e85ed267351e
@@ -414,12 +391,12 @@ trackedFiles:
     pristine_git_object: 8019f441adff485a3e4327fa836e87a1960a388e
   docs/sdks/quotes/README.md:
     id: 05d5cafc463e
-    last_write_checksum: sha1:19bf0828aeb954adc8c0144adf700eb77a13cbc3
-    pristine_git_object: 0c066554a2893c3cdf1dd68af13e21c2f73aa872
+    last_write_checksum: sha1:94de9d666798c180c5ddb5e1f2e7bf3eceb77a8e
+    pristine_git_object: 6c27ab0da15709b239bb2af1ef4ed1e519ffbb1b
   docs/sdks/requests/README.md:
     id: 3959a8b5b5bc
-    last_write_checksum: sha1:e86cd2a50c9d75902e2d09893f3274d9fe8a4854
-    pristine_git_object: e5e34c83a4cf8bfb27a5347dc310974e163ffebb
+    last_write_checksum: sha1:37ef580f831d9b6a394305ee5b1863115319cb96
+    pristine_git_object: 3d705313a02c53f79232fe3831f8c18524182c2e
   phpstan.neon:
     id: 9503203c22f7
     last_write_checksum: sha1:36c7aff86142888cf147c7dceed4bbc02049e8fd
@@ -518,8 +495,8 @@ trackedFiles:
     pristine_git_object: 34864b61358c53cc7ea91c85dc9137a3edd9b63d
   src/Merchants.php:
     id: 28dbe8ddf5de
-    last_write_checksum: sha1:90839f68eee1c9314737a4353ca42eee790df754
-    pristine_git_object: bedbd4edbe3ad174e2f892d6c547a92efd2d47fd
+    last_write_checksum: sha1:ce846ebf0f57e2ddb5a059853dbaa03341cd49e8
+    pristine_git_object: 2ca91aceb48c31c4a993bec6bed30ccd84c4573c
   src/Models/Components/Amount.php:
     id: 06ddfebd564b
     last_write_checksum: sha1:e386ef75cbeecec3cdd9d40f58c8e94518e5ded2
@@ -574,28 +551,12 @@ trackedFiles:
     pristine_git_object: ee52e0d8bf89b454c1c2b47af9ed0334f02317de
   src/Models/Components/DeliveryQuote.php:
     id: 603be3ab55d3
-    last_write_checksum: sha1:0068ff44cf58f91277ac26ff96554fc24dc97b52
-    pristine_git_object: 1538be9e16a4fc95e1651fe32f27b55443a31006
-  src/Models/Components/DeliveryQuoteCreate.php:
-    id: 3fc34ff0b48c
-    last_write_checksum: sha1:15212a98ee1c2328316c5ac51bc455a1e4f5b8a4
-    pristine_git_object: 54736667090600c71d16e2dccde8f7eb4f7b3b17
-  src/Models/Components/DeliveryQuoteStatus.php:
-    id: d836fe16455d
-    last_write_checksum: sha1:bcf2dfe9bc32cb2239a40f48f62eaa718266131e
-    pristine_git_object: 405aad4574dc73158348644d0708198372ff324f
+    last_write_checksum: sha1:c1a55da562d954ec28ba0ee54e43cf55808b7ef1
+    pristine_git_object: 54655532848cfb92e0cd177e9fae06d43604b067
   src/Models/Components/DeliveryRequest.php:
     id: e0901b101de9
-    last_write_checksum: sha1:43541110d5d3b3820505c82ef6a59fdb69241ba1
-    pristine_git_object: 8840ad8f85b8e6d935b016b64661e4937a35bcb5
-  src/Models/Components/DeliveryRequestCreate.php:
-    id: 2954f3bfdda4
-    last_write_checksum: sha1:2df8e3e793eb1ac7bfa50722add92e7b25f98ae1
-    pristine_git_object: 0e9d58e1be826609b25e4cef800acddca5944037
-  src/Models/Components/DeliveryRequestStatus.php:
-    id: e9b8e00def25
-    last_write_checksum: sha1:afd22b5acf6bad67c12c938aacd5253624134b4e
-    pristine_git_object: f8375429daba7c22b2a83c22a452c0d3c5ecdaaf
+    last_write_checksum: sha1:79e626ad3090f3d1380a25e3ad43983b7ac4d61c
+    pristine_git_object: 909591b11175c7e66ee05ec3ff38895e8a1c2f5b
   src/Models/Components/Detail.php:
     id: 748b5fb55055
     last_write_checksum: sha1:627235c04b59a7f7a1f1eb065c4a3c5db810f2e9
@@ -634,12 +595,8 @@ trackedFiles:
     pristine_git_object: 02b9823fe167b742de7cc0cbeb6034a4176318ce
   src/Models/Components/HealthResponse.php:
     id: 6abc3efa1f44
-    last_write_checksum: sha1:cfb0aa35b9d8ad9a7e78838007b4f608a47babb5
-    pristine_git_object: 9725d49bb2986d4c0d001a0560c19394c27e88cd
-  src/Models/Components/HealthResponseStatus.php:
-    id: 84d3328c505d
-    last_write_checksum: sha1:f92ad6cce5b6a1b9c4306b38390c7f4c3ccedc03
-    pristine_git_object: 38a6561822e981757c76bd5973d51a73659d77b8
+    last_write_checksum: sha1:3e5d0645133b0ae3c14ee61cbeb24be91a1bb089
+    pristine_git_object: 15bf2eb15682f0c7c497de9cbc67f26ef7ae9ec2
   src/Models/Components/Interval1.php:
     id: dd3ad3282c2e
     last_write_checksum: sha1:70ab981c63289c630cf655a9e30fc75c5c9cf768
@@ -712,6 +669,10 @@ trackedFiles:
     id: 7e266d40ca17
     last_write_checksum: sha1:02935bb45b793fcd66223452b02100532e7808d2
     pristine_git_object: 78e9f9151f8a2aea24e4a68b19b3bafab1d9572c
+  src/Models/Components/Status.php:
+    id: acaeb52457b8
+    last_write_checksum: sha1:f0a12e816bde7d20186673b296c40cc5209e3939
+    pristine_git_object: 885a9336d58292ea9160cdcc67c2c0179dac276d
   src/Models/Components/Type.php:
     id: 1114578eb272
     last_write_checksum: sha1:a202ca377d3b22be1fac584e416fc25d47fe33d9
@@ -758,8 +719,8 @@ trackedFiles:
     pristine_git_object: 76a3f6058c0a135a14b408e2102bc09cedbb98c0
   src/Models/Operations/CreateQuoteRequest.php:
     id: 1d318e11e7e1
-    last_write_checksum: sha1:278295abc271ad9dc32c66026a46ade6de41975d
-    pristine_git_object: 49045e037b5e504503b8a025536414e9a90ea444
+    last_write_checksum: sha1:62cb57ce21f1970c50636182dec3ce1558c44412
+    pristine_git_object: 91eac11c0cb406c1fc145da4381c36187437a778
   src/Models/Operations/CreateQuoteResponse.php:
     id: 486177aed1ab
     last_write_checksum: sha1:d7157de868e61f624bde0c064164fd4994b48817
@@ -836,14 +797,6 @@ trackedFiles:
     id: 8af9f25570a7
     last_write_checksum: sha1:5414786757f0eb3056f47b78795650cd5c6fe3b6
     pristine_git_object: a8f525a0fb24e5399bde7c4e93ea6698e996d527
-  src/Models/Operations/ListMerchantPaymentHandlersRequest.php:
-    id: 3674b96c6d95
-    last_write_checksum: sha1:b097d3e72db81e3002982574f267cb141c682cf8
-    pristine_git_object: 0ba0000b4caa7a816bb8e09190cc25da119e95d5
-  src/Models/Operations/ListMerchantPaymentHandlersResponse.php:
-    id: 6feecc8a7cd1
-    last_write_checksum: sha1:9738d9393bc641d1d88c1dd246a06bc334fb61cd
-    pristine_git_object: 38d2db9a06f49578d932a6f4ba43c33ed558e40c
   src/Models/Operations/ListOrderQuotesRequest.php:
     id: 536ea2710912
     last_write_checksum: sha1:9f7e06bd386a432b91b3956634f790555151bdb9
@@ -882,16 +835,16 @@ trackedFiles:
     pristine_git_object: 128a8548dc19bebfc0437be2caeeb09174f1f4da
   src/Quotes.php:
     id: c6d84f7648c5
-    last_write_checksum: sha1:4b4385588c0f646499002b4a28b1e71232bdacbd
-    pristine_git_object: bc40bc1edd9850237bb137408effeb34f91ed0bd
+    last_write_checksum: sha1:20517aa4784e7a97c224ed4d9004d9a348fc3924
+    pristine_git_object: b7f13877d2b44f6415872849b4f2d5d6fb16a609
   src/Requests.php:
     id: e839b018252a
-    last_write_checksum: sha1:522d099fb578faac92ea953bab5b0e03b0c7e6c6
-    pristine_git_object: 8270622b6742b63e597930243325ba0af345df5a
+    last_write_checksum: sha1:86b622e4a5ba4df3353ea1430aad92ceb27ac87a
+    pristine_git_object: 9c2c123b3bd31807daa8803c3f08ad26615a4d55
   src/SDKConfiguration.php:
     id: 9d60ab0bec0b
-    last_write_checksum: sha1:165e444a79d85df979c4624b619837a37ef7b971
-    pristine_git_object: f90d534ee787e961f87b6b281543220eab36c1a0
+    last_write_checksum: sha1:b2872556d7bf0a43a47c1301b58af4a3d1969de3
+    pristine_git_object: c330f704fd07a1fd45dddb922fe3763767749d0d
   src/Utils/BigDecimalHandler.php:
     id: cdcca3718e2e
     last_write_checksum: sha1:09adceacfdaa1d6b79c29e11d9b621376e0b4ad7
@@ -1053,7 +1006,7 @@ examples:
         application/json: {"id": "<id>", "nonce": "<value>", "pickup_location": {"coordinates": {"latitude": 9821.48, "longitude": 3629.78}}, "dropoff_location": {"postal_address": {}}, "pickup_time": "2026-06-22T12:35:13.217Z", "dropoff_time": "2026-02-21T01:14:18.597Z"}
       responses:
         "201":
-          application/json: {"id": "<id>", "nonce": "<value>", "pickup_location": {"postal_address": {}}, "dropoff_location": {"postal_address": {}}, "pickup_time": "2024-10-15T03:47:16.788Z", "dropoff_time": "2026-08-28T03:43:36.451Z", "created_at": "2026-06-20T14:29:44.675Z", "status": "open"}
+          application/json: {"id": "<id>", "nonce": "<value>", "pickup_location": {"postal_address": {}}, "dropoff_location": {"postal_address": {}}, "pickup_time": "2024-10-15T03:47:16.788Z", "dropoff_time": "2026-08-28T03:43:36.451Z"}
         "400":
           application/json: {"detail": "<value>"}
         "422":
@@ -1062,7 +1015,7 @@ examples:
     speakeasy-default-list-requests:
       responses:
         "200":
-          application/json: [{"id": "<id>", "nonce": "<value>", "pickup_location": {"coordinates": {"latitude": 5947.52, "longitude": 2030.42}}, "dropoff_location": {"coordinates": {"latitude": 5947.52, "longitude": 2030.42}}, "pickup_time": "2026-11-18T20:05:23.959Z", "dropoff_time": "2026-08-22T01:29:34.434Z", "created_at": "2024-09-15T11:56:51.185Z", "status": "open"}]
+          application/json: [{"id": "<id>", "nonce": "<value>", "pickup_location": {"coordinates": {"latitude": 5947.52, "longitude": 2030.42}}, "dropoff_location": {"coordinates": {"latitude": 5947.52, "longitude": 2030.42}}, "pickup_time": "2026-11-18T20:05:23.959Z", "dropoff_time": "2026-08-22T01:29:34.434Z"}]
         "500":
           application/json: {"detail": "<value>"}
   getRequest:
@@ -1072,7 +1025,7 @@ examples:
           request_id: "<id>"
       responses:
         "200":
-          application/json: {"id": "<id>", "nonce": "<value>", "pickup_location": {"coordinates": {"latitude": 1344, "longitude": 1930.15}}, "dropoff_location": {"coordinates": {"latitude": 1344, "longitude": 1930.15}}, "pickup_time": "2025-02-04T21:33:06.833Z", "dropoff_time": "2025-07-29T19:08:48.222Z", "created_at": "2026-02-07T13:02:27.266Z", "status": "open"}
+          application/json: {"id": "<id>", "nonce": "<value>", "pickup_location": {"coordinates": {"latitude": 1344, "longitude": 1930.15}}, "dropoff_location": {"coordinates": {"latitude": 1344, "longitude": 1930.15}}, "pickup_time": "2025-02-04T21:33:06.833Z", "dropoff_time": "2025-07-29T19:08:48.222Z"}
         "404":
           application/json: {"detail": "<value>"}
   createQuote:
@@ -1084,7 +1037,7 @@ examples:
         application/json: {"id": "<id>", "nonce": "<value>", "price": 887209, "currency": "Bhutanese Ngultrum", "pickup_location": {"coordinates": {"latitude": 2026.17, "longitude": 9956.78}}, "dropoff_location": {"coordinates": {"latitude": 2026.17, "longitude": 9956.78}}, "pickup_estimate": "2026-02-24T12:34:27.941Z", "dropoff_estimate": "2024-10-17T15:58:14.067Z", "payment": {}}
       responses:
         "201":
-          application/json: {"id": "<id>", "nonce": "<value>", "price": 460648, "currency": "Dalasi", "pickup_location": {"postal_address": {}}, "dropoff_location": {"coordinates": {"latitude": 2026.17, "longitude": 9956.78}}, "pickup_estimate": "2026-10-17T14:01:34.202Z", "dropoff_estimate": "2026-05-18T08:56:15.216Z", "payment": {}, "request_id": "<id>", "created_at": "2024-02-10T14:56:37.772Z", "status": "pending"}
+          application/json: {"id": "<id>", "nonce": "<value>", "price": 460648, "currency": "Dalasi", "pickup_location": {"postal_address": {}}, "dropoff_location": {"coordinates": {"latitude": 2026.17, "longitude": 9956.78}}, "pickup_estimate": "2026-10-17T14:01:34.202Z", "dropoff_estimate": "2026-05-18T08:56:15.216Z", "payment": {}}
         "400":
           application/json: {"detail": "<value>"}
         "422":
@@ -1096,7 +1049,7 @@ examples:
           request_id: "<id>"
       responses:
         "200":
-          application/json: [{"id": "<id>", "nonce": "<value>", "price": 300165, "currency": "Sri Lanka Rupee", "pickup_location": {"postal_address": {}}, "dropoff_location": {"postal_address": {}}, "pickup_estimate": "2026-07-25T09:06:21.901Z", "dropoff_estimate": "2025-05-03T10:04:20.316Z", "payment": {}, "request_id": "<id>", "created_at": "2026-06-16T13:41:07.133Z", "status": "pending"}]
+          application/json: [{"id": "<id>", "nonce": "<value>", "price": 300165, "currency": "Sri Lanka Rupee", "pickup_location": {"postal_address": {}}, "dropoff_location": {"postal_address": {}}, "pickup_estimate": "2026-07-25T09:06:21.901Z", "dropoff_estimate": "2025-05-03T10:04:20.316Z", "payment": {}}]
         "404":
           application/json: {"detail": "<value>"}
   getQuote:
@@ -1107,7 +1060,7 @@ examples:
           quote_id: "<id>"
       responses:
         "200":
-          application/json: {"id": "<id>", "nonce": "<value>", "price": 709856, "currency": "Metical", "pickup_location": {"postal_address": {}}, "dropoff_location": {"coordinates": {"latitude": 3153.04, "longitude": 8186.88}}, "pickup_estimate": "2025-10-22T17:11:40.723Z", "dropoff_estimate": "2026-05-16T02:20:28.764Z", "payment": {}, "request_id": "<id>", "created_at": "2026-12-03T23:19:59.041Z", "status": "pending"}
+          application/json: {"id": "<id>", "nonce": "<value>", "price": 709856, "currency": "Metical", "pickup_location": {"postal_address": {}}, "dropoff_location": {"coordinates": {"latitude": 3153.04, "longitude": 8186.88}}, "pickup_estimate": "2025-10-22T17:11:40.723Z", "dropoff_estimate": "2026-05-16T02:20:28.764Z", "payment": {}}
         "404":
           application/json: {"detail": "<value>"}
   createDelivery:

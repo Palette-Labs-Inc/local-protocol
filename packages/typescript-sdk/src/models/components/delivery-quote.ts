@@ -5,29 +5,24 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import * as types from "../../types/primitives.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import {
   LocationUnion,
   LocationUnion$inboundSchema,
+  LocationUnion$Outbound,
+  LocationUnion$outboundSchema,
 } from "./location-union.js";
-import { Payment, Payment$inboundSchema } from "./payment.js";
+import {
+  Payment,
+  Payment$inboundSchema,
+  Payment$Outbound,
+  Payment$outboundSchema,
+} from "./payment.js";
 
 /**
- * Quote status.
- */
-export const DeliveryQuoteStatus = {
-  Pending: "pending",
-} as const;
-/**
- * Quote status.
- */
-export type DeliveryQuoteStatus = ClosedEnum<typeof DeliveryQuoteStatus>;
-
-/**
- * A delivery quote with server-assigned metadata.
+ * A delivery quote.
  */
 export type DeliveryQuote = {
   /**
@@ -70,24 +65,7 @@ export type DeliveryQuote = {
    * Payment configuration containing instruments.
    */
   payment: Payment;
-  /**
-   * Reference to the parent delivery request.
-   */
-  requestId: string;
-  /**
-   * Server-assigned creation timestamp (RFC 3339).
-   */
-  createdAt: Date;
-  /**
-   * Quote status.
-   */
-  status: DeliveryQuoteStatus;
 };
-
-/** @internal */
-export const DeliveryQuoteStatus$inboundSchema: z.ZodMiniEnum<
-  typeof DeliveryQuoteStatus
-> = z.enum(DeliveryQuoteStatus);
 
 /** @internal */
 export const DeliveryQuote$inboundSchema: z.ZodMiniType<
@@ -105,9 +83,6 @@ export const DeliveryQuote$inboundSchema: z.ZodMiniType<
     dropoff_estimate: types.date(),
     expires_at: types.optional(types.date()),
     payment: Payment$inboundSchema,
-    request_id: types.string(),
-    created_at: types.date(),
-    status: DeliveryQuoteStatus$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -116,12 +91,54 @@ export const DeliveryQuote$inboundSchema: z.ZodMiniType<
       "pickup_estimate": "pickupEstimate",
       "dropoff_estimate": "dropoffEstimate",
       "expires_at": "expiresAt",
-      "request_id": "requestId",
-      "created_at": "createdAt",
+    });
+  }),
+);
+/** @internal */
+export type DeliveryQuote$Outbound = {
+  id: string;
+  nonce: string;
+  price: number;
+  currency: string;
+  pickup_location: LocationUnion$Outbound;
+  dropoff_location: LocationUnion$Outbound;
+  pickup_estimate: string;
+  dropoff_estimate: string;
+  expires_at?: string | undefined;
+  payment: Payment$Outbound;
+};
+
+/** @internal */
+export const DeliveryQuote$outboundSchema: z.ZodMiniType<
+  DeliveryQuote$Outbound,
+  DeliveryQuote
+> = z.pipe(
+  z.object({
+    id: z.string(),
+    nonce: z.string(),
+    price: z.int(),
+    currency: z.string(),
+    pickupLocation: LocationUnion$outboundSchema,
+    dropoffLocation: LocationUnion$outboundSchema,
+    pickupEstimate: z.pipe(z.date(), z.transform(v => v.toISOString())),
+    dropoffEstimate: z.pipe(z.date(), z.transform(v => v.toISOString())),
+    expiresAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    payment: Payment$outboundSchema,
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      pickupLocation: "pickup_location",
+      dropoffLocation: "dropoff_location",
+      pickupEstimate: "pickup_estimate",
+      dropoffEstimate: "dropoff_estimate",
+      expiresAt: "expires_at",
     });
   }),
 );
 
+export function deliveryQuoteToJSON(deliveryQuote: DeliveryQuote): string {
+  return JSON.stringify(DeliveryQuote$outboundSchema.parse(deliveryQuote));
+}
 export function deliveryQuoteFromJSON(
   jsonString: string,
 ): SafeParseResult<DeliveryQuote, SDKValidationError> {

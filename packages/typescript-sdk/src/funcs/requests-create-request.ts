@@ -33,7 +33,7 @@ import { Result } from "../types/fp.js";
  */
 export function requestsCreateRequest(
   client: LocalProtocolCore,
-  request: components.DeliveryRequestCreate,
+  request: components.DeliveryRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
@@ -59,7 +59,7 @@ export function requestsCreateRequest(
 
 async function $do(
   client: LocalProtocolCore,
-  request: components.DeliveryRequestCreate,
+  request: components.DeliveryRequest,
   options?: RequestOptions,
 ): Promise<
   [
@@ -81,7 +81,7 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) => z.parse(components.DeliveryRequestCreate$outboundSchema, value),
+    (value) => z.parse(components.DeliveryRequest$outboundSchema, value),
     "Input validation failed",
   );
   if (!parsed.ok) {

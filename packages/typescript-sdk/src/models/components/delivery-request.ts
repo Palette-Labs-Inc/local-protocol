@@ -5,28 +5,18 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import * as types from "../../types/primitives.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import {
   LocationUnion,
   LocationUnion$inboundSchema,
+  LocationUnion$Outbound,
+  LocationUnion$outboundSchema,
 } from "./location-union.js";
 
 /**
- * Request status.
- */
-export const DeliveryRequestStatus = {
-  Open: "open",
-} as const;
-/**
- * Request status.
- */
-export type DeliveryRequestStatus = ClosedEnum<typeof DeliveryRequestStatus>;
-
-/**
- * A delivery request with server-assigned metadata.
+ * A delivery request.
  */
 export type DeliveryRequest = {
   /**
@@ -61,20 +51,7 @@ export type DeliveryRequest = {
    * Dropoff directions, access codes, or delivery notes.
    */
   dropoffInstructions?: string | undefined;
-  /**
-   * Server-assigned creation timestamp (RFC 3339).
-   */
-  createdAt: Date;
-  /**
-   * Request status.
-   */
-  status: DeliveryRequestStatus;
 };
-
-/** @internal */
-export const DeliveryRequestStatus$inboundSchema: z.ZodMiniEnum<
-  typeof DeliveryRequestStatus
-> = z.enum(DeliveryRequestStatus);
 
 /** @internal */
 export const DeliveryRequest$inboundSchema: z.ZodMiniType<
@@ -90,8 +67,6 @@ export const DeliveryRequest$inboundSchema: z.ZodMiniType<
     dropoff_time: types.date(),
     pickup_instructions: types.optional(types.string()),
     dropoff_instructions: types.optional(types.string()),
-    created_at: types.date(),
-    status: DeliveryRequestStatus$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -101,11 +76,53 @@ export const DeliveryRequest$inboundSchema: z.ZodMiniType<
       "dropoff_time": "dropoffTime",
       "pickup_instructions": "pickupInstructions",
       "dropoff_instructions": "dropoffInstructions",
-      "created_at": "createdAt",
+    });
+  }),
+);
+/** @internal */
+export type DeliveryRequest$Outbound = {
+  id: string;
+  nonce: string;
+  pickup_location: LocationUnion$Outbound;
+  dropoff_location: LocationUnion$Outbound;
+  pickup_time: string;
+  dropoff_time: string;
+  pickup_instructions?: string | undefined;
+  dropoff_instructions?: string | undefined;
+};
+
+/** @internal */
+export const DeliveryRequest$outboundSchema: z.ZodMiniType<
+  DeliveryRequest$Outbound,
+  DeliveryRequest
+> = z.pipe(
+  z.object({
+    id: z.string(),
+    nonce: z.string(),
+    pickupLocation: LocationUnion$outboundSchema,
+    dropoffLocation: LocationUnion$outboundSchema,
+    pickupTime: z.pipe(z.date(), z.transform(v => v.toISOString())),
+    dropoffTime: z.pipe(z.date(), z.transform(v => v.toISOString())),
+    pickupInstructions: z.optional(z.string()),
+    dropoffInstructions: z.optional(z.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      pickupLocation: "pickup_location",
+      dropoffLocation: "dropoff_location",
+      pickupTime: "pickup_time",
+      dropoffTime: "dropoff_time",
+      pickupInstructions: "pickup_instructions",
+      dropoffInstructions: "dropoff_instructions",
     });
   }),
 );
 
+export function deliveryRequestToJSON(
+  deliveryRequest: DeliveryRequest,
+): string {
+  return JSON.stringify(DeliveryRequest$outboundSchema.parse(deliveryRequest));
+}
 export function deliveryRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<DeliveryRequest, SDKValidationError> {

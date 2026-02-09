@@ -1,6 +1,6 @@
 # DeliveryQuote
 
-A delivery quote with server-assigned metadata.
+A delivery quote.
 
 
 ## Fields
@@ -17,6 +17,3 @@ A delivery quote with server-assigned metadata.
 | `dropoffEstimate`                                                                         | [\DateTime](https://www.php.net/manual/en/class.datetime.php)                             | :heavy_check_mark:                                                                        | Estimated dropoff time (RFC 3339).                                                        |
 | `expiresAt`                                                                               | [\DateTime](https://www.php.net/manual/en/class.datetime.php)                             | :heavy_minus_sign:                                                                        | Time when the quote expires (RFC 3339).                                                   |
 | `payment`                                                                                 | [Components\Payment](../../Models/Components/Payment.md)                                  | :heavy_check_mark:                                                                        | Payment configuration containing instruments.                                             |
-| `requestId`                                                                               | *string*                                                                                  | :heavy_check_mark:                                                                        | Reference to the parent delivery request.                                                 |
-| `createdAt`                                                                               | [\DateTime](https://www.php.net/manual/en/class.datetime.php)                             | :heavy_check_mark:                                                                        | Server-assigned creation timestamp (RFC 3339).                                            |
-| `status`                                                                                  | [Components\DeliveryQuoteStatus](../../Models/Components/DeliveryQuoteStatus.md)          | :heavy_check_mark:                                                                        | Quote status.                                                                             |

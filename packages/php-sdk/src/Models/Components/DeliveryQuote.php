@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace LocalProtocol\Models\Components;
 
 
-/** DeliveryQuote - A delivery quote with server-assigned metadata. */
+/** DeliveryQuote - A delivery quote. */
 class DeliveryQuote
 {
     /**
@@ -88,31 +88,6 @@ class DeliveryQuote
     public Payment $payment;
 
     /**
-     * Reference to the parent delivery request.
-     *
-     * @var string $requestId
-     */
-    #[\Speakeasy\Serializer\Annotation\SerializedName('request_id')]
-    public string $requestId;
-
-    /**
-     * Server-assigned creation timestamp (RFC 3339).
-     *
-     * @var \DateTime $createdAt
-     */
-    #[\Speakeasy\Serializer\Annotation\SerializedName('created_at')]
-    public \DateTime $createdAt;
-
-    /**
-     * Quote status.
-     *
-     * @var DeliveryQuoteStatus $status
-     */
-    #[\Speakeasy\Serializer\Annotation\SerializedName('status')]
-    #[\Speakeasy\Serializer\Annotation\Type('\LocalProtocol\Models\Components\DeliveryQuoteStatus')]
-    public DeliveryQuoteStatus $status;
-
-    /**
      * Time when the quote expires (RFC 3339).
      *
      * @var ?\DateTime $expiresAt
@@ -131,13 +106,10 @@ class DeliveryQuote
      * @param  \DateTime  $pickupEstimate
      * @param  \DateTime  $dropoffEstimate
      * @param  Payment  $payment
-     * @param  string  $requestId
-     * @param  \DateTime  $createdAt
-     * @param  DeliveryQuoteStatus  $status
      * @param  ?\DateTime  $expiresAt
      * @phpstan-pure
      */
-    public function __construct(string $id, string $nonce, int $price, string $currency, Location1|Location2 $pickupLocation, Location1|Location2 $dropoffLocation, \DateTime $pickupEstimate, \DateTime $dropoffEstimate, Payment $payment, string $requestId, \DateTime $createdAt, DeliveryQuoteStatus $status, ?\DateTime $expiresAt = null)
+    public function __construct(string $id, string $nonce, int $price, string $currency, Location1|Location2 $pickupLocation, Location1|Location2 $dropoffLocation, \DateTime $pickupEstimate, \DateTime $dropoffEstimate, Payment $payment, ?\DateTime $expiresAt = null)
     {
         $this->id = $id;
         $this->nonce = $nonce;
@@ -148,9 +120,6 @@ class DeliveryQuote
         $this->pickupEstimate = $pickupEstimate;
         $this->dropoffEstimate = $dropoffEstimate;
         $this->payment = $payment;
-        $this->requestId = $requestId;
-        $this->createdAt = $createdAt;
-        $this->status = $status;
         $this->expiresAt = $expiresAt;
     }
 }

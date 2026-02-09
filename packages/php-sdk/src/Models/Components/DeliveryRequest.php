@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace LocalProtocol\Models\Components;
 
 
-/** DeliveryRequest - A delivery request with server-assigned metadata. */
+/** DeliveryRequest - A delivery request. */
 class DeliveryRequest
 {
     /**
@@ -63,23 +63,6 @@ class DeliveryRequest
     public \DateTime $dropoffTime;
 
     /**
-     * Server-assigned creation timestamp (RFC 3339).
-     *
-     * @var \DateTime $createdAt
-     */
-    #[\Speakeasy\Serializer\Annotation\SerializedName('created_at')]
-    public \DateTime $createdAt;
-
-    /**
-     * Request status.
-     *
-     * @var DeliveryRequestStatus $status
-     */
-    #[\Speakeasy\Serializer\Annotation\SerializedName('status')]
-    #[\Speakeasy\Serializer\Annotation\Type('\LocalProtocol\Models\Components\DeliveryRequestStatus')]
-    public DeliveryRequestStatus $status;
-
-    /**
      * Pickup directions, access codes, or handling notes.
      *
      * @var ?string $pickupInstructions
@@ -104,13 +87,11 @@ class DeliveryRequest
      * @param  Location1|Location2  $dropoffLocation
      * @param  \DateTime  $pickupTime
      * @param  \DateTime  $dropoffTime
-     * @param  \DateTime  $createdAt
-     * @param  DeliveryRequestStatus  $status
      * @param  ?string  $pickupInstructions
      * @param  ?string  $dropoffInstructions
      * @phpstan-pure
      */
-    public function __construct(string $id, string $nonce, Location1|Location2 $pickupLocation, Location1|Location2 $dropoffLocation, \DateTime $pickupTime, \DateTime $dropoffTime, \DateTime $createdAt, DeliveryRequestStatus $status, ?string $pickupInstructions = null, ?string $dropoffInstructions = null)
+    public function __construct(string $id, string $nonce, Location1|Location2 $pickupLocation, Location1|Location2 $dropoffLocation, \DateTime $pickupTime, \DateTime $dropoffTime, ?string $pickupInstructions = null, ?string $dropoffInstructions = null)
     {
         $this->id = $id;
         $this->nonce = $nonce;
@@ -118,8 +99,6 @@ class DeliveryRequest
         $this->dropoffLocation = $dropoffLocation;
         $this->pickupTime = $pickupTime;
         $this->dropoffTime = $dropoffTime;
-        $this->createdAt = $createdAt;
-        $this->status = $status;
         $this->pickupInstructions = $pickupInstructions;
         $this->dropoffInstructions = $dropoffInstructions;
     }

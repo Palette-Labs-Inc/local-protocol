@@ -10,7 +10,6 @@ export * from "./get-order-quote.js";
 export * from "./get-order.js";
 export * from "./get-quote.js";
 export * from "./get-request.js";
-export * from "./list-merchant-payment-handlers.js";
 export * from "./list-order-quotes.js";
 export * from "./list-quotes.js";
 export * from "./update-delivery-event.js";

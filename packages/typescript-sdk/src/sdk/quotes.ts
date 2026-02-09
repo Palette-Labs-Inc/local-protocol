@@ -18,7 +18,7 @@ export class Quotes extends ClientSDK {
    */
   async createQuote(
     requestId: string,
-    body: components.DeliveryQuoteCreate,
+    body: components.DeliveryQuote,
     options?: RequestOptions,
   ): Promise<components.DeliveryQuote> {
     return unwrapAsync(quotesCreateQuote(

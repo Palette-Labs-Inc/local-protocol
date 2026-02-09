@@ -114,7 +114,6 @@ if ($response->discoveryResponse !== null) {
 ### [Merchants](docs/sdks/merchants/README.md)
 
 * [getMerchant](docs/sdks/merchants/README.md#getmerchant) - Get merchant
-* [listMerchantPaymentHandlers](docs/sdks/merchants/README.md#listmerchantpaymenthandlers) - List payment handlers
 
 ### [Orders](docs/sdks/orders/README.md)
 

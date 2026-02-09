@@ -22,17 +22,17 @@ class CreateQuoteRequest
 
     /**
      *
-     * @var Components\DeliveryQuoteCreate $body
+     * @var Components\DeliveryQuote $body
      */
     #[SpeakeasyMetadata('request:mediaType=application/json')]
-    public Components\DeliveryQuoteCreate $body;
+    public Components\DeliveryQuote $body;
 
     /**
      * @param  string  $requestId
-     * @param  Components\DeliveryQuoteCreate  $body
+     * @param  Components\DeliveryQuote  $body
      * @phpstan-pure
      */
-    public function __construct(string $requestId, Components\DeliveryQuoteCreate $body)
+    public function __construct(string $requestId, Components\DeliveryQuote $body)
     {
         $this->requestId = $requestId;
         $this->body = $body;

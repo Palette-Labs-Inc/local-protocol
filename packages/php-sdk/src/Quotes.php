@@ -50,12 +50,12 @@ class Quotes
      *
      * Submit a quote for a delivery request. The `nonce` field provides idempotency.
      *
-     * @param  Components\DeliveryQuoteCreate  $body
+     * @param  Components\DeliveryQuote  $body
      * @param  string  $requestId
      * @return Operations\CreateQuoteResponse
      * @throws \LocalProtocol\Models\Errors\APIException
      */
-    public function create(Components\DeliveryQuoteCreate $body, string $requestId, ?Options $options = null): Operations\CreateQuoteResponse
+    public function create(Components\DeliveryQuote $body, string $requestId, ?Options $options = null): Operations\CreateQuoteResponse
     {
         $request = new Operations\CreateQuoteRequest(
             requestId: $requestId,

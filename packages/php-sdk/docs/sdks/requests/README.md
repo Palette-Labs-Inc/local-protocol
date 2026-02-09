@@ -28,7 +28,7 @@ use LocalProtocol\Utils;
 
 $sdk = LocalProtocol\LocalProtocol::builder()->build();
 
-$request = new Components\DeliveryRequestCreate(
+$request = new Components\DeliveryRequest(
     id: '<id>',
     nonce: '<value>',
     pickupLocation: new Components\Location1(
@@ -55,9 +55,9 @@ if ($response->deliveryRequest !== null) {
 
 ### Parameters
 
-| Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
-| `$request`                                                                           | [Components\DeliveryRequestCreate](../../Models/Components/DeliveryRequestCreate.md) | :heavy_check_mark:                                                                   | The request object to use for the request.                                           |
+| Parameter                                                                | Type                                                                     | Required                                                                 | Description                                                              |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| `$request`                                                               | [Components\DeliveryRequest](../../Models/Components/DeliveryRequest.md) | :heavy_check_mark:                                                       | The request object to use for the request.                               |
 
 ### Response
 

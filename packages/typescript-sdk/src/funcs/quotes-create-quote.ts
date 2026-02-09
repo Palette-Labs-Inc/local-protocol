@@ -35,7 +35,7 @@ import { Result } from "../types/fp.js";
 export function quotesCreateQuote(
   client: LocalProtocolCore,
   requestId: string,
-  body: components.DeliveryQuoteCreate,
+  body: components.DeliveryQuote,
   options?: RequestOptions,
 ): APIPromise<
   Result<
@@ -63,7 +63,7 @@ export function quotesCreateQuote(
 async function $do(
   client: LocalProtocolCore,
   requestId: string,
-  body: components.DeliveryQuoteCreate,
+  body: components.DeliveryQuote,
   options?: RequestOptions,
 ): Promise<
   [

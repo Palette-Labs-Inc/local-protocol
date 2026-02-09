@@ -28,7 +28,7 @@ use LocalProtocol\Utils;
 
 $sdk = LocalProtocol\LocalProtocol::builder()->build();
 
-$body = new Components\DeliveryQuoteCreate(
+$body = new Components\DeliveryQuote(
     id: '<id>',
     nonce: '<value>',
     price: 887209,
@@ -63,10 +63,10 @@ if ($response->deliveryQuote !== null) {
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `requestId`                                                                      | *string*                                                                         | :heavy_check_mark:                                                               | Delivery request identifier.                                                     |
-| `body`                                                                           | [Components\DeliveryQuoteCreate](../../Models/Components/DeliveryQuoteCreate.md) | :heavy_check_mark:                                                               | N/A                                                                              |
+| Parameter                                                            | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `requestId`                                                          | *string*                                                             | :heavy_check_mark:                                                   | Delivery request identifier.                                         |
+| `body`                                                               | [Components\DeliveryQuote](../../Models/Components/DeliveryQuote.md) | :heavy_check_mark:                                                   | N/A                                                                  |
 
 ### Response
 

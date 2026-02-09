@@ -11,13 +11,13 @@ export type CreateQuoteRequest = {
    * Delivery request identifier.
    */
   requestId: string;
-  body: components.DeliveryQuoteCreate;
+  body: components.DeliveryQuote;
 };
 
 /** @internal */
 export type CreateQuoteRequest$Outbound = {
   request_id: string;
-  body: components.DeliveryQuoteCreate$Outbound;
+  body: components.DeliveryQuote$Outbound;
 };
 
 /** @internal */
@@ -27,7 +27,7 @@ export const CreateQuoteRequest$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     requestId: z.string(),
-    body: components.DeliveryQuoteCreate$outboundSchema,
+    body: components.DeliveryQuote$outboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {

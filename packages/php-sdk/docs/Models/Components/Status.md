@@ -1,4 +1,4 @@
-# HealthResponseStatus
+# Status
 
 
 ## Values

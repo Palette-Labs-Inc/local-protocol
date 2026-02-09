@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace LocalProtocol\Models\Components;
 
 
-enum HealthResponseStatus: string
+enum Status: string
 {
     case Ok = 'ok';
 }

@@ -14,17 +14,17 @@ class HealthResponse
 {
     /**
      *
-     * @var HealthResponseStatus $status
+     * @var Status $status
      */
     #[\Speakeasy\Serializer\Annotation\SerializedName('status')]
-    #[\Speakeasy\Serializer\Annotation\Type('\LocalProtocol\Models\Components\HealthResponseStatus')]
-    public HealthResponseStatus $status;
+    #[\Speakeasy\Serializer\Annotation\Type('\LocalProtocol\Models\Components\Status')]
+    public Status $status;
 
     /**
-     * @param  HealthResponseStatus  $status
+     * @param  Status  $status
      * @phpstan-pure
      */
-    public function __construct(HealthResponseStatus $status)
+    public function __construct(Status $status)
     {
         $this->status = $status;
     }

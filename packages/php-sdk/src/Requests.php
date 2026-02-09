@@ -50,11 +50,11 @@ class Requests
      *
      * Submit a new delivery request. The `nonce` field provides idempotency.
      *
-     * @param  Components\DeliveryRequestCreate  $request
+     * @param  Components\DeliveryRequest  $request
      * @return Operations\CreateRequestResponse
      * @throws \LocalProtocol\Models\Errors\APIException
      */
-    public function create(Components\DeliveryRequestCreate $request, ?Options $options = null): Operations\CreateRequestResponse
+    public function create(Components\DeliveryRequest $request, ?Options $options = null): Operations\CreateRequestResponse
     {
         $baseUrl = $this->sdkConfiguration->getTemplatedServerUrl();
         $url = Utils\Utils::generateUrl($baseUrl, '/requests');

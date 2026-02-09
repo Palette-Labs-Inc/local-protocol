@@ -1,6 +1,6 @@
 # DeliveryRequest
 
-A delivery request with server-assigned metadata.
+A delivery request.
 
 
 ## Fields
@@ -15,5 +15,3 @@ A delivery request with server-assigned metadata.
 | `dropoffTime`                                                                             | [\DateTime](https://www.php.net/manual/en/class.datetime.php)                             | :heavy_check_mark:                                                                        | Requested dropoff time (RFC 3339).                                                        |
 | `pickupInstructions`                                                                      | *?string*                                                                                 | :heavy_minus_sign:                                                                        | Pickup directions, access codes, or handling notes.                                       |
 | `dropoffInstructions`                                                                     | *?string*                                                                                 | :heavy_minus_sign:                                                                        | Dropoff directions, access codes, or delivery notes.                                      |
-| `createdAt`                                                                               | [\DateTime](https://www.php.net/manual/en/class.datetime.php)                             | :heavy_check_mark:                                                                        | Server-assigned creation timestamp (RFC 3339).                                            |
-| `status`                                                                                  | [Components\DeliveryRequestStatus](../../Models/Components/DeliveryRequestStatus.md)      | :heavy_check_mark:                                                                        | Request status.                                                                           |

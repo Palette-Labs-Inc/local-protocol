@@ -8,7 +8,12 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import * as types from "../../types/primitives.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
-import { EvmToken, EvmToken$inboundSchema } from "./evm-token.js";
+import {
+  EvmToken,
+  EvmToken$inboundSchema,
+  EvmToken$Outbound,
+  EvmToken$outboundSchema,
+} from "./evm-token.js";
 
 /**
  * Handler configuration for auth/capture escrow on EVM chains.
@@ -59,7 +64,48 @@ export const EvmAuthCaptureEscrowConfig$inboundSchema: z.ZodMiniType<
     });
   }),
 );
+/** @internal */
+export type EvmAuthCaptureEscrowConfig$Outbound = {
+  chain_id: number;
+  contract: string;
+  operator: string;
+  receiver: string;
+  accepted_tokens: Array<EvmToken$Outbound>;
+  [additionalProperties: string]: unknown;
+};
 
+/** @internal */
+export const EvmAuthCaptureEscrowConfig$outboundSchema: z.ZodMiniType<
+  EvmAuthCaptureEscrowConfig$Outbound,
+  EvmAuthCaptureEscrowConfig
+> = z.pipe(
+  z.catchall(
+    z.object({
+      chainId: z.int(),
+      contract: z.string(),
+      operator: z.string(),
+      receiver: z.string(),
+      acceptedTokens: z.array(EvmToken$outboundSchema),
+    }),
+    z.any(),
+  ),
+  z.transform((v) => {
+    return {
+      ...remap$(v, {
+        chainId: "chain_id",
+        acceptedTokens: "accepted_tokens",
+      }),
+    };
+  }),
+);
+
+export function evmAuthCaptureEscrowConfigToJSON(
+  evmAuthCaptureEscrowConfig: EvmAuthCaptureEscrowConfig,
+): string {
+  return JSON.stringify(
+    EvmAuthCaptureEscrowConfig$outboundSchema.parse(evmAuthCaptureEscrowConfig),
+  );
+}
 export function evmAuthCaptureEscrowConfigFromJSON(
   jsonString: string,
 ): SafeParseResult<EvmAuthCaptureEscrowConfig, SDKValidationError> {

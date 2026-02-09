@@ -71,7 +71,7 @@ paths:
         required: true
         content:
           "application/json":
-            schema: {"$ref": "#/components/schemas/DeliveryRequestCreate"}
+            schema: {"$ref": "#/components/schemas/DeliveryRequest"}
       responses:
         "201":
           description: "Request created."
@@ -145,7 +145,7 @@ paths:
         required: true
         content:
           "application/json":
-            schema: {"$ref": "#/components/schemas/DeliveryQuoteCreate"}
+            schema: {"$ref": "#/components/schemas/DeliveryQuote"}
       responses:
         "201":
           description: "Quote created."
@@ -326,28 +326,6 @@ paths:
           content:
             "application/json":
               schema: {"$ref": "#/components/schemas/Merchant"}
-        "404":
-          description: "Merchant not found."
-          content:
-            "application/json":
-              schema: {"$ref": "#/components/schemas/ErrorResponse"}
-  "/merchants/{merchant_id}/payment-handlers":
-    get:
-      tags:
-        - "merchants"
-      summary: "List payment handlers"
-      description: "Returns payment handler configurations supported by the merchant."
-      operationId: "listMerchantPaymentHandlers"
-      parameters:
-        - {"$ref": "#/components/parameters/MerchantId"}
-      responses:
-        "200":
-          description: "List of payment handler configurations."
-          content:
-            "application/json":
-              schema:
-                type: "array"
-                items: {"$ref": "#/components/schemas/EvmAuthCaptureEscrowConfig"}
         "404":
           description: "Merchant not found."
           content:
@@ -650,43 +628,9 @@ components:
             - "coordinates"
         - required:
             - "postal_address"
-    "DeliveryRequestCreate":
-      type: "object"
-      description: "Body for creating a delivery request."
-      required:
-        - "id"
-        - "nonce"
-        - "pickup_location"
-        - "dropoff_location"
-        - "pickup_time"
-        - "dropoff_time"
-      properties:
-        "id":
-          type: "string"
-          description: "Unique request identifier."
-        "nonce":
-          type: "string"
-          description: "Client-generated idempotency key."
-        "pickup_location": {"$ref": "#/components/schemas/Location"}
-        "dropoff_location": {"$ref": "#/components/schemas/Location"}
-        "pickup_time":
-          type: "string"
-          format: "date-time"
-          description: "Requested pickup time (RFC 3339)."
-        "dropoff_time":
-          type: "string"
-          format: "date-time"
-          description: "Requested dropoff time (RFC 3339)."
-        "pickup_instructions":
-          type: "string"
-          description: "Pickup directions, access codes, or handling notes."
-        "dropoff_instructions":
-          type: "string"
-          description: "Dropoff directions, access codes, or delivery notes."
-      additionalProperties: false
     "DeliveryRequest":
       type: "object"
-      description: "A delivery request with server-assigned metadata."
+      description: "A delivery request."
       required:
         - "id"
         - "nonce"
@@ -694,8 +638,6 @@ components:
         - "dropoff_location"
         - "pickup_time"
         - "dropoff_time"
-        - "created_at"
-        - "status"
       properties:
         "id":
           type: "string"
@@ -719,63 +661,10 @@ components:
         "dropoff_instructions":
           type: "string"
           description: "Dropoff directions, access codes, or delivery notes."
-        "created_at":
-          type: "string"
-          format: "date-time"
-          description: "Server-assigned creation timestamp (RFC 3339)."
-        "status":
-          type: "string"
-          description: "Request status."
-          enum:
-            - "open"
-      additionalProperties: false
-    "DeliveryQuoteCreate":
-      type: "object"
-      description: "Body for creating a delivery quote."
-      required:
-        - "id"
-        - "nonce"
-        - "price"
-        - "currency"
-        - "pickup_location"
-        - "dropoff_location"
-        - "pickup_estimate"
-        - "dropoff_estimate"
-        - "payment"
-      properties:
-        "id":
-          type: "string"
-          description: "Unique quote identifier."
-        "nonce":
-          type: "string"
-          description: "Client-generated idempotency key."
-        "price":
-          type: "integer"
-          minimum: 0
-          description: "Price in minor currency units."
-        "currency":
-          type: "string"
-          pattern: "^[A-Z]{3}$"
-          description: "ISO 4217 currency code."
-        "pickup_location": {"$ref": "#/components/schemas/Location"}
-        "dropoff_location": {"$ref": "#/components/schemas/Location"}
-        "pickup_estimate":
-          type: "string"
-          format: "date-time"
-          description: "Estimated pickup time (RFC 3339)."
-        "dropoff_estimate":
-          type: "string"
-          format: "date-time"
-          description: "Estimated dropoff time (RFC 3339)."
-        "expires_at":
-          type: "string"
-          format: "date-time"
-          description: "Time when the quote expires (RFC 3339)."
-        "payment": {"$ref": "#/components/schemas/Payment", "description": "Payment handlers available for accepting this quote."}
       additionalProperties: false
     "DeliveryQuote":
       type: "object"
-      description: "A delivery quote with server-assigned metadata."
+      description: "A delivery quote."
       required:
         - "id"
         - "nonce"
@@ -786,9 +675,6 @@ components:
         - "pickup_estimate"
         - "dropoff_estimate"
         - "payment"
-        - "request_id"
-        - "created_at"
-        - "status"
       properties:
         "id":
           type: "string"
@@ -819,18 +705,6 @@ components:
           format: "date-time"
           description: "Time when the quote expires (RFC 3339)."
         "payment": {"$ref": "#/components/schemas/Payment", "description": "Payment handlers available for accepting this quote."}
-        "request_id":
-          type: "string"
-          description: "Reference to the parent delivery request."
-        "created_at":
-          type: "string"
-          format: "date-time"
-          description: "Server-assigned creation timestamp (RFC 3339)."
-        "status":
-          type: "string"
-          description: "Quote status."
-          enum:
-            - "pending"
       additionalProperties: false
     "CreateDeliveryRequest":
       type: "object"
@@ -1491,6 +1365,7 @@ components:
           maximum: 255
           description: "Token decimals."
     "EvmAuthCaptureEscrowConfig":
+      x-speakeasy-include: true
       type: "object"
       description: "Handler configuration for auth/capture escrow on EVM chains."
       required:

@@ -3,7 +3,6 @@
  */
 
 import { merchantsGetMerchant } from "../funcs/merchants-get-merchant.js";
-import { merchantsListMerchantPaymentHandlers } from "../funcs/merchants-list-merchant-payment-handlers.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as components from "../models/components/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -20,23 +19,6 @@ export class Merchants extends ClientSDK {
     options?: RequestOptions,
   ): Promise<components.Merchant> {
     return unwrapAsync(merchantsGetMerchant(
-      this,
-      merchantId,
-      options,
-    ));
-  }
-
-  /**
-   * List payment handlers
-   *
-   * @remarks
-   * Returns payment handler configurations supported by the merchant.
-   */
-  async listMerchantPaymentHandlers(
-    merchantId: string,
-    options?: RequestOptions,
-  ): Promise<Array<components.EvmAuthCaptureEscrowConfig>> {
-    return unwrapAsync(merchantsListMerchantPaymentHandlers(
       this,
       merchantId,
       options,

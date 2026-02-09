@@ -17,7 +17,7 @@ export class Requests extends ClientSDK {
    * Submit a new delivery request. The `nonce` field provides idempotency.
    */
   async createRequest(
-    request: components.DeliveryRequestCreate,
+    request: components.DeliveryRequest,
     options?: RequestOptions,
   ): Promise<components.DeliveryRequest> {
     return unwrapAsync(requestsCreateRequest(

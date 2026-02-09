@@ -122,7 +122,6 @@ run();
 ### [Merchants](docs/sdks/merchants/README.md)
 
 * [getMerchant](docs/sdks/merchants/README.md#getmerchant) - Get merchant
-* [listMerchantPaymentHandlers](docs/sdks/merchants/README.md#listmerchantpaymenthandlers) - List payment handlers
 
 ### [Orders](docs/sdks/orders/README.md)
 
@@ -174,7 +173,6 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`discoveryGetHealth`](docs/sdks/discovery/README.md#gethealth) - Health check
 - [`eventsGetEventVocabulary`](docs/sdks/events/README.md#geteventvocabulary) - Get event vocabulary
 - [`merchantsGetMerchant`](docs/sdks/merchants/README.md#getmerchant) - Get merchant
-- [`merchantsListMerchantPaymentHandlers`](docs/sdks/merchants/README.md#listmerchantpaymenthandlers) - List payment handlers
 - [`ordersCreateOrder`](docs/sdks/orders/README.md#createorder) - Create order
 - [`ordersCreateOrderRequest`](docs/sdks/orders/README.md#createorderrequest) - Create order request
 - [`ordersGetOrder`](docs/sdks/orders/README.md#getorder) - Get order
@@ -315,7 +313,7 @@ run();
 
 
 **Inherit from [`LocalProtocolError`](./src/models/errors/local-protocol-error.ts)**:
-* [`ValidationErrorResponse`](./src/models/errors/validation-error-response.ts): Validation error response with a list of field-level errors. Status code `422`. Applicable to 4 of 21 methods.*
+* [`ValidationErrorResponse`](./src/models/errors/validation-error-response.ts): Validation error response with a list of field-level errors. Status code `422`. Applicable to 4 of 20 methods.*
 * [`ResponseValidationError`](./src/models/errors/response-validation-error.ts): Type mismatch between the data returned from the server and the structure expected by the SDK. See `error.rawValue` for the raw value and `error.pretty()` for a nicely formatted multi-line string.
 
 </details>
