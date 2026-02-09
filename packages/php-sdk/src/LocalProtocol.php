@@ -47,6 +47,34 @@ class LocalProtocol
     public Deliveries $deliveries;
 
     /**
+     * Merchant and catalog operations
+     *
+     * @var Merchants $$merchants
+     */
+    public Merchants $merchants;
+
+    /**
+     * Order lifecycle operations
+     *
+     * @var Orders $$orders
+     */
+    public Orders $orders;
+
+    /**
+     * Event vocabulary operations
+     *
+     * @var Events $$events
+     */
+    public Events $events;
+
+    /**
+     * Payment instrument operations
+     *
+     * @var Payments $$payments
+     */
+    public Payments $payments;
+
+    /**
      * Returns a new instance of the SDK builder used to configure and create the SDK instance.
      *
      * @return LocalProtocolBuilder
@@ -66,6 +94,10 @@ class LocalProtocol
         $this->requests = new Requests($this->sdkConfiguration);
         $this->quotes = new Quotes($this->sdkConfiguration);
         $this->deliveries = new Deliveries($this->sdkConfiguration);
+        $this->merchants = new Merchants($this->sdkConfiguration);
+        $this->orders = new Orders($this->sdkConfiguration);
+        $this->events = new Events($this->sdkConfiguration);
+        $this->payments = new Payments($this->sdkConfiguration);
         $this->initHooks();
 
     }

@@ -107,6 +107,27 @@ if ($response->discoveryResponse !== null) {
 * [get](docs/sdks/discovery/README.md#get) - Service discovery
 * [getHealth](docs/sdks/discovery/README.md#gethealth) - Health check
 
+### [Events](docs/sdks/events/README.md)
+
+* [getEventVocabulary](docs/sdks/events/README.md#geteventvocabulary) - Get event vocabulary
+
+### [Merchants](docs/sdks/merchants/README.md)
+
+* [getMerchant](docs/sdks/merchants/README.md#getmerchant) - Get merchant
+* [listMerchantPaymentHandlers](docs/sdks/merchants/README.md#listmerchantpaymenthandlers) - List payment handlers
+
+### [Orders](docs/sdks/orders/README.md)
+
+* [createOrderRequest](docs/sdks/orders/README.md#createorderrequest) - Create order request
+* [listOrderQuotes](docs/sdks/orders/README.md#listorderquotes) - List order quotes
+* [getOrderQuote](docs/sdks/orders/README.md#getorderquote) - Get order quote
+* [createOrder](docs/sdks/orders/README.md#createorder) - Create order
+* [getOrder](docs/sdks/orders/README.md#getorder) - Get order
+
+### [Payments](docs/sdks/payments/README.md)
+
+* [createPaymentInstrument](docs/sdks/payments/README.md#createpaymentinstrument) - Register payment instrument
+
 ### [Quotes](docs/sdks/quotes/README.md)
 
 * [create](docs/sdks/quotes/README.md#create) - Create quote
