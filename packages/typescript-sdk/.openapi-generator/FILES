@@ -25,6 +25,8 @@ docs/DiscoveryResponse.md
 docs/ErrorResponse.md
 docs/EvmAuthCaptureEscrowConfig.md
 docs/EvmAuthCaptureEscrowInstrument.md
+docs/EvmAuthCaptureEscrowInstrumentAllOfAmount.md
+docs/EvmAuthCaptureEscrowInstrumentAllOfMaxAmount.md
 docs/EvmCurrency.md
 docs/EvmToken.md
 docs/FiatCurrency.md
@@ -77,6 +79,8 @@ src/models/DiscoveryResponse.ts
 src/models/ErrorResponse.ts
 src/models/EvmAuthCaptureEscrowConfig.ts
 src/models/EvmAuthCaptureEscrowInstrument.ts
+src/models/EvmAuthCaptureEscrowInstrumentAllOfAmount.ts
+src/models/EvmAuthCaptureEscrowInstrumentAllOfMaxAmount.ts
 src/models/EvmCurrency.ts
 src/models/EvmToken.ts
 src/models/FiatCurrency.ts

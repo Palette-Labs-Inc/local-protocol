@@ -9,7 +9,7 @@ Name | Type
 ------------ | -------------
 `name` | string
 `version` | string
-`_extends` | Array&lt;string&gt;
+`_extends` | Set&lt;string&gt;
 `title` | string
 `description` | string
 `spec` | string

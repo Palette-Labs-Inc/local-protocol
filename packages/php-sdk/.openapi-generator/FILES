@@ -29,6 +29,8 @@ docs/Model/DiscoveryResponse.md
 docs/Model/ErrorResponse.md
 docs/Model/EvmAuthCaptureEscrowConfig.md
 docs/Model/EvmAuthCaptureEscrowInstrument.md
+docs/Model/EvmAuthCaptureEscrowInstrumentAllOfAmount.md
+docs/Model/EvmAuthCaptureEscrowInstrumentAllOfMaxAmount.md
 docs/Model/EvmCurrency.md
 docs/Model/EvmToken.md
 docs/Model/FiatCurrency.md
@@ -81,6 +83,8 @@ lib/Model/DiscoveryResponse.php
 lib/Model/ErrorResponse.php
 lib/Model/EvmAuthCaptureEscrowConfig.php
 lib/Model/EvmAuthCaptureEscrowInstrument.php
+lib/Model/EvmAuthCaptureEscrowInstrumentAllOfAmount.php
+lib/Model/EvmAuthCaptureEscrowInstrumentAllOfMaxAmount.php
 lib/Model/EvmCurrency.php
 lib/Model/EvmToken.php
 lib/Model/FiatCurrency.php
@@ -130,6 +134,8 @@ test/Model/DeliveryTest.php
 test/Model/DiscoveryResponseTest.php
 test/Model/ErrorResponseTest.php
 test/Model/EvmAuthCaptureEscrowConfigTest.php
+test/Model/EvmAuthCaptureEscrowInstrumentAllOfAmountTest.php
+test/Model/EvmAuthCaptureEscrowInstrumentAllOfMaxAmountTest.php
 test/Model/EvmAuthCaptureEscrowInstrumentTest.php
 test/Model/EvmCurrencyTest.php
 test/Model/EvmTokenTest.php

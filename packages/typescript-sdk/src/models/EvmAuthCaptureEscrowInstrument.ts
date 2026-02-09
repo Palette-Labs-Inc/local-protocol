@@ -27,13 +27,20 @@ import {
     PaymentCredentialToJSON,
     PaymentCredentialToJSONTyped,
 } from './PaymentCredential';
-import type { Amount } from './Amount';
+import type { EvmAuthCaptureEscrowInstrumentAllOfMaxAmount } from './EvmAuthCaptureEscrowInstrumentAllOfMaxAmount';
 import {
-    AmountFromJSON,
-    AmountFromJSONTyped,
-    AmountToJSON,
-    AmountToJSONTyped,
-} from './Amount';
+    EvmAuthCaptureEscrowInstrumentAllOfMaxAmountFromJSON,
+    EvmAuthCaptureEscrowInstrumentAllOfMaxAmountFromJSONTyped,
+    EvmAuthCaptureEscrowInstrumentAllOfMaxAmountToJSON,
+    EvmAuthCaptureEscrowInstrumentAllOfMaxAmountToJSONTyped,
+} from './EvmAuthCaptureEscrowInstrumentAllOfMaxAmount';
+import type { EvmAuthCaptureEscrowInstrumentAllOfAmount } from './EvmAuthCaptureEscrowInstrumentAllOfAmount';
+import {
+    EvmAuthCaptureEscrowInstrumentAllOfAmountFromJSON,
+    EvmAuthCaptureEscrowInstrumentAllOfAmountFromJSONTyped,
+    EvmAuthCaptureEscrowInstrumentAllOfAmountToJSON,
+    EvmAuthCaptureEscrowInstrumentAllOfAmountToJSONTyped,
+} from './EvmAuthCaptureEscrowInstrumentAllOfAmount';
 import type { EvmToken } from './EvmToken';
 import {
     EvmTokenFromJSON,
@@ -127,11 +134,11 @@ export interface EvmAuthCaptureEscrowInstrument {
      */
     token: EvmToken;
     /**
-     * Maximum authorizable amount (atomic units).
-     * @type {Amount}
+     * 
+     * @type {EvmAuthCaptureEscrowInstrumentAllOfMaxAmount}
      * @memberof EvmAuthCaptureEscrowInstrument
      */
-    maxAmount: Amount;
+    maxAmount: EvmAuthCaptureEscrowInstrumentAllOfMaxAmount;
     /**
      * Pre-approval expiration (RFC 3339).
      * @type {Date}
@@ -157,11 +164,11 @@ export interface EvmAuthCaptureEscrowInstrument {
      */
     nonce: string;
     /**
-     * Amount in atomic units.
-     * @type {Amount}
+     * 
+     * @type {EvmAuthCaptureEscrowInstrumentAllOfAmount}
      * @memberof EvmAuthCaptureEscrowInstrument
      */
-    amount: Amount;
+    amount: EvmAuthCaptureEscrowInstrumentAllOfAmount;
 }
 
 
@@ -220,12 +227,12 @@ export function EvmAuthCaptureEscrowInstrumentFromJSONTyped(json: any, ignoreDis
         'contract': json['contract'],
         'receiver': json['receiver'],
         'token': EvmTokenFromJSON(json['token']),
-        'maxAmount': AmountFromJSON(json['max_amount']),
+        'maxAmount': EvmAuthCaptureEscrowInstrumentAllOfMaxAmountFromJSON(json['max_amount']),
         'preapprovalExpiresAt': (new Date(json['preapproval_expires_at'])),
         'authorizationExpiresAt': (new Date(json['authorization_expires_at'])),
         'refundExpiresAt': (new Date(json['refund_expires_at'])),
         'nonce': json['nonce'],
-        'amount': AmountFromJSON(json['amount']),
+        'amount': EvmAuthCaptureEscrowInstrumentAllOfAmountFromJSON(json['amount']),
     };
 }
 
@@ -253,12 +260,12 @@ export function EvmAuthCaptureEscrowInstrumentToJSONTyped(value?: EvmAuthCapture
         'contract': value['contract'],
         'receiver': value['receiver'],
         'token': EvmTokenToJSON(value['token']),
-        'max_amount': AmountToJSON(value['maxAmount']),
+        'max_amount': EvmAuthCaptureEscrowInstrumentAllOfMaxAmountToJSON(value['maxAmount']),
         'preapproval_expires_at': value['preapprovalExpiresAt'].toISOString(),
         'authorization_expires_at': value['authorizationExpiresAt'].toISOString(),
         'refund_expires_at': value['refundExpiresAt'].toISOString(),
         'nonce': value['nonce'],
-        'amount': AmountToJSON(value['amount']),
+        'amount': EvmAuthCaptureEscrowInstrumentAllOfAmountToJSON(value['amount']),
     };
 }
 

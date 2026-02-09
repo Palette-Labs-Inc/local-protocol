@@ -67,6 +67,7 @@ class DeliveryQuote implements ModelInterface, ArrayAccess, \JsonSerializable
         'pickup_estimate' => '\DateTime',
         'dropoff_estimate' => '\DateTime',
         'expires_at' => '\DateTime',
+        'payment' => '\LocalProtocolSdk\Model\Payment',
         'request_id' => 'string',
         'created_at' => '\DateTime',
         'status' => 'string'
@@ -89,6 +90,7 @@ class DeliveryQuote implements ModelInterface, ArrayAccess, \JsonSerializable
         'pickup_estimate' => 'date-time',
         'dropoff_estimate' => 'date-time',
         'expires_at' => 'date-time',
+        'payment' => null,
         'request_id' => null,
         'created_at' => 'date-time',
         'status' => null
@@ -109,6 +111,7 @@ class DeliveryQuote implements ModelInterface, ArrayAccess, \JsonSerializable
         'pickup_estimate' => false,
         'dropoff_estimate' => false,
         'expires_at' => false,
+        'payment' => false,
         'request_id' => false,
         'created_at' => false,
         'status' => false
@@ -209,6 +212,7 @@ class DeliveryQuote implements ModelInterface, ArrayAccess, \JsonSerializable
         'pickup_estimate' => 'pickup_estimate',
         'dropoff_estimate' => 'dropoff_estimate',
         'expires_at' => 'expires_at',
+        'payment' => 'payment',
         'request_id' => 'request_id',
         'created_at' => 'created_at',
         'status' => 'status'
@@ -229,6 +233,7 @@ class DeliveryQuote implements ModelInterface, ArrayAccess, \JsonSerializable
         'pickup_estimate' => 'setPickupEstimate',
         'dropoff_estimate' => 'setDropoffEstimate',
         'expires_at' => 'setExpiresAt',
+        'payment' => 'setPayment',
         'request_id' => 'setRequestId',
         'created_at' => 'setCreatedAt',
         'status' => 'setStatus'
@@ -249,6 +254,7 @@ class DeliveryQuote implements ModelInterface, ArrayAccess, \JsonSerializable
         'pickup_estimate' => 'getPickupEstimate',
         'dropoff_estimate' => 'getDropoffEstimate',
         'expires_at' => 'getExpiresAt',
+        'payment' => 'getPayment',
         'request_id' => 'getRequestId',
         'created_at' => 'getCreatedAt',
         'status' => 'getStatus'
@@ -333,6 +339,7 @@ class DeliveryQuote implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('pickup_estimate', $data ?? [], null);
         $this->setIfExists('dropoff_estimate', $data ?? [], null);
         $this->setIfExists('expires_at', $data ?? [], null);
+        $this->setIfExists('payment', $data ?? [], null);
         $this->setIfExists('request_id', $data ?? [], null);
         $this->setIfExists('created_at', $data ?? [], null);
         $this->setIfExists('status', $data ?? [], null);
@@ -396,6 +403,9 @@ class DeliveryQuote implements ModelInterface, ArrayAccess, \JsonSerializable
         }
         if ($this->container['dropoff_estimate'] === null) {
             $invalidProperties[] = "'dropoff_estimate' can't be null";
+        }
+        if ($this->container['payment'] === null) {
+            $invalidProperties[] = "'payment' can't be null";
         }
         if ($this->container['request_id'] === null) {
             $invalidProperties[] = "'request_id' can't be null";
@@ -693,6 +703,33 @@ class DeliveryQuote implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable expires_at cannot be null');
         }
         $this->container['expires_at'] = $expires_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets payment
+     *
+     * @return \LocalProtocolSdk\Model\Payment
+     */
+    public function getPayment()
+    {
+        return $this->container['payment'];
+    }
+
+    /**
+     * Sets payment
+     *
+     * @param \LocalProtocolSdk\Model\Payment $payment Payment handlers available for accepting this quote.
+     *
+     * @return self
+     */
+    public function setPayment($payment)
+    {
+        if (is_null($payment)) {
+            throw new \InvalidArgumentException('non-nullable payment cannot be null');
+        }
+        $this->container['payment'] = $payment;
 
         return $this;
     }

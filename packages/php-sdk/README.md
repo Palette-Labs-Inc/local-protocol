@@ -107,6 +107,8 @@ Class | Method | HTTP request | Description
 - [ErrorResponse](docs/Model/ErrorResponse.md)
 - [EvmAuthCaptureEscrowConfig](docs/Model/EvmAuthCaptureEscrowConfig.md)
 - [EvmAuthCaptureEscrowInstrument](docs/Model/EvmAuthCaptureEscrowInstrument.md)
+- [EvmAuthCaptureEscrowInstrumentAllOfAmount](docs/Model/EvmAuthCaptureEscrowInstrumentAllOfAmount.md)
+- [EvmAuthCaptureEscrowInstrumentAllOfMaxAmount](docs/Model/EvmAuthCaptureEscrowInstrumentAllOfMaxAmount.md)
 - [EvmCurrency](docs/Model/EvmCurrency.md)
 - [EvmToken](docs/Model/EvmToken.md)
 - [FiatCurrency](docs/Model/FiatCurrency.md)

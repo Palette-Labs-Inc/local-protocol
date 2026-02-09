@@ -71,12 +71,12 @@ class EvmAuthCaptureEscrowInstrument implements ModelInterface, ArrayAccess, \Js
         'contract' => 'string',
         'receiver' => 'string',
         'token' => '\LocalProtocolSdk\Model\EvmToken',
-        'max_amount' => '\LocalProtocolSdk\Model\Amount',
+        'max_amount' => '\LocalProtocolSdk\Model\EvmAuthCaptureEscrowInstrumentAllOfMaxAmount',
         'preapproval_expires_at' => '\DateTime',
         'authorization_expires_at' => '\DateTime',
         'refund_expires_at' => '\DateTime',
         'nonce' => 'string',
-        'amount' => '\LocalProtocolSdk\Model\Amount'
+        'amount' => '\LocalProtocolSdk\Model\EvmAuthCaptureEscrowInstrumentAllOfAmount'
     ];
 
     /**
@@ -908,7 +908,7 @@ class EvmAuthCaptureEscrowInstrument implements ModelInterface, ArrayAccess, \Js
     /**
      * Gets max_amount
      *
-     * @return \LocalProtocolSdk\Model\Amount
+     * @return \LocalProtocolSdk\Model\EvmAuthCaptureEscrowInstrumentAllOfMaxAmount
      */
     public function getMaxAmount()
     {
@@ -918,7 +918,7 @@ class EvmAuthCaptureEscrowInstrument implements ModelInterface, ArrayAccess, \Js
     /**
      * Sets max_amount
      *
-     * @param \LocalProtocolSdk\Model\Amount $max_amount Maximum authorizable amount (atomic units).
+     * @param \LocalProtocolSdk\Model\EvmAuthCaptureEscrowInstrumentAllOfMaxAmount $max_amount max_amount
      *
      * @return self
      */
@@ -1048,7 +1048,7 @@ class EvmAuthCaptureEscrowInstrument implements ModelInterface, ArrayAccess, \Js
     /**
      * Gets amount
      *
-     * @return \LocalProtocolSdk\Model\Amount
+     * @return \LocalProtocolSdk\Model\EvmAuthCaptureEscrowInstrumentAllOfAmount
      */
     public function getAmount()
     {
@@ -1058,7 +1058,7 @@ class EvmAuthCaptureEscrowInstrument implements ModelInterface, ArrayAccess, \Js
     /**
      * Sets amount
      *
-     * @param \LocalProtocolSdk\Model\Amount $amount Amount in atomic units.
+     * @param \LocalProtocolSdk\Model\EvmAuthCaptureEscrowInstrumentAllOfAmount $amount amount
      *
      * @return self
      */

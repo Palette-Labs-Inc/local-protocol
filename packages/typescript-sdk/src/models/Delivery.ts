@@ -38,6 +38,12 @@ export interface Delivery {
      */
     quoteId: string;
     /**
+     * Reference to the payment instrument used to create this delivery.
+     * @type {string}
+     * @memberof Delivery
+     */
+    paymentInstrumentId: string;
+    /**
      * Current event identifier.
      * @type {string}
      * @memberof Delivery
@@ -82,6 +88,7 @@ export function instanceOfDelivery(value: object): value is Delivery {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('requestId' in value) || value['requestId'] === undefined) return false;
     if (!('quoteId' in value) || value['quoteId'] === undefined) return false;
+    if (!('paymentInstrumentId' in value) || value['paymentInstrumentId'] === undefined) return false;
     if (!('event' in value) || value['event'] === undefined) return false;
     if (!('eventDescription' in value) || value['eventDescription'] === undefined) return false;
     if (!('eventVocabulary' in value) || value['eventVocabulary'] === undefined) return false;
@@ -103,6 +110,7 @@ export function DeliveryFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'id': json['id'],
         'requestId': json['request_id'],
         'quoteId': json['quote_id'],
+        'paymentInstrumentId': json['payment_instrument_id'],
         'event': json['event'],
         'eventDescription': json['event_description'],
         'eventVocabulary': json['event_vocabulary'],
@@ -126,6 +134,7 @@ export function DeliveryToJSONTyped(value?: Delivery | null, ignoreDiscriminator
         'id': value['id'],
         'request_id': value['requestId'],
         'quote_id': value['quoteId'],
+        'payment_instrument_id': value['paymentInstrumentId'],
         'event': value['event'],
         'event_description': value['eventDescription'],
         'event_vocabulary': value['eventVocabulary'],

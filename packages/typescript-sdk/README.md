@@ -87,6 +87,8 @@ All URIs are relative to *http://localhost:8000*
 - [ErrorResponse](docs/ErrorResponse.md)
 - [EvmAuthCaptureEscrowConfig](docs/EvmAuthCaptureEscrowConfig.md)
 - [EvmAuthCaptureEscrowInstrument](docs/EvmAuthCaptureEscrowInstrument.md)
+- [EvmAuthCaptureEscrowInstrumentAllOfAmount](docs/EvmAuthCaptureEscrowInstrumentAllOfAmount.md)
+- [EvmAuthCaptureEscrowInstrumentAllOfMaxAmount](docs/EvmAuthCaptureEscrowInstrumentAllOfMaxAmount.md)
 - [EvmCurrency](docs/EvmCurrency.md)
 - [EvmToken](docs/EvmToken.md)
 - [FiatCurrency](docs/FiatCurrency.md)

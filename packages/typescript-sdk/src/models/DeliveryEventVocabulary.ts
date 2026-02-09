@@ -41,10 +41,10 @@ export interface DeliveryEventVocabulary {
     version: string;
     /**
      * Parent standard this extends (optional, max one).
-     * @type {Array<string>}
+     * @type {Set<string>}
      * @memberof DeliveryEventVocabulary
      */
-    _extends?: Array<string>;
+    _extends?: Set<string>;
     /**
      * Human-readable title.
      * @type {string}
@@ -94,7 +94,7 @@ export function DeliveryEventVocabularyFromJSONTyped(json: any, ignoreDiscrimina
         
         'name': json['name'],
         'version': json['version'],
-        '_extends': json['extends'] == null ? undefined : json['extends'],
+        '_extends': json['extends'] == null ? undefined : new Set(json['extends']),
         'title': json['title'],
         'description': json['description'] == null ? undefined : json['description'],
         'spec': json['spec'] == null ? undefined : json['spec'],
@@ -115,7 +115,7 @@ export function DeliveryEventVocabularyToJSONTyped(value?: DeliveryEventVocabula
         
         'name': value['name'],
         'version': value['version'],
-        'extends': value['_extends'],
+        'extends': value['_extends'] == null ? undefined : Array.from(value['_extends'] as Set<any>),
         'title': value['title'],
         'description': value['description'],
         'spec': value['spec'],

@@ -20,12 +20,12 @@ Name | Type
 `contract` | string
 `receiver` | string
 `token` | [EvmToken](EvmToken.md)
-`maxAmount` | [Amount](Amount.md)
+`maxAmount` | [EvmAuthCaptureEscrowInstrumentAllOfMaxAmount](EvmAuthCaptureEscrowInstrumentAllOfMaxAmount.md)
 `preapprovalExpiresAt` | Date
 `authorizationExpiresAt` | Date
 `refundExpiresAt` | Date
 `nonce` | string
-`amount` | [Amount](Amount.md)
+`amount` | [EvmAuthCaptureEscrowInstrumentAllOfAmount](EvmAuthCaptureEscrowInstrumentAllOfAmount.md)
 
 ## Example
 

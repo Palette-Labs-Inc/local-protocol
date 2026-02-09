@@ -7,12 +7,9 @@
     </include>
   </coverage>
   <testsuites>
-    <testsuite name="unit">
+    <testsuite name="tests">
       <directory>./test/Api</directory>
       <directory>./test/Model</directory>
-    </testsuite>
-    <testsuite name="integration">
-      <directory>./test/Integration</directory>
     </testsuite>
   </testsuites>
   <php>

@@ -159,4 +159,13 @@ class DeliveryQuoteCreateTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test attribute "payment"
+     */
+    public function testPropertyPayment()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

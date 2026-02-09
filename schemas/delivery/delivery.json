@@ -4,7 +4,7 @@
   "title": "Delivery",
   "description": "Delivery resource created when a quote is accepted.",
   "type": "object",
-  "required": ["id", "request_id", "quote_id", "payment_instrument_id", "created_at"],
+  "required": ["id", "request_id", "quote_id", "payment_instrument_id", "event", "event_description", "event_vocabulary", "created_at", "updated_at"],
   "properties": {
     "id": {
       "type": "string",
@@ -22,10 +22,31 @@
       "type": "string",
       "description": "Reference to the payment instrument used to create this delivery."
     },
+    "event": {
+      "type": "string",
+      "description": "Current event identifier."
+    },
+    "event_description": {
+      "type": "string",
+      "description": "Human-readable description of the current event."
+    },
+    "event_vocabulary": {
+      "type": "string",
+      "description": "Event vocabulary standard in use."
+    },
+    "webhook_url": {
+      "type": ["string", "null"],
+      "description": "Registered webhook URL, if any."
+    },
     "created_at": {
       "type": "string",
       "format": "date-time",
       "description": "Delivery creation timestamp (RFC 3339)."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last update timestamp (RFC 3339)."
     }
   },
   "additionalProperties": false

@@ -16,6 +16,7 @@ Name | Type
 `pickupEstimate` | Date
 `dropoffEstimate` | Date
 `expiresAt` | Date
+`payment` | [Payment](Payment.md)
 `requestId` | string
 `createdAt` | Date
 `status` | string
@@ -36,6 +37,7 @@ const example = {
   "pickupEstimate": null,
   "dropoffEstimate": null,
   "expiresAt": null,
+  "payment": null,
   "requestId": null,
   "createdAt": null,
   "status": null,

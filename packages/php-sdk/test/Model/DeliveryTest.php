@@ -107,6 +107,15 @@ class DeliveryTest extends TestCase
     }
 
     /**
+     * Test attribute "payment_instrument_id"
+     */
+    public function testPropertyPaymentInstrumentId()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test attribute "event"
      */
     public function testPropertyEvent()

@@ -13,5 +13,6 @@ Name | Type | Description | Notes
 **pickup_estimate** | **\DateTime** | Estimated pickup time (RFC 3339). |
 **dropoff_estimate** | **\DateTime** | Estimated dropoff time (RFC 3339). |
 **expires_at** | **\DateTime** | Time when the quote expires (RFC 3339). | [optional]
+**payment** | [**\LocalProtocolSdk\Model\Payment**](Payment.md) | Payment handlers available for accepting this quote. |
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

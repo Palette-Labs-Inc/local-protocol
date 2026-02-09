@@ -10,6 +10,7 @@ Name | Type
 `id` | string
 `requestId` | string
 `quoteId` | string
+`paymentInstrumentId` | string
 `event` | string
 `eventDescription` | string
 `eventVocabulary` | string
@@ -27,6 +28,7 @@ const example = {
   "id": null,
   "requestId": null,
   "quoteId": null,
+  "paymentInstrumentId": null,
   "event": null,
   "eventDescription": null,
   "eventVocabulary": null,

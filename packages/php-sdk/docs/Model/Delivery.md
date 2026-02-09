@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **id** | **string** | Unique delivery identifier. |
 **request_id** | **string** | Reference to the delivery request. |
 **quote_id** | **string** | Reference to the accepted quote. |
+**payment_instrument_id** | **string** | Reference to the payment instrument used to create this delivery. |
 **event** | **string** | Current event identifier. |
 **event_description** | **string** | Human-readable description of the current event. |
 **event_vocabulary** | **string** | Event vocabulary standard in use. |

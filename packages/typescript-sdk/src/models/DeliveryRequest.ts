@@ -27,7 +27,6 @@ import {
  * @interface DeliveryRequest
  */
 export interface DeliveryRequest {
-    [key: string]: any | any;
     /**
      * Unique request identifier.
      * @type {string}
@@ -125,7 +124,6 @@ export function DeliveryRequestFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-            ...json,
         'id': json['id'],
         'nonce': json['nonce'],
         'pickupLocation': LocationFromJSON(json['pickup_location']),
@@ -150,7 +148,6 @@ export function DeliveryRequestToJSONTyped(value?: DeliveryRequest | null, ignor
 
     return {
         
-            ...value,
         'id': value['id'],
         'nonce': value['nonce'],
         'pickup_location': LocationToJSON(value['pickupLocation']),

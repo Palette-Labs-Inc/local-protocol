@@ -27,7 +27,27 @@ class Delivery(BaseModel):
   """
     Reference to the payment instrument used to create this delivery.
     """
+  event: str
+  """
+    Current event identifier.
+    """
+  event_description: str
+  """
+    Human-readable description of the current event.
+    """
+  event_vocabulary: str
+  """
+    Event vocabulary standard in use.
+    """
+  webhook_url: str | None = None
+  """
+    Registered webhook URL, if any.
+    """
   created_at: AwareDatetime
   """
     Delivery creation timestamp (RFC 3339).
+    """
+  updated_at: AwareDatetime
+  """
+    Last update timestamp (RFC 3339).
     """

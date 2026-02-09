@@ -21,6 +21,8 @@ export * from './DiscoveryResponse';
 export * from './ErrorResponse';
 export * from './EvmAuthCaptureEscrowConfig';
 export * from './EvmAuthCaptureEscrowInstrument';
+export * from './EvmAuthCaptureEscrowInstrumentAllOfAmount';
+export * from './EvmAuthCaptureEscrowInstrumentAllOfMaxAmount';
 export * from './EvmCurrency';
 export * from './EvmToken';
 export * from './FiatCurrency';

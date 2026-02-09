@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Payment } from './Payment';
+import {
+    PaymentFromJSON,
+    PaymentFromJSONTyped,
+    PaymentToJSON,
+    PaymentToJSONTyped,
+} from './Payment';
 import type { Location } from './Location';
 import {
     LocationFromJSON,
@@ -27,7 +34,6 @@ import {
  * @interface DeliveryQuote
  */
 export interface DeliveryQuote {
-    [key: string]: any | any;
     /**
      * Unique quote identifier.
      * @type {string}
@@ -83,6 +89,12 @@ export interface DeliveryQuote {
      */
     expiresAt?: Date;
     /**
+     * Payment handlers available for accepting this quote.
+     * @type {Payment}
+     * @memberof DeliveryQuote
+     */
+    payment: Payment;
+    /**
      * Reference to the parent delivery request.
      * @type {string}
      * @memberof DeliveryQuote
@@ -124,6 +136,7 @@ export function instanceOfDeliveryQuote(value: object): value is DeliveryQuote {
     if (!('dropoffLocation' in value) || value['dropoffLocation'] === undefined) return false;
     if (!('pickupEstimate' in value) || value['pickupEstimate'] === undefined) return false;
     if (!('dropoffEstimate' in value) || value['dropoffEstimate'] === undefined) return false;
+    if (!('payment' in value) || value['payment'] === undefined) return false;
     if (!('requestId' in value) || value['requestId'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
@@ -140,7 +153,6 @@ export function DeliveryQuoteFromJSONTyped(json: any, ignoreDiscriminator: boole
     }
     return {
         
-            ...json,
         'id': json['id'],
         'nonce': json['nonce'],
         'price': json['price'],
@@ -150,6 +162,7 @@ export function DeliveryQuoteFromJSONTyped(json: any, ignoreDiscriminator: boole
         'pickupEstimate': (new Date(json['pickup_estimate'])),
         'dropoffEstimate': (new Date(json['dropoff_estimate'])),
         'expiresAt': json['expires_at'] == null ? undefined : (new Date(json['expires_at'])),
+        'payment': PaymentFromJSON(json['payment']),
         'requestId': json['request_id'],
         'createdAt': (new Date(json['created_at'])),
         'status': json['status'],
@@ -167,7 +180,6 @@ export function DeliveryQuoteToJSONTyped(value?: DeliveryQuote | null, ignoreDis
 
     return {
         
-            ...value,
         'id': value['id'],
         'nonce': value['nonce'],
         'price': value['price'],
@@ -177,6 +189,7 @@ export function DeliveryQuoteToJSONTyped(value?: DeliveryQuote | null, ignoreDis
         'pickup_estimate': value['pickupEstimate'].toISOString(),
         'dropoff_estimate': value['dropoffEstimate'].toISOString(),
         'expires_at': value['expiresAt'] == null ? value['expiresAt'] : value['expiresAt'].toISOString(),
+        'payment': PaymentToJSON(value['payment']),
         'request_id': value['requestId'],
         'created_at': value['createdAt'].toISOString(),
         'status': value['status'],

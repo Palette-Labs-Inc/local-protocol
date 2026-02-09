@@ -66,7 +66,8 @@ class DeliveryQuoteCreate implements ModelInterface, ArrayAccess, \JsonSerializa
         'dropoff_location' => '\LocalProtocolSdk\Model\Location',
         'pickup_estimate' => '\DateTime',
         'dropoff_estimate' => '\DateTime',
-        'expires_at' => '\DateTime'
+        'expires_at' => '\DateTime',
+        'payment' => '\LocalProtocolSdk\Model\Payment'
     ];
 
     /**
@@ -85,7 +86,8 @@ class DeliveryQuoteCreate implements ModelInterface, ArrayAccess, \JsonSerializa
         'dropoff_location' => null,
         'pickup_estimate' => 'date-time',
         'dropoff_estimate' => 'date-time',
-        'expires_at' => 'date-time'
+        'expires_at' => 'date-time',
+        'payment' => null
     ];
 
     /**
@@ -102,7 +104,8 @@ class DeliveryQuoteCreate implements ModelInterface, ArrayAccess, \JsonSerializa
         'dropoff_location' => true,
         'pickup_estimate' => false,
         'dropoff_estimate' => false,
-        'expires_at' => false
+        'expires_at' => false,
+        'payment' => false
     ];
 
     /**
@@ -199,7 +202,8 @@ class DeliveryQuoteCreate implements ModelInterface, ArrayAccess, \JsonSerializa
         'dropoff_location' => 'dropoff_location',
         'pickup_estimate' => 'pickup_estimate',
         'dropoff_estimate' => 'dropoff_estimate',
-        'expires_at' => 'expires_at'
+        'expires_at' => 'expires_at',
+        'payment' => 'payment'
     ];
 
     /**
@@ -216,7 +220,8 @@ class DeliveryQuoteCreate implements ModelInterface, ArrayAccess, \JsonSerializa
         'dropoff_location' => 'setDropoffLocation',
         'pickup_estimate' => 'setPickupEstimate',
         'dropoff_estimate' => 'setDropoffEstimate',
-        'expires_at' => 'setExpiresAt'
+        'expires_at' => 'setExpiresAt',
+        'payment' => 'setPayment'
     ];
 
     /**
@@ -233,7 +238,8 @@ class DeliveryQuoteCreate implements ModelInterface, ArrayAccess, \JsonSerializa
         'dropoff_location' => 'getDropoffLocation',
         'pickup_estimate' => 'getPickupEstimate',
         'dropoff_estimate' => 'getDropoffEstimate',
-        'expires_at' => 'getExpiresAt'
+        'expires_at' => 'getExpiresAt',
+        'payment' => 'getPayment'
     ];
 
     /**
@@ -302,6 +308,7 @@ class DeliveryQuoteCreate implements ModelInterface, ArrayAccess, \JsonSerializa
         $this->setIfExists('pickup_estimate', $data ?? [], null);
         $this->setIfExists('dropoff_estimate', $data ?? [], null);
         $this->setIfExists('expires_at', $data ?? [], null);
+        $this->setIfExists('payment', $data ?? [], null);
     }
 
     /**
@@ -362,6 +369,9 @@ class DeliveryQuoteCreate implements ModelInterface, ArrayAccess, \JsonSerializa
         }
         if ($this->container['dropoff_estimate'] === null) {
             $invalidProperties[] = "'dropoff_estimate' can't be null";
+        }
+        if ($this->container['payment'] === null) {
+            $invalidProperties[] = "'payment' can't be null";
         }
         return $invalidProperties;
     }
@@ -641,6 +651,33 @@ class DeliveryQuoteCreate implements ModelInterface, ArrayAccess, \JsonSerializa
             throw new \InvalidArgumentException('non-nullable expires_at cannot be null');
         }
         $this->container['expires_at'] = $expires_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets payment
+     *
+     * @return \LocalProtocolSdk\Model\Payment
+     */
+    public function getPayment()
+    {
+        return $this->container['payment'];
+    }
+
+    /**
+     * Sets payment
+     *
+     * @param \LocalProtocolSdk\Model\Payment $payment Payment handlers available for accepting this quote.
+     *
+     * @return self
+     */
+    public function setPayment($payment)
+    {
+        if (is_null($payment)) {
+            throw new \InvalidArgumentException('non-nullable payment cannot be null');
+        }
+        $this->container['payment'] = $payment;
 
         return $this;
     }

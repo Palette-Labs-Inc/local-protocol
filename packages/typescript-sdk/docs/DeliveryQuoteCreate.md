@@ -16,6 +16,7 @@ Name | Type
 `pickupEstimate` | Date
 `dropoffEstimate` | Date
 `expiresAt` | Date
+`payment` | [Payment](Payment.md)
 
 ## Example
 
@@ -33,6 +34,7 @@ const example = {
   "pickupEstimate": null,
   "dropoffEstimate": null,
   "expiresAt": null,
+  "payment": null,
 } satisfies DeliveryQuoteCreate
 
 console.log(example)

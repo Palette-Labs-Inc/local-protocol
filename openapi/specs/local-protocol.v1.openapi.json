@@ -524,7 +524,7 @@
             "description": "Dropoff directions, access codes, or delivery notes."
           }
         },
-        "additionalProperties": true
+        "additionalProperties": false
       },
       "DeliveryRequest": {
         "type": "object",
@@ -574,12 +574,12 @@
             "enum": ["open"]
           }
         },
-        "additionalProperties": true
+        "additionalProperties": false
       },
       "DeliveryQuoteCreate": {
         "type": "object",
         "description": "Body for creating a delivery quote.",
-        "required": ["id", "nonce", "price", "currency", "pickup_location", "dropoff_location", "pickup_estimate", "dropoff_estimate"],
+        "required": ["id", "nonce", "price", "currency", "pickup_location", "dropoff_location", "pickup_estimate", "dropoff_estimate", "payment"],
         "properties": {
           "id": {
             "type": "string",
@@ -619,14 +619,18 @@
             "type": "string",
             "format": "date-time",
             "description": "Time when the quote expires (RFC 3339)."
+          },
+          "payment": {
+            "$ref": "#/components/schemas/Payment",
+            "description": "Payment handlers available for accepting this quote."
           }
         },
-        "additionalProperties": true
+        "additionalProperties": false
       },
       "DeliveryQuote": {
         "type": "object",
         "description": "A delivery quote with server-assigned metadata.",
-        "required": ["id", "nonce", "price", "currency", "pickup_location", "dropoff_location", "pickup_estimate", "dropoff_estimate", "request_id", "created_at", "status"],
+        "required": ["id", "nonce", "price", "currency", "pickup_location", "dropoff_location", "pickup_estimate", "dropoff_estimate", "payment", "request_id", "created_at", "status"],
         "properties": {
           "id": {
             "type": "string",
@@ -666,6 +670,10 @@
             "type": "string",
             "format": "date-time",
             "description": "Time when the quote expires (RFC 3339)."
+          },
+          "payment": {
+            "$ref": "#/components/schemas/Payment",
+            "description": "Payment handlers available for accepting this quote."
           },
           "request_id": {
             "type": "string",
@@ -682,7 +690,7 @@
             "enum": ["pending"]
           }
         },
-        "additionalProperties": true
+        "additionalProperties": false
       },
       "CreateDeliveryRequest": {
         "type": "object",
@@ -732,7 +740,7 @@
       "Delivery": {
         "type": "object",
         "description": "A delivery resource.",
-        "required": ["id", "request_id", "quote_id", "event", "event_description", "event_vocabulary", "created_at", "updated_at"],
+        "required": ["id", "request_id", "quote_id", "payment_instrument_id", "event", "event_description", "event_vocabulary", "created_at", "updated_at"],
         "properties": {
           "id": {
             "type": "string",
@@ -745,6 +753,10 @@
           "quote_id": {
             "type": "string",
             "description": "Reference to the accepted quote."
+          },
+          "payment_instrument_id": {
+            "type": "string",
+            "description": "Reference to the payment instrument used to create this delivery."
           },
           "event": {
             "type": "string",
@@ -1187,12 +1199,24 @@
               "contract": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "Escrow contract address." },
               "receiver": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "Receiver address for captures." },
               "token": { "$ref": "#/components/schemas/EvmToken" },
-              "max_amount": { "$ref": "#/components/schemas/Amount", "description": "Maximum authorizable amount (atomic units)." },
+              "max_amount": {
+                "allOf": [
+                  { "$ref": "#/components/schemas/Amount" },
+                  { "properties": { "currency": { "$ref": "#/components/schemas/EvmCurrency" } } }
+                ],
+                "description": "Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
+              },
               "preapproval_expires_at": { "type": "string", "format": "date-time", "description": "Pre-approval expiration (RFC 3339)." },
               "authorization_expires_at": { "type": "string", "format": "date-time", "description": "Authorization expiration (RFC 3339)." },
               "refund_expires_at": { "type": "string", "format": "date-time", "description": "Refund expiration (RFC 3339)." },
               "nonce": { "type": "string", "pattern": "^[0-9]+$", "description": "Unique nonce for payment info hash computation." },
-              "amount": { "$ref": "#/components/schemas/Amount", "description": "Amount in atomic units." }
+              "amount": {
+                "allOf": [
+                  { "$ref": "#/components/schemas/Amount" },
+                  { "properties": { "currency": { "$ref": "#/components/schemas/EvmCurrency" } } }
+                ],
+                "description": "Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
+              }
             },
             "additionalProperties": true
           }
@@ -1275,6 +1299,7 @@
             "type": "array",
             "minItems": 1,
             "maxItems": 1,
+            "uniqueItems": true,
             "items": {
               "type": "string",
               "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)+@\\d{4}-\\d{2}-\\d{2}$"

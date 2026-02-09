@@ -61,6 +61,7 @@ class Delivery implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'string',
         'request_id' => 'string',
         'quote_id' => 'string',
+        'payment_instrument_id' => 'string',
         'event' => 'string',
         'event_description' => 'string',
         'event_vocabulary' => 'string',
@@ -80,6 +81,7 @@ class Delivery implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => null,
         'request_id' => null,
         'quote_id' => null,
+        'payment_instrument_id' => null,
         'event' => null,
         'event_description' => null,
         'event_vocabulary' => null,
@@ -97,6 +99,7 @@ class Delivery implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => false,
         'request_id' => false,
         'quote_id' => false,
+        'payment_instrument_id' => false,
         'event' => false,
         'event_description' => false,
         'event_vocabulary' => false,
@@ -194,6 +197,7 @@ class Delivery implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'id',
         'request_id' => 'request_id',
         'quote_id' => 'quote_id',
+        'payment_instrument_id' => 'payment_instrument_id',
         'event' => 'event',
         'event_description' => 'event_description',
         'event_vocabulary' => 'event_vocabulary',
@@ -211,6 +215,7 @@ class Delivery implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'setId',
         'request_id' => 'setRequestId',
         'quote_id' => 'setQuoteId',
+        'payment_instrument_id' => 'setPaymentInstrumentId',
         'event' => 'setEvent',
         'event_description' => 'setEventDescription',
         'event_vocabulary' => 'setEventVocabulary',
@@ -228,6 +233,7 @@ class Delivery implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'getId',
         'request_id' => 'getRequestId',
         'quote_id' => 'getQuoteId',
+        'payment_instrument_id' => 'getPaymentInstrumentId',
         'event' => 'getEvent',
         'event_description' => 'getEventDescription',
         'event_vocabulary' => 'getEventVocabulary',
@@ -296,6 +302,7 @@ class Delivery implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('id', $data ?? [], null);
         $this->setIfExists('request_id', $data ?? [], null);
         $this->setIfExists('quote_id', $data ?? [], null);
+        $this->setIfExists('payment_instrument_id', $data ?? [], null);
         $this->setIfExists('event', $data ?? [], null);
         $this->setIfExists('event_description', $data ?? [], null);
         $this->setIfExists('event_vocabulary', $data ?? [], null);
@@ -339,6 +346,9 @@ class Delivery implements ModelInterface, ArrayAccess, \JsonSerializable
         }
         if ($this->container['quote_id'] === null) {
             $invalidProperties[] = "'quote_id' can't be null";
+        }
+        if ($this->container['payment_instrument_id'] === null) {
+            $invalidProperties[] = "'payment_instrument_id' can't be null";
         }
         if ($this->container['event'] === null) {
             $invalidProperties[] = "'event' can't be null";
@@ -447,6 +457,33 @@ class Delivery implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable quote_id cannot be null');
         }
         $this->container['quote_id'] = $quote_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets payment_instrument_id
+     *
+     * @return string
+     */
+    public function getPaymentInstrumentId()
+    {
+        return $this->container['payment_instrument_id'];
+    }
+
+    /**
+     * Sets payment_instrument_id
+     *
+     * @param string $payment_instrument_id Reference to the payment instrument used to create this delivery.
+     *
+     * @return self
+     */
+    public function setPaymentInstrumentId($payment_instrument_id)
+    {
+        if (is_null($payment_instrument_id)) {
+            throw new \InvalidArgumentException('non-nullable payment_instrument_id cannot be null');
+        }
+        $this->container['payment_instrument_id'] = $payment_instrument_id;
 
         return $this;
     }
