@@ -1,4 +1,4 @@
-# Inventory Decision Notes (Untracked)
+# Catalog Decision Notes (Untracked)
 
 This file is intentionally untracked. It contains the detailed rationale, examples, and compatibility notes that were removed from `DECISIONS.md` to keep the decision log concise.
 

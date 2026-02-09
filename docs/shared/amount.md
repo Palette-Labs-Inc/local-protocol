@@ -1,6 +1,6 @@
 # Amount
 
-Shared money object used for item prices and escrow amounts. Inventory fields may still be named `price`, but the underlying type is `Amount`. The integer string is stored in `value` to avoid `amount.amount` naming collisions. Schema: `schemas/shared/amount.json`.
+Shared money object used for item prices and escrow amounts. Catalog fields may still be named `price`, but the underlying type is `Amount`. The integer string is stored in `value` to avoid `amount.amount` naming collisions. Schema: `schemas/shared/amount.json`.
 
 ## Fields
 
