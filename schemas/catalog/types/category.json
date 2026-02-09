@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.xyz/schemas/inventory/types/category.json",
+  "$id": "https://localprotocol.xyz/schemas/catalog/types/category.json",
   "title": "Catalog Category",
   "description": "A category grouping items in a catalog.",
   "type": "object",

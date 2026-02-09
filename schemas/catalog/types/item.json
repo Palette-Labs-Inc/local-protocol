@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.xyz/schemas/inventory/types/item.json",
+  "$id": "https://localprotocol.xyz/schemas/catalog/types/item.json",
   "title": "Catalog Item",
   "description": "A menu item with embedded modifier groups.",
   "type": "object",

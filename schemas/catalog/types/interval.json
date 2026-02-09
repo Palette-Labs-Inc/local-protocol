@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.xyz/schemas/inventory/types/interval.json",
+  "$id": "https://localprotocol.xyz/schemas/catalog/types/interval.json",
   "title": "Interval",
   "description": "A single time interval for a day of the week or a specific date.",
   "type": "object",

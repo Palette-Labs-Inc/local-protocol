@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.xyz/schemas/inventory/types/availability.json",
+  "$id": "https://localprotocol.xyz/schemas/catalog/types/availability.json",
   "title": "Availability",
   "description": "Availability schedule for a catalog, category, or item.",
   "type": "object",

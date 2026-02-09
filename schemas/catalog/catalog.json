@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.xyz/schemas/inventory/catalog.json",
+  "$id": "https://localprotocol.xyz/schemas/catalog/catalog.json",
   "title": "Catalog",
   "description": "A catalog containing embedded categories, items, availability, and fulfillment configuration.",
   "type": "object",
