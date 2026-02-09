@@ -54,7 +54,14 @@ MCP requests should include a `meta` object with protocol metadata:
         },
         "idempotency-key": "550e8400-e29b-41d4-a716-446655440000"
       },
-      "request": { "pickup": {}, "dropoff": {} }
+      "request": {
+        "id": "request_123",
+        "nonce": "request-nonce-123",
+        "pickup_location": { "postal_address": {} },
+        "dropoff_location": { "postal_address": {} },
+        "pickup_time": "2026-02-12T18:30:00Z",
+        "dropoff_time": "2026-02-12T19:00:00Z"
+      }
     }
   }
 }
@@ -90,9 +97,28 @@ Capabilities map to MCP tools. A typical pattern is:
             }
           },
           "request": {
-            "pickup": { "address": "123 Market St" },
-            "dropoff": { "address": "555 Mission St" },
-            "ready_at": "2026-02-05T18:30:00Z"
+            "id": "request_123",
+            "nonce": "request-nonce-123",
+            "pickup_location": {
+              "postal_address": {
+                "street_address": "123 Market St",
+                "address_locality": "San Francisco",
+                "address_region": "CA",
+                "postal_code": "94103",
+                "address_country": "US"
+              }
+            },
+            "dropoff_location": {
+              "postal_address": {
+                "street_address": "555 Mission St",
+                "address_locality": "San Francisco",
+                "address_region": "CA",
+                "postal_code": "94105",
+                "address_country": "US"
+              }
+            },
+            "pickup_time": "2026-02-12T18:30:00Z",
+            "dropoff_time": "2026-02-12T19:00:00Z"
           }
         }
       }
@@ -108,7 +134,27 @@ Capabilities map to MCP tools. A typical pattern is:
       "result": {
         "request": {
           "id": "request_123",
-          "status": "open"
+          "nonce": "request-nonce-123",
+          "pickup_location": {
+            "postal_address": {
+              "street_address": "123 Market St",
+              "address_locality": "San Francisco",
+              "address_region": "CA",
+              "postal_code": "94103",
+              "address_country": "US"
+            }
+          },
+          "dropoff_location": {
+            "postal_address": {
+              "street_address": "555 Mission St",
+              "address_locality": "San Francisco",
+              "address_region": "CA",
+              "postal_code": "94105",
+              "address_country": "US"
+            }
+          },
+          "pickup_time": "2026-02-12T18:30:00Z",
+          "dropoff_time": "2026-02-12T19:00:00Z"
         }
       }
     }
