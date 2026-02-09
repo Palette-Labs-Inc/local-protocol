@@ -1,0 +1,37 @@
+speakeasyVersion: 1.709.1
+sources:
+    Local Protocol:
+        sourceNamespace: local-protocol
+        sourceRevisionDigest: sha256:72a4d9604e3f01eca2dcdbc97bfd596c653d2fc5c9dff55c312550109a21826e
+        sourceBlobDigest: sha256:ff0ea543ddc1346e6ba8a335d874681a9dd4ecfb2e9fd533c654e741b968255d
+        tags:
+            - latest
+            - 0.1.0
+targets:
+    local-protocol:
+        source: Local Protocol
+        sourceNamespace: local-protocol
+        sourceRevisionDigest: sha256:72a4d9604e3f01eca2dcdbc97bfd596c653d2fc5c9dff55c312550109a21826e
+        sourceBlobDigest: sha256:ff0ea543ddc1346e6ba8a335d874681a9dd4ecfb2e9fd533c654e741b968255d
+        codeSamplesNamespace: local-protocol-typescript-code-samples
+        codeSamplesRevisionDigest: sha256:e1fd1ad8f66c208a4c15e7b54c8bad1d0c4846146aacb2cfe0bf437b3f18ef2f
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        Local Protocol:
+            inputs:
+                - location: ../../openapi/specs/local-protocol.v1.openapi.json
+            output: .speakeasy/out.openapi.yaml
+            registry:
+                location: registry.speakeasyapi.dev/palette-labs/local-protocol/local-protocol
+    targets:
+        local-protocol:
+            target: typescript
+            source: Local Protocol
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/palette-labs/local-protocol/local-protocol-typescript-code-samples
+                labelOverride:
+                    fixedValue: TypeScript (SDK)
+                blocking: false

@@ -11,11 +11,11 @@ conformance_dir := root_dir / "packages/conformance"
 schema_dir := root_dir / "schemas"
 server_dir := root_dir / "apps/samples/server"
 openapi_spec := root_dir / "openapi/specs/local-protocol.v1.openapi.json"
-oag := "npx openapi-generator-cli"
+# oag is no longer used — both PHP and TS SDKs now use Speakeasy
 
 # --- SDK Generation ---
 
-# Generate all SDKs (Python from JSON Schema, PHP from OpenAPI via Speakeasy, TypeScript from OpenAPI via openapi-generator)
+# Generate all SDKs (Python from JSON Schema, PHP and TypeScript from OpenAPI via Speakeasy)
 build-sdks: build-python-sdk openapi-validate build-php-sdk build-ts-sdk
 
 # Build Python SDK from JSON schemas (datamodel-code-generator / Pydantic v2)
@@ -29,22 +29,14 @@ build-php-sdk:
   @echo "Generating PHP SDK from OpenAPI spec..."
   @cd "{{root_dir}}/packages/php-sdk" && speakeasy run
 
-# Build TypeScript SDK from OpenAPI spec (openapi-generator-cli)
+# Build TypeScript SDK from OpenAPI spec (Speakeasy)
 build-ts-sdk:
   @echo "Generating TypeScript SDK from OpenAPI spec..."
-  @rm -rf "{{root_dir}}/packages/typescript-sdk"
-  @{{oag}} generate \
-    -i "{{openapi_spec}}" -g typescript-fetch -o "{{root_dir}}/packages/typescript-sdk" \
-    --additional-properties=npmName=@localprotocol/sdk,npmVersion=0.1.0,supportsES6=true
+  @cd "{{root_dir}}/packages/typescript-sdk" && speakeasy run
 
 # Validate the OpenAPI spec
 openapi-validate:
-  @{{oag}} validate -i "{{openapi_spec}}"
-
-# Install and pin OpenAPI Generator CLI
-openapi-generator-setup:
-  @npm install -D @openapitools/openapi-generator-cli
-  @npx openapi-generator-cli version-manager set 7.19.0
+  @speakeasy validate openapi -s "{{openapi_spec}}"
 
 # --- Server ---
 
@@ -85,12 +77,12 @@ lint:
 
 # --- Cleanup ---
 
-# Clean generated SDK files
+# Clean generated SDK files (preserves Speakeasy config in .speakeasy/)
 clean:
   @echo "Cleaning generated files..."
   @rm -rf "{{py_sdk_dir}}/src/local_protocol_sdk/models"
-  @rm -rf "{{root_dir}}/packages/php-sdk"
-  @rm -rf "{{root_dir}}/packages/typescript-sdk"
+  @rm -rf "{{root_dir}}/packages/php-sdk/src" "{{root_dir}}/packages/php-sdk/docs" "{{root_dir}}/packages/php-sdk/vendor"
+  @rm -rf "{{root_dir}}/packages/typescript-sdk/src" "{{root_dir}}/packages/typescript-sdk/docs" "{{root_dir}}/packages/typescript-sdk/node_modules"
   @find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
   @find . -type d -name ".pytest_cache" -exec rm -rf {} + 2>/dev/null || true
   @find . -type d -name "*.egg-info" -exec rm -rf {} + 2>/dev/null || true

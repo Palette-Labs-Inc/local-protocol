@@ -1,0 +1,19 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    Local Protocol:
+        inputs:
+            - location: ../../openapi/specs/local-protocol.v1.openapi.json
+        output: .speakeasy/out.openapi.yaml
+        registry:
+            location: registry.speakeasyapi.dev/palette-labs/local-protocol/local-protocol
+targets:
+    local-protocol:
+        target: typescript
+        source: Local Protocol
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/palette-labs/local-protocol/local-protocol-typescript-code-samples
+            labelOverride:
+                fixedValue: TypeScript (SDK)
+            blocking: false
