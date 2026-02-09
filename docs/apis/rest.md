@@ -51,13 +51,28 @@ specification.
 
     {
       "request": {
-        "pickup": {
-          "address": "123 Market St, San Francisco, CA"
+        "id": "request_123",
+        "nonce": "request-nonce-123",
+        "pickup_location": {
+          "postal_address": {
+            "street_address": "123 Market St",
+            "address_locality": "San Francisco",
+            "address_region": "CA",
+            "postal_code": "94103",
+            "address_country": "US"
+          }
         },
-        "dropoff": {
-          "address": "555 Mission St, San Francisco, CA"
+        "dropoff_location": {
+          "postal_address": {
+            "street_address": "555 Mission St",
+            "address_locality": "San Francisco",
+            "address_region": "CA",
+            "postal_code": "94105",
+            "address_country": "US"
+          }
         },
-        "ready_at": "2026-02-05T18:30:00Z"
+        "pickup_time": "2026-02-12T18:30:00Z",
+        "dropoff_time": "2026-02-12T19:00:00Z"
       }
     }
     ```
@@ -71,13 +86,27 @@ specification.
     {
       "request": {
         "id": "request_123",
-        "status": "open",
-        "pickup": {
-          "address": "123 Market St, San Francisco, CA"
+        "nonce": "request-nonce-123",
+        "pickup_location": {
+          "postal_address": {
+            "street_address": "123 Market St",
+            "address_locality": "San Francisco",
+            "address_region": "CA",
+            "postal_code": "94103",
+            "address_country": "US"
+          }
         },
-        "dropoff": {
-          "address": "555 Mission St, San Francisco, CA"
-        }
+        "dropoff_location": {
+          "postal_address": {
+            "street_address": "555 Mission St",
+            "address_locality": "San Francisco",
+            "address_region": "CA",
+            "postal_code": "94105",
+            "address_country": "US"
+          }
+        },
+        "pickup_time": "2026-02-12T18:30:00Z",
+        "dropoff_time": "2026-02-12T19:00:00Z"
       }
     }
     ```
