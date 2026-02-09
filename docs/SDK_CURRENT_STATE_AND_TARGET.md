@@ -28,7 +28,7 @@ The repo already defines JSON Schemas for:
 
 - Delivery: `schemas/delivery/`
 - Order: `schemas/order/`
-- Catalog: currently stored at `schemas/inventory/` (legacy directory name)
+- Catalog: `schemas/catalog/`
 - Payment: `schemas/payment/`
 - Shared primitives: `schemas/shared/`
 
