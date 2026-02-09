@@ -41,11 +41,14 @@ git commit -m "$release_note"
 git_remote=$(git remote)
 if [ "$git_remote" = "" ]; then # git remote not defined
 
-    if [ "$GIT_TOKEN" = "" ]; then
-        echo "[INFO] \$GIT_TOKEN (environment variable) is not set. Using the git credential in your environment."
-        git remote add origin https://${git_host}/${git_user_id}/${git_repo_id}.git
+    git remote add origin https://${git_host}/${git_user_id}/${git_repo_id}.git
+
+    if [ "$GIT_TOKEN" != "" ]; then
+        # Supply credentials via a temporary credential helper so the token
+        # is used for authentication but never persisted in .git/config.
+        git config --local credential.helper "!f() { echo \"username=${git_user_id}\"; echo \"password=${GIT_TOKEN}\"; }; f"
     else
-        git remote add origin https://${git_user_id}:"${GIT_TOKEN}"@${git_host}/${git_user_id}/${git_repo_id}.git
+        echo "[INFO] \$GIT_TOKEN (environment variable) is not set. Using the git credential in your environment."
     fi
 
 fi
