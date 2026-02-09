@@ -10,17 +10,44 @@ py_sdk_dir := root_dir / "packages/python-sdk"
 conformance_dir := root_dir / "packages/conformance"
 schema_dir := root_dir / "schemas"
 server_dir := root_dir / "apps/samples/server"
+openapi_spec := root_dir / "openapi/specs/local-protocol.v1.openapi.json"
+oag := "npx openapi-generator-cli"
 
-# --- SDK & Code Generation ---
+# --- SDK Generation ---
 
-# Generate Python SDK from JSON schemas
-generate: build-python-sdk
+# Generate all SDKs (Python from JSON Schema, PHP + TypeScript from OpenAPI)
+build-sdks: build-python-sdk openapi-validate build-php-sdk build-ts-sdk
 
-# Build/regenerate Python SDK from schemas
+# Build Python SDK from JSON schemas (datamodel-code-generator / Pydantic v2)
 build-python-sdk:
-  @echo "Generating Python SDK from schemas..."
+  @echo "Generating Python SDK from JSON schemas..."
   @chmod +x "{{py_sdk_dir}}/generate_models.sh"
   @cd "{{py_sdk_dir}}" && ./generate_models.sh
+
+# Build PHP SDK from OpenAPI spec (openapi-generator-cli)
+build-php-sdk:
+  @echo "Generating PHP SDK from OpenAPI spec..."
+  @rm -rf "{{root_dir}}/packages/php-sdk"
+  @{{oag}} generate \
+    -i "{{openapi_spec}}" -g php -o "{{root_dir}}/packages/php-sdk" \
+    --additional-properties=packageName=LocalProtocolSdk,invokerPackage=LocalProtocolSdk,composerPackageName=localprotocol/local-protocol-sdk,artifactVersion=0.1.0
+
+# Build TypeScript SDK from OpenAPI spec (openapi-generator-cli)
+build-ts-sdk:
+  @echo "Generating TypeScript SDK from OpenAPI spec..."
+  @rm -rf "{{root_dir}}/packages/typescript-sdk"
+  @{{oag}} generate \
+    -i "{{openapi_spec}}" -g typescript-fetch -o "{{root_dir}}/packages/typescript-sdk" \
+    --additional-properties=npmName=@localprotocol/sdk,npmVersion=0.1.0,supportsES6=true
+
+# Validate the OpenAPI spec
+openapi-validate:
+  @{{oag}} validate -i "{{openapi_spec}}"
+
+# Install and pin OpenAPI Generator CLI
+openapi-generator-setup:
+  @npm install -D @openapitools/openapi-generator-cli
+  @npx openapi-generator-cli version-manager set 7.19.0
 
 # --- Server ---
 
@@ -61,10 +88,12 @@ lint:
 
 # --- Cleanup ---
 
-# Clean generated files
+# Clean generated SDK files
 clean:
   @echo "Cleaning generated files..."
   @rm -rf "{{py_sdk_dir}}/src/local_protocol_sdk/models"
+  @rm -rf "{{root_dir}}/packages/php-sdk"
+  @rm -rf "{{root_dir}}/packages/typescript-sdk"
   @find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
   @find . -type d -name ".pytest_cache" -exec rm -rf {} + 2>/dev/null || true
   @find . -type d -name "*.egg-info" -exec rm -rf {} + 2>/dev/null || true
