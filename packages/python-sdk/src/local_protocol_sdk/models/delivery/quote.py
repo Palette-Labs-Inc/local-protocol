@@ -4,6 +4,7 @@
 from __future__ import annotations
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
 from .types import location
+from ..ucp.shopping import payment as payment_1
 
 
 class DeliveryQuote(BaseModel):
@@ -41,4 +42,12 @@ class DeliveryQuote(BaseModel):
   dropoff_estimate: AwareDatetime
   """
     Estimated dropoff time (RFC 3339).
+    """
+  expires_at: AwareDatetime | None = None
+  """
+    Time when the quote expires (RFC 3339).
+    """
+  payment: payment_1.Payment
+  """
+    Payment handlers available for accepting this quote.
     """

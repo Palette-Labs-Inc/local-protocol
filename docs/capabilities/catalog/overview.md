@@ -20,17 +20,17 @@ The Catalog capability defines a denormalized catalog tree with category-based p
 
 ## Schema Files
 
-- `schemas/inventory/merchant.json` is the top-level payload.
-- `schemas/inventory/catalog.json` defines catalogs and their embedded categories/items.
-- `schemas/inventory/types/category.json` defines categories, child categories, and ordered item membership.
-- `schemas/inventory/types/item.json` defines items and embedded modifier groups.
-- `schemas/inventory/types/modifier_group.json` defines selection constraints and embedded modifier options.
-- `schemas/inventory/types/modifier_option.json` defines option nodes and embedded modifier items.
-- `schemas/inventory/types/modifier_item.json` defines purchasable modifier items.
+- `schemas/catalog/merchant.json` is the top-level payload.
+- `schemas/catalog/catalog.json` defines catalogs and their embedded categories/items.
+- `schemas/catalog/types/category.json` defines categories, child categories, and ordered item membership.
+- `schemas/catalog/types/item.json` defines items and embedded modifier groups.
+- `schemas/catalog/types/modifier_group.json` defines selection constraints and embedded modifier options.
+- `schemas/catalog/types/modifier_option.json` defines option nodes and embedded modifier items.
+- `schemas/catalog/types/modifier_item.json` defines purchasable modifier items.
 
 ## Availability
 
-- `schemas/inventory/types/availability.json` and `schemas/inventory/types/interval.json` define weekly and date-specific schedules.
+- `schemas/catalog/types/availability.json` and `schemas/catalog/types/interval.json` define weekly and date-specific schedules.
 - Availability may be defined on a catalog, category, or item.
 - If a catalog defines availability, it overrides category and item availability.
 - If a category defines availability, it overrides item availability.

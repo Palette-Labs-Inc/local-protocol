@@ -5,7 +5,7 @@
   "additionalProperties": false,
   "properties": {
     "postal_address": {
-      "$ref": "https://ucp.dev/schemas/shopping/types/postal_address.json",
+      "$ref": "../../ucp/shopping/types/postal_address.json",
       "description": "Postal address for the location."
     },
     "coordinates": {

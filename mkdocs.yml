@@ -14,18 +14,18 @@ nav:
           - A2A: apis/a2a.md
   - Capabilities:
       - Catalog:
-          - Overview: capabilities/inventory/overview.md
+          - Overview: capabilities/catalog/overview.md
           - Objects:
-              - Merchant: capabilities/inventory/merchant.md
-              - Catalog: capabilities/inventory/catalog.md
+              - Merchant: capabilities/catalog/merchant.md
+              - Catalog: capabilities/catalog/catalog.md
           - Types:
-              - Category: capabilities/inventory/category.md
-              - Item: capabilities/inventory/item.md
-              - Modifier Group: capabilities/inventory/modifier_group.md
-              - Modifier Option: capabilities/inventory/modifier_option.md
-              - Modifier Item: capabilities/inventory/modifier_item.md
-              - Availability: capabilities/inventory/availability.md
-              - Interval: capabilities/inventory/interval.md
+              - Category: capabilities/catalog/category.md
+              - Item: capabilities/catalog/item.md
+              - Modifier Group: capabilities/catalog/modifier_group.md
+              - Modifier Option: capabilities/catalog/modifier_option.md
+              - Modifier Item: capabilities/catalog/modifier_item.md
+              - Availability: capabilities/catalog/availability.md
+              - Interval: capabilities/catalog/interval.md
       - Delivery:
           - Overview: capabilities/delivery/overview.md
           - Objects:

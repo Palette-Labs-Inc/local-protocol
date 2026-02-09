@@ -1,10 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://localprotocol.xyz/schemas/payment/evm_auth_capture_escrow_instrument.json",
   "title": "EVM Auth/Capture Escrow Instrument",
   "description": "Payment instrument for auth/capture escrow on EVM chains.",
   "allOf": [
-    { "$ref": "https://ucp.dev/schemas/shopping/types/payment_instrument.json" },
+    { "$ref": "../ucp/shopping/types/payment_instrument.json" },
     {
       "type": "object",
       "required": [
