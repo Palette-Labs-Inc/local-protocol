@@ -1,0 +1,39 @@
+speakeasyVersion: 1.709.1
+sources:
+    Local Protocol:
+        sourceNamespace: local-protocol
+        sourceRevisionDigest: sha256:b60619883e2b626bb0f89a52dff0b39aa819877dde103766ce24e7a96f0338ad
+        sourceBlobDigest: sha256:ec998f526d2ecced53b46a05a21ad7be51d58eb72187b34ada6da49d8bfc04c5
+        tags:
+            - latest
+            - 0.1.0
+targets:
+    local-protocol:
+        source: Local Protocol
+        sourceNamespace: local-protocol
+        sourceRevisionDigest: sha256:b60619883e2b626bb0f89a52dff0b39aa819877dde103766ce24e7a96f0338ad
+        sourceBlobDigest: sha256:ec998f526d2ecced53b46a05a21ad7be51d58eb72187b34ada6da49d8bfc04c5
+        codeSamplesNamespace: local-protocol-php-code-samples
+        codeSamplesRevisionDigest: sha256:65313100bd04b4a46d81af6b69757e59ab0769ac968ee69345683c4f0cfdb4fe
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        Local Protocol:
+            inputs:
+                - location: ../../openapi/specs/local-protocol.v1.openapi.json
+            overlays:
+                - location: .speakeasy/speakeasy-modifications-overlay.yaml
+            output: .speakeasy/out.openapi.yaml
+            registry:
+                location: registry.speakeasyapi.dev/palette-labs/local-protocol/local-protocol
+    targets:
+        local-protocol:
+            target: php
+            source: Local Protocol
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/palette-labs/local-protocol/local-protocol-php-code-samples
+                labelOverride:
+                    fixedValue: Php (SDK)
+                blocking: false

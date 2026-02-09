@@ -15,7 +15,7 @@ oag := "npx openapi-generator-cli"
 
 # --- SDK Generation ---
 
-# Generate all SDKs (Python from JSON Schema, PHP + TypeScript from OpenAPI)
+# Generate all SDKs (Python from JSON Schema, PHP from OpenAPI via Speakeasy, TypeScript from OpenAPI via openapi-generator)
 build-sdks: build-python-sdk openapi-validate build-php-sdk build-ts-sdk
 
 # Build Python SDK from JSON schemas (datamodel-code-generator / Pydantic v2)
@@ -24,13 +24,10 @@ build-python-sdk:
   @chmod +x "{{py_sdk_dir}}/generate_models.sh"
   @cd "{{py_sdk_dir}}" && ./generate_models.sh
 
-# Build PHP SDK from OpenAPI spec (openapi-generator-cli)
+# Build PHP SDK from OpenAPI spec (Speakeasy)
 build-php-sdk:
   @echo "Generating PHP SDK from OpenAPI spec..."
-  @rm -rf "{{root_dir}}/packages/php-sdk"
-  @{{oag}} generate \
-    -i "{{openapi_spec}}" -g php -o "{{root_dir}}/packages/php-sdk" \
-    --additional-properties=packageName=LocalProtocolSdk,invokerPackage=LocalProtocolSdk,composerPackageName=localprotocol/local-protocol-sdk,artifactVersion=0.1.0
+  @cd "{{root_dir}}/packages/php-sdk" && speakeasy run
 
 # Build TypeScript SDK from OpenAPI spec (openapi-generator-cli)
 build-ts-sdk:

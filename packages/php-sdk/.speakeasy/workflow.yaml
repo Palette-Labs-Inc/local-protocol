@@ -1,0 +1,21 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    Local Protocol:
+        inputs:
+            - location: ../../openapi/specs/local-protocol.v1.openapi.json
+        overlays:
+            - location: .speakeasy/speakeasy-modifications-overlay.yaml
+        output: .speakeasy/out.openapi.yaml
+        registry:
+            location: registry.speakeasyapi.dev/palette-labs/local-protocol/local-protocol
+targets:
+    local-protocol:
+        target: php
+        source: Local Protocol
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/palette-labs/local-protocol/local-protocol-php-code-samples
+            labelOverride:
+                fixedValue: Php (SDK)
+            blocking: false

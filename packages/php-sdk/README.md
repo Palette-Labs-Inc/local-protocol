@@ -1,158 +1,220 @@
-# LocalProtocolSdk
+# localprotocol/local-protocol-sdk
 
-Local Protocol delivery API. Covers service discovery, delivery requests, quotes, and deliveries.
+Developer-friendly & type-safe Php SDK specifically catered to leverage *localprotocol/local-protocol-sdk* API.
+
+[![Built by Speakeasy](https://img.shields.io/badge/Built_by-SPEAKEASY-374151?style=for-the-badge&labelColor=f3f4f6)](https://www.speakeasy.com/?utm_source=localprotocol/local-protocol-sdk&utm_campaign=php)
+[![License: MIT](https://img.shields.io/badge/LICENSE_//_MIT-3b5bdb?style=for-the-badge&labelColor=eff6ff)](https://opensource.org/licenses/MIT)
 
 
-## Installation & Usage
+<br /><br />
+> [!IMPORTANT]
+> This SDK is not yet ready for production use. To complete setup please follow the steps outlined in your [workspace](https://app.speakeasy.com/org/palette-labs/local-protocol). Delete this section before > publishing to a package manager.
 
-### Requirements
+<!-- Start Summary [summary] -->
+## Summary
 
-PHP 8.1 and later.
+Local Protocol: Local Protocol delivery API. Covers service discovery, delivery requests, quotes, and deliveries.
+<!-- End Summary [summary] -->
 
-### Composer
+<!-- Start Table of Contents [toc] -->
+## Table of Contents
+<!-- $toc-max-depth=2 -->
+* [localprotocol/local-protocol-sdk](#localprotocollocal-protocol-sdk)
+  * [SDK Installation](#sdk-installation)
+  * [SDK Example Usage](#sdk-example-usage)
+  * [Available Resources and Operations](#available-resources-and-operations)
+  * [Error Handling](#error-handling)
+  * [Server Selection](#server-selection)
+* [Development](#development)
+  * [Maturity](#maturity)
+  * [Contributions](#contributions)
 
-To install the bindings via [Composer](https://getcomposer.org/), add the following to `composer.json`:
+<!-- End Table of Contents [toc] -->
+
+<!-- Start SDK Installation [installation] -->
+## SDK Installation
+
+> [!TIP]
+> To finish publishing your SDK you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide).
+
+
+The SDK relies on [Composer](https://getcomposer.org/) to manage its dependencies.
+
+To install the SDK first add the below to your `composer.json` file:
 
 ```json
 {
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/GIT_USER_ID/GIT_REPO_ID.git"
+    "repositories": [
+        {
+            "type": "github",
+            "url": "<UNSET>.git"
+        }
+    ],
+    "require": {
+        "localprotocol/local-protocol-sdk": "*"
     }
-  ],
-  "require": {
-    "GIT_USER_ID/GIT_REPO_ID": "*@dev"
-  }
 }
 ```
 
-Then run `composer install`
-
-### Manual Installation
-
-Download the files and include `autoload.php`:
-
-```php
-<?php
-require_once('/path/to/LocalProtocolSdk/vendor/autoload.php');
-```
-
-## Getting Started
-
-Please follow the [installation procedure](#installation--usage) and then run the following:
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-
-$apiInstance = new LocalProtocolSdk\Api\DeliveriesApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-$create_delivery_request = new \LocalProtocolSdk\Model\CreateDeliveryRequest(); // \LocalProtocolSdk\Model\CreateDeliveryRequest
-
-try {
-    $result = $apiInstance->createDelivery($create_delivery_request);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling DeliveriesApi->createDelivery: ', $e->getMessage(), PHP_EOL;
-}
-
-```
-
-## API Endpoints
-
-All URIs are relative to *http://localhost:8000*
-
-Class | Method | HTTP request | Description
------------- | ------------- | ------------- | -------------
-*DeliveriesApi* | [**createDelivery**](docs/Api/DeliveriesApi.md#createdelivery) | **POST** /deliveries | Create delivery
-*DeliveriesApi* | [**getDelivery**](docs/Api/DeliveriesApi.md#getdelivery) | **GET** /deliveries/{delivery_id} | Get delivery
-*DeliveriesApi* | [**listDeliveries**](docs/Api/DeliveriesApi.md#listdeliveries) | **GET** /deliveries | List deliveries
-*DeliveriesApi* | [**updateDeliveryEvent**](docs/Api/DeliveriesApi.md#updatedeliveryevent) | **PATCH** /deliveries/{delivery_id}/event | Update delivery event
-*DiscoveryApi* | [**getDiscovery**](docs/Api/DiscoveryApi.md#getdiscovery) | **GET** /.well-known/local-protocol | Service discovery
-*DiscoveryApi* | [**getHealth**](docs/Api/DiscoveryApi.md#gethealth) | **GET** /healthz | Health check
-*QuotesApi* | [**createQuote**](docs/Api/QuotesApi.md#createquote) | **POST** /requests/{request_id}/quotes | Create quote
-*QuotesApi* | [**getQuote**](docs/Api/QuotesApi.md#getquote) | **GET** /requests/{request_id}/quotes/{quote_id} | Get quote
-*QuotesApi* | [**listQuotes**](docs/Api/QuotesApi.md#listquotes) | **GET** /requests/{request_id}/quotes | List quotes for request
-*RequestsApi* | [**createRequest**](docs/Api/RequestsApi.md#createrequest) | **POST** /requests | Create delivery request
-*RequestsApi* | [**getRequest**](docs/Api/RequestsApi.md#getrequest) | **GET** /requests/{request_id} | Get delivery request
-*RequestsApi* | [**listRequests**](docs/Api/RequestsApi.md#listrequests) | **GET** /requests | List delivery requests
-
-## Models
-
-- [Amount](docs/Model/Amount.md)
-- [AmountCurrency](docs/Model/AmountCurrency.md)
-- [Availability](docs/Model/Availability.md)
-- [Cart](docs/Model/Cart.md)
-- [CartItem](docs/Model/CartItem.md)
-- [Catalog](docs/Model/Catalog.md)
-- [CatalogCategory](docs/Model/CatalogCategory.md)
-- [CatalogItem](docs/Model/CatalogItem.md)
-- [Coordinates](docs/Model/Coordinates.md)
-- [CreateDeliveryRequest](docs/Model/CreateDeliveryRequest.md)
-- [Delivery](docs/Model/Delivery.md)
-- [DeliveryEvent](docs/Model/DeliveryEvent.md)
-- [DeliveryEventVocabulary](docs/Model/DeliveryEventVocabulary.md)
-- [DeliveryQuote](docs/Model/DeliveryQuote.md)
-- [DeliveryQuoteCreate](docs/Model/DeliveryQuoteCreate.md)
-- [DeliveryRequest](docs/Model/DeliveryRequest.md)
-- [DeliveryRequestCreate](docs/Model/DeliveryRequestCreate.md)
-- [DiscoveryResponse](docs/Model/DiscoveryResponse.md)
-- [ErrorResponse](docs/Model/ErrorResponse.md)
-- [EvmAuthCaptureEscrowConfig](docs/Model/EvmAuthCaptureEscrowConfig.md)
-- [EvmAuthCaptureEscrowInstrument](docs/Model/EvmAuthCaptureEscrowInstrument.md)
-- [EvmAuthCaptureEscrowInstrumentAllOfAmount](docs/Model/EvmAuthCaptureEscrowInstrumentAllOfAmount.md)
-- [EvmAuthCaptureEscrowInstrumentAllOfMaxAmount](docs/Model/EvmAuthCaptureEscrowInstrumentAllOfMaxAmount.md)
-- [EvmCurrency](docs/Model/EvmCurrency.md)
-- [EvmToken](docs/Model/EvmToken.md)
-- [FiatCurrency](docs/Model/FiatCurrency.md)
-- [HealthResponse](docs/Model/HealthResponse.md)
-- [Interval](docs/Model/Interval.md)
-- [Location](docs/Model/Location.md)
-- [Media](docs/Model/Media.md)
-- [Merchant](docs/Model/Merchant.md)
-- [ModifierGroup](docs/Model/ModifierGroup.md)
-- [ModifierItem](docs/Model/ModifierItem.md)
-- [ModifierOption](docs/Model/ModifierOption.md)
-- [Order](docs/Model/Order.md)
-- [OrderQuote](docs/Model/OrderQuote.md)
-- [OrderRequest](docs/Model/OrderRequest.md)
-- [Payment](docs/Model/Payment.md)
-- [PaymentCredential](docs/Model/PaymentCredential.md)
-- [PaymentInstrument](docs/Model/PaymentInstrument.md)
-- [PostalAddress](docs/Model/PostalAddress.md)
-- [SelectedPaymentInstrument](docs/Model/SelectedPaymentInstrument.md)
-- [UpdateEventRequest](docs/Model/UpdateEventRequest.md)
-- [ValidationErrorResponse](docs/Model/ValidationErrorResponse.md)
-- [ValidationErrorResponseDetail](docs/Model/ValidationErrorResponseDetail.md)
-
-## Authorization
-Endpoints do not require authorization.
-
-## Tests
-
-To run the tests, use:
+Then run the following command:
 
 ```bash
-composer install
-vendor/bin/phpunit
+composer update
 ```
+<!-- End SDK Installation [installation] -->
 
-## Author
+<!-- Start SDK Example Usage [usage] -->
+## SDK Example Usage
+
+### Example
+
+```php
+declare(strict_types=1);
+
+require 'vendor/autoload.php';
+
+use LocalProtocol;
+
+$sdk = LocalProtocol\LocalProtocol::builder()->build();
 
 
 
-## About this package
+$response = $sdk->discovery->get(
 
-This PHP package is automatically generated by the [OpenAPI Generator](https://openapi-generator.tech) project:
+);
 
-- API version: `0.1.0`
-    - Package version: `0.1.0`
-    - Generator version: `7.19.0`
-- Build package: `org.openapitools.codegen.languages.PhpClientCodegen`
+if ($response->discoveryResponse !== null) {
+    // handle response
+}
+```
+<!-- End SDK Example Usage [usage] -->
+
+<!-- Start Available Resources and Operations [operations] -->
+## Available Resources and Operations
+
+<details open>
+<summary>Available methods</summary>
+
+### [Deliveries](docs/sdks/deliveries/README.md)
+
+* [create](docs/sdks/deliveries/README.md#create) - Create delivery
+* [list](docs/sdks/deliveries/README.md#list) - List deliveries
+* [get](docs/sdks/deliveries/README.md#get) - Get delivery
+* [updateEvent](docs/sdks/deliveries/README.md#updateevent) - Update delivery event
+
+### [Discovery](docs/sdks/discovery/README.md)
+
+* [get](docs/sdks/discovery/README.md#get) - Service discovery
+* [getHealth](docs/sdks/discovery/README.md#gethealth) - Health check
+
+### [Quotes](docs/sdks/quotes/README.md)
+
+* [create](docs/sdks/quotes/README.md#create) - Create quote
+* [list](docs/sdks/quotes/README.md#list) - List quotes for request
+* [get](docs/sdks/quotes/README.md#get) - Get quote
+
+### [Requests](docs/sdks/requests/README.md)
+
+* [create](docs/sdks/requests/README.md#create) - Create delivery request
+* [list](docs/sdks/requests/README.md#list) - List delivery requests
+* [get](docs/sdks/requests/README.md#get) - Get delivery request
+
+</details>
+<!-- End Available Resources and Operations [operations] -->
+
+<!-- Start Error Handling [errors] -->
+## Error Handling
+
+Handling errors in this SDK should largely match your expectations. All operations return a response object or throw an exception.
+
+By default an API error will raise a `Errors\APIException` exception, which has the following properties:
+
+| Property       | Type                                    | Description           |
+|----------------|-----------------------------------------|-----------------------|
+| `$message`     | *string*                                | The error message     |
+| `$statusCode`  | *int*                                   | The HTTP status code  |
+| `$rawResponse` | *?\Psr\Http\Message\ResponseInterface*  | The raw HTTP response |
+| `$body`        | *string*                                | The response content  |
+
+When custom error responses are specified for an operation, the SDK may also throw their associated exception. You can refer to respective *Errors* tables in SDK docs for more details on possible exception types for each operation. For example, the `get` method throws the following exceptions:
+
+| Error Type           | Status Code | Content Type     |
+| -------------------- | ----------- | ---------------- |
+| Errors\ErrorResponse | 500         | application/json |
+| Errors\APIException  | 4XX, 5XX    | \*/\*            |
+
+### Example
+
+```php
+declare(strict_types=1);
+
+require 'vendor/autoload.php';
+
+use LocalProtocol;
+use LocalProtocol\Models\Errors;
+
+$sdk = LocalProtocol\LocalProtocol::builder()->build();
+
+try {
+    $response = $sdk->discovery->get(
+
+    );
+
+    if ($response->discoveryResponse !== null) {
+        // handle response
+    }
+} catch (Errors\ErrorResponseThrowable $e) {
+    // handle $e->$container data
+    throw $e;
+} catch (Errors\APIException $e) {
+    // handle default exception
+    throw $e;
+}
+```
+<!-- End Error Handling [errors] -->
+
+<!-- Start Server Selection [server] -->
+## Server Selection
+
+### Override Server URL Per-Client
+
+The default server can be overridden globally using the `setServerUrl(string $serverUrl)` builder method when initializing the SDK client instance. For example:
+```php
+declare(strict_types=1);
+
+require 'vendor/autoload.php';
+
+use LocalProtocol;
+
+$sdk = LocalProtocol\LocalProtocol::builder()
+    ->setServerURL('http://localhost:8000')
+    ->build();
+
+
+
+$response = $sdk->discovery->get(
+
+);
+
+if ($response->discoveryResponse !== null) {
+    // handle response
+}
+```
+<!-- End Server Selection [server] -->
+
+<!-- Placeholder for Future Speakeasy SDK Sections -->
+
+# Development
+
+## Maturity
+
+This SDK is in beta, and there may be breaking changes between versions without a major version update. Therefore, we recommend pinning usage
+to a specific package version. This way, you can install the same version each time without breaking changes unless you are intentionally
+looking for the latest version.
+
+## Contributions
+
+While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
+We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release. 
+
+### SDK Created by [Speakeasy](https://www.speakeasy.com/?utm_source=localprotocol/local-protocol-sdk&utm_campaign=php)

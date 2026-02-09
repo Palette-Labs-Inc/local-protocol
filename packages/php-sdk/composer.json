@@ -1,40 +1,45 @@
 {
-    "name": "localprotocol/local-protocol-sdk",
-    "version": "0.1.0",
-    "description": "Local Protocol delivery API. Covers service discovery, delivery requests, quotes, and deliveries.",
-    "keywords": [
-        "openapitools",
-        "openapi-generator",
-        "openapi",
-        "php",
-        "sdk",
-        "rest",
-        "api"
-    ],
-    "homepage": "https://openapi-generator.tech",
-    "license": "unlicense",
-    "authors": [
-        {
-            "name": "OpenAPI",
-            "homepage": "https://openapi-generator.tech"
-        }
-    ],
-    "require": {
-        "php": "^8.1",
-        "ext-curl": "*",
-        "ext-json": "*",
-        "ext-mbstring": "*",
-        "guzzlehttp/guzzle": "^7.3",
-        "guzzlehttp/psr7": "^1.7 || ^2.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^9.0 || ^10.0",
-        "friendsofphp/php-cs-fixer": "^3.5"
-    },
-    "autoload": {
-        "psr-4": { "LocalProtocolSdk\\" : "lib/" }
-    },
-    "autoload-dev": {
-        "psr-4": { "LocalProtocolSdk\\Test\\" : "test/" }
+  "name": "localprotocol/local-protocol-sdk",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "LocalProtocol\\": "src/"
     }
+  },
+  "license": "MIT",
+  "require": {
+    "php": ">=8.2",
+    "galbar/jsonpath": ">=3.0",
+    "guzzlehttp/guzzle": "^7.0",
+    "speakeasy/serializer": "^4.0.3",
+    "brick/date-time": ">=0.7.0",
+    "phpdocumentor/type-resolver": ">=1.8",
+    "brick/math": ">=0.12.1"
+  },
+  "require-dev": {
+    "laravel/pint": ">=1.21.2",
+    "phpstan/phpstan": ">=2.1.0",
+    "phpunit/phpunit": ">=10",
+    "roave/security-advisories": "dev-latest"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "optimize-autoloader": true,
+    "classmap-authoritative": true,
+    "sort-packages": true,
+    "process-timeout": 60
+  },
+  "scripts": {
+    "test": [
+      "./vendor/bin/phpunit --testdox --display-warnings --colors=always"
+    ],
+    "stan": [
+      "./vendor/bin/phpstan analyse --memory-limit=2g --error-format=table"
+    ]
+  },
+  "script-descriptions": {
+    "test": "Run PhpUnit test scripts.",
+    "stan": "Run PhpStan static analysis."
+  }
 }

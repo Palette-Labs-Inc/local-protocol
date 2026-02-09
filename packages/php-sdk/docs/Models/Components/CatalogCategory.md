@@ -1,0 +1,16 @@
+# CatalogCategory
+
+A category grouping items in a catalog.
+
+
+## Fields
+
+| Field                                                                           | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `id`                                                                            | *string*                                                                        | :heavy_check_mark:                                                              | Category identifier.                                                            |
+| `name`                                                                          | *string*                                                                        | :heavy_check_mark:                                                              | Category display name.                                                          |
+| `description`                                                                   | *?string*                                                                       | :heavy_minus_sign:                                                              | Optional category description.                                                  |
+| `categories`                                                                    | array<[Components\CatalogCategory](../../Models/Components/CatalogCategory.md)> | :heavy_minus_sign:                                                              | Ordered child categories for nested category trees.                             |
+| `items`                                                                         | array<[Components\CatalogItem](../../Models/Components/CatalogItem.md)>         | :heavy_check_mark:                                                              | Ordered items in this category.                                                 |
+| `availability`                                                                  | [?Components\Availability](../../Models/Components/Availability.md)             | :heavy_minus_sign:                                                              | Availability schedule for a catalog, category, or item.                         |
+| `metadata`                                                                      | array<string, *mixed*>                                                          | :heavy_minus_sign:                                                              | Business-defined custom data.                                                   |

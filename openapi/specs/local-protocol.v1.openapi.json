@@ -33,6 +33,14 @@
                 "schema": { "$ref": "#/components/schemas/DiscoveryResponse" }
               }
             }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
           }
         }
       }
@@ -49,6 +57,14 @@
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/HealthResponse" }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -118,6 +134,14 @@
                   "type": "array",
                   "items": { "$ref": "#/components/schemas/DeliveryRequest" }
                 }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -337,6 +361,14 @@
                   "type": "array",
                   "items": { "$ref": "#/components/schemas/Delivery" }
                 }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -859,6 +891,7 @@
       },
 
       "FiatCurrency": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "Fiat currency descriptor.",
         "required": ["symbol"],
@@ -872,6 +905,7 @@
         }
       },
       "EvmCurrency": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "EVM token currency descriptor.",
         "required": ["chain_id", "address", "decimals"],
@@ -883,6 +917,7 @@
         }
       },
       "Amount": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "Amount with explicit currency. Value is always in minor units (e.g., cents for USD).",
         "required": ["value", "currency"],
@@ -903,6 +938,7 @@
         }
       },
       "Media": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "Product media item (image, video, etc.).",
         "required": ["type", "url"],
@@ -916,6 +952,7 @@
       },
 
       "Interval": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "A single time interval for a day of the week or a specific date.",
         "required": ["from_hour", "from_minute", "to_hour", "to_minute"],
@@ -929,11 +966,12 @@
           "to_minute": { "type": "integer", "minimum": 0, "maximum": 59, "description": "End minute (0-59)." }
         },
         "oneOf": [
-          { "required": ["day"], "not": { "required": ["date"] } },
-          { "required": ["date"], "not": { "required": ["day"] } }
+          { "required": ["day"] },
+          { "required": ["date"] }
         ]
       },
       "Availability": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "Availability schedule for a catalog, category, or item.",
         "required": ["intervals"],
@@ -949,6 +987,7 @@
         }
       },
       "ModifierItem": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "A purchasable modifier item within a modifier group.",
         "required": ["id", "name", "price"],
@@ -962,6 +1001,7 @@
         }
       },
       "ModifierOption": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "Selectable option within a modifier group.",
         "required": ["id", "modifier_item"],
@@ -979,6 +1019,7 @@
         }
       },
       "ModifierGroup": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "Group of modifier options with selection constraints.",
         "required": ["id", "name", "modifier_options"],
@@ -1002,6 +1043,7 @@
         }
       },
       "CatalogItem": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "A menu item with embedded modifier groups.",
         "required": ["id", "name", "description", "price"],
@@ -1026,6 +1068,7 @@
         }
       },
       "CatalogCategory": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "A category grouping items in a catalog.",
         "required": ["id", "name", "items"],
@@ -1049,6 +1092,7 @@
         }
       },
       "Catalog": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "A catalog containing embedded categories, items, availability, and fulfillment configuration.",
         "required": ["id", "name", "categories"],
@@ -1072,6 +1116,7 @@
         }
       },
       "Merchant": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "Merchant catalog payload containing denormalized catalogs.",
         "required": ["id", "name", "timezone", "catalogs"],
@@ -1092,6 +1137,7 @@
       },
 
       "CartItem": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "An item in a cart.",
         "required": ["id", "quantity"],
@@ -1102,6 +1148,7 @@
         }
       },
       "Cart": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "A shopping cart.",
         "required": ["id", "intent_id", "nonce", "items"],
@@ -1118,6 +1165,7 @@
         }
       },
       "OrderRequest": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "An order request.",
         "required": ["id", "intent_id", "nonce"],
@@ -1129,6 +1177,7 @@
         }
       },
       "OrderQuote": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "An order quote.",
         "required": ["id", "intent_id", "nonce", "price", "ready_at", "expires_at"],
@@ -1143,6 +1192,7 @@
         }
       },
       "Order": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "An order.",
         "required": ["id", "intent_id", "nonce", "payment_instrument_id"],
@@ -1156,6 +1206,7 @@
       },
 
       "EvmToken": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "EVM token identifier used for auth/capture settlement.",
         "required": ["symbol", "decimals"],
@@ -1167,6 +1218,7 @@
         }
       },
       "EvmAuthCaptureEscrowConfig": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "Handler configuration for auth/capture escrow on EVM chains.",
         "required": ["chain_id", "contract", "operator", "receiver", "accepted_tokens"],
@@ -1185,6 +1237,7 @@
         }
       },
       "EvmAuthCaptureEscrowInstrument": {
+        "x-speakeasy-include": true,
         "description": "Payment instrument for auth/capture escrow on EVM chains.",
         "allOf": [
           { "$ref": "#/components/schemas/PaymentInstrument" },
@@ -1272,6 +1325,7 @@
       },
 
       "DeliveryEvent": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "A single delivery event definition.",
         "required": ["description"],
@@ -1281,6 +1335,7 @@
         }
       },
       "DeliveryEventVocabulary": {
+        "x-speakeasy-include": true,
         "type": "object",
         "description": "Schema for delivery event vocabularies.",
         "required": ["name", "version", "title", "events"],

@@ -1,0 +1,19 @@
+# ModifierGroup
+
+Group of modifier options with selection constraints.
+
+
+## Fields
+
+| Field                                                                         | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `id`                                                                          | *string*                                                                      | :heavy_check_mark:                                                            | Modifier group identifier.                                                    |
+| `name`                                                                        | *string*                                                                      | :heavy_check_mark:                                                            | Display name for the modifier group.                                          |
+| `description`                                                                 | *?string*                                                                     | :heavy_minus_sign:                                                            | Optional modifier group description.                                          |
+| `minimumSelections`                                                           | *?int*                                                                        | :heavy_minus_sign:                                                            | Minimum selections required.                                                  |
+| `maximumSelections`                                                           | *?int*                                                                        | :heavy_minus_sign:                                                            | Maximum selections allowed.                                                   |
+| `allowQuantities`                                                             | *?bool*                                                                       | :heavy_minus_sign:                                                            | Whether options can be selected with quantities > 1.                          |
+| `maxPerModifier`                                                              | *?int*                                                                        | :heavy_minus_sign:                                                            | Maximum quantity per modifier option.                                         |
+| `modifierOptions`                                                             | array<[Components\ModifierOption](../../Models/Components/ModifierOption.md)> | :heavy_check_mark:                                                            | Ordered modifier options within this group.                                   |
+| `type`                                                                        | *?string*                                                                     | :heavy_minus_sign:                                                            | Modifier group type classification.                                           |
+| `metadata`                                                                    | array<string, *mixed*>                                                        | :heavy_minus_sign:                                                            | Business-defined custom data.                                                 |
