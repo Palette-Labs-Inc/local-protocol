@@ -34,3 +34,11 @@ class DeliveryRequest(BaseModel):
   """
     Requested dropoff time (RFC 3339).
     """
+  pickup_instructions: str | None = None
+  """
+    Pickup directions, access codes, or handling notes.
+    """
+  dropoff_instructions: str | None = None
+  """
+    Dropoff directions, access codes, or delivery notes.
+    """
