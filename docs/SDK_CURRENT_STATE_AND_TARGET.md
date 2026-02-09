@@ -164,7 +164,7 @@ Definition of done:
 Progress notes (2026-02-09):
 
 - Full-domain generation now works for all schema domains (delivery, order,
-  inventory, payment, shared) plus vendored UCP types.
+  catalog, payment, shared) plus vendored UCP types.
 - Two `datamodel-code-generator` bugs were identified and worked around in
   `generate_models.sh` via temp-copy preprocessing: `$id` base-URL hijacking
   and nested cross-directory `$ref` misresolution.
@@ -185,6 +185,13 @@ Definition of done:
 
 - `packages/python-sdk/src/local_protocol_sdk/models/` contains all schema domains.
 - Developers can import and validate all protocol objects directly.
+
+Progress notes (2026-02-09):
+
+- `schemas/inventory/` renamed to `schemas/catalog/` so the filesystem path
+  matches the domain name used everywhere else (schema titles, docs nav, SDK
+  import target). `$id` fields updated to `schemas/catalog/`.
+- SDK now generates `models.catalog.*` instead of `models.inventory.*`.
 
 ## Phase 2: Typed REST client for implemented endpoints (medium)
 
