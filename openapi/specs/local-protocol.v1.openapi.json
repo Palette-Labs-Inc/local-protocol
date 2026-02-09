@@ -17,6 +17,7 @@
     { "name": "quotes", "description": "Delivery quote operations" },
     { "name": "deliveries", "description": "Delivery lifecycle operations" }
   ],
+  "security": [],
   "paths": {
     "/.well-known/local-protocol": {
       "get": {
