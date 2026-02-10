@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Check whether the server is currently healthy.
+ */
 export class Healthz extends APIResource {
   /**
    * Returns server health status.

@@ -14,6 +14,8 @@ use LocalProtocol\ServiceContracts\Orders\RequestsContract;
 use LocalProtocol\Services\Orders\Requests\QuotesService;
 
 /**
+ * Create order requests that can be quoted.
+ *
  * @phpstan-import-type ItemShape from \LocalProtocol\Orders\Requests\RequestCreateParams\Item
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
  */

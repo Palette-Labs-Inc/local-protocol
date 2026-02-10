@@ -11,13 +11,13 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Documentation
 
-The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [localprotocol.xyz](https://localprotocol.xyz). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
 ```sh
-# install from this staging repo
-pip install git+ssh://git@github.com/stainless-sdks/local-protocol-python.git
+# install from the production repo
+pip install git+ssh://git@github.com/Palette-Labs-Inc/local-protocol-python.git
 ```
 
 > [!NOTE]
@@ -29,14 +29,32 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
+from datetime import datetime
 from local_protocol import LocalProtocol
 
 client = LocalProtocol(
     api_key=os.environ.get("LOCAL_PROTOCOL_API_KEY"),  # This is the default and can be omitted
 )
 
-well_known = client.well_known.retrieve()
-print(well_known.capabilities)
+delivery_request = client.requests.create(
+    id="req_demo_123",
+    dropoff_location={
+        "coordinates": {
+            "latitude": 37.7875,
+            "longitude": -122.4073,
+        }
+    },
+    dropoff_time=datetime.fromisoformat("2026-02-10T17:30:00"),
+    nonce="nonce_demo_123",
+    pickup_location={
+        "coordinates": {
+            "latitude": 37.7751,
+            "longitude": -122.4193,
+        }
+    },
+    pickup_time=datetime.fromisoformat("2026-02-10T17:00:00"),
+)
+print(delivery_request.id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -50,6 +68,7 @@ Simply import `AsyncLocalProtocol` instead of `LocalProtocol` and use `await` wi
 
 ```python
 import os
+from datetime import datetime
 import asyncio
 from local_protocol import AsyncLocalProtocol
 
@@ -59,8 +78,25 @@ client = AsyncLocalProtocol(
 
 
 async def main() -> None:
-    well_known = await client.well_known.retrieve()
-    print(well_known.capabilities)
+    delivery_request = await client.requests.create(
+        id="req_demo_123",
+        dropoff_location={
+            "coordinates": {
+                "latitude": 37.7875,
+                "longitude": -122.4073,
+            }
+        },
+        dropoff_time=datetime.fromisoformat("2026-02-10T17:30:00"),
+        nonce="nonce_demo_123",
+        pickup_location={
+            "coordinates": {
+                "latitude": 37.7751,
+                "longitude": -122.4193,
+            }
+        },
+        pickup_time=datetime.fromisoformat("2026-02-10T17:00:00"),
+    )
+    print(delivery_request.id)
 
 
 asyncio.run(main())
@@ -75,8 +111,8 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from this staging repo
-pip install 'local_protocol[aiohttp] @ git+ssh://git@github.com/stainless-sdks/local-protocol-python.git'
+# install from the production repo
+pip install 'local_protocol[aiohttp] @ git+ssh://git@github.com/Palette-Labs-Inc/local-protocol-python.git'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
@@ -85,6 +121,7 @@ Then you can enable it by instantiating the client with `http_client=DefaultAioH
 import os
 import asyncio
 from local_protocol import DefaultAioHttpClient
+from datetime import datetime
 from local_protocol import AsyncLocalProtocol
 
 
@@ -93,8 +130,25 @@ async def main() -> None:
         api_key=os.environ.get("LOCAL_PROTOCOL_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
-        well_known = await client.well_known.retrieve()
-        print(well_known.capabilities)
+        delivery_request = await client.requests.create(
+            id="req_demo_123",
+            dropoff_location={
+                "coordinates": {
+                    "latitude": 37.7875,
+                    "longitude": -122.4073,
+                }
+            },
+            dropoff_time=datetime.fromisoformat("2026-02-10T17:30:00"),
+            nonce="nonce_demo_123",
+            pickup_location={
+                "coordinates": {
+                    "latitude": 37.7751,
+                    "longitude": -122.4193,
+                }
+            },
+            pickup_time=datetime.fromisoformat("2026-02-10T17:00:00"),
+        )
+        print(delivery_request.id)
 
 
 asyncio.run(main())
@@ -261,9 +315,9 @@ well_known = response.parse()  # get the object that `well_known.retrieve()` wou
 print(well_known.capabilities)
 ```
 
-These methods return an [`APIResponse`](https://github.com/stainless-sdks/local-protocol-python/tree/main/src/local_protocol/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/Palette-Labs-Inc/local-protocol-python/tree/main/src/local_protocol/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/local-protocol-python/tree/main/src/local_protocol/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/Palette-Labs-Inc/local-protocol-python/tree/main/src/local_protocol/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -367,7 +421,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/local-protocol-python/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/Palette-Labs-Inc/local-protocol-python/issues) with questions, bugs, or suggestions.
 
 ### Determining the installed version
 

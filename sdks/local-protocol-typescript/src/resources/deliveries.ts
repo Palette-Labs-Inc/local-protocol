@@ -5,6 +5,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Accept quotes and manage delivery lifecycle state.
+ */
 export class Deliveries extends APIResource {
   /**
    * Accept a quote and create a delivery. The `nonce` field provides idempotency.

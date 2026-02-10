@@ -5,6 +5,9 @@ import * as RequestsAPI from './requests/requests';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Register payment instruments and related payment models.
+ */
 export class PaymentInstruments extends APIResource {
   /**
    * Register a payment instrument for use in order creation.

@@ -25,13 +25,15 @@ __all__ = ["DeliveriesResource", "AsyncDeliveriesResource"]
 
 
 class DeliveriesResource(SyncAPIResource):
+    """Accept quotes and manage delivery lifecycle state."""
+
     @cached_property
     def with_raw_response(self) -> DeliveriesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#accessing-raw-response-data-eg-headers
         """
         return DeliveriesResourceWithRawResponse(self)
 
@@ -40,7 +42,7 @@ class DeliveriesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#with_streaming_response
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#with_streaming_response
         """
         return DeliveriesResourceWithStreamingResponse(self)
 
@@ -202,13 +204,15 @@ class DeliveriesResource(SyncAPIResource):
 
 
 class AsyncDeliveriesResource(AsyncAPIResource):
+    """Accept quotes and manage delivery lifecycle state."""
+
     @cached_property
     def with_raw_response(self) -> AsyncDeliveriesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#accessing-raw-response-data-eg-headers
         """
         return AsyncDeliveriesResourceWithRawResponse(self)
 
@@ -217,7 +221,7 @@ class AsyncDeliveriesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#with_streaming_response
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#with_streaming_response
         """
         return AsyncDeliveriesResourceWithStreamingResponse(self)
 

@@ -29,6 +29,23 @@
         "summary": "Service discovery",
         "description": "Returns server capabilities, supported standards, and endpoint paths.",
         "operationId": "getDiscovery",
+        "x-codeSamples": [
+          {
+            "lang": "typescript",
+            "label": "TypeScript SDK",
+            "source": "import LocalProtocol from \"local-protocol\";\n\nconst client = new LocalProtocol({\n  apiKey: process.env.LOCAL_PROTOCOL_API_KEY,\n});\n\nconst discovery = await client.wellKnown.retrieve();\nconsole.log(discovery.capabilities);"
+          },
+          {
+            "lang": "python",
+            "label": "Python SDK",
+            "source": "from local_protocol import LocalProtocol\n\nclient = LocalProtocol()\ndiscovery = client.well_known.retrieve()\nprint(discovery.capabilities)"
+          },
+          {
+            "lang": "shell",
+            "label": "cURL",
+            "source": "curl -sS \\\n  -H \"Authorization: Bearer $LOCAL_PROTOCOL_API_KEY\" \\\n  http://localhost:8000/.well-known/local-protocol"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Discovery metadata.",
@@ -81,6 +98,23 @@
         "summary": "Create delivery request",
         "description": "Submit a new delivery request. The `nonce` field provides idempotency.",
         "operationId": "createRequest",
+        "x-codeSamples": [
+          {
+            "lang": "typescript",
+            "label": "TypeScript SDK",
+            "source": "import LocalProtocol from \"local-protocol\";\n\nconst client = new LocalProtocol({\n  apiKey: process.env.LOCAL_PROTOCOL_API_KEY,\n});\n\nconst request = await client.requests.create({\n  id: \"req_demo_123\",\n  nonce: \"nonce_demo_123\",\n  pickup_location: {\n    coordinates: { latitude: 37.7751, longitude: -122.4193 },\n  },\n  dropoff_location: {\n    coordinates: { latitude: 37.7875, longitude: -122.4073 },\n  },\n  pickup_time: \"2026-02-10T17:00:00Z\",\n  dropoff_time: \"2026-02-10T17:30:00Z\",\n});\n\nconsole.log(request.id);"
+          },
+          {
+            "lang": "python",
+            "label": "Python SDK",
+            "source": "from local_protocol import LocalProtocol\n\nclient = LocalProtocol()\nrequest = client.requests.create(\n    id=\"req_demo_123\",\n    nonce=\"nonce_demo_123\",\n    pickup_location={\"coordinates\": {\"latitude\": 37.7751, \"longitude\": -122.4193}},\n    dropoff_location={\"coordinates\": {\"latitude\": 37.7875, \"longitude\": -122.4073}},\n    pickup_time=\"2026-02-10T17:00:00Z\",\n    dropoff_time=\"2026-02-10T17:30:00Z\",\n)\n\nprint(request.id)"
+          },
+          {
+            "lang": "shell",
+            "label": "cURL",
+            "source": "curl -sS -X POST \\\n  -H \"Authorization: Bearer $LOCAL_PROTOCOL_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  http://localhost:8000/requests \\\n  -d '{\n    \"id\": \"req_demo_123\",\n    \"nonce\": \"nonce_demo_123\",\n    \"pickup_location\": {\"coordinates\": {\"latitude\": 37.7751, \"longitude\": -122.4193}},\n    \"dropoff_location\": {\"coordinates\": {\"latitude\": 37.7875, \"longitude\": -122.4073}},\n    \"pickup_time\": \"2026-02-10T17:00:00Z\",\n    \"dropoff_time\": \"2026-02-10T17:30:00Z\"\n  }'"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -187,6 +221,18 @@
         "summary": "Create quote",
         "description": "Submit a quote for a delivery request. The `nonce` field provides idempotency.",
         "operationId": "createQuote",
+        "x-codeSamples": [
+          {
+            "lang": "typescript",
+            "label": "TypeScript SDK",
+            "source": "import LocalProtocol from \"local-protocol\";\n\nconst client = new LocalProtocol({\n  apiKey: process.env.LOCAL_PROTOCOL_API_KEY,\n});\n\nconst quote = await client.requests.quotes.create(\"req_demo_123\", {\n  id: \"quote_demo_123\",\n  nonce: \"nonce_quote_123\",\n  price: 1299,\n  currency: \"USD\",\n  pickup_location: {\n    coordinates: { latitude: 37.7751, longitude: -122.4193 },\n  },\n  dropoff_location: {\n    coordinates: { latitude: 37.7875, longitude: -122.4073 },\n  },\n  pickup_estimate: \"2026-02-10T17:08:00Z\",\n  dropoff_estimate: \"2026-02-10T17:30:00Z\",\n  payment: {\n    instruments: [\n      {\n        id: \"pi_demo_123\",\n        handler_id: \"com.localprotocol.evm_auth_capture_escrow\",\n        type: \"tokenized_card\",\n      },\n    ],\n  },\n});\n\nconsole.log(quote.id);"
+          },
+          {
+            "lang": "python",
+            "label": "Python SDK",
+            "source": "from local_protocol import LocalProtocol\n\nclient = LocalProtocol()\nquote = client.requests.quotes.create(\n    request_id=\"req_demo_123\",\n    id=\"quote_demo_123\",\n    nonce=\"nonce_quote_123\",\n    price=1299,\n    currency=\"USD\",\n    pickup_location={\"coordinates\": {\"latitude\": 37.7751, \"longitude\": -122.4193}},\n    dropoff_location={\"coordinates\": {\"latitude\": 37.7875, \"longitude\": -122.4073}},\n    pickup_estimate=\"2026-02-10T17:08:00Z\",\n    dropoff_estimate=\"2026-02-10T17:30:00Z\",\n    payment={\n        \"instruments\": [\n            {\n                \"id\": \"pi_demo_123\",\n                \"handler_id\": \"com.localprotocol.evm_auth_capture_escrow\",\n                \"type\": \"tokenized_card\",\n            }\n        ]\n    },\n)\n\nprint(quote.id)"
+          }
+        ],
         "parameters": [
           { "$ref": "#/components/parameters/RequestId" }
         ],
@@ -308,6 +354,23 @@
         "summary": "Create delivery",
         "description": "Accept a quote and create a delivery. The `nonce` field provides idempotency.",
         "operationId": "createDelivery",
+        "x-codeSamples": [
+          {
+            "lang": "typescript",
+            "label": "TypeScript SDK",
+            "source": "import LocalProtocol from \"local-protocol\";\n\nconst client = new LocalProtocol({\n  apiKey: process.env.LOCAL_PROTOCOL_API_KEY,\n});\n\nconst delivery = await client.deliveries.create({\n  request_id: \"req_demo_123\",\n  quote_id: \"quote_demo_123\",\n  nonce: \"nonce_delivery_123\",\n  event_vocabulary: \"xyz.localprotocol.delivery.courier@2026-01-30\",\n});\n\nconsole.log(delivery.id);"
+          },
+          {
+            "lang": "python",
+            "label": "Python SDK",
+            "source": "from local_protocol import LocalProtocol\n\nclient = LocalProtocol()\ndelivery = client.deliveries.create(\n    request_id=\"req_demo_123\",\n    quote_id=\"quote_demo_123\",\n    nonce=\"nonce_delivery_123\",\n    event_vocabulary=\"xyz.localprotocol.delivery.courier@2026-01-30\",\n)\n\nprint(delivery.id)"
+          },
+          {
+            "lang": "shell",
+            "label": "cURL",
+            "source": "curl -sS -X POST \\\n  -H \"Authorization: Bearer $LOCAL_PROTOCOL_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  http://localhost:8000/deliveries \\\n  -d '{\n    \"request_id\": \"req_demo_123\",\n    \"quote_id\": \"quote_demo_123\",\n    \"nonce\": \"nonce_delivery_123\",\n    \"event_vocabulary\": \"xyz.localprotocol.delivery.courier@2026-01-30\"\n  }'"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {

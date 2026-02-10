@@ -12,6 +12,8 @@ use LocalProtocol\ServiceContracts\WellKnownRawContract;
 use LocalProtocol\WellKnown\WellKnownGetResponse;
 
 /**
+ * Discover server capabilities, standards, and endpoints.
+ *
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
  */
 final class WellKnownRawService implements WellKnownRawContract

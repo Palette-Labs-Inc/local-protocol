@@ -5,6 +5,9 @@ import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
+/**
+ * List and retrieve order request quotes.
+ */
 export class Quotes extends APIResource {
   /**
    * Returns a single order quote by ID.

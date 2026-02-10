@@ -32,8 +32,11 @@ __all__ = ["RequestsResource", "AsyncRequestsResource"]
 
 
 class RequestsResource(SyncAPIResource):
+    """Create order requests that can be quoted."""
+
     @cached_property
     def quotes(self) -> QuotesResource:
+        """List and retrieve order request quotes."""
         return QuotesResource(self._client)
 
     @cached_property
@@ -42,7 +45,7 @@ class RequestsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#accessing-raw-response-data-eg-headers
         """
         return RequestsResourceWithRawResponse(self)
 
@@ -51,7 +54,7 @@ class RequestsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#with_streaming_response
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#with_streaming_response
         """
         return RequestsResourceWithStreamingResponse(self)
 
@@ -109,8 +112,11 @@ class RequestsResource(SyncAPIResource):
 
 
 class AsyncRequestsResource(AsyncAPIResource):
+    """Create order requests that can be quoted."""
+
     @cached_property
     def quotes(self) -> AsyncQuotesResource:
+        """List and retrieve order request quotes."""
         return AsyncQuotesResource(self._client)
 
     @cached_property
@@ -119,7 +125,7 @@ class AsyncRequestsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#accessing-raw-response-data-eg-headers
         """
         return AsyncRequestsResourceWithRawResponse(self)
 
@@ -128,7 +134,7 @@ class AsyncRequestsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#with_streaming_response
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#with_streaming_response
         """
         return AsyncRequestsResourceWithStreamingResponse(self)
 
@@ -195,6 +201,7 @@ class RequestsResourceWithRawResponse:
 
     @cached_property
     def quotes(self) -> QuotesResourceWithRawResponse:
+        """List and retrieve order request quotes."""
         return QuotesResourceWithRawResponse(self._requests.quotes)
 
 
@@ -208,6 +215,7 @@ class AsyncRequestsResourceWithRawResponse:
 
     @cached_property
     def quotes(self) -> AsyncQuotesResourceWithRawResponse:
+        """List and retrieve order request quotes."""
         return AsyncQuotesResourceWithRawResponse(self._requests.quotes)
 
 
@@ -221,6 +229,7 @@ class RequestsResourceWithStreamingResponse:
 
     @cached_property
     def quotes(self) -> QuotesResourceWithStreamingResponse:
+        """List and retrieve order request quotes."""
         return QuotesResourceWithStreamingResponse(self._requests.quotes)
 
 
@@ -234,4 +243,5 @@ class AsyncRequestsResourceWithStreamingResponse:
 
     @cached_property
     def quotes(self) -> AsyncQuotesResourceWithStreamingResponse:
+        """List and retrieve order request quotes."""
         return AsyncQuotesResourceWithStreamingResponse(self._requests.quotes)

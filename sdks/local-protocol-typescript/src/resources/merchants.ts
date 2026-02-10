@@ -7,6 +7,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Read merchant profile and denormalized catalog data.
+ */
 export class Merchants extends APIResource {
   /**
    * Returns a merchant with its full denormalized catalog tree.

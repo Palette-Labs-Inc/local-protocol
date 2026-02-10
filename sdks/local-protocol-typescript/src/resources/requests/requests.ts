@@ -7,6 +7,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Create and manage delivery requests.
+ */
 export class Requests extends APIResource {
   quotes: QuotesAPI.Quotes = new QuotesAPI.Quotes(this._client);
 

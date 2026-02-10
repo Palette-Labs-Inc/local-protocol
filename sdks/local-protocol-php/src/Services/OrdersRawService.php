@@ -13,6 +13,8 @@ use LocalProtocol\RequestOptions;
 use LocalProtocol\ServiceContracts\OrdersRawContract;
 
 /**
+ * Create and retrieve orders and order-level requests.
+ *
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
  */
 final class OrdersRawService implements OrdersRawContract

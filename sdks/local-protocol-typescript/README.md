@@ -4,14 +4,14 @@
 
 This library provides convenient access to the Local Protocol REST API from server-side TypeScript or JavaScript.
 
-The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [localprotocol.xyz](https://localprotocol.xyz). The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:stainless-sdks/local-protocol-typescript.git
+npm install git+ssh://git@github.com:Palette-Labs-Inc/local-protocol-typescript.git
 ```
 
 > [!NOTE]
@@ -29,9 +29,16 @@ const client = new LocalProtocol({
   apiKey: process.env['LOCAL_PROTOCOL_API_KEY'], // This is the default and can be omitted
 });
 
-const wellKnown = await client.wellKnown.retrieve();
+const deliveryRequest = await client.requests.create({
+  id: 'req_demo_123',
+  dropoff_location: { coordinates: { latitude: 37.7875, longitude: -122.4073 } },
+  dropoff_time: '2026-02-10T17:30:00Z',
+  nonce: 'nonce_demo_123',
+  pickup_location: { coordinates: { latitude: 37.7751, longitude: -122.4193 } },
+  pickup_time: '2026-02-10T17:00:00Z',
+});
 
-console.log(wellKnown.capabilities);
+console.log(deliveryRequest.id);
 ```
 
 ### Request & Response types
@@ -225,7 +232,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.wellKnown.retrieve({
+client.requests.create({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
@@ -335,7 +342,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/local-protocol-typescript/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/Palette-Labs-Inc/local-protocol-typescript/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 

@@ -14,6 +14,8 @@ use LocalProtocol\Requests\Quotes\DeliveryQuote;
 use LocalProtocol\ServiceContracts\Requests\QuotesContract;
 
 /**
+ * Create and read delivery quotes for a request.
+ *
  * @phpstan-import-type PaymentShape from \LocalProtocol\PaymentInstruments\Payment
  * @phpstan-import-type LocationShape from \LocalProtocol\Requests\Location
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions

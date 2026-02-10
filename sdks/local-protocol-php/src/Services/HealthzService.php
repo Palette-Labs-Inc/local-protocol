@@ -11,6 +11,8 @@ use LocalProtocol\RequestOptions;
 use LocalProtocol\ServiceContracts\HealthzContract;
 
 /**
+ * Check whether the server is currently healthy.
+ *
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
  */
 final class HealthzService implements HealthzContract

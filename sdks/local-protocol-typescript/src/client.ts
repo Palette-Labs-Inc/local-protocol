@@ -35,6 +35,7 @@ import {
 } from './resources/merchants';
 import {
   Amount,
+  EvmAmount,
   EvmAuthCaptureEscrowInstrument,
   EvmAuthCaptureEscrowInstrumentDetails,
   EvmCurrency,
@@ -760,13 +761,37 @@ export class LocalProtocol {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Discover server capabilities, standards, and endpoints.
+   */
   wellKnown: API.WellKnown = new API.WellKnown(this);
+  /**
+   * Check whether the server is currently healthy.
+   */
   healthz: API.Healthz = new API.Healthz(this);
+  /**
+   * Create and manage delivery requests.
+   */
   requests: API.Requests = new API.Requests(this);
+  /**
+   * Accept quotes and manage delivery lifecycle state.
+   */
   deliveries: API.Deliveries = new API.Deliveries(this);
+  /**
+   * Read merchant profile and denormalized catalog data.
+   */
   merchants: API.Merchants = new API.Merchants(this);
+  /**
+   * Create and retrieve orders and order-level requests.
+   */
   orders: API.Orders = new API.Orders(this);
+  /**
+   * Retrieve event vocabulary definitions by name.
+   */
   eventVocabularies: API.EventVocabularies = new API.EventVocabularies(this);
+  /**
+   * Register payment instruments and related payment models.
+   */
   paymentInstruments: API.PaymentInstruments = new API.PaymentInstruments(this);
 }
 
@@ -823,6 +848,7 @@ export declare namespace LocalProtocol {
   export {
     PaymentInstruments as PaymentInstruments,
     type Amount as Amount,
+    type EvmAmount as EvmAmount,
     type EvmAuthCaptureEscrowInstrument as EvmAuthCaptureEscrowInstrument,
     type EvmAuthCaptureEscrowInstrumentDetails as EvmAuthCaptureEscrowInstrumentDetails,
     type EvmCurrency as EvmCurrency,

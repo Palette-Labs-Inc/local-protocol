@@ -28,6 +28,8 @@ __all__ = ["PaymentInstrumentsResource", "AsyncPaymentInstrumentsResource"]
 
 
 class PaymentInstrumentsResource(SyncAPIResource):
+    """Register payment instruments and related payment models."""
+
     @cached_property
     def with_raw_response(self) -> PaymentInstrumentsResourceWithRawResponse:
         """
@@ -162,6 +164,8 @@ class PaymentInstrumentsResource(SyncAPIResource):
 
 
 class AsyncPaymentInstrumentsResource(AsyncAPIResource):
+    """Register payment instruments and related payment models."""
+
     @cached_property
     def with_raw_response(self) -> AsyncPaymentInstrumentsResourceWithRawResponse:
         """

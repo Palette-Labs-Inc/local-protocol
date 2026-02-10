@@ -17,6 +17,8 @@ use LocalProtocol\Requests\PostalAddress;
 use LocalProtocol\ServiceContracts\PaymentInstrumentsRawContract;
 
 /**
+ * Register payment instruments and related payment models.
+ *
  * @phpstan-import-type TokenShape from \LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Token
  * @phpstan-import-type PostalAddressShape from \LocalProtocol\Requests\PostalAddress
  * @phpstan-import-type CredentialShape from \LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Credential
