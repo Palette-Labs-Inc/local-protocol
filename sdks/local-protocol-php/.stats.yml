@@ -1,4 +1,4 @@
 configured_endpoints: 20
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/palette-labs%2Flocal-protocol-fdd1e2bcb70b0328b882fb2728e8f5e9af2be2de7ca1a0918452620e78f3b4c3.yml
-openapi_spec_hash: de2c8cbb760e6e343a9b945d60ed2e27
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/palette-labs%2Flocal-protocol-7db6ad75e16d7398b9c3c077a9ef9bafea3287877edb7d56c9998b79e8e5a50c.yml
+openapi_spec_hash: fb85938d807b70c0d93dac234dca375a
 config_hash: 83cdf2c8393005b2b6a8ff2b930313b6

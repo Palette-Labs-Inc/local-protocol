@@ -179,25 +179,6 @@ settings:
   disable_mock_tests: true
   license: Apache-2.0
 
-# `client_settings` define settings for the API client, such as extra constructor
-# arguments (used for authentication), retry behavior, idempotency, etc.
-client_settings:
-  opts:
-    api_key:
-      type: string
-      read_env: LOCAL_PROTOCOL_API_KEY
-      nullable: false
-      auth:
-        security_scheme: bearerAuth
-
-security_schemes:
-  bearerAuth:
-    type: http
-    scheme: bearer
-
-security:
-  - bearerAuth: []
-
 # `readme` is used to configure the code snippets that will be rendered in the
 # README.md of various SDKs. In particular, you can change the `headline`
 # snippet's endpoint and the arguments to call it with.
