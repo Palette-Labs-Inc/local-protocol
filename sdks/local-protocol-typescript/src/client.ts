@@ -72,11 +72,6 @@ import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
   /**
-   * Optional bearer token. When provided, requests include `Authorization: Bearer <token>`.
-   */
-  apiKey?: string | undefined;
-
-  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
    * Defaults to process.env['LOCAL_PROTOCOL_BASE_URL'].
@@ -149,8 +144,6 @@ export interface ClientOptions {
  * API Client for interfacing with the Local Protocol API.
  */
 export class LocalProtocol {
-  apiKey: string | undefined;
-
   baseURL: string;
   maxRetries: number;
   timeout: number;
@@ -166,7 +159,6 @@ export class LocalProtocol {
   /**
    * API Client for interfacing with the Local Protocol API.
    *
-   * @param {string | undefined} [opts.apiKey]
    * @param {string} [opts.baseURL=process.env['LOCAL_PROTOCOL_BASE_URL'] ?? http://localhost:8000] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -175,13 +167,8 @@ export class LocalProtocol {
    * @param {HeadersLike} opts.defaultHeaders - Default headers to include with every request to the API.
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
-  constructor({
-    baseURL = readEnv('LOCAL_PROTOCOL_BASE_URL'),
-    apiKey,
-    ...opts
-  }: ClientOptions = {}) {
+  constructor({ baseURL = readEnv('LOCAL_PROTOCOL_BASE_URL'), ...opts }: ClientOptions = {}) {
     const options: ClientOptions = {
-      apiKey,
       ...opts,
       baseURL: baseURL || `http://localhost:8000`,
     };
@@ -202,8 +189,6 @@ export class LocalProtocol {
     this.#encoder = Opts.FallbackEncoder;
 
     this._options = options;
-
-    this.apiKey = apiKey;
   }
 
   /**
@@ -219,7 +204,6 @@ export class LocalProtocol {
       logLevel: this.logLevel,
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
-      apiKey: this.apiKey,
       ...options,
     });
     return client;
@@ -238,11 +222,6 @@ export class LocalProtocol {
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
     return;
-  }
-
-  protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    if (!this.apiKey) return buildHeaders([]);
-    return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
   }
 
   /**
@@ -683,7 +662,6 @@ export class LocalProtocol {
         ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
         ...getPlatformHeaders(),
       },
-      await this.authHeaders(options),
       this._options.defaultHeaders,
       bodyHeaders,
       options.headers,

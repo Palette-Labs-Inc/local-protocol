@@ -64,12 +64,10 @@ __all__ = [
 
 class LocalProtocol(SyncAPIClient):
     # client options
-    api_key: str | None
 
     def __init__(
         self,
         *,
-        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -90,8 +88,6 @@ class LocalProtocol(SyncAPIClient):
         _strict_response_validation: bool = False,
     ) -> None:
         """Construct a new synchronous LocalProtocol client instance."""
-        self.api_key = api_key
-
         if base_url is None:
             base_url = os.environ.get("LOCAL_PROTOCOL_BASE_URL")
         if base_url is None:
@@ -179,12 +175,6 @@ class LocalProtocol(SyncAPIClient):
 
     @property
     @override
-    def auth_headers(self) -> dict[str, str]:
-        api_key = self.api_key
-        return {"Authorization": f"Bearer {api_key}"} if api_key is not None else {}
-
-    @property
-    @override
     def default_headers(self) -> dict[str, str | Omit]:
         return {
             **super().default_headers,
@@ -195,7 +185,6 @@ class LocalProtocol(SyncAPIClient):
     def copy(
         self,
         *,
-        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.Client | None = None,
@@ -229,7 +218,6 @@ class LocalProtocol(SyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
-            api_key=self.api_key if api_key is None else api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -279,12 +267,10 @@ class LocalProtocol(SyncAPIClient):
 
 class AsyncLocalProtocol(AsyncAPIClient):
     # client options
-    api_key: str | None
 
     def __init__(
         self,
         *,
-        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -305,8 +291,6 @@ class AsyncLocalProtocol(AsyncAPIClient):
         _strict_response_validation: bool = False,
     ) -> None:
         """Construct a new async AsyncLocalProtocol client instance."""
-        self.api_key = api_key
-
         if base_url is None:
             base_url = os.environ.get("LOCAL_PROTOCOL_BASE_URL")
         if base_url is None:
@@ -394,12 +378,6 @@ class AsyncLocalProtocol(AsyncAPIClient):
 
     @property
     @override
-    def auth_headers(self) -> dict[str, str]:
-        api_key = self.api_key
-        return {"Authorization": f"Bearer {api_key}"} if api_key is not None else {}
-
-    @property
-    @override
     def default_headers(self) -> dict[str, str | Omit]:
         return {
             **super().default_headers,
@@ -410,7 +388,6 @@ class AsyncLocalProtocol(AsyncAPIClient):
     def copy(
         self,
         *,
-        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.AsyncClient | None = None,
@@ -444,7 +421,6 @@ class AsyncLocalProtocol(AsyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
-            api_key=self.api_key if api_key is None else api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,

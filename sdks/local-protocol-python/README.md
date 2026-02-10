@@ -54,9 +54,6 @@ delivery_request = client.requests.create(
 print(delivery_request.id)
 ```
 
-If your deployment requires bearer auth, you can provide an optional
-`api_key` keyword argument when constructing the client.
-
 ## Async usage
 
 Simply import `AsyncLocalProtocol` instead of `LocalProtocol` and use `await` with each API call:
