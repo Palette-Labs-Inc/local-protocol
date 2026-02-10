@@ -68,7 +68,7 @@ export interface DeliveryQuote {
   /**
    * Payment handlers available for accepting this quote.
    */
-  payment: DeliveryQuote.Payment;
+  payment: PaymentInstrumentsAPI.Payment;
 
   /**
    * Estimated pickup time (RFC 3339).
@@ -90,31 +90,6 @@ export interface DeliveryQuote {
    * Time when the quote expires (RFC 3339).
    */
   expires_at?: string;
-}
-
-export namespace DeliveryQuote {
-  /**
-   * Payment handlers available for accepting this quote.
-   */
-  export interface Payment {
-    /**
-     * Payment instruments available. Each instrument is associated with a handler via
-     * handler_id.
-     */
-    instruments?: Array<Payment.Instrument>;
-  }
-
-  export namespace Payment {
-    /**
-     * A payment instrument with selection state.
-     */
-    export interface Instrument extends PaymentInstrumentsAPI.PaymentInstrument {
-      /**
-       * Whether this instrument is selected by the user.
-       */
-      selected?: boolean;
-    }
-  }
 }
 
 export type QuoteListResponse = Array<DeliveryQuote>;
@@ -149,7 +124,7 @@ export interface QuoteCreateParams {
   /**
    * Payment handlers available for accepting this quote.
    */
-  payment: QuoteCreateParams.Payment;
+  payment: PaymentInstrumentsAPI.Payment;
 
   /**
    * Estimated pickup time (RFC 3339).
@@ -171,31 +146,6 @@ export interface QuoteCreateParams {
    * Time when the quote expires (RFC 3339).
    */
   expires_at?: string;
-}
-
-export namespace QuoteCreateParams {
-  /**
-   * Payment handlers available for accepting this quote.
-   */
-  export interface Payment {
-    /**
-     * Payment instruments available. Each instrument is associated with a handler via
-     * handler_id.
-     */
-    instruments?: Array<Payment.Instrument>;
-  }
-
-  export namespace Payment {
-    /**
-     * A payment instrument with selection state.
-     */
-    export interface Instrument extends PaymentInstrumentsAPI.PaymentInstrument {
-      /**
-       * Whether this instrument is selected by the user.
-       */
-      selected?: boolean;
-    }
-  }
 }
 
 export interface QuoteRetrieveParams {

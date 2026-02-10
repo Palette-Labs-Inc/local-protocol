@@ -19,6 +19,7 @@ from ..._response import (
 )
 from ..._base_client import make_request_options
 from ...types.requests import quote_create_params
+from ...types.payment_param import PaymentParam
 from ...types.location_param import LocationParam
 from ...types.requests.delivery_quote import DeliveryQuote
 from ...types.requests.quote_list_response import QuoteListResponse
@@ -55,7 +56,7 @@ class QuotesResource(SyncAPIResource):
         dropoff_estimate: Union[str, datetime],
         dropoff_location: LocationParam,
         nonce: str,
-        payment: quote_create_params.Payment,
+        payment: PaymentParam,
         pickup_estimate: Union[str, datetime],
         pickup_location: LocationParam,
         price: int,
@@ -226,7 +227,7 @@ class AsyncQuotesResource(AsyncAPIResource):
         dropoff_estimate: Union[str, datetime],
         dropoff_location: LocationParam,
         nonce: str,
-        payment: quote_create_params.Payment,
+        payment: PaymentParam,
         pickup_estimate: Union[str, datetime],
         pickup_location: LocationParam,
         price: int,

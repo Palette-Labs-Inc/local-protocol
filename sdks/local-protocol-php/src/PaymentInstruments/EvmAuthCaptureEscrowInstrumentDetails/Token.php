@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrument;
+namespace LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails;
 
 use LocalProtocol\Core\Attributes\Optional;
 use LocalProtocol\Core\Attributes\Required;

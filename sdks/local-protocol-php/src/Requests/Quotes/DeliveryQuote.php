@@ -8,14 +8,14 @@ use LocalProtocol\Core\Attributes\Optional;
 use LocalProtocol\Core\Attributes\Required;
 use LocalProtocol\Core\Concerns\SdkModel;
 use LocalProtocol\Core\Contracts\BaseModel;
+use LocalProtocol\PaymentInstruments\Payment;
 use LocalProtocol\Requests\Location;
-use LocalProtocol\Requests\Quotes\DeliveryQuote\Payment;
 
 /**
  * A delivery quote.
  *
  * @phpstan-import-type LocationShape from \LocalProtocol\Requests\Location
- * @phpstan-import-type PaymentShape from \LocalProtocol\Requests\Quotes\DeliveryQuote\Payment
+ * @phpstan-import-type PaymentShape from \LocalProtocol\PaymentInstruments\Payment
  *
  * @phpstan-type DeliveryQuoteShape = array{
  *   id: string,

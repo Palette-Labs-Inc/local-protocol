@@ -2,20 +2,19 @@
 
 declare(strict_types=1);
 
-namespace LocalProtocol\Requests\Quotes\QuoteCreateParams;
+namespace LocalProtocol\PaymentInstruments;
 
 use LocalProtocol\Core\Attributes\Optional;
 use LocalProtocol\Core\Concerns\SdkModel;
 use LocalProtocol\Core\Contracts\BaseModel;
-use LocalProtocol\Requests\Quotes\QuoteCreateParams\Payment\Instrument;
 
 /**
- * Payment handlers available for accepting this quote.
+ * Payment configuration containing instruments.
  *
- * @phpstan-import-type InstrumentShape from \LocalProtocol\Requests\Quotes\QuoteCreateParams\Payment\Instrument
+ * @phpstan-import-type SelectedPaymentInstrumentShape from \LocalProtocol\PaymentInstruments\SelectedPaymentInstrument
  *
  * @phpstan-type PaymentShape = array{
- *   instruments?: list<Instrument|InstrumentShape>|null
+ *   instruments?: list<SelectedPaymentInstrument|SelectedPaymentInstrumentShape>|null,
  * }
  */
 final class Payment implements BaseModel
@@ -26,9 +25,9 @@ final class Payment implements BaseModel
     /**
      * Payment instruments available. Each instrument is associated with a handler via handler_id.
      *
-     * @var list<Instrument>|null $instruments
+     * @var list<SelectedPaymentInstrument>|null $instruments
      */
-    #[Optional(list: Instrument::class)]
+    #[Optional(list: SelectedPaymentInstrument::class)]
     public ?array $instruments;
 
     public function __construct()
@@ -41,7 +40,7 @@ final class Payment implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Instrument|InstrumentShape>|null $instruments
+     * @param list<SelectedPaymentInstrument|SelectedPaymentInstrumentShape>|null $instruments
      */
     public static function with(?array $instruments = null): self
     {
@@ -55,7 +54,7 @@ final class Payment implements BaseModel
     /**
      * Payment instruments available. Each instrument is associated with a handler via handler_id.
      *
-     * @param list<Instrument|InstrumentShape> $instruments
+     * @param list<SelectedPaymentInstrument|SelectedPaymentInstrumentShape> $instruments
      */
     public function withInstruments(array $instruments): self
     {

@@ -7,36 +7,21 @@ namespace LocalProtocol\Healthz;
 use LocalProtocol\Core\Attributes\Required;
 use LocalProtocol\Core\Concerns\SdkModel;
 use LocalProtocol\Core\Contracts\BaseModel;
-use LocalProtocol\Healthz\HealthzCheckResponse\Status;
 
 /**
  * Health check response.
  *
- * @phpstan-type HealthzCheckResponseShape = array{status: Status|value-of<Status>}
+ * @phpstan-type HealthzCheckResponseShape = array{status: 'ok'}
  */
 final class HealthzCheckResponse implements BaseModel
 {
     /** @use SdkModel<HealthzCheckResponseShape> */
     use SdkModel;
 
-    /** @var value-of<Status> $status */
-    #[Required(enum: Status::class)]
-    public string $status;
+    /** @var 'ok' $status */
+    #[Required]
+    public string $status = 'ok';
 
-    /**
-     * `new HealthzCheckResponse()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * HealthzCheckResponse::with(status: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new HealthzCheckResponse)->withStatus(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -46,22 +31,16 @@ final class HealthzCheckResponse implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Status|value-of<Status> $status
      */
-    public static function with(Status|string $status): self
+    public static function with(): self
     {
-        $self = new self;
-
-        $self['status'] = $status;
-
-        return $self;
+        return new self;
     }
 
     /**
-     * @param Status|value-of<Status> $status
+     * @param 'ok' $status
      */
-    public function withStatus(Status|string $status): self
+    public function withStatus(string $status): self
     {
         $self = clone $this;
         $self['status'] = $status;

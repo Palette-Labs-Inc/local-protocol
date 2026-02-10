@@ -9,8 +9,8 @@ use LocalProtocol\Core\Attributes\Required;
 use LocalProtocol\Core\Concerns\SdkModel;
 use LocalProtocol\Core\Concerns\SdkParams;
 use LocalProtocol\Core\Contracts\BaseModel;
+use LocalProtocol\PaymentInstruments\Payment;
 use LocalProtocol\Requests\Location;
-use LocalProtocol\Requests\Quotes\QuoteCreateParams\Payment;
 
 /**
  * Submit a quote for a delivery request. The `nonce` field provides idempotency.
@@ -18,7 +18,7 @@ use LocalProtocol\Requests\Quotes\QuoteCreateParams\Payment;
  * @see LocalProtocol\Services\Requests\QuotesService::create()
  *
  * @phpstan-import-type LocationShape from \LocalProtocol\Requests\Location
- * @phpstan-import-type PaymentShape from \LocalProtocol\Requests\Quotes\QuoteCreateParams\Payment
+ * @phpstan-import-type PaymentShape from \LocalProtocol\PaymentInstruments\Payment
  *
  * @phpstan-type QuoteCreateParamsShape = array{
  *   id: string,

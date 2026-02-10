@@ -27,7 +27,13 @@ Methods:
 Types:
 
 ```python
-from local_protocol.types import DeliveryRequest, Location, PostalAddress, RequestListResponse
+from local_protocol.types import (
+    Coordinates,
+    DeliveryRequest,
+    Location,
+    PostalAddress,
+    RequestListResponse,
+)
 ```
 
 Methods:
@@ -141,8 +147,12 @@ Types:
 from local_protocol.types import (
     Amount,
     EvmAuthCaptureEscrowInstrument,
+    EvmAuthCaptureEscrowInstrumentDetails,
     EvmCurrency,
+    Payment,
     PaymentInstrument,
+    SelectedPaymentInstrument,
+    SelectedPaymentInstrumentSelectionState,
 )
 ```
 

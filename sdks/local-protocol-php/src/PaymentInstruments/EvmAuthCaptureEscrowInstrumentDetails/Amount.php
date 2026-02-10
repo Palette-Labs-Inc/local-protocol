@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrument;
+namespace LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails;
 
 use LocalProtocol\Core\Attributes\Required;
 use LocalProtocol\Core\Concerns\SdkModel;
@@ -11,16 +11,16 @@ use LocalProtocol\PaymentInstruments\Amount\Currency\FiatCurrency;
 use LocalProtocol\PaymentInstruments\EvmCurrency;
 
 /**
- * Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
+ * Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
  *
  * @phpstan-import-type CurrencyVariants from \LocalProtocol\PaymentInstruments\Amount\Currency
  * @phpstan-import-type CurrencyShape from \LocalProtocol\PaymentInstruments\Amount\Currency
  *
- * @phpstan-type MaxAmountShape = array{currency: CurrencyShape, value: string}
+ * @phpstan-type AmountShape = array{currency: CurrencyShape, value: string}
  */
-final class MaxAmount implements BaseModel
+final class Amount implements BaseModel
 {
-    /** @use SdkModel<MaxAmountShape> */
+    /** @use SdkModel<AmountShape> */
     use SdkModel;
 
     /**
@@ -38,17 +38,17 @@ final class MaxAmount implements BaseModel
     public string $value;
 
     /**
-     * `new MaxAmount()` is missing required properties by the API.
+     * `new Amount()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * MaxAmount::with(currency: ..., value: ...)
+     * Amount::with(currency: ..., value: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MaxAmount)->withCurrency(...)->withValue(...)
+     * (new Amount)->withCurrency(...)->withValue(...)
      * ```
      */
     public function __construct()

@@ -4,32 +4,19 @@ declare(strict_types=1);
 
 namespace LocalProtocol\PaymentInstruments;
 
-use LocalProtocol\Core\Attributes\Optional;
 use LocalProtocol\Core\Attributes\Required;
 use LocalProtocol\Core\Concerns\SdkModel;
 use LocalProtocol\Core\Contracts\BaseModel;
 use LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\Amount;
 use LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\MaxAmount;
 use LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\Token;
-use LocalProtocol\PaymentInstruments\PaymentInstrument\Credential;
-use LocalProtocol\Requests\PostalAddress;
 
 /**
- * Payment instrument for auth/capture escrow on EVM chains.
- *
- * @phpstan-import-type PostalAddressShape from \LocalProtocol\Requests\PostalAddress
- * @phpstan-import-type CredentialShape from \LocalProtocol\PaymentInstruments\PaymentInstrument\Credential
  * @phpstan-import-type TokenShape from \LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\Token
  * @phpstan-import-type AmountShape from \LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\Amount
  * @phpstan-import-type MaxAmountShape from \LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\MaxAmount
  *
- * @phpstan-type EvmAuthCaptureEscrowInstrumentShape = array{
- *   id: string,
- *   handlerID: string,
- *   type: string,
- *   billingAddress?: null|PostalAddress|PostalAddressShape,
- *   credential?: null|Credential|CredentialShape,
- *   display?: array<string,mixed>|null,
+ * @phpstan-type EvmAuthCaptureEscrowInstrumentDetailsShape = array{
  *   token: Token|TokenShape,
  *   amount: \LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\Amount|AmountShape,
  *   authorizationExpiresAt: \DateTimeInterface,
@@ -43,47 +30,17 @@ use LocalProtocol\Requests\PostalAddress;
  *   preapprovalExpiresAt: \DateTimeInterface,
  *   receiver: string,
  *   refundExpiresAt: \DateTimeInterface,
+ *   type: 'evm_auth_capture_escrow',
  * }
  */
-final class EvmAuthCaptureEscrowInstrument implements BaseModel
+final class EvmAuthCaptureEscrowInstrumentDetails implements BaseModel
 {
-    /** @use SdkModel<EvmAuthCaptureEscrowInstrumentShape> */
+    /** @use SdkModel<EvmAuthCaptureEscrowInstrumentDetailsShape> */
     use SdkModel;
 
-    /**
-     * Unique instrument identifier.
-     */
+    /** @var 'evm_auth_capture_escrow' $type */
     #[Required]
-    public string $id;
-
-    /**
-     * Handler instance identifier.
-     */
-    #[Required('handler_id')]
-    public string $handlerID;
-
-    /**
-     * Instrument category (e.g., 'card', 'tokenized_card').
-     */
-    #[Required]
-    public string $type;
-
-    #[Optional('billing_address')]
-    public ?PostalAddress $billingAddress;
-
-    /**
-     * Base definition for any payment credential.
-     */
-    #[Optional]
-    public ?Credential $credential;
-
-    /**
-     * Display information for the instrument. Each payment instrument schema defines its specific display properties, as outlined by the payment handler.
-     *
-     * @var array<string,mixed>|null $display
-     */
-    #[Optional(map: 'mixed')]
-    public ?array $display;
+    public string $type = 'evm_auth_capture_escrow';
 
     /**
      * EVM token identifier used for auth/capture settlement.
@@ -164,14 +121,11 @@ final class EvmAuthCaptureEscrowInstrument implements BaseModel
     public \DateTimeInterface $refundExpiresAt;
 
     /**
-     * `new EvmAuthCaptureEscrowInstrument()` is missing required properties by the API.
+     * `new EvmAuthCaptureEscrowInstrumentDetails()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * EvmAuthCaptureEscrowInstrument::with(
-     *   id: ...,
-     *   handlerID: ...,
-     *   type: ...,
+     * EvmAuthCaptureEscrowInstrumentDetails::with(
      *   token: ...,
      *   amount: ...,
      *   authorizationExpiresAt: ...,
@@ -191,10 +145,7 @@ final class EvmAuthCaptureEscrowInstrument implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new EvmAuthCaptureEscrowInstrument)
-     *   ->withID(...)
-     *   ->withHandlerID(...)
-     *   ->withType(...)
+     * (new EvmAuthCaptureEscrowInstrumentDetails)
      *   ->withToken(...)
      *   ->withAmount(...)
      *   ->withAuthorizationExpiresAt(...)
@@ -223,14 +174,8 @@ final class EvmAuthCaptureEscrowInstrument implements BaseModel
      * @param Token|TokenShape $token
      * @param Amount|AmountShape $amount
      * @param MaxAmount|MaxAmountShape $maxAmount
-     * @param PostalAddress|PostalAddressShape|null $billingAddress
-     * @param Credential|CredentialShape|null $credential
-     * @param array<string,mixed>|null $display
      */
     public static function with(
-        string $id,
-        string $handlerID,
-        string $type,
         Token|array $token,
         Amount|array $amount,
         \DateTimeInterface $authorizationExpiresAt,
@@ -244,15 +189,9 @@ final class EvmAuthCaptureEscrowInstrument implements BaseModel
         \DateTimeInterface $preapprovalExpiresAt,
         string $receiver,
         \DateTimeInterface $refundExpiresAt,
-        PostalAddress|array|null $billingAddress = null,
-        Credential|array|null $credential = null,
-        ?array $display = null,
     ): self {
         $self = new self;
 
-        $self['id'] = $id;
-        $self['handlerID'] = $handlerID;
-        $self['type'] = $type;
         $self['token'] = $token;
         $self['amount'] = $amount;
         $self['authorizationExpiresAt'] = $authorizationExpiresAt;
@@ -266,81 +205,6 @@ final class EvmAuthCaptureEscrowInstrument implements BaseModel
         $self['preapprovalExpiresAt'] = $preapprovalExpiresAt;
         $self['receiver'] = $receiver;
         $self['refundExpiresAt'] = $refundExpiresAt;
-
-        null !== $billingAddress && $self['billingAddress'] = $billingAddress;
-        null !== $credential && $self['credential'] = $credential;
-        null !== $display && $self['display'] = $display;
-
-        return $self;
-    }
-
-    /**
-     * Unique instrument identifier.
-     */
-    public function withID(string $id): self
-    {
-        $self = clone $this;
-        $self['id'] = $id;
-
-        return $self;
-    }
-
-    /**
-     * Handler instance identifier.
-     */
-    public function withHandlerID(string $handlerID): self
-    {
-        $self = clone $this;
-        $self['handlerID'] = $handlerID;
-
-        return $self;
-    }
-
-    /**
-     * Instrument category (e.g., 'card', 'tokenized_card').
-     */
-    public function withType(string $type): self
-    {
-        $self = clone $this;
-        $self['type'] = $type;
-
-        return $self;
-    }
-
-    /**
-     * @param PostalAddress|PostalAddressShape $billingAddress
-     */
-    public function withBillingAddress(
-        PostalAddress|array $billingAddress
-    ): self {
-        $self = clone $this;
-        $self['billingAddress'] = $billingAddress;
-
-        return $self;
-    }
-
-    /**
-     * Base definition for any payment credential.
-     *
-     * @param Credential|CredentialShape $credential
-     */
-    public function withCredential(Credential|array $credential): self
-    {
-        $self = clone $this;
-        $self['credential'] = $credential;
-
-        return $self;
-    }
-
-    /**
-     * Display information for the instrument. Each payment instrument schema defines its specific display properties, as outlined by the payment handler.
-     *
-     * @param array<string,mixed> $display
-     */
-    public function withDisplay(array $display): self
-    {
-        $self = clone $this;
-        $self['display'] = $display;
 
         return $self;
     }
@@ -494,6 +358,17 @@ final class EvmAuthCaptureEscrowInstrument implements BaseModel
     ): self {
         $self = clone $this;
         $self['refundExpiresAt'] = $refundExpiresAt;
+
+        return $self;
+    }
+
+    /**
+     * @param 'evm_auth_capture_escrow' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
 
         return $self;
     }

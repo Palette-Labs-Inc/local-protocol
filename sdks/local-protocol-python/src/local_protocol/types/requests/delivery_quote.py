@@ -1,30 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import Optional
 from datetime import datetime
 
-from .. import payment_instrument
+from ..payment import Payment
 from ..._models import BaseModel
 from ..location import Location
 
-__all__ = ["DeliveryQuote", "Payment", "PaymentInstrument"]
-
-
-class PaymentInstrument(payment_instrument.PaymentInstrument):
-    """A payment instrument with selection state."""
-
-    selected: Optional[bool] = None
-    """Whether this instrument is selected by the user."""
-
-
-class Payment(BaseModel):
-    """Payment handlers available for accepting this quote."""
-
-    instruments: Optional[List[PaymentInstrument]] = None
-    """Payment instruments available.
-
-    Each instrument is associated with a handler via handler_id.
-    """
+__all__ = ["DeliveryQuote"]
 
 
 class DeliveryQuote(BaseModel):

@@ -8,6 +8,7 @@ use LocalProtocol\Requests\DeliveryRequest;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -30,6 +31,10 @@ final class RequestsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
         $result = $this->client->requests->create(
             id: 'id',
             dropoffLocation: [],
@@ -46,6 +51,10 @@ final class RequestsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
         $result = $this->client->requests->create(
             id: 'id',
             dropoffLocation: [
@@ -90,6 +99,10 @@ final class RequestsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
         $result = $this->client->requests->retrieve('request_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -99,6 +112,10 @@ final class RequestsTest extends TestCase
     #[Test]
     public function testList(): void
     {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
         $result = $this->client->requests->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

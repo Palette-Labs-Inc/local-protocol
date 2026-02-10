@@ -9,6 +9,7 @@ export {
 } from './quotes';
 export {
   Requests,
+  type Coordinates,
   type DeliveryRequest,
   type Location,
   type PostalAddress,

@@ -82,6 +82,7 @@ resources:
     models:
       postal_address: '#/components/schemas/PostalAddress'
       location: '#/components/schemas/Location'
+      coordinates: '#/components/schemas/Coordinates'
       delivery_request: '#/components/schemas/DeliveryRequest'
     methods:
       create: post /requests
@@ -148,7 +149,11 @@ resources:
       evm_currency: '#/components/schemas/EvmCurrency'
       amount: '#/components/schemas/Amount'
       evm_auth_capture_escrow_instrument: '#/components/schemas/EvmAuthCaptureEscrowInstrument'
+      evm_auth_capture_escrow_instrument_details: '#/components/schemas/EvmAuthCaptureEscrowInstrumentDetails'
       payment_instrument: '#/components/schemas/PaymentInstrument'
+      selected_payment_instrument_selection_state: '#/components/schemas/SelectedPaymentInstrumentSelectionState'
+      selected_payment_instrument: '#/components/schemas/SelectedPaymentInstrument'
+      payment: '#/components/schemas/Payment'
     methods:
       register: post /payment-instruments
 

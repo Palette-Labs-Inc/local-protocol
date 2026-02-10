@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 
-from typing import Union, Iterable
+from typing import Union
 from datetime import datetime
 from typing_extensions import Required, Annotated, TypedDict
 
 from ..._utils import PropertyInfo
+from ..payment_param import PaymentParam
 from ..location_param import LocationParam
-from ..payment_instrument_param import PaymentInstrumentParam
 
-__all__ = ["QuoteCreateParams", "Payment", "PaymentInstrument"]
+__all__ = ["QuoteCreateParams"]
 
 
 class QuoteCreateParams(TypedDict, total=False):
@@ -32,7 +32,7 @@ class QuoteCreateParams(TypedDict, total=False):
     nonce: Required[str]
     """Client-generated idempotency key."""
 
-    payment: Required[Payment]
+    payment: Required[PaymentParam]
     """Payment handlers available for accepting this quote."""
 
     pickup_estimate: Required[Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]]
@@ -49,20 +49,3 @@ class QuoteCreateParams(TypedDict, total=False):
 
     expires_at: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
     """Time when the quote expires (RFC 3339)."""
-
-
-class PaymentInstrument(PaymentInstrumentParam, total=False):
-    """A payment instrument with selection state."""
-
-    selected: bool
-    """Whether this instrument is selected by the user."""
-
-
-class Payment(TypedDict, total=False):
-    """Payment handlers available for accepting this quote."""
-
-    instruments: Iterable[PaymentInstrument]
-    """Payment instruments available.
-
-    Each instrument is associated with a handler via handler_id.
-    """

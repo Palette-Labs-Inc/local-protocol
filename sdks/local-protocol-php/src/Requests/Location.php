@@ -7,12 +7,11 @@ namespace LocalProtocol\Requests;
 use LocalProtocol\Core\Attributes\Optional;
 use LocalProtocol\Core\Concerns\SdkModel;
 use LocalProtocol\Core\Contracts\BaseModel;
-use LocalProtocol\Requests\Location\Coordinates;
 
 /**
  * A location specified by coordinates and/or postal address. At least one must be provided.
  *
- * @phpstan-import-type CoordinatesShape from \LocalProtocol\Requests\Location\Coordinates
+ * @phpstan-import-type CoordinatesShape from \LocalProtocol\Requests\Coordinates
  * @phpstan-import-type PostalAddressShape from \LocalProtocol\Requests\PostalAddress
  *
  * @phpstan-type LocationShape = array{

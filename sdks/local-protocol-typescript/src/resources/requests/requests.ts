@@ -33,6 +33,21 @@ export class Requests extends APIResource {
 }
 
 /**
+ * Geographic coordinates.
+ */
+export interface Coordinates {
+  /**
+   * Latitude in decimal degrees.
+   */
+  latitude: number;
+
+  /**
+   * Longitude in decimal degrees.
+   */
+  longitude: number;
+}
+
+/**
  * A delivery request.
  */
 export interface DeliveryRequest {
@@ -87,26 +102,9 @@ export interface Location {
   /**
    * Geographic coordinates.
    */
-  coordinates?: Location.Coordinates;
+  coordinates?: Coordinates;
 
   postal_address?: PostalAddress;
-}
-
-export namespace Location {
-  /**
-   * Geographic coordinates.
-   */
-  export interface Coordinates {
-    /**
-     * Latitude in decimal degrees.
-     */
-    latitude: number;
-
-    /**
-     * Longitude in decimal degrees.
-     */
-    longitude: number;
-  }
 }
 
 export interface PostalAddress {
@@ -206,6 +204,7 @@ Requests.Quotes = Quotes;
 
 export declare namespace Requests {
   export {
+    type Coordinates as Coordinates,
     type DeliveryRequest as DeliveryRequest,
     type Location as Location,
     type PostalAddress as PostalAddress,

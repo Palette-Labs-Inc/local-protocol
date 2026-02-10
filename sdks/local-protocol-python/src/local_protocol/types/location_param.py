@@ -2,21 +2,12 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, TypedDict
+from typing_extensions import TypedDict
 
+from .coordinates_param import CoordinatesParam
 from .postal_address_param import PostalAddressParam
 
-__all__ = ["LocationParam", "Coordinates"]
-
-
-class Coordinates(TypedDict, total=False):
-    """Geographic coordinates."""
-
-    latitude: Required[float]
-    """Latitude in decimal degrees."""
-
-    longitude: Required[float]
-    """Longitude in decimal degrees."""
+__all__ = ["LocationParam"]
 
 
 class LocationParam(TypedDict, total=False):
@@ -25,7 +16,7 @@ class LocationParam(TypedDict, total=False):
     At least one must be provided.
     """
 
-    coordinates: Coordinates
+    coordinates: CoordinatesParam
     """Geographic coordinates."""
 
     postal_address: PostalAddressParam

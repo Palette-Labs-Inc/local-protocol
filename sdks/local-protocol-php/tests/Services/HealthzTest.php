@@ -8,6 +8,7 @@ use LocalProtocol\Healthz\HealthzCheckResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -30,6 +31,10 @@ final class HealthzTest extends TestCase
     #[Test]
     public function testCheck(): void
     {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
         $result = $this->client->healthz->check();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

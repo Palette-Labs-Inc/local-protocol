@@ -43,10 +43,10 @@ var_dump($wellKnown->capabilities);
 
 ### Value Objects
 
-It is recommended to use the static `with` constructor `Amount::with(currency: ['symbol' => 'SQ9_0_L1__5L'], ...)`
+It is recommended to use the static `with` constructor `Coordinates::with(latitude: -90, ...)`
 and named parameters to initialize value objects.
 
-However, builders are also provided `(new Amount)->withCurrency(['symbol' => 'SQ9_0_L1__5L'])`.
+However, builders are also provided `(new Coordinates)->withLatitude(-90)`.
 
 ### Handling errors
 

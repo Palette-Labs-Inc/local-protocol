@@ -49,17 +49,21 @@ export namespace Amount {
 /**
  * Payment instrument for auth/capture escrow on EVM chains.
  */
-export interface EvmAuthCaptureEscrowInstrument extends PaymentInstrument {
+export interface EvmAuthCaptureEscrowInstrument
+  extends PaymentInstrument,
+    EvmAuthCaptureEscrowInstrumentDetails {}
+
+export interface EvmAuthCaptureEscrowInstrumentDetails {
   /**
    * EVM token identifier used for auth/capture settlement.
    */
-  token: EvmAuthCaptureEscrowInstrument.Token;
+  token: EvmAuthCaptureEscrowInstrumentDetails.Token;
 
   /**
    * Amount in atomic units. Currency chain_id MUST match the instrument chain_id;
    * currency address and decimals MUST match token address and decimals.
    */
-  amount: EvmAuthCaptureEscrowInstrument.Amount;
+  amount: EvmAuthCaptureEscrowInstrumentDetails.Amount;
 
   /**
    * Authorization expiration (RFC 3339).
@@ -81,7 +85,7 @@ export interface EvmAuthCaptureEscrowInstrument extends PaymentInstrument {
    * match the instrument chain_id; currency address and decimals MUST match token
    * address and decimals.
    */
-  max_amount: EvmAuthCaptureEscrowInstrument.MaxAmount;
+  max_amount: EvmAuthCaptureEscrowInstrumentDetails.MaxAmount;
 
   /**
    * Unique nonce for payment info hash computation.
@@ -119,9 +123,11 @@ export interface EvmAuthCaptureEscrowInstrument extends PaymentInstrument {
   refund_expires_at: string;
 
   type: 'evm_auth_capture_escrow';
+
+  [k: string]: unknown;
 }
 
-export namespace EvmAuthCaptureEscrowInstrument {
+export namespace EvmAuthCaptureEscrowInstrumentDetails {
   /**
    * EVM token identifier used for auth/capture settlement.
    */
@@ -187,6 +193,17 @@ export interface EvmCurrency {
 }
 
 /**
+ * Payment configuration containing instruments.
+ */
+export interface Payment {
+  /**
+   * Payment instruments available. Each instrument is associated with a handler via
+   * handler_id.
+   */
+  instruments?: Array<SelectedPaymentInstrument>;
+}
+
+/**
  * Base definition for any payment instrument.
  */
 export interface PaymentInstrument {
@@ -234,6 +251,20 @@ export namespace PaymentInstrument {
 
     [k: string]: unknown;
   }
+}
+
+/**
+ * A payment instrument with selection state.
+ */
+export interface SelectedPaymentInstrument
+  extends PaymentInstrument,
+    SelectedPaymentInstrumentSelectionState {}
+
+export interface SelectedPaymentInstrumentSelectionState {
+  /**
+   * Whether this instrument is selected by the user.
+   */
+  selected?: boolean;
 }
 
 export interface PaymentInstrumentRegisterParams {
@@ -395,8 +426,12 @@ export declare namespace PaymentInstruments {
   export {
     type Amount as Amount,
     type EvmAuthCaptureEscrowInstrument as EvmAuthCaptureEscrowInstrument,
+    type EvmAuthCaptureEscrowInstrumentDetails as EvmAuthCaptureEscrowInstrumentDetails,
     type EvmCurrency as EvmCurrency,
+    type Payment as Payment,
     type PaymentInstrument as PaymentInstrument,
+    type SelectedPaymentInstrument as SelectedPaymentInstrument,
+    type SelectedPaymentInstrumentSelectionState as SelectedPaymentInstrumentSelectionState,
     type PaymentInstrumentRegisterParams as PaymentInstrumentRegisterParams,
   };
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LocalProtocol\Requests\Quotes\QuoteCreateParams\Payment;
+namespace LocalProtocol\PaymentInstruments;
 
 use LocalProtocol\Core\Attributes\Optional;
 use LocalProtocol\Core\Attributes\Required;
@@ -17,7 +17,7 @@ use LocalProtocol\Requests\PostalAddress;
  * @phpstan-import-type PostalAddressShape from \LocalProtocol\Requests\PostalAddress
  * @phpstan-import-type CredentialShape from \LocalProtocol\PaymentInstruments\PaymentInstrument\Credential
  *
- * @phpstan-type InstrumentShape = array{
+ * @phpstan-type SelectedPaymentInstrumentShape = array{
  *   id: string,
  *   handlerID: string,
  *   type: string,
@@ -27,9 +27,9 @@ use LocalProtocol\Requests\PostalAddress;
  *   selected?: bool|null,
  * }
  */
-final class Instrument implements BaseModel
+final class SelectedPaymentInstrument implements BaseModel
 {
-    /** @use SdkModel<InstrumentShape> */
+    /** @use SdkModel<SelectedPaymentInstrumentShape> */
     use SdkModel;
 
     /**
@@ -74,17 +74,17 @@ final class Instrument implements BaseModel
     public ?bool $selected;
 
     /**
-     * `new Instrument()` is missing required properties by the API.
+     * `new SelectedPaymentInstrument()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Instrument::with(id: ..., handlerID: ..., type: ...)
+     * SelectedPaymentInstrument::with(id: ..., handlerID: ..., type: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Instrument)->withID(...)->withHandlerID(...)->withType(...)
+     * (new SelectedPaymentInstrument)->withID(...)->withHandlerID(...)->withType(...)
      * ```
      */
     public function __construct()

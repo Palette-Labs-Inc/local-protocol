@@ -22,6 +22,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/requests/requests.ts">Coordinates</a></code>
 - <code><a href="./src/resources/requests/requests.ts">DeliveryRequest</a></code>
 - <code><a href="./src/resources/requests/requests.ts">Location</a></code>
 - <code><a href="./src/resources/requests/requests.ts">PostalAddress</a></code>
@@ -123,8 +124,12 @@ Types:
 
 - <code><a href="./src/resources/payment-instruments.ts">Amount</a></code>
 - <code><a href="./src/resources/payment-instruments.ts">EvmAuthCaptureEscrowInstrument</a></code>
+- <code><a href="./src/resources/payment-instruments.ts">EvmAuthCaptureEscrowInstrumentDetails</a></code>
 - <code><a href="./src/resources/payment-instruments.ts">EvmCurrency</a></code>
+- <code><a href="./src/resources/payment-instruments.ts">Payment</a></code>
 - <code><a href="./src/resources/payment-instruments.ts">PaymentInstrument</a></code>
+- <code><a href="./src/resources/payment-instruments.ts">SelectedPaymentInstrument</a></code>
+- <code><a href="./src/resources/payment-instruments.ts">SelectedPaymentInstrumentSelectionState</a></code>
 
 Methods:
 

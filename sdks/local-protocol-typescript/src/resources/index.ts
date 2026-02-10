@@ -22,12 +22,17 @@ export {
   PaymentInstruments,
   type Amount,
   type EvmAuthCaptureEscrowInstrument,
+  type EvmAuthCaptureEscrowInstrumentDetails,
   type EvmCurrency,
+  type Payment,
   type PaymentInstrument,
+  type SelectedPaymentInstrument,
+  type SelectedPaymentInstrumentSelectionState,
   type PaymentInstrumentRegisterParams,
 } from './payment-instruments';
 export {
   Requests,
+  type Coordinates,
   type DeliveryRequest,
   type Location,
   type PostalAddress,

@@ -36,14 +36,19 @@ import {
 import {
   Amount,
   EvmAuthCaptureEscrowInstrument,
+  EvmAuthCaptureEscrowInstrumentDetails,
   EvmCurrency,
+  Payment,
   PaymentInstrument,
   PaymentInstrumentRegisterParams,
   PaymentInstruments,
+  SelectedPaymentInstrument,
+  SelectedPaymentInstrumentSelectionState,
 } from './resources/payment-instruments';
 import { WellKnown, WellKnownRetrieveResponse } from './resources/well-known';
 import { Order, OrderCreateParams, Orders } from './resources/orders/orders';
 import {
+  Coordinates,
   DeliveryRequest,
   Location,
   PostalAddress,
@@ -783,6 +788,7 @@ export declare namespace LocalProtocol {
 
   export {
     Requests as Requests,
+    type Coordinates as Coordinates,
     type DeliveryRequest as DeliveryRequest,
     type Location as Location,
     type PostalAddress as PostalAddress,
@@ -818,8 +824,12 @@ export declare namespace LocalProtocol {
     PaymentInstruments as PaymentInstruments,
     type Amount as Amount,
     type EvmAuthCaptureEscrowInstrument as EvmAuthCaptureEscrowInstrument,
+    type EvmAuthCaptureEscrowInstrumentDetails as EvmAuthCaptureEscrowInstrumentDetails,
     type EvmCurrency as EvmCurrency,
+    type Payment as Payment,
     type PaymentInstrument as PaymentInstrument,
+    type SelectedPaymentInstrument as SelectedPaymentInstrument,
+    type SelectedPaymentInstrumentSelectionState as SelectedPaymentInstrumentSelectionState,
     type PaymentInstrumentRegisterParams as PaymentInstrumentRegisterParams,
   };
 }

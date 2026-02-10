@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LocalProtocol\Requests\Location;
+namespace LocalProtocol\Requests;
 
 use LocalProtocol\Core\Attributes\Required;
 use LocalProtocol\Core\Concerns\SdkModel;

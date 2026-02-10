@@ -8,16 +8,16 @@ use LocalProtocol\Client;
 use LocalProtocol\Core\Contracts\BaseResponse;
 use LocalProtocol\Core\Conversion\ListOf;
 use LocalProtocol\Core\Exceptions\APIException;
+use LocalProtocol\PaymentInstruments\Payment;
 use LocalProtocol\RequestOptions;
 use LocalProtocol\Requests\Location;
 use LocalProtocol\Requests\Quotes\DeliveryQuote;
 use LocalProtocol\Requests\Quotes\QuoteCreateParams;
-use LocalProtocol\Requests\Quotes\QuoteCreateParams\Payment;
 use LocalProtocol\Requests\Quotes\QuoteRetrieveParams;
 use LocalProtocol\ServiceContracts\Requests\QuotesRawContract;
 
 /**
- * @phpstan-import-type PaymentShape from \LocalProtocol\Requests\Quotes\QuoteCreateParams\Payment
+ * @phpstan-import-type PaymentShape from \LocalProtocol\PaymentInstruments\Payment
  * @phpstan-import-type LocationShape from \LocalProtocol\Requests\Location
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
  */

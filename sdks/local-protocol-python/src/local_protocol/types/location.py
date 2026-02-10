@@ -3,19 +3,10 @@
 from typing import Optional
 
 from .._models import BaseModel
+from .coordinates import Coordinates
 from .postal_address import PostalAddress
 
-__all__ = ["Location", "Coordinates"]
-
-
-class Coordinates(BaseModel):
-    """Geographic coordinates."""
-
-    latitude: float
-    """Latitude in decimal degrees."""
-
-    longitude: float
-    """Longitude in decimal degrees."""
+__all__ = ["Location"]
 
 
 class Location(BaseModel):
