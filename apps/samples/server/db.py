@@ -136,6 +136,12 @@ class Database:
     delivery_id = f"del_{uuid.uuid4().hex[:8]}"
     now = datetime.now(timezone.utc).isoformat()
 
+    # Derive payment_instrument_id from the quote's payment instruments
+    quote = self.quotes.get(quote_id, {})
+    payment = quote.get("payment", {})
+    instruments = payment.get("instruments", [])
+    payment_instrument_id = instruments[0]["id"] if instruments else f"pi_{uuid.uuid4().hex[:8]}"
+
     delivery = {
       "id": delivery_id,
       "request_id": request_id,
@@ -143,6 +149,7 @@ class Database:
       "event": "created",
       "event_description": "Delivery created",
       "event_vocabulary": event_vocabulary,
+      "payment_instrument_id": payment_instrument_id,
       "webhook_url": webhook_url,
       "created_at": now,
       "updated_at": now,

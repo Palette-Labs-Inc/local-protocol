@@ -12,8 +12,8 @@ from absl import flags
 from absl.testing import absltest
 from fastapi import FastAPI
 from fastapi import Request
-from fastapi.responses import JSONResponse
 import httpx
+from local_protocol import LocalProtocol
 import uvicorn
 
 
@@ -54,18 +54,7 @@ except flags.DuplicateFlagError:
 
 
 def load_standard(name: str) -> dict[str, Any]:
-  """Load a standard definition from the test fixtures.
-
-  Args:
-      name: The standard name (e.g., 'courier').
-
-  Returns:
-      The standard definition as a dictionary.
-
-  Raises:
-      FileNotFoundError: If the standard file doesn't exist.
-
-  """
+  """Load a standard definition from the test fixtures."""
   standards_path = Path(FLAGS.standards_dir)
   standard_file = standards_path / f"{name}.json"
   with standard_file.open() as f:
@@ -73,35 +62,18 @@ def load_standard(name: str) -> dict[str, Any]:
 
 
 def load_schema(schema_path: str) -> dict[str, Any]:
-  """Load a JSON schema from the schemas directory.
-
-  Args:
-      schema_path: Relative path to the schema (e.g., 'delivery/request.json').
-
-  Returns:
-      The schema definition as a dictionary.
-
-  Raises:
-      FileNotFoundError: If the schema file doesn't exist.
-
-  """
+  """Load a JSON schema from the schemas directory."""
   if FLAGS.schema_dir is None:
-    raise ValueError("--schema_dir flag must be set for schema validation tests")
+    raise ValueError(
+      "--schema_dir flag must be set for schema validation tests"
+    )
   schema_file = Path(FLAGS.schema_dir) / schema_path
   with schema_file.open() as f:
     return json.load(f)
 
 
 def get_headers(request_id: str | None = None) -> dict[str, str]:
-  """Generate headers for Local Protocol requests.
-
-  Args:
-      request_id: Optional specific request ID.
-
-  Returns:
-      A dictionary of HTTP headers.
-
-  """
+  """Generate headers for Local Protocol requests."""
   return {
     "Content-Type": "application/json",
     "request-id": request_id or str(uuid.uuid4()),
@@ -112,12 +84,6 @@ class MockWebhookServer:
   """A background mock webhook server that records incoming events."""
 
   def __init__(self, port: int):
-    """Initialize the MockWebhookServer.
-
-    Args:
-      port: The port to listen on.
-
-    """
     self.port = port
     self.app = FastAPI()
     self.events: list[dict[str, Any]] = []
@@ -131,11 +97,8 @@ class MockWebhookServer:
     return f"http://localhost:{self.port}/webhook"
 
   def _setup_routes(self) -> None:
-    """Set up the routes for the mock server."""
-
     @self.app.post("/webhook")
     async def webhook_receiver(request: Request) -> dict[str, str]:
-      """Record an incoming webhook event."""
       payload = await request.json()
       self.events.append(payload)
       return {"status": "ok"}
@@ -144,22 +107,18 @@ class MockWebhookServer:
     async def delivery_status(
       delivery_id: str, request: Request
     ) -> dict[str, str]:
-      """Record an incoming delivery status event (legacy endpoint)."""
       payload = await request.json()
       self.events.append({"delivery_id": delivery_id, "payload": payload})
       return {"status": "ok"}
 
     @self.app.get("/healthz")
     async def health_check() -> dict[str, str]:
-      """Return a simple health check response."""
       return {"status": "ok"}
 
   def get_events(self) -> list[dict[str, Any]]:
-    """Return all recorded events."""
     return self.events.copy()
 
   def start(self) -> None:
-    """Start the mock server in a background thread."""
     config = uvicorn.Config(
       self.app, host="0.0.0.0", port=self.port, log_level="error"
     )
@@ -180,14 +139,12 @@ class MockWebhookServer:
       raise RuntimeError(f"Server failed to start on port {self.port}")
 
   def stop(self) -> None:
-    """Stop the mock server."""
     if self._server is not None:
       self._server.should_exit = True
       if self._thread is not None:
         self._thread.join(timeout=5)
 
   def clear_events(self) -> None:
-    """Clear all recorded events."""
     self.events = []
 
 
@@ -195,7 +152,6 @@ class IntegrationTestBase(absltest.TestCase):
   """Base class for Local Protocol integration tests."""
 
   def setUp(self) -> None:
-    """Set up the test case, including clients and mock servers."""
     super().setUp()
     if not FLAGS.server_url:
       self.fail(
@@ -204,7 +160,15 @@ class IntegrationTestBase(absltest.TestCase):
         "e.g., --server_url=http://localhost:8000"
       )
     self.base_url = FLAGS.server_url
-    self.client = httpx.Client(base_url=self.base_url)
+
+    # SDK client for happy-path tests
+    self.sdk = LocalProtocol(base_url=self.base_url, api_key="test")
+
+    # Raw httpx client for error-path tests (invalid payloads, 404s)
+    self.http_client = httpx.Client(base_url=self.base_url)
+
+    # Backward-compat alias used by discovery/validation tests
+    self.client = self.http_client
 
     httpx_logger = logging.getLogger("httpx")
     if FLAGS.verbose_http:
@@ -224,51 +188,23 @@ class IntegrationTestBase(absltest.TestCase):
       self.conformance_config = {}
 
   def tearDown(self) -> None:
-    """Tear down the test case."""
-    self.client.close()
+    self.sdk.close()
+    self.http_client.close()
     super().tearDown()
 
   def get_headers(self, request_id: str | None = None) -> dict[str, str]:
-    """Generate headers for requests (instance method)."""
     return get_headers(request_id)
 
   def load_standard(self, name: str) -> dict[str, Any]:
-    """Load a standard definition from the test fixtures.
-
-    Args:
-        name: The standard name (e.g., 'courier').
-
-    Returns:
-        The standard definition as a dictionary.
-
-    """
     return load_standard(name)
 
   def load_schema(self, schema_path: str) -> dict[str, Any]:
-    """Load a JSON schema from the schemas directory.
-
-    Args:
-        schema_path: Relative path to the schema.
-
-    Returns:
-        The schema definition as a dictionary.
-
-    """
     return load_schema(schema_path)
 
   def assert_response_status(
     self, response: httpx.Response, expected_code: int | list[int]
   ) -> None:
-    """Assert that the response status code matches expected.
-
-    Args:
-        response: The httpx response object.
-        expected_code: An integer or list of valid status codes.
-
-    Raises:
-        AssertionError: If status code not in expected_code.
-
-    """
+    """Assert that the response status code matches expected."""
     if isinstance(expected_code, int):
       expected_codes = [expected_code]
     else:
@@ -284,7 +220,107 @@ class IntegrationTestBase(absltest.TestCase):
     )
 
   # -------------------------------------------------------------------------
-  # Delivery-specific helpers
+  # SDK-based helpers (return typed SDK objects)
+  # -------------------------------------------------------------------------
+
+  def create_request(
+    self,
+    request_id: str | None = None,
+    pickup_lat: float = 37.7749,
+    pickup_lng: float = -122.4194,
+    dropoff_lat: float = 37.7849,
+    dropoff_lng: float = -122.4094,
+    pickup_time: str | None = None,
+    dropoff_time: str | None = None,
+  ):
+    """Create a delivery request via SDK."""
+    from datetime import datetime, timedelta, timezone
+
+    now = datetime.now(timezone.utc)
+
+    return self.sdk.requests.create(
+      id=request_id or str(uuid.uuid4()),
+      nonce=str(uuid.uuid4()),
+      pickup_location={
+        "coordinates": {"latitude": pickup_lat, "longitude": pickup_lng},
+      },
+      dropoff_location={
+        "coordinates": {"latitude": dropoff_lat, "longitude": dropoff_lng},
+      },
+      pickup_time=pickup_time or (now + timedelta(minutes=30)).isoformat(),
+      dropoff_time=dropoff_time or (now + timedelta(minutes=60)).isoformat(),
+    )
+
+  def create_quote(
+    self,
+    request_id: str,
+    quote_id: str | None = None,
+    price: int = 1500,
+    currency: str = "USD",
+    pickup_lat: float = 37.7749,
+    pickup_lng: float = -122.4194,
+    dropoff_lat: float = 37.7849,
+    dropoff_lng: float = -122.4094,
+    pickup_estimate: str | None = None,
+    dropoff_estimate: str | None = None,
+  ):
+    """Create a quote for a request via SDK."""
+    from datetime import datetime, timedelta, timezone
+
+    now = datetime.now(timezone.utc)
+
+    return self.sdk.requests.quotes.create(
+      request_id,
+      id=quote_id or str(uuid.uuid4()),
+      nonce=str(uuid.uuid4()),
+      price=price,
+      currency=currency,
+      payment={},
+      pickup_location={
+        "coordinates": {"latitude": pickup_lat, "longitude": pickup_lng},
+      },
+      dropoff_location={
+        "coordinates": {"latitude": dropoff_lat, "longitude": dropoff_lng},
+      },
+      pickup_estimate=pickup_estimate
+      or (now + timedelta(minutes=25)).isoformat(),
+      dropoff_estimate=dropoff_estimate
+      or (now + timedelta(minutes=55)).isoformat(),
+    )
+
+  def create_delivery(
+    self,
+    request_id: str,
+    quote_id: str,
+    webhook_url: str | None = None,
+  ):
+    """Create a delivery via SDK."""
+    kwargs: dict[str, Any] = {
+      "nonce": str(uuid.uuid4()),
+      "request_id": request_id,
+      "quote_id": quote_id,
+    }
+    if webhook_url is not None:
+      kwargs["webhook_url"] = webhook_url
+    return self.sdk.deliveries.create(**kwargs)
+
+  def update_event(
+    self,
+    delivery_id: str,
+    event: str,
+    event_description: str | None = None,
+  ):
+    """Update a delivery event via SDK."""
+    if event_description is None:
+      event_description = f"Event changed to {event}"
+    return self.sdk.deliveries.update_event(
+      delivery_id,
+      event=event,
+      event_description=event_description,
+    )
+
+  # -------------------------------------------------------------------------
+  # Raw-payload helpers (for error-path and backward-compat tests)
   # -------------------------------------------------------------------------
 
   def create_request_payload(
@@ -297,21 +333,7 @@ class IntegrationTestBase(absltest.TestCase):
     pickup_time: str | None = None,
     dropoff_time: str | None = None,
   ) -> dict[str, Any]:
-    """Create a valid delivery request payload.
-
-    Args:
-        request_id: Unique request ID. Auto-generated if None.
-        pickup_lat: Pickup latitude.
-        pickup_lng: Pickup longitude.
-        dropoff_lat: Dropoff latitude.
-        dropoff_lng: Dropoff longitude.
-        pickup_time: RFC3339 pickup time. Auto-generated if None.
-        dropoff_time: RFC3339 dropoff time. Auto-generated if None.
-
-    Returns:
-        A dictionary representing a DeliveryRequest.
-
-    """
+    """Create a valid delivery request payload dict."""
     from datetime import datetime, timedelta, timezone
 
     now = datetime.now(timezone.utc)
@@ -325,10 +347,8 @@ class IntegrationTestBase(absltest.TestCase):
       "dropoff_location": {
         "coordinates": {"latitude": dropoff_lat, "longitude": dropoff_lng},
       },
-      "pickup_time": pickup_time
-      or (now + timedelta(minutes=30)).isoformat(),
-      "dropoff_time": dropoff_time
-      or (now + timedelta(minutes=60)).isoformat(),
+      "pickup_time": pickup_time or (now + timedelta(minutes=30)).isoformat(),
+      "dropoff_time": dropoff_time or (now + timedelta(minutes=60)).isoformat(),
     }
 
   def create_quote_payload(
@@ -343,23 +363,7 @@ class IntegrationTestBase(absltest.TestCase):
     pickup_estimate: str | None = None,
     dropoff_estimate: str | None = None,
   ) -> dict[str, Any]:
-    """Create a valid delivery quote payload.
-
-    Args:
-        quote_id: Unique quote ID. Auto-generated if None.
-        price: Price in minor currency units (e.g., cents).
-        currency: ISO 4217 currency code.
-        pickup_lat: Pickup latitude.
-        pickup_lng: Pickup longitude.
-        dropoff_lat: Dropoff latitude.
-        dropoff_lng: Dropoff longitude.
-        pickup_estimate: RFC3339 estimated pickup time.
-        dropoff_estimate: RFC3339 estimated dropoff time.
-
-    Returns:
-        A dictionary representing a DeliveryQuote.
-
-    """
+    """Create a valid delivery quote payload dict."""
     from datetime import datetime, timedelta, timezone
 
     now = datetime.now(timezone.utc)
@@ -369,6 +373,7 @@ class IntegrationTestBase(absltest.TestCase):
       "nonce": str(uuid.uuid4()),
       "price": price,
       "currency": currency,
+      "payment": {},
       "pickup_location": {
         "coordinates": {"latitude": pickup_lat, "longitude": pickup_lng},
       },
@@ -386,16 +391,7 @@ class IntegrationTestBase(absltest.TestCase):
     request_payload: dict[str, Any] | None = None,
     headers: dict[str, str] | None = None,
   ) -> httpx.Response:
-    """Post a delivery request to the server.
-
-    Args:
-        request_payload: The request payload. Uses default if None.
-        headers: Optional headers to include.
-
-    Returns:
-        The httpx response.
-
-    """
+    """Post a delivery request via raw httpx."""
     if request_payload is None:
       request_payload = self.create_request_payload()
 
@@ -403,7 +399,7 @@ class IntegrationTestBase(absltest.TestCase):
     if headers:
       request_headers.update(headers)
 
-    return self.client.post(
+    return self.http_client.post(
       "/requests",
       json=request_payload,
       headers=request_headers,
@@ -415,17 +411,7 @@ class IntegrationTestBase(absltest.TestCase):
     quote_payload: dict[str, Any] | None = None,
     headers: dict[str, str] | None = None,
   ) -> httpx.Response:
-    """Post a delivery quote for a request.
-
-    Args:
-        request_id: The request ID to quote on.
-        quote_payload: The quote payload. Uses default if None.
-        headers: Optional headers to include.
-
-    Returns:
-        The httpx response.
-
-    """
+    """Post a delivery quote via raw httpx."""
     if quote_payload is None:
       quote_payload = self.create_quote_payload()
 
@@ -433,15 +419,11 @@ class IntegrationTestBase(absltest.TestCase):
     if headers:
       request_headers.update(headers)
 
-    return self.client.post(
+    return self.http_client.post(
       f"/requests/{request_id}/quotes",
       json=quote_payload,
       headers=request_headers,
     )
-
-  # -------------------------------------------------------------------------
-  # Delivery creation helpers
-  # -------------------------------------------------------------------------
 
   def create_delivery_payload(
     self,
@@ -450,18 +432,7 @@ class IntegrationTestBase(absltest.TestCase):
     webhook_url: str | None = None,
     event_vocabulary: str = "xyz.localprotocol.delivery.courier@2026-01-30",
   ) -> dict[str, Any]:
-    """Create a valid delivery creation payload.
-
-    Args:
-        request_id: The request ID.
-        quote_id: The quote ID.
-        webhook_url: Optional webhook URL for event notifications.
-        event_vocabulary: The event vocabulary to use.
-
-    Returns:
-        A dictionary for creating a delivery.
-
-    """
+    """Create a valid delivery creation payload dict."""
     payload: dict[str, Any] = {
       "request_id": request_id,
       "quote_id": quote_id,
@@ -479,57 +450,35 @@ class IntegrationTestBase(absltest.TestCase):
     webhook_url: str | None = None,
     headers: dict[str, str] | None = None,
   ) -> httpx.Response:
-    """Create a delivery from an accepted quote.
-
-    Args:
-        request_id: The request ID.
-        quote_id: The quote ID.
-        webhook_url: Optional webhook URL for event notifications.
-        headers: Optional headers to include.
-
-    Returns:
-        The httpx response.
-
-    """
+    """Create a delivery via raw httpx."""
     payload = self.create_delivery_payload(request_id, quote_id, webhook_url)
 
     request_headers = self.get_headers()
     if headers:
       request_headers.update(headers)
 
-    return self.client.post(
+    return self.http_client.post(
       "/deliveries",
       json=payload,
       headers=request_headers,
     )
 
-  def create_delivery(
+  # -------------------------------------------------------------------------
+  # Full-flow helper (returns dict for backward compat with webhook tests)
+  # -------------------------------------------------------------------------
+
+  def create_full_delivery(
     self,
     webhook_url: str | None = None,
   ) -> dict[str, Any]:
-    """Create a request, quote, and delivery (full flow).
+    """Create a request, quote, and delivery via SDK (full flow).
 
-    Args:
-        webhook_url: Optional webhook URL for event notifications.
-
-    Returns:
-        The created delivery object.
-
+    Returns a dict for backward compatibility with webhook/dict-access tests.
     """
-    # Create request
-    request_response = self.post_request()
-    self.assert_response_status(request_response, 201)
-    req = request_response.json()
-
-    # Create quote
-    quote_response = self.post_quote(req["id"])
-    self.assert_response_status(quote_response, 201)
-    quote = quote_response.json()
-
-    # Create delivery
-    delivery_response = self.post_delivery(req["id"], quote["id"], webhook_url)
-    self.assert_response_status(delivery_response, 201)
-    return delivery_response.json()
+    req = self.create_request()
+    quote = self.create_quote(req.id)
+    delivery = self.create_delivery(req.id, quote.id, webhook_url)
+    return delivery.model_dump(mode="json")
 
   def update_delivery_event(
     self,
@@ -537,21 +486,11 @@ class IntegrationTestBase(absltest.TestCase):
     event: str,
     event_description: str | None = None,
   ) -> httpx.Response:
-    """Update a delivery's event.
-
-    Args:
-        delivery_id: The delivery ID.
-        event: The new event ID.
-        event_description: The new event description (auto-generated if None).
-
-    Returns:
-        The httpx response.
-
-    """
+    """Update a delivery event via raw httpx (for response-level assertions)."""
     if event_description is None:
       event_description = f"Event changed to {event}"
 
-    return self.client.patch(
+    return self.http_client.patch(
       f"/deliveries/{delivery_id}/event",
       json={"event": event, "event_description": event_description},
     )

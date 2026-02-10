@@ -10,23 +10,19 @@ class DiscoveryConformanceTest(IntegrationTestBase):
 
   def test_discovery_has_capabilities(self) -> None:
     """Discovery response MUST include capabilities."""
-    response = self.client.get("/.well-known/local-protocol")
-    self.assert_response_status(response, 200)
-    data = response.json()
-    self.assertIn("capabilities", data)
-    self.assertIsInstance(data["capabilities"], dict)
+    data = self.sdk.well_known.retrieve()
+    self.assertIsNotNone(data.capabilities)
+    self.assertIsInstance(data.capabilities, dict)
 
   def test_discovery_has_delivery_capability(self) -> None:
     """Discovery MUST declare delivery capability."""
-    response = self.client.get("/.well-known/local-protocol")
-    data = response.json()
-    self.assertIn("delivery", data.get("capabilities", {}))
+    data = self.sdk.well_known.retrieve()
+    self.assertIn("delivery", data.capabilities)
 
   def test_delivery_capability_has_conforms_to(self) -> None:
     """Delivery capability MUST declare conforms_to."""
-    response = self.client.get("/.well-known/local-protocol")
-    data = response.json()
-    delivery = data.get("capabilities", {}).get("delivery", {})
+    data = self.sdk.well_known.retrieve()
+    delivery = data.capabilities.get("delivery", {})
     self.assertIn(
       "conforms_to",
       delivery,
@@ -36,9 +32,8 @@ class DiscoveryConformanceTest(IntegrationTestBase):
 
   def test_conforms_to_is_not_empty(self) -> None:
     """conforms_to MUST have at least one standard reference."""
-    response = self.client.get("/.well-known/local-protocol")
-    data = response.json()
-    conforms_to = data["capabilities"]["delivery"]["conforms_to"]
+    data = self.sdk.well_known.retrieve()
+    conforms_to = data.capabilities["delivery"]["conforms_to"]
     self.assertGreater(
       len(conforms_to),
       0,
@@ -47,9 +42,8 @@ class DiscoveryConformanceTest(IntegrationTestBase):
 
   def test_conforms_to_includes_version(self) -> None:
     """Standard references MUST include @version."""
-    response = self.client.get("/.well-known/local-protocol")
-    data = response.json()
-    conforms_to = data["capabilities"]["delivery"]["conforms_to"]
+    data = self.sdk.well_known.retrieve()
+    conforms_to = data.capabilities["delivery"]["conforms_to"]
     for ref in conforms_to:
       self.assertIn(
         "@",
@@ -59,9 +53,8 @@ class DiscoveryConformanceTest(IntegrationTestBase):
 
   def test_conforms_to_version_is_date_format(self) -> None:
     """Standard reference versions MUST be valid YYYY-MM-DD format."""
-    response = self.client.get("/.well-known/local-protocol")
-    data = response.json()
-    conforms_to = data["capabilities"]["delivery"]["conforms_to"]
+    data = self.sdk.well_known.retrieve()
+    conforms_to = data.capabilities["delivery"]["conforms_to"]
     for ref in conforms_to:
       parts = ref.split("@")
       self.assertEqual(
@@ -77,9 +70,8 @@ class DiscoveryConformanceTest(IntegrationTestBase):
 
   def test_conforms_to_references_known_standards(self) -> None:
     """Standard references SHOULD reference known standards."""
-    response = self.client.get("/.well-known/local-protocol")
-    data = response.json()
-    conforms_to = data["capabilities"]["delivery"]["conforms_to"]
+    data = self.sdk.well_known.retrieve()
+    conforms_to = data.capabilities["delivery"]["conforms_to"]
 
     known_standard_prefixes = [
       "xyz.localprotocol.delivery.courier",
@@ -96,9 +88,8 @@ class DiscoveryConformanceTest(IntegrationTestBase):
 
   def test_conforms_to_courier_standard(self) -> None:
     """conforms_to SHOULD include courier standard."""
-    response = self.client.get("/.well-known/local-protocol")
-    data = response.json()
-    conforms_to = data["capabilities"]["delivery"]["conforms_to"]
+    data = self.sdk.well_known.retrieve()
+    conforms_to = data.capabilities["delivery"]["conforms_to"]
 
     has_courier = any(
       ref.startswith("xyz.localprotocol.delivery.courier@")

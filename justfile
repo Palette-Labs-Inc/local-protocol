@@ -1,4 +1,10 @@
 # Local Protocol Development Commands
+#
+# SDK generation uses Stainless (stl CLI). Config lives in .stainless/.
+# The OpenAPI spec at openapi/specs/local-protocol.v1.openapi.json is the
+# single source of truth -- it contains no generator-specific annotations.
+# See DECISIONS.md (2026-02-09) for migration history from OpenAPI Generator
+# and Speakeasy to Stainless.
 
 # Default recipe - show help
 default:
@@ -6,21 +12,40 @@ default:
 
 # --- paths ---
 root_dir := justfile_directory()
-py_sdk_dir := root_dir / "packages/python-sdk"
 conformance_dir := root_dir / "packages/conformance"
+conformance_php_dir := root_dir / "packages/conformance-php"
 schema_dir := root_dir / "schemas"
 server_dir := root_dir / "apps/samples/server"
+openapi_spec := root_dir / "openapi/specs/local-protocol.v1.openapi.json"
 
-# --- SDK & Code Generation ---
+# --- SDK Generation (Stainless) ---
 
-# Generate Python SDK from JSON schemas
-generate: build-python-sdk
+# Generate all SDKs (Python, PHP, TypeScript from OpenAPI via Stainless)
+build-sdks: openapi-validate build-stainless-sdks
 
-# Build/regenerate Python SDK from schemas
-build-python-sdk:
-  @echo "Generating Python SDK from schemas..."
-  @chmod +x "{{py_sdk_dir}}/generate_models.sh"
-  @cd "{{py_sdk_dir}}" && ./generate_models.sh
+# Build all SDKs from OpenAPI spec (Stainless)
+build-stainless-sdks:
+  @echo "Generating Python, PHP, and TypeScript SDKs via Stainless..."
+  @cd "{{root_dir}}" && ./scripts/stainless_preview_local.sh
+  @cd "{{root_dir}}" && ./scripts/patch_stainless_sdks.sh
+
+# Build a single Stainless target (e.g., just build-sdk python)
+build-sdk target:
+  @echo "Generating {{target}} SDK via Stainless..."
+  @cd "{{root_dir}}" && ./scripts/stainless_preview_local.sh --target {{target}}
+  @cd "{{root_dir}}" && ./scripts/patch_stainless_sdks.sh
+
+# Apply post-generation SDK patches without regenerating.
+patch-sdks:
+  @cd "{{root_dir}}" && ./scripts/patch_stainless_sdks.sh
+
+# Build all SDKs using production Stainless config (requires GitHub App auth).
+build-stainless-sdks-production:
+  @cd "{{root_dir}}" && stl preview
+
+# Validate the OpenAPI spec and Stainless config
+openapi-validate:
+  @cd "{{root_dir}}" && stl lint
 
 # --- Server ---
 
@@ -40,31 +65,36 @@ test-conformance server_url:
   @chmod +x "{{root_dir}}/scripts/run_conformance.sh"
   @"{{root_dir}}/scripts/run_conformance.sh" "{{server_url}}"
 
+# Run PHP conformance tests against a server
+test-conformance-php server_url:
+  @echo "Running PHP conformance tests against {{server_url}}..."
+  @cd "{{conformance_php_dir}}" && TEST_API_BASE_URL={{server_url}} composer test
+
 # Run all tests
-test server_url: (test-conformance server_url)
+test server_url: (test-conformance server_url) (test-conformance-php server_url)
 
 # --- Development ---
 
 # Format Python code
 fmt:
   @echo "Formatting Python code..."
-  @cd "{{py_sdk_dir}}" && uv run ruff format .
   @cd "{{conformance_dir}}" && uv run ruff format .
   @cd "{{server_dir}}" && uv run ruff format .
 
 # Lint Python code
 lint:
   @echo "Linting Python code..."
-  @cd "{{py_sdk_dir}}" && uv run ruff check .
   @cd "{{conformance_dir}}" && uv run ruff check .
   @cd "{{server_dir}}" && uv run ruff check .
 
 # --- Cleanup ---
 
-# Clean generated files
+# Clean generated SDK files
 clean:
   @echo "Cleaning generated files..."
-  @rm -rf "{{py_sdk_dir}}/src/local_protocol_sdk/models"
+  @rm -rf "{{root_dir}}/sdks/local-protocol-python/src" "{{root_dir}}/sdks/local-protocol-python/tests"
+  @rm -rf "{{root_dir}}/sdks/local-protocol-php/src" "{{root_dir}}/sdks/local-protocol-php/docs" "{{root_dir}}/sdks/local-protocol-php/vendor"
+  @rm -rf "{{root_dir}}/sdks/local-protocol-typescript/src" "{{root_dir}}/sdks/local-protocol-typescript/docs" "{{root_dir}}/sdks/local-protocol-typescript/node_modules"
   @find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
   @find . -type d -name ".pytest_cache" -exec rm -rf {} + 2>/dev/null || true
   @find . -type d -name "*.egg-info" -exec rm -rf {} + 2>/dev/null || true
