@@ -20,7 +20,7 @@ class CredentialTyped(TypedDict, total=False):
 Credential: TypeAlias = Union[CredentialTyped, Dict[str, object]]
 
 
-class PaymentInstrumentParamTyped(TypedDict, total=False):
+class PaymentInstrumentParam(TypedDict, total=False):
     """Base definition for any payment instrument."""
 
     id: Required[str]
@@ -40,6 +40,3 @@ class PaymentInstrumentParamTyped(TypedDict, total=False):
 
     display: object
     """Display information for the instrument."""
-
-
-PaymentInstrumentParam: TypeAlias = Union[PaymentInstrumentParamTyped, Dict[str, object]]

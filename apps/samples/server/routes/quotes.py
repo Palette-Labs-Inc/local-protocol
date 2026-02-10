@@ -94,6 +94,10 @@ async def create_quote(request_id: str, quote: dict[str, Any]) -> dict[str, Any]
         detail="Quote ID already exists",
       )
 
+    # Normalize payment field: accept but ensure it's stored
+    if "payment" not in quote:
+      quote["payment"] = {}
+
     # Create
     created = db.create_quote(request_id, quote)
     db.complete_idempotency(key, created)

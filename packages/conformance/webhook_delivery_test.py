@@ -35,7 +35,7 @@ class WebhookDeliveryTest(IntegrationTestBase):
 
   def test_webhook_receives_event_on_transition(self) -> None:
     """Webhook MUST receive POST when delivery event changes."""
-    delivery = self.create_delivery(webhook_url=self.webhook_server.url)
+    delivery = self.create_full_delivery(webhook_url=self.webhook_server.url)
 
     # Update event
     response = self.update_delivery_event(
@@ -54,7 +54,7 @@ class WebhookDeliveryTest(IntegrationTestBase):
 
   def test_webhook_payload_has_required_fields(self) -> None:
     """Webhook payload MUST include required fields."""
-    delivery = self.create_delivery(webhook_url=self.webhook_server.url)
+    delivery = self.create_full_delivery(webhook_url=self.webhook_server.url)
 
     response = self.update_delivery_event(
       delivery["id"],
@@ -82,7 +82,7 @@ class WebhookDeliveryTest(IntegrationTestBase):
 
   def test_webhook_payload_matches_delivery(self) -> None:
     """Webhook payload MUST match delivery object state."""
-    delivery = self.create_delivery(webhook_url=self.webhook_server.url)
+    delivery = self.create_full_delivery(webhook_url=self.webhook_server.url)
 
     response = self.update_delivery_event(
       delivery["id"],
@@ -112,7 +112,7 @@ class WebhookDeliveryTest(IntegrationTestBase):
 
   def test_webhook_event_type_is_delivery_event(self) -> None:
     """Webhook event_type MUST be 'delivery_event'."""
-    delivery = self.create_delivery(webhook_url=self.webhook_server.url)
+    delivery = self.create_full_delivery(webhook_url=self.webhook_server.url)
 
     response = self.update_delivery_event(
       delivery["id"],
@@ -131,7 +131,7 @@ class WebhookDeliveryTest(IntegrationTestBase):
   def test_no_webhook_when_url_not_provided(self) -> None:
     """No webhook should be sent when webhook_url is not provided."""
     # Create delivery without webhook URL
-    delivery = self.create_delivery(webhook_url=None)
+    delivery = self.create_full_delivery(webhook_url=None)
 
     response = self.update_delivery_event(
       delivery["id"],
@@ -148,7 +148,7 @@ class WebhookDeliveryTest(IntegrationTestBase):
 
   def test_multiple_transitions_send_multiple_webhooks(self) -> None:
     """Multiple event transitions MUST send multiple webhooks."""
-    delivery = self.create_delivery(webhook_url=self.webhook_server.url)
+    delivery = self.create_full_delivery(webhook_url=self.webhook_server.url)
 
     # First transition
     response1 = self.update_delivery_event(
@@ -176,7 +176,7 @@ class WebhookDeliveryTest(IntegrationTestBase):
 
   def test_full_lifecycle_sends_webhooks(self) -> None:
     """Full courier lifecycle MUST send webhook for each transition."""
-    delivery = self.create_delivery(webhook_url=self.webhook_server.url)
+    delivery = self.create_full_delivery(webhook_url=self.webhook_server.url)
 
     lifecycle = [
       ("assigned", "Courier assigned"),

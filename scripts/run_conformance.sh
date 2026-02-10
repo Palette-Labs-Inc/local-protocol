@@ -34,7 +34,7 @@ PY
 # Parse arguments
 SERVER_URL="${1:-}"
 CONFORMANCE_DIR="${ROOT_DIR}/packages/conformance"
-PY_SDK_DIR="${ROOT_DIR}/packages/python-sdk"
+PY_SDK_DIR="${ROOT_DIR}/sdks/local-protocol-python"
 CONFORMANCE_INPUT="${CONFORMANCE_DIR}/test_data/delivery/conformance_input.json"
 STANDARDS_DIR="${CONFORMANCE_DIR}/test_data/standards"
 SCHEMA_DIR="${ROOT_DIR}/schemas"

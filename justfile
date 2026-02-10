@@ -7,6 +7,7 @@ default:
 # --- paths ---
 root_dir := justfile_directory()
 conformance_dir := root_dir / "packages/conformance"
+conformance_php_dir := root_dir / "packages/conformance-php"
 schema_dir := root_dir / "schemas"
 server_dir := root_dir / "apps/samples/server"
 openapi_spec := root_dir / "openapi/specs/local-protocol.v1.openapi.json"
@@ -47,6 +48,11 @@ test-conformance server_url:
   @echo "Running conformance tests against {{server_url}}..."
   @chmod +x "{{root_dir}}/scripts/run_conformance.sh"
   @"{{root_dir}}/scripts/run_conformance.sh" "{{server_url}}"
+
+# Run PHP conformance tests against a server
+test-conformance-php server_url:
+  @echo "Running PHP conformance tests against {{server_url}}..."
+  @cd "{{conformance_php_dir}}" && TEST_API_BASE_URL={{server_url}} composer test
 
 # Run all tests
 test server_url: (test-conformance server_url)

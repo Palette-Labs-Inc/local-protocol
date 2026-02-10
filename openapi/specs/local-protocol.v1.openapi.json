@@ -1531,7 +1531,6 @@
         "type": "object",
         "description": "Base definition for any payment instrument.",
         "required": ["id", "handler_id", "type"],
-        "additionalProperties": true,
         "properties": {
           "id": { "type": "string", "description": "Unique instrument identifier." },
           "handler_id": { "type": "string", "description": "Handler instance identifier." },

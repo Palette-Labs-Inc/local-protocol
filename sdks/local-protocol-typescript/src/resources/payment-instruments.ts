@@ -219,8 +219,6 @@ export interface PaymentInstrument {
    * Display information for the instrument.
    */
   display?: unknown;
-
-  [k: string]: unknown;
 }
 
 export namespace PaymentInstrument {
