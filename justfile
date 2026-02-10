@@ -6,37 +6,29 @@ default:
 
 # --- paths ---
 root_dir := justfile_directory()
-py_sdk_dir := root_dir / "packages/python-sdk"
 conformance_dir := root_dir / "packages/conformance"
 schema_dir := root_dir / "schemas"
 server_dir := root_dir / "apps/samples/server"
 openapi_spec := root_dir / "openapi/specs/local-protocol.v1.openapi.json"
-# oag is no longer used — both PHP and TS SDKs now use Speakeasy
 
 # --- SDK Generation ---
 
-# Generate all SDKs (Python from JSON Schema, PHP and TypeScript from OpenAPI via Speakeasy)
-build-sdks: build-python-sdk openapi-validate build-php-sdk build-ts-sdk
+# Generate all SDKs (Python, PHP, TypeScript from OpenAPI via Stainless)
+build-sdks: openapi-validate build-stainless-sdks
 
-# Build Python SDK from JSON schemas (datamodel-code-generator / Pydantic v2)
-build-python-sdk:
-  @echo "Generating Python SDK from JSON schemas..."
-  @chmod +x "{{py_sdk_dir}}/generate_models.sh"
-  @cd "{{py_sdk_dir}}" && ./generate_models.sh
+# Build all SDKs from OpenAPI spec (Stainless)
+build-stainless-sdks:
+  @echo "Generating Python, PHP, and TypeScript SDKs via Stainless..."
+  @cd "{{root_dir}}" && stl preview
 
-# Build PHP SDK from OpenAPI spec (Speakeasy)
-build-php-sdk:
-  @echo "Generating PHP SDK from OpenAPI spec..."
-  @cd "{{root_dir}}/packages/php-sdk" && speakeasy run
+# Build a single Stainless target (e.g., just build-sdk python)
+build-sdk target:
+  @echo "Generating {{target}} SDK via Stainless..."
+  @cd "{{root_dir}}" && stl preview --target {{target}}
 
-# Build TypeScript SDK from OpenAPI spec (Speakeasy)
-build-ts-sdk:
-  @echo "Generating TypeScript SDK from OpenAPI spec..."
-  @cd "{{root_dir}}/packages/typescript-sdk" && speakeasy run
-
-# Validate the OpenAPI spec
+# Validate the OpenAPI spec and Stainless config
 openapi-validate:
-  @speakeasy validate openapi -s "{{openapi_spec}}"
+  @cd "{{root_dir}}" && stl lint
 
 # --- Server ---
 
@@ -64,25 +56,23 @@ test server_url: (test-conformance server_url)
 # Format Python code
 fmt:
   @echo "Formatting Python code..."
-  @cd "{{py_sdk_dir}}" && uv run ruff format .
   @cd "{{conformance_dir}}" && uv run ruff format .
   @cd "{{server_dir}}" && uv run ruff format .
 
 # Lint Python code
 lint:
   @echo "Linting Python code..."
-  @cd "{{py_sdk_dir}}" && uv run ruff check .
   @cd "{{conformance_dir}}" && uv run ruff check .
   @cd "{{server_dir}}" && uv run ruff check .
 
 # --- Cleanup ---
 
-# Clean generated SDK files (preserves Speakeasy config in .speakeasy/)
+# Clean generated SDK files
 clean:
   @echo "Cleaning generated files..."
-  @rm -rf "{{py_sdk_dir}}/src/local_protocol_sdk/models"
-  @rm -rf "{{root_dir}}/packages/php-sdk/src" "{{root_dir}}/packages/php-sdk/docs" "{{root_dir}}/packages/php-sdk/vendor"
-  @rm -rf "{{root_dir}}/packages/typescript-sdk/src" "{{root_dir}}/packages/typescript-sdk/docs" "{{root_dir}}/packages/typescript-sdk/node_modules"
+  @rm -rf "{{root_dir}}/sdks/local-protocol-python/src" "{{root_dir}}/sdks/local-protocol-python/tests"
+  @rm -rf "{{root_dir}}/sdks/local-protocol-php/src" "{{root_dir}}/sdks/local-protocol-php/docs" "{{root_dir}}/sdks/local-protocol-php/vendor"
+  @rm -rf "{{root_dir}}/sdks/local-protocol-typescript/src" "{{root_dir}}/sdks/local-protocol-typescript/docs" "{{root_dir}}/sdks/local-protocol-typescript/node_modules"
   @find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
   @find . -type d -name ".pytest_cache" -exec rm -rf {} + 2>/dev/null || true
   @find . -type d -name "*.egg-info" -exec rm -rf {} + 2>/dev/null || true

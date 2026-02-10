@@ -1,0 +1,19 @@
+{
+  "project": "local-protocol",
+  "openapi_spec": "../openapi/specs/local-protocol.v1.openapi.json",
+  "stainless_config": "stainless.yml",
+  "targets": {
+    "openapi": {
+      "output_path": "../sdks/local-protocol-openapi"
+    },
+    "php": {
+      "output_path": "../sdks/local-protocol-php"
+    },
+    "python": {
+      "output_path": "../sdks/local-protocol-python"
+    },
+    "typescript": {
+      "output_path": "../sdks/local-protocol-typescript"
+    }
+  }
+}
