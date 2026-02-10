@@ -1459,7 +1459,6 @@
         }
       },
       "EvmAuthCaptureEscrowConfig": {
-        "x-speakeasy-include": true,
         "type": "object",
         "description": "Handler configuration for auth/capture escrow on EVM chains.",
         "required": ["chain_id", "contract", "operator", "receiver", "accepted_tokens"],
