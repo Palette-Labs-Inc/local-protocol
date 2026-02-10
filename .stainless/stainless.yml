@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=https://app.stainless.com/config.schema.json
+#
+# Stainless SDK generation config for Local Protocol.
+#
+# This is the sole SDK generator for the project. It reads the OpenAPI spec
+# (path configured in workspace.json) and produces typed client libraries for
+# Python, PHP, and TypeScript.
+#
+# History: the repo previously used OpenAPI Generator, then Speakeasy. Both were
+# removed in favour of Stainless (see DECISIONS.md 2026-02-09). The OpenAPI spec
+# no longer carries any generator-specific annotations (x-speakeasy-*, etc.).
+#
+# Usage:
+#   stl preview              # generate all targets
+#   stl preview --target py  # generate one target
+#   stl lint                 # validate spec + config
+#   just build-sdks          # lint + generate (recommended entry point)
 
 # The main edition for the config, see the [docs] for more information.
 #

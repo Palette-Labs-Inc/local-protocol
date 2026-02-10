@@ -1,4 +1,10 @@
 # Local Protocol Development Commands
+#
+# SDK generation uses Stainless (stl CLI). Config lives in .stainless/.
+# The OpenAPI spec at openapi/specs/local-protocol.v1.openapi.json is the
+# single source of truth -- it contains no generator-specific annotations.
+# See DECISIONS.md (2026-02-09) for migration history from OpenAPI Generator
+# and Speakeasy to Stainless.
 
 # Default recipe - show help
 default:
@@ -12,7 +18,7 @@ schema_dir := root_dir / "schemas"
 server_dir := root_dir / "apps/samples/server"
 openapi_spec := root_dir / "openapi/specs/local-protocol.v1.openapi.json"
 
-# --- SDK Generation ---
+# --- SDK Generation (Stainless) ---
 
 # Generate all SDKs (Python, PHP, TypeScript from OpenAPI via Stainless)
 build-sdks: openapi-validate build-stainless-sdks

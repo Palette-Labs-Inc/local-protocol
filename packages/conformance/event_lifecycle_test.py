@@ -23,9 +23,7 @@ class EventLifecycleTest(IntegrationTestBase):
   def test_event_can_transition_to_assigned(self) -> None:
     """Delivery CAN transition from created to assigned."""
     delivery = self._create_delivery_sdk()
-    updated = self.update_event(
-      delivery.id, "assigned", "Courier assigned"
-    )
+    updated = self.update_event(delivery.id, "assigned", "Courier assigned")
     self.assertEqual(updated.event, "assigned")
 
   def test_event_can_transition_to_enroute_pickup(self) -> None:
@@ -47,9 +45,7 @@ class EventLifecycleTest(IntegrationTestBase):
   def test_event_can_transition_to_collected(self) -> None:
     """Delivery CAN transition to collected."""
     delivery = self._create_delivery_sdk()
-    updated = self.update_event(
-      delivery.id, "collected", "Courier picked up"
-    )
+    updated = self.update_event(delivery.id, "collected", "Courier picked up")
     self.assertEqual(updated.event, "collected")
 
   def test_event_can_transition_to_arrived_dropoff(self) -> None:
@@ -71,9 +67,7 @@ class EventLifecycleTest(IntegrationTestBase):
   def test_event_can_transition_to_canceled(self) -> None:
     """Delivery CAN transition to canceled."""
     delivery = self._create_delivery_sdk()
-    updated = self.update_event(
-      delivery.id, "canceled", "Delivery canceled"
-    )
+    updated = self.update_event(delivery.id, "canceled", "Delivery canceled")
     self.assertEqual(updated.event, "canceled")
 
   def test_updated_at_changes_on_transition(self) -> None:
@@ -82,11 +76,10 @@ class EventLifecycleTest(IntegrationTestBase):
     original_updated_at = delivery.updated_at
 
     import time
+
     time.sleep(0.1)
 
-    updated = self.update_event(
-      delivery.id, "assigned", "Courier assigned"
-    )
+    updated = self.update_event(delivery.id, "assigned", "Courier assigned")
     self.assertNotEqual(
       updated.updated_at,
       original_updated_at,

@@ -64,7 +64,9 @@ def load_standard(name: str) -> dict[str, Any]:
 def load_schema(schema_path: str) -> dict[str, Any]:
   """Load a JSON schema from the schemas directory."""
   if FLAGS.schema_dir is None:
-    raise ValueError("--schema_dir flag must be set for schema validation tests")
+    raise ValueError(
+      "--schema_dir flag must be set for schema validation tests"
+    )
   schema_file = Path(FLAGS.schema_dir) / schema_path
   with schema_file.open() as f:
     return json.load(f)
@@ -345,10 +347,8 @@ class IntegrationTestBase(absltest.TestCase):
       "dropoff_location": {
         "coordinates": {"latitude": dropoff_lat, "longitude": dropoff_lng},
       },
-      "pickup_time": pickup_time
-      or (now + timedelta(minutes=30)).isoformat(),
-      "dropoff_time": dropoff_time
-      or (now + timedelta(minutes=60)).isoformat(),
+      "pickup_time": pickup_time or (now + timedelta(minutes=30)).isoformat(),
+      "dropoff_time": dropoff_time or (now + timedelta(minutes=60)).isoformat(),
     }
 
   def create_quote_payload(
