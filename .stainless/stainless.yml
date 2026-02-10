@@ -25,6 +25,7 @@ organization:
   # Name of your organization or company, used to determine the name of the client
   # and headings.
   name: local-protocol
+  github_org: Palette-Labs-Inc
   # Link to your API documentation.
   docs: ''
   # Contact email for bug reports, questions, and support requests.
@@ -39,18 +40,18 @@ targets:
     # [docs]: https://www.stainless.com/docs/reference/editions
     edition: typescript.2025-10-10
     package_name: local-protocol
-    production_repo: null
+    production_repo: Palette-Labs-Inc/local-protocol-typescript
     publish:
       npm: false
   php:
     edition: php.2025-10-08
     package_name: local-protocol
-    production_repo: null
+    production_repo: Palette-Labs-Inc/local-protocol-php
     composer_package_name: local-protocol/local-protocol
   python:
     edition: python.2025-11-20
     package_name: local_protocol
-    production_repo: null
+    production_repo: Palette-Labs-Inc/local-protocol-python
     publish:
       pypi: false
 
