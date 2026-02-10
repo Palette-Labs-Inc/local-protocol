@@ -8,7 +8,8 @@ const client = new LocalProtocol({
 });
 
 describe('resource merchants', () => {
-  test('retrieve', async () => {
+  // Prism tests are disabled
+  test.skip('retrieve', async () => {
     const responsePromise = client.merchants.retrieve('merchant_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);

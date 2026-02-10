@@ -8,7 +8,8 @@ const client = new LocalProtocol({
 });
 
 describe('resource wellKnown', () => {
-  test('retrieve', async () => {
+  // Prism tests are disabled
+  test.skip('retrieve', async () => {
     const responsePromise = client.wellKnown.retrieve();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);

@@ -8,7 +8,8 @@ const client = new LocalProtocol({
 });
 
 describe('resource deliveries', () => {
-  test('create: only required params', async () => {
+  // Prism tests are disabled
+  test.skip('create: only required params', async () => {
     const responsePromise = client.deliveries.create({
       nonce: 'nonce',
       quote_id: 'quote_id',
@@ -23,7 +24,8 @@ describe('resource deliveries', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('create: required and optional params', async () => {
+  // Prism tests are disabled
+  test.skip('create: required and optional params', async () => {
     const response = await client.deliveries.create({
       nonce: 'nonce',
       quote_id: 'quote_id',
@@ -33,7 +35,8 @@ describe('resource deliveries', () => {
     });
   });
 
-  test('retrieve', async () => {
+  // Prism tests are disabled
+  test.skip('retrieve', async () => {
     const responsePromise = client.deliveries.retrieve('delivery_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -44,7 +47,8 @@ describe('resource deliveries', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('list', async () => {
+  // Prism tests are disabled
+  test.skip('list', async () => {
     const responsePromise = client.deliveries.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -55,7 +59,8 @@ describe('resource deliveries', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('updateEvent: only required params', async () => {
+  // Prism tests are disabled
+  test.skip('updateEvent: only required params', async () => {
     const responsePromise = client.deliveries.updateEvent('delivery_id', {
       event: 'event',
       event_description: 'event_description',
@@ -69,7 +74,8 @@ describe('resource deliveries', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('updateEvent: required and optional params', async () => {
+  // Prism tests are disabled
+  test.skip('updateEvent: required and optional params', async () => {
     const response = await client.deliveries.updateEvent('delivery_id', {
       event: 'event',
       event_description: 'event_description',

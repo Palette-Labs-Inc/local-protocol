@@ -8,7 +8,8 @@ const client = new LocalProtocol({
 });
 
 describe('resource healthz', () => {
-  test('check', async () => {
+  // Prism tests are disabled
+  test.skip('check', async () => {
     const responsePromise = client.healthz.check();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);

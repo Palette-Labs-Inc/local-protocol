@@ -17,6 +17,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestDeliveries:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create(self, client: LocalProtocol) -> None:
         delivery = client.deliveries.create(
@@ -26,6 +27,7 @@ class TestDeliveries:
         )
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: LocalProtocol) -> None:
         delivery = client.deliveries.create(
@@ -37,6 +39,7 @@ class TestDeliveries:
         )
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: LocalProtocol) -> None:
         response = client.deliveries.with_raw_response.create(
@@ -50,6 +53,7 @@ class TestDeliveries:
         delivery = response.parse()
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: LocalProtocol) -> None:
         with client.deliveries.with_streaming_response.create(
@@ -65,6 +69,7 @@ class TestDeliveries:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: LocalProtocol) -> None:
         delivery = client.deliveries.retrieve(
@@ -72,6 +77,7 @@ class TestDeliveries:
         )
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: LocalProtocol) -> None:
         response = client.deliveries.with_raw_response.retrieve(
@@ -83,6 +89,7 @@ class TestDeliveries:
         delivery = response.parse()
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: LocalProtocol) -> None:
         with client.deliveries.with_streaming_response.retrieve(
@@ -96,6 +103,7 @@ class TestDeliveries:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: LocalProtocol) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `delivery_id` but received ''"):
@@ -103,11 +111,13 @@ class TestDeliveries:
                 "",
             )
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list(self, client: LocalProtocol) -> None:
         delivery = client.deliveries.list()
         assert_matches_type(DeliveryListResponse, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: LocalProtocol) -> None:
         response = client.deliveries.with_raw_response.list()
@@ -117,6 +127,7 @@ class TestDeliveries:
         delivery = response.parse()
         assert_matches_type(DeliveryListResponse, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: LocalProtocol) -> None:
         with client.deliveries.with_streaming_response.list() as response:
@@ -128,6 +139,7 @@ class TestDeliveries:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update_event(self, client: LocalProtocol) -> None:
         delivery = client.deliveries.update_event(
@@ -137,6 +149,7 @@ class TestDeliveries:
         )
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_update_event(self, client: LocalProtocol) -> None:
         response = client.deliveries.with_raw_response.update_event(
@@ -150,6 +163,7 @@ class TestDeliveries:
         delivery = response.parse()
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_update_event(self, client: LocalProtocol) -> None:
         with client.deliveries.with_streaming_response.update_event(
@@ -165,6 +179,7 @@ class TestDeliveries:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_update_event(self, client: LocalProtocol) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `delivery_id` but received ''"):
@@ -180,6 +195,7 @@ class TestAsyncDeliveries:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncLocalProtocol) -> None:
         delivery = await async_client.deliveries.create(
@@ -189,6 +205,7 @@ class TestAsyncDeliveries:
         )
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLocalProtocol) -> None:
         delivery = await async_client.deliveries.create(
@@ -200,6 +217,7 @@ class TestAsyncDeliveries:
         )
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLocalProtocol) -> None:
         response = await async_client.deliveries.with_raw_response.create(
@@ -213,6 +231,7 @@ class TestAsyncDeliveries:
         delivery = await response.parse()
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLocalProtocol) -> None:
         async with async_client.deliveries.with_streaming_response.create(
@@ -228,6 +247,7 @@ class TestAsyncDeliveries:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncLocalProtocol) -> None:
         delivery = await async_client.deliveries.retrieve(
@@ -235,6 +255,7 @@ class TestAsyncDeliveries:
         )
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncLocalProtocol) -> None:
         response = await async_client.deliveries.with_raw_response.retrieve(
@@ -246,6 +267,7 @@ class TestAsyncDeliveries:
         delivery = await response.parse()
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncLocalProtocol) -> None:
         async with async_client.deliveries.with_streaming_response.retrieve(
@@ -259,6 +281,7 @@ class TestAsyncDeliveries:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncLocalProtocol) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `delivery_id` but received ''"):
@@ -266,11 +289,13 @@ class TestAsyncDeliveries:
                 "",
             )
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncLocalProtocol) -> None:
         delivery = await async_client.deliveries.list()
         assert_matches_type(DeliveryListResponse, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncLocalProtocol) -> None:
         response = await async_client.deliveries.with_raw_response.list()
@@ -280,6 +305,7 @@ class TestAsyncDeliveries:
         delivery = await response.parse()
         assert_matches_type(DeliveryListResponse, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncLocalProtocol) -> None:
         async with async_client.deliveries.with_streaming_response.list() as response:
@@ -291,6 +317,7 @@ class TestAsyncDeliveries:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update_event(self, async_client: AsyncLocalProtocol) -> None:
         delivery = await async_client.deliveries.update_event(
@@ -300,6 +327,7 @@ class TestAsyncDeliveries:
         )
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_update_event(self, async_client: AsyncLocalProtocol) -> None:
         response = await async_client.deliveries.with_raw_response.update_event(
@@ -313,6 +341,7 @@ class TestAsyncDeliveries:
         delivery = await response.parse()
         assert_matches_type(Delivery, delivery, path=["response"])
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_update_event(self, async_client: AsyncLocalProtocol) -> None:
         async with async_client.deliveries.with_streaming_response.update_event(
@@ -328,6 +357,7 @@ class TestAsyncDeliveries:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_update_event(self, async_client: AsyncLocalProtocol) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `delivery_id` but received ''"):
