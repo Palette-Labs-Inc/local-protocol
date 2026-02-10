@@ -8,7 +8,6 @@ use LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrument;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -31,10 +30,6 @@ final class PaymentInstrumentsTest extends TestCase
     #[Test]
     public function testRegister(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
-
         $result = $this->client->paymentInstruments->register(
             id: 'id',
             token: ['decimals' => 0, 'symbol' => 'symbol'],
@@ -66,10 +61,6 @@ final class PaymentInstrumentsTest extends TestCase
     #[Test]
     public function testRegisterWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
-
         $result = $this->client->paymentInstruments->register(
             id: 'id',
             token: [

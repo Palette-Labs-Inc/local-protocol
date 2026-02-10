@@ -8,8 +8,7 @@ const client = new LocalProtocol({
 });
 
 describe('resource requests', () => {
-  // Prism tests are disabled
-  test.skip('create: only required params', async () => {
+  test('create: only required params', async () => {
     const responsePromise = client.orders.requests.create({
       id: 'id',
       intent_id: 'intent_id',
@@ -25,8 +24,7 @@ describe('resource requests', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('create: required and optional params', async () => {
+  test('create: required and optional params', async () => {
     const response = await client.orders.requests.create({
       id: 'id',
       intent_id: 'intent_id',

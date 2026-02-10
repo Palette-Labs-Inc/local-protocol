@@ -10,7 +10,7 @@ __all__ = ["WellKnownRetrieveResponse"]
 class WellKnownRetrieveResponse(BaseModel):
     """Service discovery metadata."""
 
-    capabilities: Dict[str, object]
+    capabilities: Dict[str, Dict[str, object]]
     """Supported capabilities by domain."""
 
     endpoints: Dict[str, str]

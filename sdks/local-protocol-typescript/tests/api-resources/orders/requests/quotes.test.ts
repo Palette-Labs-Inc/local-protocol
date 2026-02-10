@@ -8,8 +8,7 @@ const client = new LocalProtocol({
 });
 
 describe('resource quotes', () => {
-  // Prism tests are disabled
-  test.skip('retrieve: only required params', async () => {
+  test('retrieve: only required params', async () => {
     const responsePromise = client.orders.requests.quotes.retrieve('order_quote_id', {
       order_request_id: 'order_request_id',
     });
@@ -22,15 +21,13 @@ describe('resource quotes', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
+  test('retrieve: required and optional params', async () => {
     const response = await client.orders.requests.quotes.retrieve('order_quote_id', {
       order_request_id: 'order_request_id',
     });
   });
 
-  // Prism tests are disabled
-  test.skip('list', async () => {
+  test('list', async () => {
     const responsePromise = client.orders.requests.quotes.list('order_request_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);

@@ -8,7 +8,6 @@ use LocalProtocol\Requests\Quotes\DeliveryQuote;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -31,10 +30,6 @@ final class QuotesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
-
         $result = $this->client->requests->quotes->create(
             'request_id',
             id: 'id',
@@ -55,10 +50,6 @@ final class QuotesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
-
         $result = $this->client->requests->quotes->create(
             'request_id',
             id: 'id',
@@ -128,10 +119,6 @@ final class QuotesTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
-
         $result = $this->client->requests->quotes->retrieve(
             'quote_id',
             requestID: 'request_id'
@@ -144,10 +131,6 @@ final class QuotesTest extends TestCase
     #[Test]
     public function testRetrieveWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
-
         $result = $this->client->requests->quotes->retrieve(
             'quote_id',
             requestID: 'request_id'
@@ -160,10 +143,6 @@ final class QuotesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
-
         $result = $this->client->requests->quotes->list('request_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

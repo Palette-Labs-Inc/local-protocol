@@ -47,5 +47,9 @@ class PaymentInstrument(BaseModel):
     credential: Optional[Credential] = None
     """Base definition for any payment credential."""
 
-    display: Optional[object] = None
-    """Display information for the instrument."""
+    display: Optional[Dict[str, object]] = None
+    """Display information for the instrument.
+
+    Each payment instrument schema defines its specific display properties, as
+    outlined by the payment handler.
+    """

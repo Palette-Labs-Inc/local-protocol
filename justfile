@@ -26,12 +26,22 @@ build-sdks: openapi-validate build-stainless-sdks
 # Build all SDKs from OpenAPI spec (Stainless)
 build-stainless-sdks:
   @echo "Generating Python, PHP, and TypeScript SDKs via Stainless..."
-  @cd "{{root_dir}}" && stl preview
+  @cd "{{root_dir}}" && ./scripts/stainless_preview_local.sh
+  @cd "{{root_dir}}" && ./scripts/patch_stainless_sdks.sh
 
 # Build a single Stainless target (e.g., just build-sdk python)
 build-sdk target:
   @echo "Generating {{target}} SDK via Stainless..."
-  @cd "{{root_dir}}" && stl preview --target {{target}}
+  @cd "{{root_dir}}" && ./scripts/stainless_preview_local.sh --target {{target}}
+  @cd "{{root_dir}}" && ./scripts/patch_stainless_sdks.sh
+
+# Apply post-generation SDK patches without regenerating.
+patch-sdks:
+  @cd "{{root_dir}}" && ./scripts/patch_stainless_sdks.sh
+
+# Build all SDKs using production Stainless config (requires GitHub App auth).
+build-stainless-sdks-production:
+  @cd "{{root_dir}}" && stl preview
 
 # Validate the OpenAPI spec and Stainless config
 openapi-validate:

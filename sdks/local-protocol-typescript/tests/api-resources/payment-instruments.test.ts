@@ -8,8 +8,7 @@ const client = new LocalProtocol({
 });
 
 describe('resource paymentInstruments', () => {
-  // Prism tests are disabled
-  test.skip('register: only required params', async () => {
+  test('register: only required params', async () => {
     const responsePromise = client.paymentInstruments.register({
       id: 'id',
       token: { decimals: 0, symbol: 'symbol' },
@@ -43,8 +42,7 @@ describe('resource paymentInstruments', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('register: required and optional params', async () => {
+  test('register: required and optional params', async () => {
     const response = await client.paymentInstruments.register({
       id: 'id',
       token: {

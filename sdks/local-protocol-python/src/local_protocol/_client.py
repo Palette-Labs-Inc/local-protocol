@@ -12,7 +12,6 @@ from . import _exceptions
 from ._qs import Querystring
 from ._types import (
     Omit,
-    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -24,7 +23,7 @@ from ._utils import is_given, get_async_library
 from ._compat import cached_property
 from ._version import __version__
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError
+from ._exceptions import APIStatusError, LocalProtocolError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -65,7 +64,7 @@ __all__ = [
 
 class LocalProtocol(SyncAPIClient):
     # client options
-    api_key: str | None
+    api_key: str
 
     def __init__(
         self,
@@ -96,6 +95,10 @@ class LocalProtocol(SyncAPIClient):
         """
         if api_key is None:
             api_key = os.environ.get("LOCAL_PROTOCOL_API_KEY")
+        if api_key is None:
+            raise LocalProtocolError(
+                "The api_key client option must be set either by passing api_key to the client or by setting the LOCAL_PROTOCOL_API_KEY environment variable"
+            )
         self.api_key = api_key
 
         if base_url is None:
@@ -179,8 +182,6 @@ class LocalProtocol(SyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         api_key = self.api_key
-        if api_key is None:
-            return {}
         return {"Authorization": f"Bearer {api_key}"}
 
     @property
@@ -191,15 +192,6 @@ class LocalProtocol(SyncAPIClient):
             "X-Stainless-Async": "false",
             **self._custom_headers,
         }
-
-    @override
-    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if headers.get("Authorization") or isinstance(custom_headers.get("Authorization"), Omit):
-            return
-
-        raise TypeError(
-            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted"'
-        )
 
     def copy(
         self,
@@ -288,7 +280,7 @@ class LocalProtocol(SyncAPIClient):
 
 class AsyncLocalProtocol(AsyncAPIClient):
     # client options
-    api_key: str | None
+    api_key: str
 
     def __init__(
         self,
@@ -319,6 +311,10 @@ class AsyncLocalProtocol(AsyncAPIClient):
         """
         if api_key is None:
             api_key = os.environ.get("LOCAL_PROTOCOL_API_KEY")
+        if api_key is None:
+            raise LocalProtocolError(
+                "The api_key client option must be set either by passing api_key to the client or by setting the LOCAL_PROTOCOL_API_KEY environment variable"
+            )
         self.api_key = api_key
 
         if base_url is None:
@@ -402,8 +398,6 @@ class AsyncLocalProtocol(AsyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         api_key = self.api_key
-        if api_key is None:
-            return {}
         return {"Authorization": f"Bearer {api_key}"}
 
     @property
@@ -414,15 +408,6 @@ class AsyncLocalProtocol(AsyncAPIClient):
             "X-Stainless-Async": f"async:{get_async_library()}",
             **self._custom_headers,
         }
-
-    @override
-    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if headers.get("Authorization") or isinstance(custom_headers.get("Authorization"), Omit):
-            return
-
-        raise TypeError(
-            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted"'
-        )
 
     def copy(
         self,

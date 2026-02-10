@@ -8,8 +8,7 @@ const client = new LocalProtocol({
 });
 
 describe('resource eventVocabularies', () => {
-  // Prism tests are disabled
-  test.skip('retrieve', async () => {
+  test('retrieve', async () => {
     const responsePromise = client.eventVocabularies.retrieve('name');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);

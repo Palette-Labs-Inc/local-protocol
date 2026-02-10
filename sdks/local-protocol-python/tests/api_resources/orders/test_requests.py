@@ -17,7 +17,6 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestRequests:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create(self, client: LocalProtocol) -> None:
         request = client.orders.requests.create(
@@ -33,7 +32,6 @@ class TestRequests:
         )
         assert_matches_type(RequestCreateResponse, request, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: LocalProtocol) -> None:
         response = client.orders.requests.with_raw_response.create(
@@ -53,7 +51,6 @@ class TestRequests:
         request = response.parse()
         assert_matches_type(RequestCreateResponse, request, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: LocalProtocol) -> None:
         with client.orders.requests.with_streaming_response.create(
@@ -81,7 +78,6 @@ class TestAsyncRequests:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncLocalProtocol) -> None:
         request = await async_client.orders.requests.create(
@@ -97,7 +93,6 @@ class TestAsyncRequests:
         )
         assert_matches_type(RequestCreateResponse, request, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLocalProtocol) -> None:
         response = await async_client.orders.requests.with_raw_response.create(
@@ -117,7 +112,6 @@ class TestAsyncRequests:
         request = await response.parse()
         assert_matches_type(RequestCreateResponse, request, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLocalProtocol) -> None:
         async with async_client.orders.requests.with_streaming_response.create(

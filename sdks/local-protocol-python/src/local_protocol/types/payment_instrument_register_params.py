@@ -76,8 +76,12 @@ class PaymentInstrumentRegisterParams(TypedDict, total=False):
     credential: Credential
     """Base definition for any payment credential."""
 
-    display: object
-    """Display information for the instrument."""
+    display: Dict[str, object]
+    """Display information for the instrument.
+
+    Each payment instrument schema defines its specific display properties, as
+    outlined by the payment handler.
+    """
 
 
 class Token(TypedDict, total=False):

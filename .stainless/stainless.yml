@@ -168,7 +168,7 @@ client_settings:
     api_key:
       type: string
       read_env: LOCAL_PROTOCOL_API_KEY
-      nullable: true
+      nullable: false
       auth:
         security_scheme: bearerAuth
 
