@@ -9,9 +9,7 @@ use LocalProtocol\Core\Attributes\Required;
 use LocalProtocol\Core\Concerns\SdkModel;
 use LocalProtocol\Core\Concerns\SdkParams;
 use LocalProtocol\Core\Contracts\BaseModel;
-use LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Amount;
 use LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Credential;
-use LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\MaxAmount;
 use LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Token;
 use LocalProtocol\Requests\PostalAddress;
 
@@ -21,8 +19,7 @@ use LocalProtocol\Requests\PostalAddress;
  * @see LocalProtocol\Services\PaymentInstrumentsService::register()
  *
  * @phpstan-import-type TokenShape from \LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Token
- * @phpstan-import-type AmountShape from \LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Amount
- * @phpstan-import-type MaxAmountShape from \LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\MaxAmount
+ * @phpstan-import-type EvmAmountShape from \LocalProtocol\PaymentInstruments\EvmAmount
  * @phpstan-import-type PostalAddressShape from \LocalProtocol\Requests\PostalAddress
  * @phpstan-import-type CredentialShape from \LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Credential
  *
@@ -30,12 +27,12 @@ use LocalProtocol\Requests\PostalAddress;
  *   type: 'evm_auth_capture_escrow',
  *   id: string,
  *   token: Token|TokenShape,
- *   amount: \LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Amount|AmountShape,
+ *   amount: EvmAmount|EvmAmountShape,
  *   authorizationExpiresAt: \DateTimeInterface,
  *   chainID: int,
  *   contract: string,
  *   handlerID: string,
- *   maxAmount: MaxAmount|MaxAmountShape,
+ *   maxAmount: EvmAmount|EvmAmountShape,
  *   nonce: string,
  *   operator: string,
  *   payer: string,
@@ -74,7 +71,7 @@ final class PaymentInstrumentRegisterParams implements BaseModel
      * Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
      */
     #[Required]
-    public Amount $amount;
+    public EvmAmount $amount;
 
     /**
      * Authorization expiration (RFC 3339).
@@ -104,7 +101,7 @@ final class PaymentInstrumentRegisterParams implements BaseModel
      * Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
      */
     #[Required('max_amount')]
-    public MaxAmount $maxAmount;
+    public EvmAmount $maxAmount;
 
     /**
      * Unique nonce for payment info hash computation.
@@ -224,8 +221,8 @@ final class PaymentInstrumentRegisterParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Token|TokenShape $token
-     * @param Amount|AmountShape $amount
-     * @param MaxAmount|MaxAmountShape $maxAmount
+     * @param EvmAmount|EvmAmountShape $amount
+     * @param EvmAmount|EvmAmountShape $maxAmount
      * @param PostalAddress|PostalAddressShape|null $billingAddress
      * @param Credential|CredentialShape|null $credential
      * @param array<string,mixed>|null $display
@@ -233,12 +230,12 @@ final class PaymentInstrumentRegisterParams implements BaseModel
     public static function with(
         string $id,
         Token|array $token,
-        Amount|array $amount,
+        EvmAmount|array $amount,
         \DateTimeInterface $authorizationExpiresAt,
         int $chainID,
         string $contract,
         string $handlerID,
-        MaxAmount|array $maxAmount,
+        EvmAmount|array $maxAmount,
         string $nonce,
         string $operator,
         string $payer,
@@ -313,11 +310,10 @@ final class PaymentInstrumentRegisterParams implements BaseModel
     /**
      * Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
      *
-     * @param Amount|AmountShape $amount
+     * @param EvmAmount|EvmAmountShape $amount
      */
-    public function withAmount(
-        Amount|array $amount,
-    ): self {
+    public function withAmount(EvmAmount|array $amount): self
+    {
         $self = clone $this;
         $self['amount'] = $amount;
 
@@ -372,9 +368,9 @@ final class PaymentInstrumentRegisterParams implements BaseModel
     /**
      * Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
      *
-     * @param MaxAmount|MaxAmountShape $maxAmount
+     * @param EvmAmount|EvmAmountShape $maxAmount
      */
-    public function withMaxAmount(MaxAmount|array $maxAmount): self
+    public function withMaxAmount(EvmAmount|array $maxAmount): self
     {
         $self = clone $this;
         $self['maxAmount'] = $maxAmount;

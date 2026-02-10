@@ -148,6 +148,7 @@ resources:
   payment_instruments:
     models:
       evm_currency: '#/components/schemas/EvmCurrency'
+      evm_amount: '#/components/schemas/EvmAmount'
       amount: '#/components/schemas/Amount'
       evm_auth_capture_escrow_instrument: '#/components/schemas/EvmAuthCaptureEscrowInstrument'
       evm_auth_capture_escrow_instrument_details: '#/components/schemas/EvmAuthCaptureEscrowInstrumentDetails'

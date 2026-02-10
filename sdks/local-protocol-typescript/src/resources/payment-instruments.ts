@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as PaymentInstrumentsAPI from './payment-instruments';
 import * as RequestsAPI from './requests/requests';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
@@ -47,11 +46,28 @@ export namespace Amount {
 }
 
 /**
+ * Amount denominated in an EVM token. Value is in atomic token units.
+ */
+export interface EvmAmount {
+  /**
+   * EVM token currency descriptor.
+   */
+  currency: EvmCurrency;
+
+  /**
+   * Value in atomic token units as an integer string.
+   */
+  value: string;
+}
+
+/**
  * Payment instrument for auth/capture escrow on EVM chains.
  */
 export interface EvmAuthCaptureEscrowInstrument
   extends PaymentInstrument,
-    EvmAuthCaptureEscrowInstrumentDetails {}
+    EvmAuthCaptureEscrowInstrumentDetails {
+  type: 'evm_auth_capture_escrow';
+}
 
 export interface EvmAuthCaptureEscrowInstrumentDetails {
   /**
@@ -63,7 +79,7 @@ export interface EvmAuthCaptureEscrowInstrumentDetails {
    * Amount in atomic units. Currency chain_id MUST match the instrument chain_id;
    * currency address and decimals MUST match token address and decimals.
    */
-  amount: EvmAuthCaptureEscrowInstrumentDetails.Amount;
+  amount: EvmAmount;
 
   /**
    * Authorization expiration (RFC 3339).
@@ -85,7 +101,7 @@ export interface EvmAuthCaptureEscrowInstrumentDetails {
    * match the instrument chain_id; currency address and decimals MUST match token
    * address and decimals.
    */
-  max_amount: EvmAuthCaptureEscrowInstrumentDetails.MaxAmount;
+  max_amount: EvmAmount;
 
   /**
    * Unique nonce for payment info hash computation.
@@ -122,8 +138,6 @@ export interface EvmAuthCaptureEscrowInstrumentDetails {
    */
   refund_expires_at: string;
 
-  type: 'evm_auth_capture_escrow';
-
   [k: string]: unknown;
 }
 
@@ -146,29 +160,6 @@ export namespace EvmAuthCaptureEscrowInstrumentDetails {
      * ERC-20 contract address. Omit for native gas tokens.
      */
     address?: string;
-  }
-
-  /**
-   * Amount in atomic units. Currency chain_id MUST match the instrument chain_id;
-   * currency address and decimals MUST match token address and decimals.
-   */
-  export interface Amount extends Omit<PaymentInstrumentsAPI.Amount, 'currency'> {
-    /**
-     * EVM token currency descriptor.
-     */
-    currency?: PaymentInstrumentsAPI.EvmCurrency;
-  }
-
-  /**
-   * Maximum amount that can be authorized (atomic units). Currency chain_id MUST
-   * match the instrument chain_id; currency address and decimals MUST match token
-   * address and decimals.
-   */
-  export interface MaxAmount extends Omit<PaymentInstrumentsAPI.Amount, 'currency'> {
-    /**
-     * EVM token currency descriptor.
-     */
-    currency?: PaymentInstrumentsAPI.EvmCurrency;
   }
 }
 
@@ -282,7 +273,7 @@ export interface PaymentInstrumentRegisterParams {
    * Amount in atomic units. Currency chain_id MUST match the instrument chain_id;
    * currency address and decimals MUST match token address and decimals.
    */
-  amount: PaymentInstrumentRegisterParams.Amount;
+  amount: EvmAmount;
 
   /**
    * Authorization expiration (RFC 3339).
@@ -309,7 +300,7 @@ export interface PaymentInstrumentRegisterParams {
    * match the instrument chain_id; currency address and decimals MUST match token
    * address and decimals.
    */
-  max_amount: PaymentInstrumentRegisterParams.MaxAmount;
+  max_amount: EvmAmount;
 
   /**
    * Unique nonce for payment info hash computation.
@@ -387,29 +378,6 @@ export namespace PaymentInstrumentRegisterParams {
   }
 
   /**
-   * Amount in atomic units. Currency chain_id MUST match the instrument chain_id;
-   * currency address and decimals MUST match token address and decimals.
-   */
-  export interface Amount extends Omit<PaymentInstrumentsAPI.Amount, 'currency'> {
-    /**
-     * EVM token currency descriptor.
-     */
-    currency?: PaymentInstrumentsAPI.EvmCurrency;
-  }
-
-  /**
-   * Maximum amount that can be authorized (atomic units). Currency chain_id MUST
-   * match the instrument chain_id; currency address and decimals MUST match token
-   * address and decimals.
-   */
-  export interface MaxAmount extends Omit<PaymentInstrumentsAPI.Amount, 'currency'> {
-    /**
-     * EVM token currency descriptor.
-     */
-    currency?: PaymentInstrumentsAPI.EvmCurrency;
-  }
-
-  /**
    * Base definition for any payment credential.
    */
   export interface Credential {
@@ -425,6 +393,7 @@ export namespace PaymentInstrumentRegisterParams {
 export declare namespace PaymentInstruments {
   export {
     type Amount as Amount,
+    type EvmAmount as EvmAmount,
     type EvmAuthCaptureEscrowInstrument as EvmAuthCaptureEscrowInstrument,
     type EvmAuthCaptureEscrowInstrumentDetails as EvmAuthCaptureEscrowInstrumentDetails,
     type EvmCurrency as EvmCurrency,

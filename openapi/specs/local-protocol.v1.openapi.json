@@ -1137,6 +1137,20 @@
           "decimals": { "type": "integer", "minimum": 0, "maximum": 255, "description": "Decimal places for the token." }
         }
       },
+      "EvmAmount": {
+        "type": "object",
+        "description": "Amount denominated in an EVM token. Value is in atomic token units.",
+        "required": ["value", "currency"],
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string",
+            "pattern": "^[0-9]+$",
+            "description": "Value in atomic token units as an integer string."
+          },
+          "currency": { "$ref": "#/components/schemas/EvmCurrency" }
+        }
+      },
       "Amount": {
 
         "type": "object",
@@ -1481,9 +1495,8 @@
       },
       "EvmAuthCaptureEscrowInstrumentDetails": {
         "type": "object",
-        "required": ["type", "payment_info_hash", "operator", "payer", "receiver", "token", "max_amount", "preapproval_expires_at", "authorization_expires_at", "refund_expires_at", "nonce", "chain_id", "contract", "amount"],
+        "required": ["payment_info_hash", "operator", "payer", "receiver", "token", "max_amount", "preapproval_expires_at", "authorization_expires_at", "refund_expires_at", "nonce", "chain_id", "contract", "amount"],
         "properties": {
-          "type": { "type": "string", "const": "evm_auth_capture_escrow" },
           "payment_info_hash": { "type": "string", "pattern": "^0x[a-fA-F0-9]{64}$", "description": "Hash identifying the on-chain payment authorization." },
           "operator": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "Operator address." },
           "payer": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "Payer address." },
@@ -1492,10 +1505,7 @@
           "receiver": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "Receiver address for captures." },
           "token": { "$ref": "#/components/schemas/EvmToken" },
           "max_amount": {
-            "allOf": [
-              { "$ref": "#/components/schemas/Amount" },
-              { "properties": { "currency": { "$ref": "#/components/schemas/EvmCurrency" } } }
-            ],
+            "$ref": "#/components/schemas/EvmAmount",
             "description": "Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
           },
           "preapproval_expires_at": { "type": "string", "format": "date-time", "description": "Pre-approval expiration (RFC 3339)." },
@@ -1503,10 +1513,7 @@
           "refund_expires_at": { "type": "string", "format": "date-time", "description": "Refund expiration (RFC 3339)." },
           "nonce": { "type": "string", "pattern": "^[0-9]+$", "description": "Unique nonce for payment info hash computation." },
           "amount": {
-            "allOf": [
-              { "$ref": "#/components/schemas/Amount" },
-              { "properties": { "currency": { "$ref": "#/components/schemas/EvmCurrency" } } }
-            ],
+            "$ref": "#/components/schemas/EvmAmount",
             "description": "Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
           }
         },
@@ -1517,7 +1524,8 @@
         "description": "Payment instrument for auth/capture escrow on EVM chains.",
         "allOf": [
           { "$ref": "#/components/schemas/PaymentInstrument" },
-          { "$ref": "#/components/schemas/EvmAuthCaptureEscrowInstrumentDetails" }
+          { "$ref": "#/components/schemas/EvmAuthCaptureEscrowInstrumentDetails" },
+          { "required": ["type"], "properties": { "type": { "type": "string", "const": "evm_auth_capture_escrow" } } }
         ]
       },
 

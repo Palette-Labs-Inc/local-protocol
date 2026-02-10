@@ -7,7 +7,6 @@
     {
       "type": "object",
       "required": [
-        "type",
         "payment_info_hash",
         "operator",
         "payer",
@@ -23,10 +22,6 @@
         "amount"
       ],
       "properties": {
-        "type": {
-          "type": "string",
-          "const": "evm_auth_capture_escrow"
-        },
         "payment_info_hash": {
           "type": "string",
           "description": "Hash that identifies the on-chain payment authorization.",
@@ -61,14 +56,7 @@
           "$ref": "types/evm_token.json"
         },
         "max_amount": {
-          "allOf": [
-            { "$ref": "../shared/amount.json" },
-            {
-              "properties": {
-                "currency": { "$ref": "../shared/evm_currency.json" }
-              }
-            }
-          ],
+          "$ref": "../shared/evm_amount.json",
           "description": "Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
         },
         "preapproval_expires_at": {
@@ -92,18 +80,20 @@
           "pattern": "^[0-9]+$"
         },
         "amount": {
-          "allOf": [
-            { "$ref": "../shared/amount.json" },
-            {
-              "properties": {
-                "currency": { "$ref": "../shared/evm_currency.json" }
-              }
-            }
-          ],
+          "$ref": "../shared/evm_amount.json",
           "description": "Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
         }
       },
       "additionalProperties": true
+    },
+    {
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "evm_auth_capture_escrow"
+        }
+      }
     }
   ]
 }

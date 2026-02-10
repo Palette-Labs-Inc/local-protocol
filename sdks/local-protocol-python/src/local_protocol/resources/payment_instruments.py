@@ -20,6 +20,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.evm_amount_param import EvmAmountParam
 from ..types.postal_address_param import PostalAddressParam
 from ..types.evm_auth_capture_escrow_instrument import EvmAuthCaptureEscrowInstrument
 
@@ -33,7 +34,7 @@ class PaymentInstrumentsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#accessing-raw-response-data-eg-headers
         """
         return PaymentInstrumentsResourceWithRawResponse(self)
 
@@ -42,7 +43,7 @@ class PaymentInstrumentsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#with_streaming_response
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#with_streaming_response
         """
         return PaymentInstrumentsResourceWithStreamingResponse(self)
 
@@ -51,12 +52,12 @@ class PaymentInstrumentsResource(SyncAPIResource):
         *,
         id: str,
         token: payment_instrument_register_params.Token,
-        amount: payment_instrument_register_params.Amount,
+        amount: EvmAmountParam,
         authorization_expires_at: Union[str, datetime],
         chain_id: int,
         contract: str,
         handler_id: str,
-        max_amount: payment_instrument_register_params.MaxAmount,
+        max_amount: EvmAmountParam,
         nonce: str,
         operator: str,
         payer: str,
@@ -167,7 +168,7 @@ class AsyncPaymentInstrumentsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#accessing-raw-response-data-eg-headers
         """
         return AsyncPaymentInstrumentsResourceWithRawResponse(self)
 
@@ -176,7 +177,7 @@ class AsyncPaymentInstrumentsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#with_streaming_response
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#with_streaming_response
         """
         return AsyncPaymentInstrumentsResourceWithStreamingResponse(self)
 
@@ -185,12 +186,12 @@ class AsyncPaymentInstrumentsResource(AsyncAPIResource):
         *,
         id: str,
         token: payment_instrument_register_params.Token,
-        amount: payment_instrument_register_params.Amount,
+        amount: EvmAmountParam,
         authorization_expires_at: Union[str, datetime],
         chain_id: int,
         contract: str,
         handler_id: str,
-        max_amount: payment_instrument_register_params.MaxAmount,
+        max_amount: EvmAmountParam,
         nonce: str,
         operator: str,
         payer: str,

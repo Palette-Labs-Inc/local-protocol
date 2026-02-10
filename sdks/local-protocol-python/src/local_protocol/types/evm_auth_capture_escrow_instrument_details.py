@@ -2,15 +2,13 @@
 
 from typing import TYPE_CHECKING, Dict, Optional
 from datetime import datetime
-from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
-from . import amount
 from .._models import BaseModel
-from .evm_currency import EvmCurrency
+from .evm_amount import EvmAmount
 
-__all__ = ["EvmAuthCaptureEscrowInstrumentDetails", "Token", "Amount", "MaxAmount"]
+__all__ = ["EvmAuthCaptureEscrowInstrumentDetails", "Token"]
 
 
 class Token(BaseModel):
@@ -26,31 +24,11 @@ class Token(BaseModel):
     """ERC-20 contract address. Omit for native gas tokens."""
 
 
-class Amount(amount.Amount):
-    """Amount in atomic units.
-
-    Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
-    """
-
-    currency: Optional[EvmCurrency] = None  # type: ignore
-    """EVM token currency descriptor."""
-
-
-class MaxAmount(amount.Amount):
-    """Maximum amount that can be authorized (atomic units).
-
-    Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
-    """
-
-    currency: Optional[EvmCurrency] = None  # type: ignore
-    """EVM token currency descriptor."""
-
-
 class EvmAuthCaptureEscrowInstrumentDetails(BaseModel):
     token: Token
     """EVM token identifier used for auth/capture settlement."""
 
-    amount: Amount
+    amount: EvmAmount
     """Amount in atomic units.
 
     Currency chain_id MUST match the instrument chain_id; currency address and
@@ -66,7 +44,7 @@ class EvmAuthCaptureEscrowInstrumentDetails(BaseModel):
     contract: str
     """Escrow contract address."""
 
-    max_amount: MaxAmount
+    max_amount: EvmAmount
     """Maximum amount that can be authorized (atomic units).
 
     Currency chain_id MUST match the instrument chain_id; currency address and
@@ -93,8 +71,6 @@ class EvmAuthCaptureEscrowInstrumentDetails(BaseModel):
 
     refund_expires_at: datetime
     """Refund expiration (RFC 3339)."""
-
-    type: Literal["evm_auth_capture_escrow"]
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a

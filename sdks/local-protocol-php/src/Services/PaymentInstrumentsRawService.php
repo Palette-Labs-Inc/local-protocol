@@ -7,11 +7,10 @@ namespace LocalProtocol\Services;
 use LocalProtocol\Client;
 use LocalProtocol\Core\Contracts\BaseResponse;
 use LocalProtocol\Core\Exceptions\APIException;
+use LocalProtocol\PaymentInstruments\EvmAmount;
 use LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrument;
 use LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams;
-use LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Amount;
 use LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Credential;
-use LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\MaxAmount;
 use LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Token;
 use LocalProtocol\RequestOptions;
 use LocalProtocol\Requests\PostalAddress;
@@ -19,11 +18,10 @@ use LocalProtocol\ServiceContracts\PaymentInstrumentsRawContract;
 
 /**
  * @phpstan-import-type TokenShape from \LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Token
- * @phpstan-import-type AmountShape from \LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Amount
- * @phpstan-import-type MaxAmountShape from \LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\MaxAmount
  * @phpstan-import-type PostalAddressShape from \LocalProtocol\Requests\PostalAddress
  * @phpstan-import-type CredentialShape from \LocalProtocol\PaymentInstruments\PaymentInstrumentRegisterParams\Credential
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
+ * @phpstan-import-type EvmAmountShape from \LocalProtocol\PaymentInstruments\EvmAmount
  */
 final class PaymentInstrumentsRawService implements PaymentInstrumentsRawContract
 {
@@ -41,12 +39,12 @@ final class PaymentInstrumentsRawService implements PaymentInstrumentsRawContrac
      * @param array{
      *   id: string,
      *   token: Token|TokenShape,
-     *   amount: Amount|AmountShape,
+     *   amount: EvmAmount|EvmAmountShape,
      *   authorizationExpiresAt: \DateTimeInterface,
      *   chainID: int,
      *   contract: string,
      *   handlerID: string,
-     *   maxAmount: MaxAmount|MaxAmountShape,
+     *   maxAmount: EvmAmount|EvmAmountShape,
      *   nonce: string,
      *   operator: string,
      *   payer: string,

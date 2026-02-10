@@ -7,11 +7,10 @@ from datetime import datetime
 from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from .._utils import PropertyInfo
-from .amount_param import AmountParam
-from .evm_currency_param import EvmCurrencyParam
+from .evm_amount_param import EvmAmountParam
 from .postal_address_param import PostalAddressParam
 
-__all__ = ["PaymentInstrumentRegisterParams", "Token", "Amount", "MaxAmount", "Credential"]
+__all__ = ["PaymentInstrumentRegisterParams", "Token", "Credential"]
 
 
 class PaymentInstrumentRegisterParams(TypedDict, total=False):
@@ -21,7 +20,7 @@ class PaymentInstrumentRegisterParams(TypedDict, total=False):
     token: Required[Token]
     """EVM token identifier used for auth/capture settlement."""
 
-    amount: Required[Amount]
+    amount: Required[EvmAmountParam]
     """Amount in atomic units.
 
     Currency chain_id MUST match the instrument chain_id; currency address and
@@ -40,7 +39,7 @@ class PaymentInstrumentRegisterParams(TypedDict, total=False):
     handler_id: Required[str]
     """Handler instance identifier."""
 
-    max_amount: Required[MaxAmount]
+    max_amount: Required[EvmAmountParam]
     """Maximum amount that can be authorized (atomic units).
 
     Currency chain_id MUST match the instrument chain_id; currency address and
@@ -95,26 +94,6 @@ class Token(TypedDict, total=False):
 
     address: str
     """ERC-20 contract address. Omit for native gas tokens."""
-
-
-class Amount(AmountParam, total=False):
-    """Amount in atomic units.
-
-    Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
-    """
-
-    currency: EvmCurrencyParam  # type: ignore
-    """EVM token currency descriptor."""
-
-
-class MaxAmount(AmountParam, total=False):
-    """Maximum amount that can be authorized (atomic units).
-
-    Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
-    """
-
-    currency: EvmCurrencyParam  # type: ignore
-    """EVM token currency descriptor."""
 
 
 class CredentialTyped(TypedDict, total=False):

@@ -14,7 +14,11 @@ describe('resource paymentInstruments', () => {
       id: 'id',
       token: { decimals: 0, symbol: 'symbol' },
       amount: {
-        currency: { symbol: 'SQ9_0_L1__5L' },
+        currency: {
+          address: '0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A',
+          chain_id: 1,
+          decimals: 0,
+        },
         value: '269125115713',
       },
       authorization_expires_at: '2019-12-27T18:11:19.117Z',
@@ -22,7 +26,11 @@ describe('resource paymentInstruments', () => {
       contract: '0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A',
       handler_id: 'handler_id',
       max_amount: {
-        currency: { symbol: 'SQ9_0_L1__5L' },
+        currency: {
+          address: '0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A',
+          chain_id: 1,
+          decimals: 0,
+        },
         value: '269125115713',
       },
       nonce: '269125115713',
