@@ -1,8 +1,8 @@
 # Catalog
 
-The Catalog capability defines a denormalized catalog tree with category-based presentation. This supports POS and commerce platform ingest, customer-facing apps, and downstream integrations without joining across a separate canonical object graph.
+The catalog capability is used for advertising availability of goods. Typically, it would be paired with an order capability, so those same goods could be ordered. 
 
-## Design Goals
+The data model used in this capability is intended to:
 
 - Interoperate with major POS systems and commerce platforms.
 - Support multiple catalogs per business/merchant.
@@ -12,13 +12,9 @@ The Catalog capability defines a denormalized catalog tree with category-based p
 
 ## Core Model
 
-- Merchant payloads contain catalogs, and each catalog embeds categories and items directly.
-- Catalogs order categories via array order, categories order items via their `items` array, and nested categories are represented by `categories` on each category.
-- Items embed modifier groups, modifier groups embed modifier options, and modifier options embed modifier items.
-- Provider-specific fields that are not modeled natively belong in `metadata`.
-- Items may appear directly in a catalog via `items` without category membership. If a UI or storage system requires a category, place these items into a synthetic category (for example, "Items" or "Uncategorized").
-
-## Schema Files
+- Merchants have catalogs
+- Catalogs have categories and items. Items may or may not belong to a category.
+- Items are modified via modifier groups, modifier options, and modifier items.
 
 - `schemas/catalog/merchant.json` is the top-level payload.
 - `schemas/catalog/catalog.json` defines catalogs and their embedded categories/items.
@@ -30,6 +26,8 @@ The Catalog capability defines a denormalized catalog tree with category-based p
 
 ## Availability
 
+Additionally, the catalog capability allows advertisement of availability of those items. 
+
 - `schemas/catalog/types/availability.json` and `schemas/catalog/types/interval.json` define weekly and date-specific schedules.
 - Availability may be defined on a catalog, category, or item.
 - If a catalog defines availability, it overrides category and item availability.
@@ -37,9 +35,11 @@ The Catalog capability defines a denormalized catalog tree with category-based p
 
 Intervals are neutral and can be reused by closure schedules (recurring unavailability windows applied at the merchant or location level).
 
-## Source of Truth and Platform Pricing
+## Operations
 
-- The merchant/business (or its delegate, such as a POS, ERP, or PIM) is the source of truth for catalog data.
-- Platforms or marketplaces that mirror those catalogs may apply markups, discounts, or fees.
-- Those platform-specific pricing adjustments are modeled separately from the catalog itself (e.g., in checkout totals/adjustments), not by mutating canonical item prices.
-- If a business intentionally sets different base prices per platform, represent them as distinct catalogs with their own embedded item prices.
+The set of operations required to fulfill this capability are:
+
+- Get all merchants
+- Get all catalogs
+- Get a catalog by id
+- Get all catalogs for a particular merchant

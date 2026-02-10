@@ -6,12 +6,8 @@ nav:
   - Home: index.md
   - Philosophy: documentation/philosophy.md
   - Getting Started:
-      - Picking Capabilities: getting-started/picking-capabilities.md
+      - Understanding Capabilities: getting-started/understanding-capabilities.md
       - Add UCP Discovery: getting-started/ucp-setup.md
-      - APIs:
-          - REST: apis/rest.md
-          - MCP: apis/mcp.md
-          - A2A: apis/a2a.md
   - Capabilities:
       - Catalog:
           - Overview: capabilities/catalog/overview.md
