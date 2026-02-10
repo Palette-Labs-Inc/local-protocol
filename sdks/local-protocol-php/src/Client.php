@@ -18,13 +18,10 @@ use LocalProtocol\Services\RequestsService;
 use LocalProtocol\Services\WellKnownService;
 
 /**
- * @phpstan-import-type NormalizedRequest from \LocalProtocol\Core\BaseClient
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
  */
 class Client extends BaseClient
 {
-    public ?string $apiKey;
-
     /**
      * @api
      */
@@ -69,12 +66,9 @@ class Client extends BaseClient
      * @param RequestOpts|null $requestOptions
      */
     public function __construct(
-        ?string $apiKey = null,
         ?string $baseUrl = null,
-        RequestOptions|array|null $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null
     ) {
-        $this->apiKey = $apiKey;
-
         $baseUrl ??= Util::getenv(
             'LOCAL_PROTOCOL_BASE_URL'
         ) ?: 'http://localhost:8000';
@@ -95,7 +89,7 @@ class Client extends BaseClient
                 'Accept' => 'application/json',
                 'User-Agent' => sprintf('local-protocol/PHP %s', VERSION),
                 'X-Stainless-Lang' => 'php',
-                'X-Stainless-Package-Version' => '0.0.1',
+                'X-Stainless-Package-Version' => '0.1.0',
                 'X-Stainless-Arch' => Util::machtype(),
                 'X-Stainless-OS' => Util::ostype(),
                 'X-Stainless-Runtime' => php_sapi_name(),
@@ -113,39 +107,5 @@ class Client extends BaseClient
         $this->orders = new OrdersService($this);
         $this->eventVocabularies = new EventVocabulariesService($this);
         $this->paymentInstruments = new PaymentInstrumentsService($this);
-    }
-
-    /** @return array<string,string> */
-    protected function authHeaders(): array
-    {
-        return ($this->apiKey !== null && $this->apiKey !== '') ? ['Authorization' => "Bearer {$this->apiKey}"] : [];
-    }
-
-    /**
-     * @internal
-     *
-     * @param string|list<string> $path
-     * @param array<string,mixed> $query
-     * @param array<string,string|int|list<string|int>|null> $headers
-     * @param RequestOpts|null $opts
-     *
-     * @return array{NormalizedRequest, RequestOptions}
-     */
-    protected function buildRequest(
-        string $method,
-        string|array $path,
-        array $query,
-        array $headers,
-        mixed $body,
-        RequestOptions|array|null $opts,
-    ): array {
-        return parent::buildRequest(
-            method: $method,
-            path: $path,
-            query: $query,
-            headers: [...$this->authHeaders(), ...$headers],
-            body: $body,
-            opts: $opts,
-        );
     }
 }
