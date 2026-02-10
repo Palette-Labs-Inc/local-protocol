@@ -23,7 +23,7 @@ from ._utils import is_given, get_async_library
 from ._compat import cached_property
 from ._version import __version__
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError, LocalProtocolError
+from ._exceptions import APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -64,7 +64,7 @@ __all__ = [
 
 class LocalProtocol(SyncAPIClient):
     # client options
-    api_key: str
+    api_key: str | None
 
     def __init__(
         self,
@@ -89,16 +89,7 @@ class LocalProtocol(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous LocalProtocol client instance.
-
-        This automatically infers the `api_key` argument from the `LOCAL_PROTOCOL_API_KEY` environment variable if it is not provided.
-        """
-        if api_key is None:
-            api_key = os.environ.get("LOCAL_PROTOCOL_API_KEY")
-        if api_key is None:
-            raise LocalProtocolError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the LOCAL_PROTOCOL_API_KEY environment variable"
-            )
+        """Construct a new synchronous LocalProtocol client instance."""
         self.api_key = api_key
 
         if base_url is None:
@@ -190,7 +181,7 @@ class LocalProtocol(SyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         api_key = self.api_key
-        return {"Authorization": f"Bearer {api_key}"}
+        return {"Authorization": f"Bearer {api_key}"} if api_key is not None else {}
 
     @property
     @override
@@ -238,7 +229,7 @@ class LocalProtocol(SyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
-            api_key=api_key or self.api_key,
+            api_key=self.api_key if api_key is None else api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -288,7 +279,7 @@ class LocalProtocol(SyncAPIClient):
 
 class AsyncLocalProtocol(AsyncAPIClient):
     # client options
-    api_key: str
+    api_key: str | None
 
     def __init__(
         self,
@@ -313,16 +304,7 @@ class AsyncLocalProtocol(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async AsyncLocalProtocol client instance.
-
-        This automatically infers the `api_key` argument from the `LOCAL_PROTOCOL_API_KEY` environment variable if it is not provided.
-        """
-        if api_key is None:
-            api_key = os.environ.get("LOCAL_PROTOCOL_API_KEY")
-        if api_key is None:
-            raise LocalProtocolError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the LOCAL_PROTOCOL_API_KEY environment variable"
-            )
+        """Construct a new async AsyncLocalProtocol client instance."""
         self.api_key = api_key
 
         if base_url is None:
@@ -414,7 +396,7 @@ class AsyncLocalProtocol(AsyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         api_key = self.api_key
-        return {"Authorization": f"Bearer {api_key}"}
+        return {"Authorization": f"Bearer {api_key}"} if api_key is not None else {}
 
     @property
     @override
@@ -462,7 +444,7 @@ class AsyncLocalProtocol(AsyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
-            api_key=api_key or self.api_key,
+            api_key=self.api_key if api_key is None else api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,

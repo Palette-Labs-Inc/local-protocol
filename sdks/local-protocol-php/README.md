@@ -40,7 +40,7 @@ Parameters with a default value must be set by name.
 
 use LocalProtocol\Client;
 
-$client = new Client(apiKey: getenv('LOCAL_PROTOCOL_API_KEY') ?: 'My API Key');
+$client = new Client();
 
 $deliveryRequest = $client->requests->create(
   id: 'req_demo_123',

@@ -23,7 +23,7 @@ use LocalProtocol\Services\WellKnownService;
  */
 class Client extends BaseClient
 {
-    public string $apiKey;
+    public ?string $apiKey;
 
     /**
      * @api
@@ -73,7 +73,7 @@ class Client extends BaseClient
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
     ) {
-        $this->apiKey = (string) ($apiKey ?? Util::getenv('LOCAL_PROTOCOL_API_KEY'));
+        $this->apiKey = $apiKey;
 
         $baseUrl ??= Util::getenv(
             'LOCAL_PROTOCOL_BASE_URL'
@@ -118,7 +118,7 @@ class Client extends BaseClient
     /** @return array<string,string> */
     protected function authHeaders(): array
     {
-        return $this->apiKey ? ['Authorization' => "Bearer {$this->apiKey}"] : [];
+        return ($this->apiKey !== null && $this->apiKey !== '') ? ['Authorization' => "Bearer {$this->apiKey}"] : [];
     }
 
     /**

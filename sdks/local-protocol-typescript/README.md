@@ -25,9 +25,7 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import LocalProtocol from 'local-protocol';
 
-const client = new LocalProtocol({
-  apiKey: process.env['LOCAL_PROTOCOL_API_KEY'], // This is the default and can be omitted
-});
+const client = new LocalProtocol();
 
 const deliveryRequest = await client.requests.create({
   id: 'req_demo_123',
@@ -49,9 +47,7 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import LocalProtocol from 'local-protocol';
 
-const client = new LocalProtocol({
-  apiKey: process.env['LOCAL_PROTOCOL_API_KEY'], // This is the default and can be omitted
-});
+const client = new LocalProtocol();
 
 const wellKnown: LocalProtocol.WellKnownRetrieveResponse = await client.wellKnown.retrieve();
 ```

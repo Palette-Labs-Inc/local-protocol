@@ -28,13 +28,10 @@ pip install git+ssh://git@github.com/Palette-Labs-Inc/local-protocol-python.git
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-import os
 from datetime import datetime
 from local_protocol import LocalProtocol
 
-client = LocalProtocol(
-    api_key=os.environ.get("LOCAL_PROTOCOL_API_KEY"),  # This is the default and can be omitted
-)
+client = LocalProtocol()
 
 delivery_request = client.requests.create(
     id="req_demo_123",
@@ -57,24 +54,19 @@ delivery_request = client.requests.create(
 print(delivery_request.id)
 ```
 
-While you can provide an `api_key` keyword argument,
-we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `LOCAL_PROTOCOL_API_KEY="My API Key"` to your `.env` file
-so that your API Key is not stored in source control.
+If your deployment requires bearer auth, you can provide an optional
+`api_key` keyword argument when constructing the client.
 
 ## Async usage
 
 Simply import `AsyncLocalProtocol` instead of `LocalProtocol` and use `await` with each API call:
 
 ```python
-import os
 from datetime import datetime
 import asyncio
 from local_protocol import AsyncLocalProtocol
 
-client = AsyncLocalProtocol(
-    api_key=os.environ.get("LOCAL_PROTOCOL_API_KEY"),  # This is the default and can be omitted
-)
+client = AsyncLocalProtocol()
 
 
 async def main() -> None:
@@ -118,7 +110,6 @@ pip install 'local_protocol[aiohttp] @ git+ssh://git@github.com/Palette-Labs-Inc
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
-import os
 import asyncio
 from local_protocol import DefaultAioHttpClient
 from datetime import datetime
@@ -127,7 +118,6 @@ from local_protocol import AsyncLocalProtocol
 
 async def main() -> None:
     async with AsyncLocalProtocol(
-        api_key=os.environ.get("LOCAL_PROTOCOL_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         delivery_request = await client.requests.create(
