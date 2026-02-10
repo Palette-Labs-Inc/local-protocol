@@ -92,7 +92,7 @@ describe('resource paymentInstruments', () => {
         street_address: 'street_address',
       },
       credential: { type: 'type' },
-      display: {},
+      display: { foo: 'bar' },
     });
   });
 });

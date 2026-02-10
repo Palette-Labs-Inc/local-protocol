@@ -44,7 +44,7 @@ interface PaymentInstrumentsContract
      * @param 'evm_auth_capture_escrow' $type
      * @param PostalAddress|PostalAddressShape $billingAddress billing address
      * @param Credential|CredentialShape $credential base definition for any payment credential
-     * @param mixed $display display information for the instrument
+     * @param array<string,mixed> $display Display information for the instrument. Each payment instrument schema defines its specific display properties, as outlined by the payment handler.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -68,7 +68,7 @@ interface PaymentInstrumentsContract
         string $type = 'evm_auth_capture_escrow',
         PostalAddress|array|null $billingAddress = null,
         Credential|array|null $credential = null,
-        mixed $display = null,
+        ?array $display = null,
         RequestOptions|array|null $requestOptions = null,
     ): EvmAuthCaptureEscrowInstrument;
 }

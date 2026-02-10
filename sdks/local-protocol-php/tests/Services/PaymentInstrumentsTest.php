@@ -119,7 +119,7 @@ final class PaymentInstrumentsTest extends TestCase
                 'streetAddress' => 'street_address',
             ],
             credential: ['type' => 'type'],
-            display: (object) [],
+            display: ['foo' => 'bar'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

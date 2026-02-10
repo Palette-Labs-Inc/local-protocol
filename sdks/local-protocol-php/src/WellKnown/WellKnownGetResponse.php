@@ -7,12 +7,13 @@ namespace LocalProtocol\WellKnown;
 use LocalProtocol\Core\Attributes\Required;
 use LocalProtocol\Core\Concerns\SdkModel;
 use LocalProtocol\Core\Contracts\BaseModel;
+use LocalProtocol\Core\Conversion\MapOf;
 
 /**
  * Service discovery metadata.
  *
  * @phpstan-type WellKnownGetResponseShape = array{
- *   capabilities: array<string,mixed>,
+ *   capabilities: array<string,array<string,mixed>>,
  *   endpoints: array<string,string>,
  *   name: string,
  *   version: string,
@@ -26,9 +27,9 @@ final class WellKnownGetResponse implements BaseModel
     /**
      * Supported capabilities by domain.
      *
-     * @var array<string,mixed> $capabilities
+     * @var array<string,array<string,mixed>> $capabilities
      */
-    #[Required(map: 'mixed')]
+    #[Required(map: new MapOf('mixed'))]
     public array $capabilities;
 
     /**
@@ -81,7 +82,7 @@ final class WellKnownGetResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string,mixed> $capabilities
+     * @param array<string,array<string,mixed>> $capabilities
      * @param array<string,string> $endpoints
      */
     public static function with(
@@ -103,7 +104,7 @@ final class WellKnownGetResponse implements BaseModel
     /**
      * Supported capabilities by domain.
      *
-     * @param array<string,mixed> $capabilities
+     * @param array<string,array<string,mixed>> $capabilities
      */
     public function withCapabilities(array $capabilities): self
     {

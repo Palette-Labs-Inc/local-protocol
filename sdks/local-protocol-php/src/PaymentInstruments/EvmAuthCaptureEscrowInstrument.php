@@ -29,7 +29,7 @@ use LocalProtocol\Requests\PostalAddress;
  *   type: string,
  *   billingAddress?: null|PostalAddress|PostalAddressShape,
  *   credential?: null|Credential|CredentialShape,
- *   display?: mixed,
+ *   display?: array<string,mixed>|null,
  *   token: Token|TokenShape,
  *   amount: \LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrument\Amount|AmountShape,
  *   authorizationExpiresAt: \DateTimeInterface,
@@ -78,10 +78,12 @@ final class EvmAuthCaptureEscrowInstrument implements BaseModel
     public ?Credential $credential;
 
     /**
-     * Display information for the instrument.
+     * Display information for the instrument. Each payment instrument schema defines its specific display properties, as outlined by the payment handler.
+     *
+     * @var array<string,mixed>|null $display
      */
-    #[Optional]
-    public mixed $display;
+    #[Optional(map: 'mixed')]
+    public ?array $display;
 
     /**
      * EVM token identifier used for auth/capture settlement.
@@ -223,6 +225,7 @@ final class EvmAuthCaptureEscrowInstrument implements BaseModel
      * @param MaxAmount|MaxAmountShape $maxAmount
      * @param PostalAddress|PostalAddressShape|null $billingAddress
      * @param Credential|CredentialShape|null $credential
+     * @param array<string,mixed>|null $display
      */
     public static function with(
         string $id,
@@ -243,7 +246,7 @@ final class EvmAuthCaptureEscrowInstrument implements BaseModel
         \DateTimeInterface $refundExpiresAt,
         PostalAddress|array|null $billingAddress = null,
         Credential|array|null $credential = null,
-        mixed $display = null,
+        ?array $display = null,
     ): self {
         $self = new self;
 
@@ -330,9 +333,11 @@ final class EvmAuthCaptureEscrowInstrument implements BaseModel
     }
 
     /**
-     * Display information for the instrument.
+     * Display information for the instrument. Each payment instrument schema defines its specific display properties, as outlined by the payment handler.
+     *
+     * @param array<string,mixed> $display
      */
-    public function withDisplay(mixed $display): self
+    public function withDisplay(array $display): self
     {
         $self = clone $this;
         $self['display'] = $display;

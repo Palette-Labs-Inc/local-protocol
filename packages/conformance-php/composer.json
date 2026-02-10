@@ -7,7 +7,7 @@
   "prefer-stable": true,
   "require": {
     "php": "^8.1",
-    "org-placeholder/local-protocol": "*",
+    "local-protocol/local-protocol": "*",
     "symfony/http-client": "^7",
     "nyholm/psr7": "^1"
   },

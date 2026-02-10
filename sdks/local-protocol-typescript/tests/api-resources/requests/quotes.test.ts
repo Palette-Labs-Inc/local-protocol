@@ -69,7 +69,7 @@ describe('resource quotes', () => {
               street_address: 'street_address',
             },
             credential: { type: 'type' },
-            display: {},
+            display: { foo: 'bar' },
             selected: true,
           },
         ],

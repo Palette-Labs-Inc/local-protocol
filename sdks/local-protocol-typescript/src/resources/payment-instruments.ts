@@ -216,9 +216,10 @@ export interface PaymentInstrument {
   credential?: PaymentInstrument.Credential;
 
   /**
-   * Display information for the instrument.
+   * Display information for the instrument. Each payment instrument schema defines
+   * its specific display properties, as outlined by the payment handler.
    */
-  display?: unknown;
+  display?: { [key: string]: unknown };
 }
 
 export namespace PaymentInstrument {
@@ -327,9 +328,10 @@ export interface PaymentInstrumentRegisterParams {
   credential?: PaymentInstrumentRegisterParams.Credential;
 
   /**
-   * Display information for the instrument.
+   * Display information for the instrument. Each payment instrument schema defines
+   * its specific display properties, as outlined by the payment handler.
    */
-  display?: unknown;
+  display?: { [key: string]: unknown };
 }
 
 export namespace PaymentInstrumentRegisterParams {

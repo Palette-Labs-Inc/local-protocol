@@ -61,7 +61,7 @@ test-conformance-php server_url:
   @cd "{{conformance_php_dir}}" && TEST_API_BASE_URL={{server_url}} composer test
 
 # Run all tests
-test server_url: (test-conformance server_url)
+test server_url: (test-conformance server_url) (test-conformance-php server_url)
 
 # --- Development ---
 

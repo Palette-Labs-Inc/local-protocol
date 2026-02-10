@@ -20,7 +20,7 @@ export interface WellKnownRetrieveResponse {
   /**
    * Supported capabilities by domain.
    */
-  capabilities: { [key: string]: unknown };
+  capabilities: { [key: string]: { [key: string]: unknown } };
 
   /**
    * Endpoint path map.

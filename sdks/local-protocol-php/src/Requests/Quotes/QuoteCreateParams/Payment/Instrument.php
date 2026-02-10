@@ -23,7 +23,7 @@ use LocalProtocol\Requests\PostalAddress;
  *   type: string,
  *   billingAddress?: null|PostalAddress|PostalAddressShape,
  *   credential?: null|Credential|CredentialShape,
- *   display?: mixed,
+ *   display?: array<string,mixed>|null,
  *   selected?: bool|null,
  * }
  */
@@ -60,10 +60,12 @@ final class Instrument implements BaseModel
     public ?Credential $credential;
 
     /**
-     * Display information for the instrument.
+     * Display information for the instrument. Each payment instrument schema defines its specific display properties, as outlined by the payment handler.
+     *
+     * @var array<string,mixed>|null $display
      */
-    #[Optional]
-    public mixed $display;
+    #[Optional(map: 'mixed')]
+    public ?array $display;
 
     /**
      * Whether this instrument is selected by the user.
@@ -97,6 +99,7 @@ final class Instrument implements BaseModel
      *
      * @param PostalAddress|PostalAddressShape|null $billingAddress
      * @param Credential|CredentialShape|null $credential
+     * @param array<string,mixed>|null $display
      */
     public static function with(
         string $id,
@@ -104,7 +107,7 @@ final class Instrument implements BaseModel
         string $type,
         PostalAddress|array|null $billingAddress = null,
         Credential|array|null $credential = null,
-        mixed $display = null,
+        ?array $display = null,
         ?bool $selected = null,
     ): self {
         $self = new self;
@@ -180,9 +183,11 @@ final class Instrument implements BaseModel
     }
 
     /**
-     * Display information for the instrument.
+     * Display information for the instrument. Each payment instrument schema defines its specific display properties, as outlined by the payment handler.
+     *
+     * @param array<string,mixed> $display
      */
-    public function withDisplay(mixed $display): self
+    public function withDisplay(array $display): self
     {
         $self = clone $this;
         $self['display'] = $display;

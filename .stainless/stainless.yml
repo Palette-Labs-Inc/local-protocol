@@ -46,7 +46,7 @@ targets:
     edition: php.2025-10-08
     package_name: local-protocol
     production_repo: null
-    composer_package_name: org-placeholder/local-protocol
+    composer_package_name: local-protocol/local-protocol
   python:
     edition: python.2025-11-20
     package_name: local_protocol
@@ -57,7 +57,7 @@ targets:
 # `environments` are a map of the name of the environment (e.g. "sandbox",
 # "production") to the corresponding url to use.
 environments:
-  production: http://localhost:8000
+  local: http://localhost:8000
 
 # `resources` define the structure and organization for your API, such as how
 # methods and models are grouped together and accessed. See the [configuration

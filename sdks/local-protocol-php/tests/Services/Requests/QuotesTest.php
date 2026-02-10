@@ -97,7 +97,7 @@ final class QuotesTest extends TestCase
                             'streetAddress' => 'street_address',
                         ],
                         'credential' => ['type' => 'type'],
-                        'display' => (object) [],
+                        'display' => ['foo' => 'bar'],
                         'selected' => true,
                     ],
                 ],

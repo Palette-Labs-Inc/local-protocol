@@ -45,7 +45,7 @@ use LocalProtocol\Requests\PostalAddress;
  *   refundExpiresAt: \DateTimeInterface,
  *   billingAddress?: null|PostalAddress|PostalAddressShape,
  *   credential?: null|Credential|CredentialShape,
- *   display?: mixed,
+ *   display?: array<string,mixed>|null,
  * }
  */
 final class PaymentInstrumentRegisterParams implements BaseModel
@@ -161,10 +161,12 @@ final class PaymentInstrumentRegisterParams implements BaseModel
     public ?Credential $credential;
 
     /**
-     * Display information for the instrument.
+     * Display information for the instrument. Each payment instrument schema defines its specific display properties, as outlined by the payment handler.
+     *
+     * @var array<string,mixed>|null $display
      */
-    #[Optional]
-    public mixed $display;
+    #[Optional(map: 'mixed')]
+    public ?array $display;
 
     /**
      * `new PaymentInstrumentRegisterParams()` is missing required properties by the API.
@@ -226,6 +228,7 @@ final class PaymentInstrumentRegisterParams implements BaseModel
      * @param MaxAmount|MaxAmountShape $maxAmount
      * @param PostalAddress|PostalAddressShape|null $billingAddress
      * @param Credential|CredentialShape|null $credential
+     * @param array<string,mixed>|null $display
      */
     public static function with(
         string $id,
@@ -245,7 +248,7 @@ final class PaymentInstrumentRegisterParams implements BaseModel
         \DateTimeInterface $refundExpiresAt,
         PostalAddress|array|null $billingAddress = null,
         Credential|array|null $credential = null,
-        mixed $display = null,
+        ?array $display = null,
     ): self {
         $self = new self;
 
@@ -486,9 +489,11 @@ final class PaymentInstrumentRegisterParams implements BaseModel
     }
 
     /**
-     * Display information for the instrument.
+     * Display information for the instrument. Each payment instrument schema defines its specific display properties, as outlined by the payment handler.
+     *
+     * @param array<string,mixed> $display
      */
-    public function withDisplay(mixed $display): self
+    public function withDisplay(array $display): self
     {
         $self = clone $this;
         $self['display'] = $display;

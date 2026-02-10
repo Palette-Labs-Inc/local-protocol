@@ -21,7 +21,7 @@
     { "name": "events", "description": "Event vocabulary operations" },
     { "name": "payments", "description": "Payment instrument operations" }
   ],
-  "security": [],
+  "security": [{ "bearerAuth": [] }],
   "paths": {
     "/.well-known/local-protocol": {
       "get": {
@@ -1054,7 +1054,10 @@
           "capabilities": {
             "type": "object",
             "description": "Supported capabilities by domain.",
-            "additionalProperties": true
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": true
+            }
           },
           "endpoints": {
             "type": "object",
@@ -1404,7 +1407,7 @@
           "id": { "type": "string", "description": "Unique quote identifier." },
           "intent_id": { "type": "string", "description": "Shared intent identifier for tracing Request -> Quote -> Order." },
           "nonce": { "type": "string", "description": "Client-generated idempotency key." },
-          "price": { "type": "integer", "description": "Price in minor currency units." },
+          "price": { "type": "integer", "minimum": 0, "description": "Price in minor currency units." },
           "ready_at": { "type": "string", "format": "date-time", "description": "Estimated readiness time (RFC 3339)." },
           "expires_at": { "type": "string", "format": "date-time", "description": "Quote expiration time (RFC 3339)." }
         }
@@ -1536,7 +1539,7 @@
           "type": { "type": "string", "description": "Instrument category (e.g., 'card', 'tokenized_card')." },
           "billing_address": { "$ref": "#/components/schemas/PostalAddress", "description": "Billing address." },
           "credential": { "$ref": "#/components/schemas/PaymentCredential" },
-          "display": { "type": "object", "description": "Display information for the instrument." }
+          "display": { "type": "object", "description": "Display information for the instrument. Each payment instrument schema defines its specific display properties, as outlined by the payment handler.", "additionalProperties": true }
         }
       },
       "SelectedPaymentInstrument": {
@@ -1611,6 +1614,13 @@
             "description": "Map of event IDs to event definitions."
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Bearer token authentication via the LOCAL_PROTOCOL_API_KEY."
       }
     }
   }

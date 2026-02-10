@@ -57,7 +57,7 @@ final class PaymentInstrumentsRawService implements PaymentInstrumentsRawContrac
      *   type?: 'evm_auth_capture_escrow',
      *   billingAddress?: PostalAddress|PostalAddressShape,
      *   credential?: Credential|CredentialShape,
-     *   display?: mixed,
+     *   display?: array<string,mixed>,
      * }|PaymentInstrumentRegisterParams $params
      * @param RequestOpts|null $requestOptions
      *
