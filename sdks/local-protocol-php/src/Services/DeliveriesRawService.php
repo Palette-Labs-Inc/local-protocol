@@ -15,6 +15,8 @@ use LocalProtocol\RequestOptions;
 use LocalProtocol\ServiceContracts\DeliveriesRawContract;
 
 /**
+ * Accept quotes and manage delivery lifecycle state.
+ *
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
  */
 final class DeliveriesRawService implements DeliveriesRawContract

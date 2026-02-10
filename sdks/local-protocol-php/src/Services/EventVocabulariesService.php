@@ -11,6 +11,8 @@ use LocalProtocol\RequestOptions;
 use LocalProtocol\ServiceContracts\EventVocabulariesContract;
 
 /**
+ * Retrieve event vocabulary definitions by name.
+ *
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
  */
 final class EventVocabulariesService implements EventVocabulariesContract

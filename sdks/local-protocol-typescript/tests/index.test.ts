@@ -445,11 +445,10 @@ describe('instantiate client', () => {
     });
   });
 
-  test('with environment variable arguments', () => {
-    // set options via env var
+  test('does not infer apiKey from environment variables', () => {
     process.env['LOCAL_PROTOCOL_API_KEY'] = 'My API Key';
     const client = new LocalProtocol();
-    expect(client.apiKey).toBe('My API Key');
+    expect(client.apiKey).toBe(undefined);
   });
 
   test('with overridden environment variable arguments', () => {

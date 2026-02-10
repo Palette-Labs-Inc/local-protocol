@@ -11,6 +11,8 @@ use LocalProtocol\RequestOptions;
 use LocalProtocol\ServiceContracts\MerchantsContract;
 
 /**
+ * Read merchant profile and denormalized catalog data.
+ *
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
  */
 final class MerchantsService implements MerchantsContract

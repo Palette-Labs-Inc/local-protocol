@@ -14,6 +14,8 @@ use LocalProtocol\ServiceContracts\RequestsContract;
 use LocalProtocol\Services\Requests\QuotesService;
 
 /**
+ * Create and manage delivery requests.
+ *
  * @phpstan-import-type LocationShape from \LocalProtocol\Requests\Location
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
  */

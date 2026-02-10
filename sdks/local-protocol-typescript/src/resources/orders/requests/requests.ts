@@ -6,6 +6,9 @@ import { OrderQuote, QuoteListResponse, QuoteRetrieveParams, Quotes } from './qu
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 
+/**
+ * Create order requests that can be quoted.
+ */
 export class Requests extends APIResource {
   quotes: QuotesAPI.Quotes = new QuotesAPI.Quotes(this._client);
 

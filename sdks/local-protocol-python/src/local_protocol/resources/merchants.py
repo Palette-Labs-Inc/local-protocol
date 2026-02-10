@@ -20,13 +20,15 @@ __all__ = ["MerchantsResource", "AsyncMerchantsResource"]
 
 
 class MerchantsResource(SyncAPIResource):
+    """Read merchant profile and denormalized catalog data."""
+
     @cached_property
     def with_raw_response(self) -> MerchantsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#accessing-raw-response-data-eg-headers
         """
         return MerchantsResourceWithRawResponse(self)
 
@@ -35,7 +37,7 @@ class MerchantsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#with_streaming_response
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#with_streaming_response
         """
         return MerchantsResourceWithStreamingResponse(self)
 
@@ -74,13 +76,15 @@ class MerchantsResource(SyncAPIResource):
 
 
 class AsyncMerchantsResource(AsyncAPIResource):
+    """Read merchant profile and denormalized catalog data."""
+
     @cached_property
     def with_raw_response(self) -> AsyncMerchantsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#accessing-raw-response-data-eg-headers
         """
         return AsyncMerchantsResourceWithRawResponse(self)
 
@@ -89,7 +93,7 @@ class AsyncMerchantsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/local-protocol-python#with_streaming_response
+        For more information, see https://www.github.com/Palette-Labs-Inc/local-protocol-python#with_streaming_response
         """
         return AsyncMerchantsResourceWithStreamingResponse(self)
 

@@ -9,8 +9,8 @@ from .amount import Amount as Amount
 from .payment import Payment as Payment
 from .delivery import Delivery as Delivery
 from .location import Location as Location
+from .evm_amount import EvmAmount as EvmAmount
 from .coordinates import Coordinates as Coordinates
-from .amount_param import AmountParam as AmountParam
 from .availability import Availability as Availability
 from .evm_currency import EvmCurrency as EvmCurrency
 from .payment_param import PaymentParam as PaymentParam
@@ -20,6 +20,7 @@ from .postal_address import PostalAddress as PostalAddress
 from .modifier_option import ModifierOption as ModifierOption
 from .catalog_category import CatalogCategory as CatalogCategory
 from .delivery_request import DeliveryRequest as DeliveryRequest
+from .evm_amount_param import EvmAmountParam as EvmAmountParam
 from .coordinates_param import CoordinatesParam as CoordinatesParam
 from .evm_currency_param import EvmCurrencyParam as EvmCurrencyParam
 from .payment_instrument import PaymentInstrument as PaymentInstrument

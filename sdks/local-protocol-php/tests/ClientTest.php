@@ -28,7 +28,6 @@ class ClientTest extends TestCase
 
         $client = new \LocalProtocol\Client(
             baseUrl: 'http://localhost',
-            apiKey: 'My API Key',
             requestOptions: ['transporter' => $transporter],
         );
 

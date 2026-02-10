@@ -6,16 +6,20 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Documentation
 
+The REST API documentation can be found on [localprotocol.xyz](https://localprotocol.xyz).
+
 ## Installation
 
 To use this package, install via Composer by adding the following to your application's `composer.json`:
+
+<!-- x-release-please-start-version -->
 
 ```json
 {
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:stainless-sdks/local-protocol-php.git"
+      "url": "git@github.com:Palette-Labs-Inc/local-protocol-php.git"
     }
   ],
   "require": {
@@ -23,6 +27,8 @@ To use this package, install via Composer by adding the following to your applic
   }
 }
 ```
+
+<!-- x-release-please-end -->
 
 ## Usage
 
@@ -34,11 +40,22 @@ Parameters with a default value must be set by name.
 
 use LocalProtocol\Client;
 
-$client = new Client(apiKey: getenv('LOCAL_PROTOCOL_API_KEY') ?: 'My API Key');
+$client = new Client();
 
-$wellKnown = $client->wellKnown->retrieve();
+$deliveryRequest = $client->requests->create(
+  id: 'req_demo_123',
+  dropoffLocation: [
+    'coordinates' => ['latitude' => 37.7875, 'longitude' => -122.4073]
+  ],
+  dropoffTime: new \DateTimeImmutable('2026-02-10T17:30:00Z'),
+  nonce: 'nonce_demo_123',
+  pickupLocation: [
+    'coordinates' => ['latitude' => 37.7751, 'longitude' => -122.4193]
+  ],
+  pickupTime: new \DateTimeImmutable('2026-02-10T17:00:00Z'),
+);
 
-var_dump($wellKnown->capabilities);
+var_dump($deliveryRequest->id);
 ```
 
 ### Value Objects
@@ -162,4 +179,4 @@ PHP 8.1.0 or higher.
 
 ## Contributing
 
-See [the contributing documentation](https://github.com/stainless-sdks/local-protocol-php/tree/main/CONTRIBUTING.md).
+See [the contributing documentation](https://github.com/Palette-Labs-Inc/local-protocol-php/tree/main/CONTRIBUTING.md).

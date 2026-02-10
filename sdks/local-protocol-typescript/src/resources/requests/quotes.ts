@@ -7,6 +7,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Create and read delivery quotes for a request.
+ */
 export class Quotes extends APIResource {
   /**
    * Submit a quote for a delivery request. The `nonce` field provides idempotency.

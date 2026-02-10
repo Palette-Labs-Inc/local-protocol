@@ -25,8 +25,9 @@ organization:
   # Name of your organization or company, used to determine the name of the client
   # and headings.
   name: local-protocol
+  github_org: Palette-Labs-Inc
   # Link to your API documentation.
-  docs: ''
+  docs: https://localprotocol.xyz
   # Contact email for bug reports, questions, and support requests.
   contact: ''
 
@@ -39,18 +40,18 @@ targets:
     # [docs]: https://www.stainless.com/docs/reference/editions
     edition: typescript.2025-10-10
     package_name: local-protocol
-    production_repo: null
+    production_repo: Palette-Labs-Inc/local-protocol-typescript
     publish:
       npm: false
   php:
     edition: php.2025-10-08
     package_name: local-protocol
-    production_repo: null
+    production_repo: Palette-Labs-Inc/local-protocol-php
     composer_package_name: local-protocol/local-protocol
   python:
     edition: python.2025-11-20
     package_name: local_protocol
-    production_repo: null
+    production_repo: Palette-Labs-Inc/local-protocol-python
     publish:
       pypi: false
 
@@ -66,6 +67,7 @@ environments:
 # [configuration guide]: https://www.stainless.com/docs/guides/configure#resources
 resources:
   well_known:
+    description: Discover server capabilities, standards, and endpoints.
     # Configure the methods defined in this resource. Each key in the object is the
     # name of the method and the value is either an endpoint (for example, `get /foo`)
     # or an object with more detail.
@@ -75,10 +77,12 @@ resources:
       retrieve: get /.well-known/local-protocol
 
   healthz:
+    description: Check whether the server is currently healthy.
     methods:
       check: get /healthz
 
   requests:
+    description: Create and manage delivery requests.
     models:
       postal_address: '#/components/schemas/PostalAddress'
       location: '#/components/schemas/Location'
@@ -92,6 +96,7 @@ resources:
     # logical groupings, e.g. `cards.payments`.
     subresources:
       quotes:
+        description: Create and read delivery quotes for a request.
         # Configure the models--named types--defined in the resource. Each key in the
         # object is the name of the model and the value is either the name of a schema in
         # `#/components/schemas` or an object with more detail.
@@ -105,6 +110,7 @@ resources:
           retrieve: get /requests/{request_id}/quotes/{quote_id}
 
   deliveries:
+    description: Accept quotes and manage delivery lifecycle state.
     models:
       delivery: '#/components/schemas/Delivery'
     methods:
@@ -114,6 +120,7 @@ resources:
       update_event: patch /deliveries/{delivery_id}/event
 
   merchants:
+    description: Read merchant profile and denormalized catalog data.
     models:
       availability: '#/components/schemas/Availability'
       modifier_option: '#/components/schemas/ModifierOption'
@@ -123,6 +130,7 @@ resources:
       retrieve: get /merchants/{merchant_id}
 
   orders:
+    description: Create and retrieve orders and order-level requests.
     models:
       order: '#/components/schemas/Order'
     methods:
@@ -130,10 +138,12 @@ resources:
       retrieve: get /orders/{order_id}
     subresources:
       requests:
+        description: Create order requests that can be quoted.
         methods:
           create: post /orders/requests
         subresources:
           quotes:
+            description: List and retrieve order request quotes.
             models:
               order_quote: '#/components/schemas/OrderQuote'
             methods:
@@ -141,12 +151,15 @@ resources:
               retrieve: get /orders/requests/{order_request_id}/quotes/{order_quote_id}
 
   event_vocabularies:
+    description: Retrieve event vocabulary definitions by name.
     methods:
       retrieve: get /event-vocabularies/{name}
 
   payment_instruments:
+    description: Register payment instruments and related payment models.
     models:
       evm_currency: '#/components/schemas/EvmCurrency'
+      evm_amount: '#/components/schemas/EvmAmount'
       amount: '#/components/schemas/Amount'
       evm_auth_capture_escrow_instrument: '#/components/schemas/EvmAuthCaptureEscrowInstrument'
       evm_auth_capture_escrow_instrument_details: '#/components/schemas/EvmAuthCaptureEscrowInstrumentDetails'
@@ -166,25 +179,6 @@ settings:
   disable_mock_tests: true
   license: Apache-2.0
 
-# `client_settings` define settings for the API client, such as extra constructor
-# arguments (used for authentication), retry behavior, idempotency, etc.
-client_settings:
-  opts:
-    api_key:
-      type: string
-      read_env: LOCAL_PROTOCOL_API_KEY
-      nullable: false
-      auth:
-        security_scheme: bearerAuth
-
-security_schemes:
-  bearerAuth:
-    type: http
-    scheme: bearer
-
-security:
-  - bearerAuth: []
-
 # `readme` is used to configure the code snippets that will be rendered in the
 # README.md of various SDKs. In particular, you can change the `headline`
 # snippet's endpoint and the arguments to call it with.
@@ -196,5 +190,17 @@ readme:
       params: {}
     headline:
       type: request
-      endpoint: get /.well-known/local-protocol
-      params: {}
+      endpoint: post /requests
+      params:
+        id: req_demo_123
+        nonce: nonce_demo_123
+        pickup_location:
+          coordinates:
+            latitude: 37.7751
+            longitude: -122.4193
+        dropoff_location:
+          coordinates:
+            latitude: 37.7875
+            longitude: -122.4073
+        pickup_time: "2026-02-10T17:00:00Z"
+        dropoff_time: "2026-02-10T17:30:00Z"

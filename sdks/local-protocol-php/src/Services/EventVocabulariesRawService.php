@@ -12,6 +12,8 @@ use LocalProtocol\RequestOptions;
 use LocalProtocol\ServiceContracts\EventVocabulariesRawContract;
 
 /**
+ * Retrieve event vocabulary definitions by name.
+ *
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
  */
 final class EventVocabulariesRawService implements EventVocabulariesRawContract

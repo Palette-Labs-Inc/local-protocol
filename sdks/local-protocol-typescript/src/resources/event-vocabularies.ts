@@ -5,6 +5,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Retrieve event vocabulary definitions by name.
+ */
 export class EventVocabularies extends APIResource {
   /**
    * Returns a delivery event vocabulary by name.

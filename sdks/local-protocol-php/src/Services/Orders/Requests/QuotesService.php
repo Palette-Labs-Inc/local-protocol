@@ -12,6 +12,8 @@ use LocalProtocol\RequestOptions;
 use LocalProtocol\ServiceContracts\Orders\Requests\QuotesContract;
 
 /**
+ * List and retrieve order request quotes.
+ *
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
  */
 final class QuotesService implements QuotesContract

@@ -15,6 +15,8 @@ use LocalProtocol\Requests\RequestCreateParams;
 use LocalProtocol\ServiceContracts\RequestsRawContract;
 
 /**
+ * Create and manage delivery requests.
+ *
  * @phpstan-import-type LocationShape from \LocalProtocol\Requests\Location
  * @phpstan-import-type RequestOpts from \LocalProtocol\RequestOptions
  */

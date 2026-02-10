@@ -23,7 +23,7 @@ final class PaymentInstrumentsTest extends TestCase
         parent::setUp();
 
         $testUrl = Util::getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
-        $client = new Client(apiKey: 'My API Key', baseUrl: $testUrl);
+        $client = new Client(baseUrl: $testUrl);
 
         $this->client = $client;
     }
@@ -39,7 +39,12 @@ final class PaymentInstrumentsTest extends TestCase
             id: 'id',
             token: ['decimals' => 0, 'symbol' => 'symbol'],
             amount: [
-                'currency' => ['symbol' => 'SQ9_0_L1__5L'], 'value' => '269125115713',
+                'currency' => [
+                    'address' => '0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A',
+                    'chainID' => 1,
+                    'decimals' => 0,
+                ],
+                'value' => '269125115713',
             ],
             authorizationExpiresAt: new \DateTimeImmutable(
                 '2019-12-27T18:11:19.117Z'
@@ -48,7 +53,12 @@ final class PaymentInstrumentsTest extends TestCase
             contract: '0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A',
             handlerID: 'handler_id',
             maxAmount: [
-                'currency' => ['symbol' => 'SQ9_0_L1__5L'], 'value' => '269125115713',
+                'currency' => [
+                    'address' => '0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A',
+                    'chainID' => 1,
+                    'decimals' => 0,
+                ],
+                'value' => '269125115713',
             ],
             nonce: '269125115713',
             operator: '0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A',

@@ -146,6 +146,7 @@ Types:
 ```python
 from local_protocol.types import (
     Amount,
+    EvmAmount,
     EvmAuthCaptureEscrowInstrument,
     EvmAuthCaptureEscrowInstrumentDetails,
     EvmCurrency,

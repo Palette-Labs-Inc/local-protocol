@@ -25,13 +25,25 @@ build-sdks: openapi-validate build-stainless-sdks
 
 # Build all SDKs from OpenAPI spec (Stainless)
 build-stainless-sdks:
-  @echo "Generating Python, PHP, and TypeScript SDKs via Stainless..."
-  @cd "{{root_dir}}" && ./scripts/stainless_preview_local.sh
+  @echo "Generating Python, PHP, and TypeScript SDKs via Stainless (production repos enabled)..."
+  @cd "{{root_dir}}" && stl preview
   @cd "{{root_dir}}" && ./scripts/patch_stainless_sdks.sh
 
 # Build a single Stainless target (e.g., just build-sdk python)
 build-sdk target:
   @echo "Generating {{target}} SDK via Stainless..."
+  @cd "{{root_dir}}" && stl preview --target {{target}}
+  @cd "{{root_dir}}" && ./scripts/patch_stainless_sdks.sh
+
+# Build all SDKs from OpenAPI spec while bypassing GitHub production repos.
+build-stainless-sdks-local:
+  @echo "Generating SDKs via Stainless (local mode, production repos disabled)..."
+  @cd "{{root_dir}}" && ./scripts/stainless_preview_local.sh
+  @cd "{{root_dir}}" && ./scripts/patch_stainless_sdks.sh
+
+# Build one Stainless target while bypassing GitHub production repos.
+build-sdk-local target:
+  @echo "Generating {{target}} SDK via Stainless (local mode)..."
   @cd "{{root_dir}}" && ./scripts/stainless_preview_local.sh --target {{target}}
   @cd "{{root_dir}}" && ./scripts/patch_stainless_sdks.sh
 
@@ -41,7 +53,7 @@ patch-sdks:
 
 # Build all SDKs using production Stainless config (requires GitHub App auth).
 build-stainless-sdks-production:
-  @cd "{{root_dir}}" && stl preview
+  @just build-stainless-sdks
 
 # Validate the OpenAPI spec and Stainless config
 openapi-validate:

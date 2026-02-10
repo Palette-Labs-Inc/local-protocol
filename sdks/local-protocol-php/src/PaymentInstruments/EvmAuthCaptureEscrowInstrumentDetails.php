@@ -7,22 +7,19 @@ namespace LocalProtocol\PaymentInstruments;
 use LocalProtocol\Core\Attributes\Required;
 use LocalProtocol\Core\Concerns\SdkModel;
 use LocalProtocol\Core\Contracts\BaseModel;
-use LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\Amount;
-use LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\MaxAmount;
 use LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\Token;
 
 /**
  * @phpstan-import-type TokenShape from \LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\Token
- * @phpstan-import-type AmountShape from \LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\Amount
- * @phpstan-import-type MaxAmountShape from \LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\MaxAmount
+ * @phpstan-import-type EvmAmountShape from \LocalProtocol\PaymentInstruments\EvmAmount
  *
  * @phpstan-type EvmAuthCaptureEscrowInstrumentDetailsShape = array{
  *   token: Token|TokenShape,
- *   amount: \LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\Amount|AmountShape,
+ *   amount: EvmAmount|EvmAmountShape,
  *   authorizationExpiresAt: \DateTimeInterface,
  *   chainID: int,
  *   contract: string,
- *   maxAmount: MaxAmount|MaxAmountShape,
+ *   maxAmount: EvmAmount|EvmAmountShape,
  *   nonce: string,
  *   operator: string,
  *   payer: string,
@@ -30,17 +27,12 @@ use LocalProtocol\PaymentInstruments\EvmAuthCaptureEscrowInstrumentDetails\Token
  *   preapprovalExpiresAt: \DateTimeInterface,
  *   receiver: string,
  *   refundExpiresAt: \DateTimeInterface,
- *   type: 'evm_auth_capture_escrow',
  * }
  */
 final class EvmAuthCaptureEscrowInstrumentDetails implements BaseModel
 {
     /** @use SdkModel<EvmAuthCaptureEscrowInstrumentDetailsShape> */
     use SdkModel;
-
-    /** @var 'evm_auth_capture_escrow' $type */
-    #[Required]
-    public string $type = 'evm_auth_capture_escrow';
 
     /**
      * EVM token identifier used for auth/capture settlement.
@@ -52,7 +44,7 @@ final class EvmAuthCaptureEscrowInstrumentDetails implements BaseModel
      * Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
      */
     #[Required]
-    public Amount $amount;
+    public EvmAmount $amount;
 
     /**
      * Authorization expiration (RFC 3339).
@@ -76,7 +68,7 @@ final class EvmAuthCaptureEscrowInstrumentDetails implements BaseModel
      * Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
      */
     #[Required('max_amount')]
-    public MaxAmount $maxAmount;
+    public EvmAmount $maxAmount;
 
     /**
      * Unique nonce for payment info hash computation.
@@ -172,16 +164,16 @@ final class EvmAuthCaptureEscrowInstrumentDetails implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Token|TokenShape $token
-     * @param Amount|AmountShape $amount
-     * @param MaxAmount|MaxAmountShape $maxAmount
+     * @param EvmAmount|EvmAmountShape $amount
+     * @param EvmAmount|EvmAmountShape $maxAmount
      */
     public static function with(
         Token|array $token,
-        Amount|array $amount,
+        EvmAmount|array $amount,
         \DateTimeInterface $authorizationExpiresAt,
         int $chainID,
         string $contract,
-        MaxAmount|array $maxAmount,
+        EvmAmount|array $maxAmount,
         string $nonce,
         string $operator,
         string $payer,
@@ -225,11 +217,10 @@ final class EvmAuthCaptureEscrowInstrumentDetails implements BaseModel
     /**
      * Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
      *
-     * @param Amount|AmountShape $amount
+     * @param EvmAmount|EvmAmountShape $amount
      */
-    public function withAmount(
-        Amount|array $amount,
-    ): self {
+    public function withAmount(EvmAmount|array $amount): self
+    {
         $self = clone $this;
         $self['amount'] = $amount;
 
@@ -273,9 +264,9 @@ final class EvmAuthCaptureEscrowInstrumentDetails implements BaseModel
     /**
      * Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.
      *
-     * @param MaxAmount|MaxAmountShape $maxAmount
+     * @param EvmAmount|EvmAmountShape $maxAmount
      */
-    public function withMaxAmount(MaxAmount|array $maxAmount): self
+    public function withMaxAmount(EvmAmount|array $maxAmount): self
     {
         $self = clone $this;
         $self['maxAmount'] = $maxAmount;
@@ -358,17 +349,6 @@ final class EvmAuthCaptureEscrowInstrumentDetails implements BaseModel
     ): self {
         $self = clone $this;
         $self['refundExpiresAt'] = $refundExpiresAt;
-
-        return $self;
-    }
-
-    /**
-     * @param 'evm_auth_capture_escrow' $type
-     */
-    public function withType(string $type): self
-    {
-        $self = clone $this;
-        $self['type'] = $type;
 
         return $self;
     }

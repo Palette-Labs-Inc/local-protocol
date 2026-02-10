@@ -35,6 +35,7 @@ import {
 } from './resources/merchants';
 import {
   Amount,
+  EvmAmount,
   EvmAuthCaptureEscrowInstrument,
   EvmAuthCaptureEscrowInstrumentDetails,
   EvmCurrency,
@@ -71,7 +72,7 @@ import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['LOCAL_PROTOCOL_API_KEY'].
+   * Optional bearer token. When provided, requests include `Authorization: Bearer <token>`.
    */
   apiKey?: string | undefined;
 
@@ -148,7 +149,7 @@ export interface ClientOptions {
  * API Client for interfacing with the Local Protocol API.
  */
 export class LocalProtocol {
-  apiKey: string;
+  apiKey: string | undefined;
 
   baseURL: string;
   maxRetries: number;
@@ -165,7 +166,7 @@ export class LocalProtocol {
   /**
    * API Client for interfacing with the Local Protocol API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['LOCAL_PROTOCOL_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.apiKey]
    * @param {string} [opts.baseURL=process.env['LOCAL_PROTOCOL_BASE_URL'] ?? http://localhost:8000] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -176,15 +177,9 @@ export class LocalProtocol {
    */
   constructor({
     baseURL = readEnv('LOCAL_PROTOCOL_BASE_URL'),
-    apiKey = readEnv('LOCAL_PROTOCOL_API_KEY'),
+    apiKey,
     ...opts
   }: ClientOptions = {}) {
-    if (apiKey === undefined) {
-      throw new Errors.LocalProtocolError(
-        "The LOCAL_PROTOCOL_API_KEY environment variable is missing or empty; either provide it, or instantiate the LocalProtocol client with an apiKey option, like new LocalProtocol({ apiKey: 'My API Key' }).",
-      );
-    }
-
     const options: ClientOptions = {
       apiKey,
       ...opts,
@@ -246,6 +241,7 @@ export class LocalProtocol {
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    if (!this.apiKey) return buildHeaders([]);
     return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
   }
 
@@ -760,13 +756,37 @@ export class LocalProtocol {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Discover server capabilities, standards, and endpoints.
+   */
   wellKnown: API.WellKnown = new API.WellKnown(this);
+  /**
+   * Check whether the server is currently healthy.
+   */
   healthz: API.Healthz = new API.Healthz(this);
+  /**
+   * Create and manage delivery requests.
+   */
   requests: API.Requests = new API.Requests(this);
+  /**
+   * Accept quotes and manage delivery lifecycle state.
+   */
   deliveries: API.Deliveries = new API.Deliveries(this);
+  /**
+   * Read merchant profile and denormalized catalog data.
+   */
   merchants: API.Merchants = new API.Merchants(this);
+  /**
+   * Create and retrieve orders and order-level requests.
+   */
   orders: API.Orders = new API.Orders(this);
+  /**
+   * Retrieve event vocabulary definitions by name.
+   */
   eventVocabularies: API.EventVocabularies = new API.EventVocabularies(this);
+  /**
+   * Register payment instruments and related payment models.
+   */
   paymentInstruments: API.PaymentInstruments = new API.PaymentInstruments(this);
 }
 
@@ -823,6 +843,7 @@ export declare namespace LocalProtocol {
   export {
     PaymentInstruments as PaymentInstruments,
     type Amount as Amount,
+    type EvmAmount as EvmAmount,
     type EvmAuthCaptureEscrowInstrument as EvmAuthCaptureEscrowInstrument,
     type EvmAuthCaptureEscrowInstrumentDetails as EvmAuthCaptureEscrowInstrumentDetails,
     type EvmCurrency as EvmCurrency,

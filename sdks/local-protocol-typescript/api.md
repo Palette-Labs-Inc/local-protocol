@@ -123,6 +123,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/payment-instruments.ts">Amount</a></code>
+- <code><a href="./src/resources/payment-instruments.ts">EvmAmount</a></code>
 - <code><a href="./src/resources/payment-instruments.ts">EvmAuthCaptureEscrowInstrument</a></code>
 - <code><a href="./src/resources/payment-instruments.ts">EvmAuthCaptureEscrowInstrumentDetails</a></code>
 - <code><a href="./src/resources/payment-instruments.ts">EvmCurrency</a></code>

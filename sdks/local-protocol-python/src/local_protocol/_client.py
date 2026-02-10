@@ -23,7 +23,7 @@ from ._utils import is_given, get_async_library
 from ._compat import cached_property
 from ._version import __version__
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError, LocalProtocolError
+from ._exceptions import APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -64,7 +64,7 @@ __all__ = [
 
 class LocalProtocol(SyncAPIClient):
     # client options
-    api_key: str
+    api_key: str | None
 
     def __init__(
         self,
@@ -89,16 +89,7 @@ class LocalProtocol(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous LocalProtocol client instance.
-
-        This automatically infers the `api_key` argument from the `LOCAL_PROTOCOL_API_KEY` environment variable if it is not provided.
-        """
-        if api_key is None:
-            api_key = os.environ.get("LOCAL_PROTOCOL_API_KEY")
-        if api_key is None:
-            raise LocalProtocolError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the LOCAL_PROTOCOL_API_KEY environment variable"
-            )
+        """Construct a new synchronous LocalProtocol client instance."""
         self.api_key = api_key
 
         if base_url is None:
@@ -119,48 +110,56 @@ class LocalProtocol(SyncAPIClient):
 
     @cached_property
     def well_known(self) -> WellKnownResource:
+        """Discover server capabilities, standards, and endpoints."""
         from .resources.well_known import WellKnownResource
 
         return WellKnownResource(self)
 
     @cached_property
     def healthz(self) -> HealthzResource:
+        """Check whether the server is currently healthy."""
         from .resources.healthz import HealthzResource
 
         return HealthzResource(self)
 
     @cached_property
     def requests(self) -> RequestsResource:
+        """Create and manage delivery requests."""
         from .resources.requests import RequestsResource
 
         return RequestsResource(self)
 
     @cached_property
     def deliveries(self) -> DeliveriesResource:
+        """Accept quotes and manage delivery lifecycle state."""
         from .resources.deliveries import DeliveriesResource
 
         return DeliveriesResource(self)
 
     @cached_property
     def merchants(self) -> MerchantsResource:
+        """Read merchant profile and denormalized catalog data."""
         from .resources.merchants import MerchantsResource
 
         return MerchantsResource(self)
 
     @cached_property
     def orders(self) -> OrdersResource:
+        """Create and retrieve orders and order-level requests."""
         from .resources.orders import OrdersResource
 
         return OrdersResource(self)
 
     @cached_property
     def event_vocabularies(self) -> EventVocabulariesResource:
+        """Retrieve event vocabulary definitions by name."""
         from .resources.event_vocabularies import EventVocabulariesResource
 
         return EventVocabulariesResource(self)
 
     @cached_property
     def payment_instruments(self) -> PaymentInstrumentsResource:
+        """Register payment instruments and related payment models."""
         from .resources.payment_instruments import PaymentInstrumentsResource
 
         return PaymentInstrumentsResource(self)
@@ -182,7 +181,7 @@ class LocalProtocol(SyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         api_key = self.api_key
-        return {"Authorization": f"Bearer {api_key}"}
+        return {"Authorization": f"Bearer {api_key}"} if api_key is not None else {}
 
     @property
     @override
@@ -230,7 +229,7 @@ class LocalProtocol(SyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
-            api_key=api_key or self.api_key,
+            api_key=self.api_key if api_key is None else api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -280,7 +279,7 @@ class LocalProtocol(SyncAPIClient):
 
 class AsyncLocalProtocol(AsyncAPIClient):
     # client options
-    api_key: str
+    api_key: str | None
 
     def __init__(
         self,
@@ -305,16 +304,7 @@ class AsyncLocalProtocol(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async AsyncLocalProtocol client instance.
-
-        This automatically infers the `api_key` argument from the `LOCAL_PROTOCOL_API_KEY` environment variable if it is not provided.
-        """
-        if api_key is None:
-            api_key = os.environ.get("LOCAL_PROTOCOL_API_KEY")
-        if api_key is None:
-            raise LocalProtocolError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the LOCAL_PROTOCOL_API_KEY environment variable"
-            )
+        """Construct a new async AsyncLocalProtocol client instance."""
         self.api_key = api_key
 
         if base_url is None:
@@ -335,48 +325,56 @@ class AsyncLocalProtocol(AsyncAPIClient):
 
     @cached_property
     def well_known(self) -> AsyncWellKnownResource:
+        """Discover server capabilities, standards, and endpoints."""
         from .resources.well_known import AsyncWellKnownResource
 
         return AsyncWellKnownResource(self)
 
     @cached_property
     def healthz(self) -> AsyncHealthzResource:
+        """Check whether the server is currently healthy."""
         from .resources.healthz import AsyncHealthzResource
 
         return AsyncHealthzResource(self)
 
     @cached_property
     def requests(self) -> AsyncRequestsResource:
+        """Create and manage delivery requests."""
         from .resources.requests import AsyncRequestsResource
 
         return AsyncRequestsResource(self)
 
     @cached_property
     def deliveries(self) -> AsyncDeliveriesResource:
+        """Accept quotes and manage delivery lifecycle state."""
         from .resources.deliveries import AsyncDeliveriesResource
 
         return AsyncDeliveriesResource(self)
 
     @cached_property
     def merchants(self) -> AsyncMerchantsResource:
+        """Read merchant profile and denormalized catalog data."""
         from .resources.merchants import AsyncMerchantsResource
 
         return AsyncMerchantsResource(self)
 
     @cached_property
     def orders(self) -> AsyncOrdersResource:
+        """Create and retrieve orders and order-level requests."""
         from .resources.orders import AsyncOrdersResource
 
         return AsyncOrdersResource(self)
 
     @cached_property
     def event_vocabularies(self) -> AsyncEventVocabulariesResource:
+        """Retrieve event vocabulary definitions by name."""
         from .resources.event_vocabularies import AsyncEventVocabulariesResource
 
         return AsyncEventVocabulariesResource(self)
 
     @cached_property
     def payment_instruments(self) -> AsyncPaymentInstrumentsResource:
+        """Register payment instruments and related payment models."""
         from .resources.payment_instruments import AsyncPaymentInstrumentsResource
 
         return AsyncPaymentInstrumentsResource(self)
@@ -398,7 +396,7 @@ class AsyncLocalProtocol(AsyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         api_key = self.api_key
-        return {"Authorization": f"Bearer {api_key}"}
+        return {"Authorization": f"Bearer {api_key}"} if api_key is not None else {}
 
     @property
     @override
@@ -446,7 +444,7 @@ class AsyncLocalProtocol(AsyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
-            api_key=api_key or self.api_key,
+            api_key=self.api_key if api_key is None else api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -502,48 +500,56 @@ class LocalProtocolWithRawResponse:
 
     @cached_property
     def well_known(self) -> well_known.WellKnownResourceWithRawResponse:
+        """Discover server capabilities, standards, and endpoints."""
         from .resources.well_known import WellKnownResourceWithRawResponse
 
         return WellKnownResourceWithRawResponse(self._client.well_known)
 
     @cached_property
     def healthz(self) -> healthz.HealthzResourceWithRawResponse:
+        """Check whether the server is currently healthy."""
         from .resources.healthz import HealthzResourceWithRawResponse
 
         return HealthzResourceWithRawResponse(self._client.healthz)
 
     @cached_property
     def requests(self) -> requests.RequestsResourceWithRawResponse:
+        """Create and manage delivery requests."""
         from .resources.requests import RequestsResourceWithRawResponse
 
         return RequestsResourceWithRawResponse(self._client.requests)
 
     @cached_property
     def deliveries(self) -> deliveries.DeliveriesResourceWithRawResponse:
+        """Accept quotes and manage delivery lifecycle state."""
         from .resources.deliveries import DeliveriesResourceWithRawResponse
 
         return DeliveriesResourceWithRawResponse(self._client.deliveries)
 
     @cached_property
     def merchants(self) -> merchants.MerchantsResourceWithRawResponse:
+        """Read merchant profile and denormalized catalog data."""
         from .resources.merchants import MerchantsResourceWithRawResponse
 
         return MerchantsResourceWithRawResponse(self._client.merchants)
 
     @cached_property
     def orders(self) -> orders.OrdersResourceWithRawResponse:
+        """Create and retrieve orders and order-level requests."""
         from .resources.orders import OrdersResourceWithRawResponse
 
         return OrdersResourceWithRawResponse(self._client.orders)
 
     @cached_property
     def event_vocabularies(self) -> event_vocabularies.EventVocabulariesResourceWithRawResponse:
+        """Retrieve event vocabulary definitions by name."""
         from .resources.event_vocabularies import EventVocabulariesResourceWithRawResponse
 
         return EventVocabulariesResourceWithRawResponse(self._client.event_vocabularies)
 
     @cached_property
     def payment_instruments(self) -> payment_instruments.PaymentInstrumentsResourceWithRawResponse:
+        """Register payment instruments and related payment models."""
         from .resources.payment_instruments import PaymentInstrumentsResourceWithRawResponse
 
         return PaymentInstrumentsResourceWithRawResponse(self._client.payment_instruments)
@@ -557,48 +563,56 @@ class AsyncLocalProtocolWithRawResponse:
 
     @cached_property
     def well_known(self) -> well_known.AsyncWellKnownResourceWithRawResponse:
+        """Discover server capabilities, standards, and endpoints."""
         from .resources.well_known import AsyncWellKnownResourceWithRawResponse
 
         return AsyncWellKnownResourceWithRawResponse(self._client.well_known)
 
     @cached_property
     def healthz(self) -> healthz.AsyncHealthzResourceWithRawResponse:
+        """Check whether the server is currently healthy."""
         from .resources.healthz import AsyncHealthzResourceWithRawResponse
 
         return AsyncHealthzResourceWithRawResponse(self._client.healthz)
 
     @cached_property
     def requests(self) -> requests.AsyncRequestsResourceWithRawResponse:
+        """Create and manage delivery requests."""
         from .resources.requests import AsyncRequestsResourceWithRawResponse
 
         return AsyncRequestsResourceWithRawResponse(self._client.requests)
 
     @cached_property
     def deliveries(self) -> deliveries.AsyncDeliveriesResourceWithRawResponse:
+        """Accept quotes and manage delivery lifecycle state."""
         from .resources.deliveries import AsyncDeliveriesResourceWithRawResponse
 
         return AsyncDeliveriesResourceWithRawResponse(self._client.deliveries)
 
     @cached_property
     def merchants(self) -> merchants.AsyncMerchantsResourceWithRawResponse:
+        """Read merchant profile and denormalized catalog data."""
         from .resources.merchants import AsyncMerchantsResourceWithRawResponse
 
         return AsyncMerchantsResourceWithRawResponse(self._client.merchants)
 
     @cached_property
     def orders(self) -> orders.AsyncOrdersResourceWithRawResponse:
+        """Create and retrieve orders and order-level requests."""
         from .resources.orders import AsyncOrdersResourceWithRawResponse
 
         return AsyncOrdersResourceWithRawResponse(self._client.orders)
 
     @cached_property
     def event_vocabularies(self) -> event_vocabularies.AsyncEventVocabulariesResourceWithRawResponse:
+        """Retrieve event vocabulary definitions by name."""
         from .resources.event_vocabularies import AsyncEventVocabulariesResourceWithRawResponse
 
         return AsyncEventVocabulariesResourceWithRawResponse(self._client.event_vocabularies)
 
     @cached_property
     def payment_instruments(self) -> payment_instruments.AsyncPaymentInstrumentsResourceWithRawResponse:
+        """Register payment instruments and related payment models."""
         from .resources.payment_instruments import AsyncPaymentInstrumentsResourceWithRawResponse
 
         return AsyncPaymentInstrumentsResourceWithRawResponse(self._client.payment_instruments)
@@ -612,48 +626,56 @@ class LocalProtocolWithStreamedResponse:
 
     @cached_property
     def well_known(self) -> well_known.WellKnownResourceWithStreamingResponse:
+        """Discover server capabilities, standards, and endpoints."""
         from .resources.well_known import WellKnownResourceWithStreamingResponse
 
         return WellKnownResourceWithStreamingResponse(self._client.well_known)
 
     @cached_property
     def healthz(self) -> healthz.HealthzResourceWithStreamingResponse:
+        """Check whether the server is currently healthy."""
         from .resources.healthz import HealthzResourceWithStreamingResponse
 
         return HealthzResourceWithStreamingResponse(self._client.healthz)
 
     @cached_property
     def requests(self) -> requests.RequestsResourceWithStreamingResponse:
+        """Create and manage delivery requests."""
         from .resources.requests import RequestsResourceWithStreamingResponse
 
         return RequestsResourceWithStreamingResponse(self._client.requests)
 
     @cached_property
     def deliveries(self) -> deliveries.DeliveriesResourceWithStreamingResponse:
+        """Accept quotes and manage delivery lifecycle state."""
         from .resources.deliveries import DeliveriesResourceWithStreamingResponse
 
         return DeliveriesResourceWithStreamingResponse(self._client.deliveries)
 
     @cached_property
     def merchants(self) -> merchants.MerchantsResourceWithStreamingResponse:
+        """Read merchant profile and denormalized catalog data."""
         from .resources.merchants import MerchantsResourceWithStreamingResponse
 
         return MerchantsResourceWithStreamingResponse(self._client.merchants)
 
     @cached_property
     def orders(self) -> orders.OrdersResourceWithStreamingResponse:
+        """Create and retrieve orders and order-level requests."""
         from .resources.orders import OrdersResourceWithStreamingResponse
 
         return OrdersResourceWithStreamingResponse(self._client.orders)
 
     @cached_property
     def event_vocabularies(self) -> event_vocabularies.EventVocabulariesResourceWithStreamingResponse:
+        """Retrieve event vocabulary definitions by name."""
         from .resources.event_vocabularies import EventVocabulariesResourceWithStreamingResponse
 
         return EventVocabulariesResourceWithStreamingResponse(self._client.event_vocabularies)
 
     @cached_property
     def payment_instruments(self) -> payment_instruments.PaymentInstrumentsResourceWithStreamingResponse:
+        """Register payment instruments and related payment models."""
         from .resources.payment_instruments import PaymentInstrumentsResourceWithStreamingResponse
 
         return PaymentInstrumentsResourceWithStreamingResponse(self._client.payment_instruments)
@@ -667,48 +689,56 @@ class AsyncLocalProtocolWithStreamedResponse:
 
     @cached_property
     def well_known(self) -> well_known.AsyncWellKnownResourceWithStreamingResponse:
+        """Discover server capabilities, standards, and endpoints."""
         from .resources.well_known import AsyncWellKnownResourceWithStreamingResponse
 
         return AsyncWellKnownResourceWithStreamingResponse(self._client.well_known)
 
     @cached_property
     def healthz(self) -> healthz.AsyncHealthzResourceWithStreamingResponse:
+        """Check whether the server is currently healthy."""
         from .resources.healthz import AsyncHealthzResourceWithStreamingResponse
 
         return AsyncHealthzResourceWithStreamingResponse(self._client.healthz)
 
     @cached_property
     def requests(self) -> requests.AsyncRequestsResourceWithStreamingResponse:
+        """Create and manage delivery requests."""
         from .resources.requests import AsyncRequestsResourceWithStreamingResponse
 
         return AsyncRequestsResourceWithStreamingResponse(self._client.requests)
 
     @cached_property
     def deliveries(self) -> deliveries.AsyncDeliveriesResourceWithStreamingResponse:
+        """Accept quotes and manage delivery lifecycle state."""
         from .resources.deliveries import AsyncDeliveriesResourceWithStreamingResponse
 
         return AsyncDeliveriesResourceWithStreamingResponse(self._client.deliveries)
 
     @cached_property
     def merchants(self) -> merchants.AsyncMerchantsResourceWithStreamingResponse:
+        """Read merchant profile and denormalized catalog data."""
         from .resources.merchants import AsyncMerchantsResourceWithStreamingResponse
 
         return AsyncMerchantsResourceWithStreamingResponse(self._client.merchants)
 
     @cached_property
     def orders(self) -> orders.AsyncOrdersResourceWithStreamingResponse:
+        """Create and retrieve orders and order-level requests."""
         from .resources.orders import AsyncOrdersResourceWithStreamingResponse
 
         return AsyncOrdersResourceWithStreamingResponse(self._client.orders)
 
     @cached_property
     def event_vocabularies(self) -> event_vocabularies.AsyncEventVocabulariesResourceWithStreamingResponse:
+        """Retrieve event vocabulary definitions by name."""
         from .resources.event_vocabularies import AsyncEventVocabulariesResourceWithStreamingResponse
 
         return AsyncEventVocabulariesResourceWithStreamingResponse(self._client.event_vocabularies)
 
     @cached_property
     def payment_instruments(self) -> payment_instruments.AsyncPaymentInstrumentsResourceWithStreamingResponse:
+        """Register payment instruments and related payment models."""
         from .resources.payment_instruments import AsyncPaymentInstrumentsResourceWithStreamingResponse
 
         return AsyncPaymentInstrumentsResourceWithStreamingResponse(self._client.payment_instruments)

@@ -21,6 +21,7 @@ export { Orders, type Order, type OrderCreateParams } from './orders/orders';
 export {
   PaymentInstruments,
   type Amount,
+  type EvmAmount,
   type EvmAuthCaptureEscrowInstrument,
   type EvmAuthCaptureEscrowInstrumentDetails,
   type EvmCurrency,

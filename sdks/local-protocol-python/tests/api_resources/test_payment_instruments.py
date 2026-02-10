@@ -9,7 +9,9 @@ import pytest
 
 from tests.utils import assert_matches_type
 from local_protocol import LocalProtocol, AsyncLocalProtocol
-from local_protocol.types import EvmAuthCaptureEscrowInstrument
+from local_protocol.types import (
+    EvmAuthCaptureEscrowInstrument,
+)
 from local_protocol._utils import parse_datetime
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -28,7 +30,11 @@ class TestPaymentInstruments:
                 "symbol": "symbol",
             },
             amount={
-                "currency": {"symbol": "SQ9_0_L1__5L"},
+                "currency": {
+                    "address": "0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
+                    "chain_id": 1,
+                    "decimals": 0,
+                },
                 "value": "269125115713",
             },
             authorization_expires_at=parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -36,7 +42,11 @@ class TestPaymentInstruments:
             contract="0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
             handler_id="handler_id",
             max_amount={
-                "currency": {"symbol": "SQ9_0_L1__5L"},
+                "currency": {
+                    "address": "0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
+                    "chain_id": 1,
+                    "decimals": 0,
+                },
                 "value": "269125115713",
             },
             nonce="269125115713",
@@ -114,7 +124,11 @@ class TestPaymentInstruments:
                 "symbol": "symbol",
             },
             amount={
-                "currency": {"symbol": "SQ9_0_L1__5L"},
+                "currency": {
+                    "address": "0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
+                    "chain_id": 1,
+                    "decimals": 0,
+                },
                 "value": "269125115713",
             },
             authorization_expires_at=parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -122,7 +136,11 @@ class TestPaymentInstruments:
             contract="0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
             handler_id="handler_id",
             max_amount={
-                "currency": {"symbol": "SQ9_0_L1__5L"},
+                "currency": {
+                    "address": "0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
+                    "chain_id": 1,
+                    "decimals": 0,
+                },
                 "value": "269125115713",
             },
             nonce="269125115713",
@@ -150,7 +168,11 @@ class TestPaymentInstruments:
                 "symbol": "symbol",
             },
             amount={
-                "currency": {"symbol": "SQ9_0_L1__5L"},
+                "currency": {
+                    "address": "0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
+                    "chain_id": 1,
+                    "decimals": 0,
+                },
                 "value": "269125115713",
             },
             authorization_expires_at=parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -158,7 +180,11 @@ class TestPaymentInstruments:
             contract="0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
             handler_id="handler_id",
             max_amount={
-                "currency": {"symbol": "SQ9_0_L1__5L"},
+                "currency": {
+                    "address": "0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
+                    "chain_id": 1,
+                    "decimals": 0,
+                },
                 "value": "269125115713",
             },
             nonce="269125115713",
@@ -194,7 +220,11 @@ class TestAsyncPaymentInstruments:
                 "symbol": "symbol",
             },
             amount={
-                "currency": {"symbol": "SQ9_0_L1__5L"},
+                "currency": {
+                    "address": "0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
+                    "chain_id": 1,
+                    "decimals": 0,
+                },
                 "value": "269125115713",
             },
             authorization_expires_at=parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -202,7 +232,11 @@ class TestAsyncPaymentInstruments:
             contract="0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
             handler_id="handler_id",
             max_amount={
-                "currency": {"symbol": "SQ9_0_L1__5L"},
+                "currency": {
+                    "address": "0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
+                    "chain_id": 1,
+                    "decimals": 0,
+                },
                 "value": "269125115713",
             },
             nonce="269125115713",
@@ -280,7 +314,11 @@ class TestAsyncPaymentInstruments:
                 "symbol": "symbol",
             },
             amount={
-                "currency": {"symbol": "SQ9_0_L1__5L"},
+                "currency": {
+                    "address": "0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
+                    "chain_id": 1,
+                    "decimals": 0,
+                },
                 "value": "269125115713",
             },
             authorization_expires_at=parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -288,7 +326,11 @@ class TestAsyncPaymentInstruments:
             contract="0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
             handler_id="handler_id",
             max_amount={
-                "currency": {"symbol": "SQ9_0_L1__5L"},
+                "currency": {
+                    "address": "0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
+                    "chain_id": 1,
+                    "decimals": 0,
+                },
                 "value": "269125115713",
             },
             nonce="269125115713",
@@ -316,7 +358,11 @@ class TestAsyncPaymentInstruments:
                 "symbol": "symbol",
             },
             amount={
-                "currency": {"symbol": "SQ9_0_L1__5L"},
+                "currency": {
+                    "address": "0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
+                    "chain_id": 1,
+                    "decimals": 0,
+                },
                 "value": "269125115713",
             },
             authorization_expires_at=parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -324,7 +370,11 @@ class TestAsyncPaymentInstruments:
             contract="0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
             handler_id="handler_id",
             max_amount={
-                "currency": {"symbol": "SQ9_0_L1__5L"},
+                "currency": {
+                    "address": "0x2c02efDd09B3BA1AEaDd3dCAa7aC7A37C1CBDA8A",
+                    "chain_id": 1,
+                    "decimals": 0,
+                },
                 "value": "269125115713",
             },
             nonce="269125115713",
