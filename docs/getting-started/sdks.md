@@ -6,9 +6,9 @@ Local Protocol provides generated SDKs for TypeScript, Python, and PHP.
 
 SDKs are generated in this repo and pushed to their language-specific repos. Releases are published to language registries.
 
-- TypeScript: npm package `local-protocol` ([source](https://github.com/Palette-Labs-Inc/local-protocol-typescript))
-- Python: PyPI package `local_protocol` ([source](https://github.com/Palette-Labs-Inc/local-protocol-python))
-- PHP: Packagist package `local-protocol/local-protocol` ([source](https://github.com/Palette-Labs-Inc/local-protocol-php))
+- TypeScript: npm package `local-protocol` ([npm](https://www.npmjs.com/package/local-protocol))
+- Python: PyPI package `local_protocol` ([PyPI](https://pypi.org/project/local_protocol/))
+- PHP: Packagist package `local-protocol/local-protocol` ([Packagist](https://packagist.org/packages/local-protocol/local-protocol))
 
 ## Install
 
