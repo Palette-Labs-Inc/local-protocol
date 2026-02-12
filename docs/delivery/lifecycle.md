@@ -179,7 +179,7 @@ POST /deliveries
 ## Delivery Events
 
 Delivery progresses through events defined in the courier event vocabulary
-(`events/delivery/courier.json`):
+(`schemas/delivery/events/courier.json`):
 
 | Event | Description |
 |-------|-------------|

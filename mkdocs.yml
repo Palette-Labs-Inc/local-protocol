@@ -8,6 +8,7 @@ nav:
   - Getting Started:
       - Understanding Capabilities: getting-started/understanding-capabilities.md
       - Add UCP Discovery: getting-started/ucp-setup.md
+      - SDKs: getting-started/sdks.md
   - Capabilities:
       - Catalog:
           - Overview: capabilities/catalog/overview.md
