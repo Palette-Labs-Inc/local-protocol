@@ -88,7 +88,7 @@ export const ModifierGroup: z.ZodType<{
     })
 );
 
-/** Modifier option (lazy for circular ref with ModifierGroup). */
+// Modifier option (lazy for circular ref with ModifierGroup)
 export const ModifierOption: z.ZodType<{
   id: string;
   modifier_item: unknown;
@@ -112,7 +112,7 @@ export const ModifierOption: z.ZodType<{
     })
 );
 
-/** Catalog item. Matches schemas/catalog/types/item.json */
+// Catalog item
 export const CatalogItem = z
   .object({
     id: z.string().describe("Item identifier."),
@@ -131,7 +131,7 @@ export const CatalogItem = z
     description: "A menu item with embedded modifier groups.",
   });
 
-/** Catalog category (lazy for self and Item). */
+// Catalog category 
 export const CatalogCategory: z.ZodType<{
   id: string;
   name: string;
@@ -159,7 +159,7 @@ export const CatalogCategory: z.ZodType<{
     })
 );
 
-/** Catalog. Matches schemas/catalog/catalog.json */
+// Catalog
 export const Catalog = z
   .object({
     id: z.string().describe("Catalog identifier."),
@@ -177,7 +177,7 @@ export const Catalog = z
     description: "A catalog containing embedded categories, items, availability, and fulfillment configuration.",
   });
 
-/** Merchant. Matches schemas/catalog/merchant.json */
+// Merchant
 export const Merchant = z
   .object({
     id: z.string().describe("Merchant identifier."),

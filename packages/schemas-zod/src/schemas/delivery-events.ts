@@ -29,7 +29,7 @@ export const DeliveryEventVocabulary = z
     description: "Schema for delivery event vocabularies.",
   });
 
-/** JSON Schema for Delivery Event Vocabulary with $defs/event and additionalProperties ref (Zod record inlines value schema). */
+// JSON Schema for Delivery Event Vocabulary with $defs/event and additionalProperties ref
 export function deliveryEventsJsonSchema(): Record<string, unknown> {
   return {
     $schema: "https://json-schema.org/draft/2020-12/schema",
@@ -102,7 +102,7 @@ export function deliveryEventsJsonSchema(): Record<string, unknown> {
   };
 }
 
-/** Courier delivery vocabulary instance (data, not a schema). */
+// Courier delivery vocabulary instance (data, not a schema)
 export function courierVocabularyData(): Record<string, unknown> {
   return {
     name: "xyz.localprotocol.delivery.courier",

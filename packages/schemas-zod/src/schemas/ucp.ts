@@ -60,7 +60,7 @@ export const Payment = z
     description: "Payment configuration containing handlers.",
   });
 
-/** JSON Schema for Payment: instruments items ref payment_instrument#/$defs/selected_payment_instrument (Zod cannot emit cross-schema $defs ref). */
+// JSON Schema for Payment: instruments items ref payment_instrument#/$defs/selected_payment_instrument
 export function paymentJsonSchema(): Record<string, unknown> {
   return {
     $schema: "https://json-schema.org/draft/2020-12/schema",
@@ -78,7 +78,7 @@ export function paymentJsonSchema(): Record<string, unknown> {
   };
 }
 
-/** JSON Schema for Payment Instrument with $defs/selected_payment_instrument (Zod cannot emit $defs with self-ref). */
+// JSON Schema for Payment Instrument with $defs/selected_payment_instrument
 export function paymentInstrumentJsonSchema(): Record<string, unknown> {
   return {
     $schema: "https://json-schema.org/draft/2020-12/schema",

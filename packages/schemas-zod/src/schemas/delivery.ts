@@ -27,7 +27,7 @@ export const Location = z
     title: "Location",
   });
 
-/** JSON Schema for Location: single object + anyOf required (Zod union would emit oneOf of two objects). */
+// JSON Schema for Location: single object + anyOf required 
 export function locationJsonSchema(refs: { postal_address: string; coordinates: string }): Record<string, unknown> {
   return {
     $schema: "https://json-schema.org/draft/2020-12/schema",
