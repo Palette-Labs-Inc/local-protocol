@@ -80,8 +80,6 @@ registry.add(Merchant, { id: "catalog/merchant.json" });
 
 const SCHEMAS_DIR = path.resolve(process.cwd(), "schemas");
 const PACKAGE_SCHEMAS_DIR = path.resolve(process.cwd(), "..", "..", "schemas");
-// Output under schemas/test so you can compare to originals without overwriting
-const OUT_SUBDIR = "test";
 
 // Schemas that have $id in the original; all others omit it
 const SCHEMAS_WITH_$ID = new Set([
@@ -112,7 +110,7 @@ function getSchemasDir(): string {
 }
 
 function getOutputDir(): string {
-  return path.join(getSchemasDir(), OUT_SUBDIR);
+  return getSchemasDir();
 }
 
 const ROOT_KEY_ORDER_DEFAULT = ["$schema", "$id", "title", "description", "type", "additionalProperties", "properties", "required", "anyOf", "oneOf"];

@@ -4,7 +4,11 @@
   "title": "Catalog",
   "description": "A catalog containing embedded categories, items, availability, and fulfillment configuration.",
   "type": "object",
-  "required": ["id", "name", "categories"],
+  "required": [
+    "id",
+    "name",
+    "categories"
+  ],
   "properties": {
     "id": {
       "type": "string",

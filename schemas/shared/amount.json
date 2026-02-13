@@ -17,8 +17,12 @@
     "currency": {
       "description": "Currency descriptor (fiat or EVM token).",
       "oneOf": [
-        { "$ref": "fiat_currency.json" },
-        { "$ref": "evm_currency.json" }
+        {
+          "$ref": "fiat_currency.json"
+        },
+        {
+          "$ref": "evm_currency.json"
+        }
       ]
     }
   },

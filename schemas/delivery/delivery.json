@@ -4,7 +4,17 @@
   "title": "Delivery",
   "description": "Delivery resource created when a quote is accepted.",
   "type": "object",
-  "required": ["id", "request_id", "quote_id", "payment_instrument_id", "event", "event_description", "event_vocabulary", "created_at", "updated_at"],
+  "required": [
+    "id",
+    "request_id",
+    "quote_id",
+    "payment_instrument_id",
+    "event",
+    "event_description",
+    "event_vocabulary",
+    "created_at",
+    "updated_at"
+  ],
   "properties": {
     "id": {
       "type": "string",
@@ -35,7 +45,10 @@
       "description": "Event vocabulary standard in use."
     },
     "webhook_url": {
-      "type": ["string", "null"],
+      "type": [
+        "string",
+        "null"
+      ],
       "description": "Registered webhook URL, if any."
     },
     "created_at": {

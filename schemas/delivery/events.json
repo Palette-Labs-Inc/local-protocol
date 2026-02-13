@@ -5,7 +5,12 @@
   "description": "Schema for delivery event vocabularies.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["name", "version", "title", "events"],
+  "required": [
+    "name",
+    "version",
+    "title",
+    "events"
+  ],
   "properties": {
     "name": {
       "type": "string",
@@ -55,7 +60,9 @@
     "event": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["description"],
+      "required": [
+        "description"
+      ],
       "properties": {
         "description": {
           "type": "string",

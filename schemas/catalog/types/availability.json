@@ -4,7 +4,9 @@
   "title": "Availability",
   "description": "Availability schedule for a catalog, category, or item.",
   "type": "object",
-  "required": ["intervals"],
+  "required": [
+    "intervals"
+  ],
   "properties": {
     "timezone": {
       "type": "string",

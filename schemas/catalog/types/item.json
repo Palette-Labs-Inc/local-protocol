@@ -4,7 +4,12 @@
   "title": "Catalog Item",
   "description": "A menu item with embedded modifier groups.",
   "type": "object",
-  "required": ["id", "name", "description", "price"],
+  "required": [
+    "id",
+    "name",
+    "description",
+    "price"
+  ],
   "properties": {
     "id": {
       "type": "string",

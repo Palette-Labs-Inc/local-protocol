@@ -39,7 +39,9 @@
       "title": "Selected Payment Instrument",
       "description": "A payment instrument with selection state.",
       "allOf": [
-        { "$ref": "#" },
+        {
+          "$ref": "#"
+        },
         {
           "type": "object",
           "properties": {

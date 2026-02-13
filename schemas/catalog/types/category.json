@@ -4,7 +4,11 @@
   "title": "Catalog Category",
   "description": "A category grouping items in a catalog.",
   "type": "object",
-  "required": ["id", "name", "items"],
+  "required": [
+    "id",
+    "name",
+    "items"
+  ],
   "properties": {
     "id": {
       "type": "string",

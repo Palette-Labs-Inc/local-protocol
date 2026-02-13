@@ -4,7 +4,10 @@
   "title": "Modifier Option",
   "description": "Selectable option within a modifier group.",
   "type": "object",
-  "required": ["id", "modifier_item"],
+  "required": [
+    "id",
+    "modifier_item"
+  ],
   "properties": {
     "id": {
       "type": "string",

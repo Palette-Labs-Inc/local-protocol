@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "catalog/types/modifier_group.json": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Modifier group identifier."
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name for the modifier group."
+        },
+        "description": {
+          "description": "Optional modifier group description.",
+          "type": "string"
+        },
+        "minimum_selections": {
+          "description": "Minimum number of selections required from this group.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "maximum_selections": {
+          "description": "Maximum number of selections allowed from this group.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "allow_quantities": {
+          "description": "Whether modifier options can be selected with quantities greater than 1.",
+          "type": "boolean"
+        },
+        "max_per_modifier": {
+          "description": "Maximum quantity allowed per modifier option. Defaults to 1 (each modifier can be selected at most once).",
+          "type": "integer",
+          "minimum": 0
+        },
+        "modifier_options": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "catalog/types/modifier_option.json"
+          },
+          "description": "Ordered modifier options within this group. Order should be used for display."
+        },
+        "type": {
+          "description": "Modifier group type classification.",
+          "type": "string"
+        },
+        "metadata": {
+          "description": "Business-defined custom data extending the modifier group.",
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "modifier_options"
+      ],
+      "additionalProperties": false,
+      "id": "catalog/types/modifier_group.json",
+      "$id": "https://localprotocol.xyz/schemas/catalog/types/modifier_group.json",
+      "title": "Modifier Group",
+      "description": "Group of modifier options with selection constraints."
+    },
+    "catalog/types/modifier_option.json": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Modifier option identifier."
+        },
+        "modifier_item": {
+          "description": "Modifier item for this option.",
+          "$ref": "catalog/types/modifier_item.json"
+        },
+        "child_modifier_groups": {
+          "description": "Nested modifier groups required after selecting this option.",
+          "type": "array",
+          "items": {
+            "$ref": "catalog/types/modifier_group.json"
+          }
+        },
+        "is_default": {
+          "description": "Whether this option is selected by default.",
+          "type": "boolean"
+        },
+        "metadata": {
+          "description": "Business-defined custom data extending the modifier option.",
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "id",
+        "modifier_item"
+      ],
+      "additionalProperties": false,
+      "id": "catalog/types/modifier_option.json",
+      "$id": "https://localprotocol.xyz/schemas/catalog/types/modifier_option.json",
+      "title": "Modifier Option",
+      "description": "Selectable option within a modifier group."
+    },
+    "catalog/types/category.json": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Category identifier."
+        },
+        "name": {
+          "type": "string",
+          "description": "Category display name."
+        },
+        "description": {
+          "description": "Optional category description.",
+          "type": "string"
+        },
+        "categories": {
+          "description": "Ordered list of child categories for nested category trees.",
+          "type": "array",
+          "items": {
+            "$ref": "catalog/types/category.json"
+          }
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "catalog/types/item.json"
+          },
+          "description": "Ordered list of items in this category."
+        },
+        "availability": {
+          "description": "Category availability. Ignored when the catalog defines availability.",
+          "$ref": "catalog/types/availability.json"
+        },
+        "metadata": {
+          "description": "Business-defined custom data extending the category.",
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "items"
+      ],
+      "additionalProperties": false,
+      "id": "catalog/types/category.json",
+      "$id": "https://localprotocol.xyz/schemas/catalog/types/category.json",
+      "title": "Catalog Category",
+      "description": "A category grouping items in a catalog."
+    }
+  }
+}

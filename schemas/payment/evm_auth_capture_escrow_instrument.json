@@ -3,7 +3,9 @@
   "title": "EVM Auth/Capture Escrow Instrument",
   "description": "Payment instrument for auth/capture escrow on EVM chains.",
   "allOf": [
-    { "$ref": "../ucp/shopping/types/payment_instrument.json" },
+    {
+      "$ref": "../ucp/shopping/types/payment_instrument.json"
+    },
     {
       "type": "object",
       "required": [
@@ -87,7 +89,9 @@
       "additionalProperties": true
     },
     {
-      "required": ["type"],
+      "required": [
+        "type"
+      ],
       "properties": {
         "type": {
           "type": "string",
