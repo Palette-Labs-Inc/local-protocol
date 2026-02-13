@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/payment/types/evm_token.json",
+  "title": "EVM Token",
+  "description": "EVM token identifier used for auth/capture settlement.",
+  "type": "object",
+  "required": [
+    "symbol",
+    "decimals"
+  ],
+  "properties": {
+    "address": {
+      "type": "string",
+      "description": "ERC-20 contract address. Omit for native gas tokens (e.g., ETH, MATIC).",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "symbol": {
+      "type": "string",
+      "description": "Token symbol (e.g., USDC)."
+    },
+    "decimals": {
+      "type": "integer",
+      "description": "Token decimals.",
+      "minimum": 0,
+      "maximum": 255
+    }
+  },
+  "additionalProperties": false
+}

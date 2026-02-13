@@ -1,0 +1,227 @@
+import * as z from "zod";
+export declare const Coordinates: z.ZodObject<{
+    latitude: z.ZodNumber;
+    longitude: z.ZodNumber;
+}, z.core.$strict>;
+export declare const Location: z.ZodUnion<readonly [z.ZodObject<{
+    postal_address: z.ZodObject<{
+        extended_address: z.ZodOptional<z.ZodString>;
+        street_address: z.ZodOptional<z.ZodString>;
+        address_locality: z.ZodOptional<z.ZodString>;
+        address_region: z.ZodOptional<z.ZodString>;
+        address_country: z.ZodOptional<z.ZodString>;
+        postal_code: z.ZodOptional<z.ZodString>;
+        first_name: z.ZodOptional<z.ZodString>;
+        last_name: z.ZodOptional<z.ZodString>;
+        phone_number: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>;
+    coordinates: z.ZodOptional<z.ZodObject<{
+        latitude: z.ZodNumber;
+        longitude: z.ZodNumber;
+    }, z.core.$strict>>;
+}, z.core.$strict>, z.ZodObject<{
+    coordinates: z.ZodObject<{
+        latitude: z.ZodNumber;
+        longitude: z.ZodNumber;
+    }, z.core.$strict>;
+    postal_address: z.ZodOptional<z.ZodObject<{
+        extended_address: z.ZodOptional<z.ZodString>;
+        street_address: z.ZodOptional<z.ZodString>;
+        address_locality: z.ZodOptional<z.ZodString>;
+        address_region: z.ZodOptional<z.ZodString>;
+        address_country: z.ZodOptional<z.ZodString>;
+        postal_code: z.ZodOptional<z.ZodString>;
+        first_name: z.ZodOptional<z.ZodString>;
+        last_name: z.ZodOptional<z.ZodString>;
+        phone_number: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strict>]>;
+/** JSON Schema for Location: single object + anyOf required (Zod union would emit oneOf of two objects). */
+export declare function locationJsonSchema(refs: {
+    postal_address: string;
+    coordinates: string;
+}): Record<string, unknown>;
+export declare const DeliveryRequest: z.ZodObject<{
+    id: z.ZodString;
+    nonce: z.ZodString;
+    pickup_location: z.ZodUnion<readonly [z.ZodObject<{
+        postal_address: z.ZodObject<{
+            extended_address: z.ZodOptional<z.ZodString>;
+            street_address: z.ZodOptional<z.ZodString>;
+            address_locality: z.ZodOptional<z.ZodString>;
+            address_region: z.ZodOptional<z.ZodString>;
+            address_country: z.ZodOptional<z.ZodString>;
+            postal_code: z.ZodOptional<z.ZodString>;
+            first_name: z.ZodOptional<z.ZodString>;
+            last_name: z.ZodOptional<z.ZodString>;
+            phone_number: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>;
+        coordinates: z.ZodOptional<z.ZodObject<{
+            latitude: z.ZodNumber;
+            longitude: z.ZodNumber;
+        }, z.core.$strict>>;
+    }, z.core.$strict>, z.ZodObject<{
+        coordinates: z.ZodObject<{
+            latitude: z.ZodNumber;
+            longitude: z.ZodNumber;
+        }, z.core.$strict>;
+        postal_address: z.ZodOptional<z.ZodObject<{
+            extended_address: z.ZodOptional<z.ZodString>;
+            street_address: z.ZodOptional<z.ZodString>;
+            address_locality: z.ZodOptional<z.ZodString>;
+            address_region: z.ZodOptional<z.ZodString>;
+            address_country: z.ZodOptional<z.ZodString>;
+            postal_code: z.ZodOptional<z.ZodString>;
+            first_name: z.ZodOptional<z.ZodString>;
+            last_name: z.ZodOptional<z.ZodString>;
+            phone_number: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>>;
+    }, z.core.$strict>]>;
+    dropoff_location: z.ZodUnion<readonly [z.ZodObject<{
+        postal_address: z.ZodObject<{
+            extended_address: z.ZodOptional<z.ZodString>;
+            street_address: z.ZodOptional<z.ZodString>;
+            address_locality: z.ZodOptional<z.ZodString>;
+            address_region: z.ZodOptional<z.ZodString>;
+            address_country: z.ZodOptional<z.ZodString>;
+            postal_code: z.ZodOptional<z.ZodString>;
+            first_name: z.ZodOptional<z.ZodString>;
+            last_name: z.ZodOptional<z.ZodString>;
+            phone_number: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>;
+        coordinates: z.ZodOptional<z.ZodObject<{
+            latitude: z.ZodNumber;
+            longitude: z.ZodNumber;
+        }, z.core.$strict>>;
+    }, z.core.$strict>, z.ZodObject<{
+        coordinates: z.ZodObject<{
+            latitude: z.ZodNumber;
+            longitude: z.ZodNumber;
+        }, z.core.$strict>;
+        postal_address: z.ZodOptional<z.ZodObject<{
+            extended_address: z.ZodOptional<z.ZodString>;
+            street_address: z.ZodOptional<z.ZodString>;
+            address_locality: z.ZodOptional<z.ZodString>;
+            address_region: z.ZodOptional<z.ZodString>;
+            address_country: z.ZodOptional<z.ZodString>;
+            postal_code: z.ZodOptional<z.ZodString>;
+            first_name: z.ZodOptional<z.ZodString>;
+            last_name: z.ZodOptional<z.ZodString>;
+            phone_number: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>>;
+    }, z.core.$strict>]>;
+    pickup_time: z.ZodISODateTime;
+    dropoff_time: z.ZodISODateTime;
+    pickup_instructions: z.ZodOptional<z.ZodString>;
+    dropoff_instructions: z.ZodOptional<z.ZodString>;
+}, z.core.$strict>;
+export declare const DeliveryQuote: z.ZodObject<{
+    id: z.ZodString;
+    nonce: z.ZodString;
+    price: z.ZodInt;
+    currency: z.ZodString;
+    pickup_location: z.ZodUnion<readonly [z.ZodObject<{
+        postal_address: z.ZodObject<{
+            extended_address: z.ZodOptional<z.ZodString>;
+            street_address: z.ZodOptional<z.ZodString>;
+            address_locality: z.ZodOptional<z.ZodString>;
+            address_region: z.ZodOptional<z.ZodString>;
+            address_country: z.ZodOptional<z.ZodString>;
+            postal_code: z.ZodOptional<z.ZodString>;
+            first_name: z.ZodOptional<z.ZodString>;
+            last_name: z.ZodOptional<z.ZodString>;
+            phone_number: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>;
+        coordinates: z.ZodOptional<z.ZodObject<{
+            latitude: z.ZodNumber;
+            longitude: z.ZodNumber;
+        }, z.core.$strict>>;
+    }, z.core.$strict>, z.ZodObject<{
+        coordinates: z.ZodObject<{
+            latitude: z.ZodNumber;
+            longitude: z.ZodNumber;
+        }, z.core.$strict>;
+        postal_address: z.ZodOptional<z.ZodObject<{
+            extended_address: z.ZodOptional<z.ZodString>;
+            street_address: z.ZodOptional<z.ZodString>;
+            address_locality: z.ZodOptional<z.ZodString>;
+            address_region: z.ZodOptional<z.ZodString>;
+            address_country: z.ZodOptional<z.ZodString>;
+            postal_code: z.ZodOptional<z.ZodString>;
+            first_name: z.ZodOptional<z.ZodString>;
+            last_name: z.ZodOptional<z.ZodString>;
+            phone_number: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>>;
+    }, z.core.$strict>]>;
+    dropoff_location: z.ZodUnion<readonly [z.ZodObject<{
+        postal_address: z.ZodObject<{
+            extended_address: z.ZodOptional<z.ZodString>;
+            street_address: z.ZodOptional<z.ZodString>;
+            address_locality: z.ZodOptional<z.ZodString>;
+            address_region: z.ZodOptional<z.ZodString>;
+            address_country: z.ZodOptional<z.ZodString>;
+            postal_code: z.ZodOptional<z.ZodString>;
+            first_name: z.ZodOptional<z.ZodString>;
+            last_name: z.ZodOptional<z.ZodString>;
+            phone_number: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>;
+        coordinates: z.ZodOptional<z.ZodObject<{
+            latitude: z.ZodNumber;
+            longitude: z.ZodNumber;
+        }, z.core.$strict>>;
+    }, z.core.$strict>, z.ZodObject<{
+        coordinates: z.ZodObject<{
+            latitude: z.ZodNumber;
+            longitude: z.ZodNumber;
+        }, z.core.$strict>;
+        postal_address: z.ZodOptional<z.ZodObject<{
+            extended_address: z.ZodOptional<z.ZodString>;
+            street_address: z.ZodOptional<z.ZodString>;
+            address_locality: z.ZodOptional<z.ZodString>;
+            address_region: z.ZodOptional<z.ZodString>;
+            address_country: z.ZodOptional<z.ZodString>;
+            postal_code: z.ZodOptional<z.ZodString>;
+            first_name: z.ZodOptional<z.ZodString>;
+            last_name: z.ZodOptional<z.ZodString>;
+            phone_number: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>>;
+    }, z.core.$strict>]>;
+    pickup_estimate: z.ZodISODateTime;
+    dropoff_estimate: z.ZodISODateTime;
+    expires_at: z.ZodOptional<z.ZodISODateTime>;
+    payment: z.ZodObject<{
+        instruments: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            handler_id: z.ZodString;
+            type: z.ZodString;
+            billing_address: z.ZodOptional<z.ZodObject<{
+                extended_address: z.ZodOptional<z.ZodString>;
+                street_address: z.ZodOptional<z.ZodString>;
+                address_locality: z.ZodOptional<z.ZodString>;
+                address_region: z.ZodOptional<z.ZodString>;
+                address_country: z.ZodOptional<z.ZodString>;
+                postal_code: z.ZodOptional<z.ZodString>;
+                first_name: z.ZodOptional<z.ZodString>;
+                last_name: z.ZodOptional<z.ZodString>;
+                phone_number: z.ZodOptional<z.ZodString>;
+            }, z.core.$strip>>;
+            credential: z.ZodOptional<z.ZodObject<{
+                type: z.ZodString;
+            }, z.core.$loose>>;
+            display: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+        }, z.core.$loose>>;
+    }, z.core.$strip>;
+}, z.core.$strict>;
+export declare const Delivery: z.ZodObject<{
+    id: z.ZodString;
+    request_id: z.ZodString;
+    quote_id: z.ZodString;
+    payment_instrument_id: z.ZodString;
+    event: z.ZodString;
+    event_description: z.ZodString;
+    event_vocabulary: z.ZodString;
+    webhook_url: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    created_at: z.ZodISODateTime;
+    updated_at: z.ZodISODateTime;
+}, z.core.$strict>;
+//# sourceMappingURL=delivery.d.ts.map

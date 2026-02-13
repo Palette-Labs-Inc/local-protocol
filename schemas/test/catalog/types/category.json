@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/catalog/types/category.json",
+  "title": "Catalog Category",
+  "description": "A category grouping items in a catalog.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "items"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Category identifier."
+    },
+    "name": {
+      "type": "string",
+      "description": "Category display name."
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional category description."
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "$ref": "category.json"
+      },
+      "description": "Ordered list of child categories for nested category trees."
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "item.json"
+      },
+      "description": "Ordered list of items in this category."
+    },
+    "availability": {
+      "$ref": "availability.json",
+      "description": "Category availability. Ignored when the catalog defines availability."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Business-defined custom data extending the category.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

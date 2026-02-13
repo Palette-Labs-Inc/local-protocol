@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EVM Auth/Capture Escrow Instrument",
+  "description": "Payment instrument for auth/capture escrow on EVM chains.",
+  "allOf": [
+    {
+      "$ref": "../ucp/shopping/types/payment_instrument.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "payment_info_hash",
+        "operator",
+        "payer",
+        "receiver",
+        "token",
+        "max_amount",
+        "preapproval_expires_at",
+        "authorization_expires_at",
+        "refund_expires_at",
+        "nonce",
+        "chain_id",
+        "contract",
+        "amount"
+      ],
+      "properties": {
+        "payment_info_hash": {
+          "type": "string",
+          "description": "Hash that identifies the on-chain payment authorization.",
+          "pattern": "^0x[a-fA-F0-9]{64}$"
+        },
+        "operator": {
+          "type": "string",
+          "description": "Operator address used to compute the payment info hash.",
+          "pattern": "^0x[a-fA-F0-9]{40}$"
+        },
+        "payer": {
+          "type": "string",
+          "description": "Payer address used to compute the payment info hash.",
+          "pattern": "^0x[a-fA-F0-9]{40}$"
+        },
+        "chain_id": {
+          "type": "integer",
+          "description": "EVM chain id for the escrow contract.",
+          "minimum": 1
+        },
+        "contract": {
+          "type": "string",
+          "description": "Escrow contract address on the target chain.",
+          "pattern": "^0x[a-fA-F0-9]{40}$"
+        },
+        "receiver": {
+          "type": "string",
+          "description": "Receiver address used for captures.",
+          "pattern": "^0x[a-fA-F0-9]{40}$"
+        },
+        "token": {
+          "$ref": "types/evm_token.json"
+        },
+        "max_amount": {
+          "$ref": "../shared/evm_amount.json",
+          "description": "Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
+        },
+        "preapproval_expires_at": {
+          "type": "string",
+          "description": "Pre-approval expiration timestamp (RFC 3339).",
+          "format": "date-time"
+        },
+        "authorization_expires_at": {
+          "type": "string",
+          "description": "Authorization expiration timestamp (RFC 3339).",
+          "format": "date-time"
+        },
+        "refund_expires_at": {
+          "type": "string",
+          "description": "Refund expiration timestamp (RFC 3339).",
+          "format": "date-time"
+        },
+        "nonce": {
+          "type": "string",
+          "description": "Unique nonce used to compute the payment info hash.",
+          "pattern": "^[0-9]+$"
+        },
+        "amount": {
+          "$ref": "../shared/evm_amount.json",
+          "description": "Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
+        }
+      },
+      "additionalProperties": true
+    },
+    {
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "evm_auth_capture_escrow"
+        }
+      }
+    }
+  ]
+}
