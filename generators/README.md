@@ -6,15 +6,6 @@ Define **Zod** schemas as the source of truth and use **`z.toJSONSchema()`** to 
 
 ## Usage
 
-### Generate JSON Schema from a single Zod schema
-
-```ts
-import { toJSONSchema, Amount } from "@local-protocol/schemas-zod";
-
-const jsonSchema = toJSONSchema(Amount);
-// => draft-2020-12 JSON Schema object (matches schemas/shared/amount.json)
-```
-
 ### Generate all schemas and write to `schemas/test/`
 
 All schemas under `local-protocol/schemas/` are generated from Zod (no copying). Run:
@@ -22,7 +13,6 @@ All schemas under `local-protocol/schemas/` are generated from Zod (no copying).
 ```bash
 yarn generate
 ```
-
 
 This writes one `.json` file per schema under `local-protocol/schemas/`, with `$ref` values relativized so they match the existing multi-file layout.
 
