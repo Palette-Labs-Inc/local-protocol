@@ -1,7 +1,3 @@
-/**
- * API-only Zod schemas for OpenAPI (not in standalone JSON Schema files).
- * Used by generate-openapi to emit components/schemas that match local-protocol.v1.openapi.json.
- */
 import z from "zod";
 
 export const DiscoveryResponse = z
