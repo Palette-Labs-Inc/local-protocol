@@ -203,9 +203,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@local-protocol/schemas-zod@workspace:.":
+"@local-protocol/generators@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@local-protocol/schemas-zod@workspace:."
+  resolution: "@local-protocol/generators@workspace:."
   dependencies:
     "@types/node": "npm:^22.0.0"
     tsx: "npm:^4.19.0"

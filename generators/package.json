@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "generate": "tsx src/generate.ts"
+    "generate": "tsx src/generate-schemas.ts"
   },
   "dependencies": {
     "zod": "^4.0.0"
