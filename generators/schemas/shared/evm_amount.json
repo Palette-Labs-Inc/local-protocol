@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/shared/evm_amount.json",
+  "title": "EVM Amount",
+  "description": "Amount denominated in an EVM token. Value is in atomic token units.",
+  "type": "object",
+  "required": [
+    "value",
+    "currency"
+  ],
+  "properties": {
+    "value": {
+      "type": "string",
+      "pattern": "^[0-9]+$",
+      "description": "Value in atomic token units as an integer string."
+    },
+    "currency": {
+      "$ref": "evm_currency.json",
+      "description": "EVM token currency."
+    }
+  },
+  "additionalProperties": false
+}

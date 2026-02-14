@@ -1,4 +1,4 @@
-# @local-protocol/schemas-zod
+# Generators
 
 Define **Zod** schemas as the source of truth and use **`z.toJSONSchema()`** to generate JSON Schemas
 

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/catalog/catalog.json",
+  "title": "Catalog",
+  "description": "A catalog containing embedded categories, items, availability, and fulfillment configuration.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "categories"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Catalog identifier."
+    },
+    "name": {
+      "type": "string",
+      "description": "Catalog name."
+    },
+    "description": {
+      "type": "string",
+      "description": "Catalog description."
+    },
+    "categories": {
+      "type": "array",
+      "description": "Ordered top-level categories included in this catalog. Nested categories live under each category's categories array.",
+      "items": {
+        "$ref": "types/category.json"
+      }
+    },
+    "items": {
+      "type": "array",
+      "description": "Ordered items included in this catalog that are not assigned to a category. Consumers that require category membership should place these items into a synthetic category.",
+      "items": {
+        "$ref": "types/item.json"
+      }
+    },
+    "availability": {
+      "$ref": "types/availability.json",
+      "description": "Catalog availability. When present, it overrides category and item availability."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Business-defined custom data extending the catalog.",
+      "additionalProperties": true,
+      "propertyNames": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

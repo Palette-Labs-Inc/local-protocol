@@ -1,17 +1,9 @@
 {
-  "name": "@local-protocol/schemas-zod",
+  "name": "@local-protocol/generators",
   "version": "0.0.1",
   "description": "Zod schema definitions that generate JSON Schemas via z.toJSONSchema()",
-  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    }
-  },
   "scripts": {
     "build": "tsc",
     "generate": "tsx src/generate.ts"

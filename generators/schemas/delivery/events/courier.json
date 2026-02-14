@@ -1,0 +1,33 @@
+{
+  "name": "xyz.localprotocol.delivery.courier",
+  "version": "2026-01-30",
+  "title": "Courier Delivery Standard",
+  "description": "Event vocabulary for courier-based pickup and delivery.",
+  "spec": "https://localprotocol.xyz/spec/delivery/courier",
+  "events": {
+    "created": {
+      "description": "Delivery created"
+    },
+    "assigned": {
+      "description": "Courier assigned"
+    },
+    "enroute_pickup": {
+      "description": "Courier heading to pickup"
+    },
+    "arrived_pickup": {
+      "description": "Courier at pickup location"
+    },
+    "collected": {
+      "description": "Courier picked up"
+    },
+    "arrived_dropoff": {
+      "description": "Courier at dropoff location"
+    },
+    "delivered": {
+      "description": "Courier completed dropoff"
+    },
+    "canceled": {
+      "description": "Delivery canceled"
+    }
+  }
+}

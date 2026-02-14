@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Order",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique order identifier."
+    },
+    "intent_id": {
+      "type": "string",
+      "description": "Shared intent identifier for tracing Request → Quote → Order."
+    },
+    "nonce": {
+      "type": "string",
+      "description": "Client-generated idempotency key."
+    },
+    "payment_instrument_id": {
+      "type": "string",
+      "description": "Reference to the payment instrument used to create this order."
+    }
+  },
+  "required": [
+    "id",
+    "intent_id",
+    "nonce",
+    "payment_instrument_id"
+  ]
+}

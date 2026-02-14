@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://localprotocol.xyz/schemas/catalog/types/item.json",
+  "title": "Catalog Item",
+  "description": "A menu item with embedded modifier groups.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "description",
+    "price"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Item identifier."
+    },
+    "name": {
+      "type": "string",
+      "description": "Item name."
+    },
+    "description": {
+      "type": "string",
+      "description": "Item description."
+    },
+    "price": {
+      "$ref": "../../shared/amount.json",
+      "description": "Base price for the item."
+    },
+    "media": {
+      "type": "array",
+      "description": "Item media (images, videos, 3D models).",
+      "items": {
+        "$ref": "../../shared/media.json"
+      }
+    },
+    "modifier_groups": {
+      "type": "array",
+      "description": "Modifier groups available for this item.",
+      "items": {
+        "$ref": "modifier_group.json"
+      }
+    },
+    "availability": {
+      "$ref": "availability.json",
+      "description": "Item availability. Ignored when the catalog or category defines availability."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Business-defined custom data extending the item.",
+      "additionalProperties": true,
+      "propertyNames": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}
