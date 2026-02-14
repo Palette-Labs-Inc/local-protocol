@@ -12,19 +12,45 @@
     }
   ],
   "tags": [
-    { "name": "discovery", "description": "Service discovery and health" },
-    { "name": "requests", "description": "Delivery request operations" },
-    { "name": "quotes", "description": "Delivery quote operations" },
-    { "name": "deliveries", "description": "Delivery lifecycle operations" },
-    { "name": "merchants", "description": "Merchant and catalog operations" },
-    { "name": "orders", "description": "Order lifecycle operations" },
-    { "name": "events", "description": "Event vocabulary operations" },
-    { "name": "payments", "description": "Payment instrument operations" }
+    {
+      "name": "discovery",
+      "description": "Service discovery and health"
+    },
+    {
+      "name": "requests",
+      "description": "Delivery request operations"
+    },
+    {
+      "name": "quotes",
+      "description": "Delivery quote operations"
+    },
+    {
+      "name": "deliveries",
+      "description": "Delivery lifecycle operations"
+    },
+    {
+      "name": "merchants",
+      "description": "Merchant and catalog operations"
+    },
+    {
+      "name": "orders",
+      "description": "Order lifecycle operations"
+    },
+    {
+      "name": "events",
+      "description": "Event vocabulary operations"
+    },
+    {
+      "name": "payments",
+      "description": "Payment instrument operations"
+    }
   ],
   "paths": {
     "/.well-known/local-protocol": {
       "get": {
-        "tags": ["discovery"],
+        "tags": [
+          "discovery"
+        ],
         "summary": "Service discovery",
         "description": "Returns server capabilities, supported standards, and endpoint paths.",
         "operationId": "getDiscovery",
@@ -50,7 +76,9 @@
             "description": "Discovery metadata.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/DiscoveryResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/DiscoveryResponse"
+                }
               }
             }
           },
@@ -58,7 +86,9 @@
             "description": "Internal server error.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -67,7 +97,9 @@
     },
     "/healthz": {
       "get": {
-        "tags": ["discovery"],
+        "tags": [
+          "discovery"
+        ],
         "summary": "Health check",
         "description": "Returns server health status.",
         "operationId": "getHealth",
@@ -76,7 +108,9 @@
             "description": "Server is healthy.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HealthResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
               }
             }
           },
@@ -84,7 +118,9 @@
             "description": "Service unavailable.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -93,7 +129,9 @@
     },
     "/requests": {
       "post": {
-        "tags": ["requests"],
+        "tags": [
+          "requests"
+        ],
         "summary": "Create delivery request",
         "description": "Submit a new delivery request. The `nonce` field provides idempotency.",
         "operationId": "createRequest",
@@ -118,7 +156,9 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/DeliveryRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/delivery/request.json"
+              }
             }
           }
         },
@@ -127,7 +167,9 @@
             "description": "Request created.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/DeliveryRequest" }
+                "schema": {
+                  "$ref": "#/components/schemas/delivery/request.json"
+                }
               }
             }
           },
@@ -135,7 +177,9 @@
             "description": "Invalid nonce.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           },
@@ -143,7 +187,9 @@
             "description": "Duplicate nonce or request ID.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           },
@@ -151,14 +197,18 @@
             "description": "Validation errors.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ValidationErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
               }
             }
           }
         }
       },
       "get": {
-        "tags": ["requests"],
+        "tags": [
+          "requests"
+        ],
         "summary": "List delivery requests",
         "description": "Returns all delivery requests.",
         "operationId": "listRequests",
@@ -169,7 +219,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/DeliveryRequest" }
+                  "items": {
+                    "$ref": "#/components/schemas/delivery/request.json"
+                  }
                 }
               }
             }
@@ -178,7 +230,9 @@
             "description": "Internal server error.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -187,19 +241,25 @@
     },
     "/requests/{request_id}": {
       "get": {
-        "tags": ["requests"],
+        "tags": [
+          "requests"
+        ],
         "summary": "Get delivery request",
         "description": "Returns a single delivery request by ID.",
         "operationId": "getRequest",
         "parameters": [
-          { "$ref": "#/components/parameters/RequestId" }
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
         ],
         "responses": {
           "200": {
             "description": "The request.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/DeliveryRequest" }
+                "schema": {
+                  "$ref": "#/components/schemas/delivery/request.json"
+                }
               }
             }
           },
@@ -207,7 +267,9 @@
             "description": "Request not found.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -216,7 +278,9 @@
     },
     "/requests/{request_id}/quotes": {
       "post": {
-        "tags": ["quotes"],
+        "tags": [
+          "quotes"
+        ],
         "summary": "Create quote",
         "description": "Submit a quote for a delivery request. The `nonce` field provides idempotency.",
         "operationId": "createQuote",
@@ -233,13 +297,17 @@
           }
         ],
         "parameters": [
-          { "$ref": "#/components/parameters/RequestId" }
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
         ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/DeliveryQuote" }
+              "schema": {
+                "$ref": "#/components/schemas/delivery/quote.json"
+              }
             }
           }
         },
@@ -248,7 +316,9 @@
             "description": "Quote created.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/DeliveryQuote" }
+                "schema": {
+                  "$ref": "#/components/schemas/delivery/quote.json"
+                }
               }
             }
           },
@@ -256,52 +326,8 @@
             "description": "Invalid nonce.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
-              }
-            }
-          },
-          "404": {
-            "description": "Request not found.",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
-              }
-            }
-          },
-          "409": {
-            "description": "Duplicate nonce or quote ID.",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation errors.",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ValidationErrorResponse" }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": ["quotes"],
-        "summary": "List quotes for request",
-        "description": "Returns all quotes for a delivery request.",
-        "operationId": "listQuotes",
-        "parameters": [
-          { "$ref": "#/components/parameters/RequestId" }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of quotes.",
-            "content": {
-              "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/DeliveryQuote" }
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -310,7 +336,67 @@
             "description": "Request not found.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Duplicate nonce or quote ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "quotes"
+        ],
+        "summary": "List quotes for request",
+        "description": "Returns all quotes for a delivery request.",
+        "operationId": "listQuotes",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of quotes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/delivery/quote.json"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -319,20 +405,28 @@
     },
     "/requests/{request_id}/quotes/{quote_id}": {
       "get": {
-        "tags": ["quotes"],
+        "tags": [
+          "quotes"
+        ],
         "summary": "Get quote",
         "description": "Returns a single quote by ID.",
         "operationId": "getQuote",
         "parameters": [
-          { "$ref": "#/components/parameters/RequestId" },
-          { "$ref": "#/components/parameters/QuoteId" }
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/QuoteId"
+          }
         ],
         "responses": {
           "200": {
             "description": "The quote.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/DeliveryQuote" }
+                "schema": {
+                  "$ref": "#/components/schemas/delivery/quote.json"
+                }
               }
             }
           },
@@ -340,7 +434,9 @@
             "description": "Request or quote not found.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -349,9 +445,11 @@
     },
     "/deliveries": {
       "post": {
-        "tags": ["deliveries"],
+        "tags": [
+          "deliveries"
+        ],
         "summary": "Create delivery",
-        "description": "Accept a quote and create a delivery. The `nonce` field provides idempotency.",
+        "description": "Create a delivery from an accepted quote. The `nonce` field provides idempotency.",
         "operationId": "createDelivery",
         "x-codeSamples": [
           {
@@ -374,7 +472,9 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateDeliveryRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/CreateDeliveryRequest"
+              }
             }
           }
         },
@@ -383,15 +483,19 @@
             "description": "Delivery created.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Delivery" }
+                "schema": {
+                  "$ref": "#/components/schemas/delivery/delivery.json"
+                }
               }
             }
           },
           "400": {
-            "description": "Invalid nonce or quote does not belong to request.",
+            "description": "Invalid request.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           },
@@ -399,7 +503,9 @@
             "description": "Request or quote not found.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           },
@@ -407,14 +513,18 @@
             "description": "Duplicate nonce or nonce reuse with different payload.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
         }
       },
       "get": {
-        "tags": ["deliveries"],
+        "tags": [
+          "deliveries"
+        ],
         "summary": "List deliveries",
         "description": "Returns all deliveries.",
         "operationId": "listDeliveries",
@@ -425,7 +535,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Delivery" }
+                  "items": {
+                    "$ref": "#/components/schemas/delivery/delivery.json"
+                  }
                 }
               }
             }
@@ -434,7 +546,9 @@
             "description": "Internal server error.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -443,19 +557,25 @@
     },
     "/deliveries/{delivery_id}": {
       "get": {
-        "tags": ["deliveries"],
+        "tags": [
+          "deliveries"
+        ],
         "summary": "Get delivery",
         "description": "Returns a single delivery by ID.",
         "operationId": "getDelivery",
         "parameters": [
-          { "$ref": "#/components/parameters/DeliveryId" }
+          {
+            "$ref": "#/components/parameters/DeliveryId"
+          }
         ],
         "responses": {
           "200": {
             "description": "The delivery.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Delivery" }
+                "schema": {
+                  "$ref": "#/components/schemas/delivery/delivery.json"
+                }
               }
             }
           },
@@ -463,7 +583,9 @@
             "description": "Delivery not found.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -472,18 +594,24 @@
     },
     "/deliveries/{delivery_id}/event": {
       "patch": {
-        "tags": ["deliveries"],
+        "tags": [
+          "deliveries"
+        ],
         "summary": "Update delivery event",
         "description": "Transition a delivery to a new event state. If a webhook URL was registered, the server pushes an event notification in the background.",
         "operationId": "updateDeliveryEvent",
         "parameters": [
-          { "$ref": "#/components/parameters/DeliveryId" }
+          {
+            "$ref": "#/components/parameters/DeliveryId"
+          }
         ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/UpdateEventRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEventRequest"
+              }
             }
           }
         },
@@ -492,7 +620,9 @@
             "description": "Delivery event updated.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Delivery" }
+                "schema": {
+                  "$ref": "#/components/schemas/delivery/delivery.json"
+                }
               }
             }
           },
@@ -500,29 +630,36 @@
             "description": "Delivery not found.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
         }
       }
     },
-
     "/merchants/{merchant_id}": {
       "get": {
-        "tags": ["merchants"],
+        "tags": [
+          "merchants"
+        ],
         "summary": "Get merchant",
         "description": "Returns a merchant with its full denormalized catalog tree.",
         "operationId": "getMerchant",
         "parameters": [
-          { "$ref": "#/components/parameters/MerchantId" }
+          {
+            "$ref": "#/components/parameters/MerchantId"
+          }
         ],
         "responses": {
           "200": {
             "description": "The merchant.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Merchant" }
+                "schema": {
+                  "$ref": "#/components/schemas/catalog/merchant.json"
+                }
               }
             }
           },
@@ -530,7 +667,9 @@
             "description": "Merchant not found.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -539,7 +678,9 @@
     },
     "/orders/requests": {
       "post": {
-        "tags": ["orders"],
+        "tags": [
+          "orders"
+        ],
         "summary": "Create order request",
         "description": "Submit a new order request with a cart. The `nonce` field provides idempotency.",
         "operationId": "createOrderRequest",
@@ -547,7 +688,9 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/Cart" }
+              "schema": {
+                "$ref": "#/components/schemas/order/cart.json"
+              }
             }
           }
         },
@@ -556,7 +699,9 @@
             "description": "Order request created.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/OrderRequest" }
+                "schema": {
+                  "$ref": "#/components/schemas/order/request.json"
+                }
               }
             }
           },
@@ -564,7 +709,9 @@
             "description": "Invalid request.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           },
@@ -572,7 +719,9 @@
             "description": "Duplicate nonce or request ID.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           },
@@ -580,7 +729,9 @@
             "description": "Validation errors.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ValidationErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
               }
             }
           }
@@ -589,12 +740,16 @@
     },
     "/orders/requests/{order_request_id}/quotes": {
       "get": {
-        "tags": ["orders"],
+        "tags": [
+          "orders"
+        ],
         "summary": "List order quotes",
         "description": "Returns all quotes for an order request.",
         "operationId": "listOrderQuotes",
         "parameters": [
-          { "$ref": "#/components/parameters/OrderRequestId" }
+          {
+            "$ref": "#/components/parameters/OrderRequestId"
+          }
         ],
         "responses": {
           "200": {
@@ -603,7 +758,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/OrderQuote" }
+                  "items": {
+                    "$ref": "#/components/schemas/order/quote.json"
+                  }
                 }
               }
             }
@@ -612,7 +769,9 @@
             "description": "Order request not found.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -621,20 +780,28 @@
     },
     "/orders/requests/{order_request_id}/quotes/{order_quote_id}": {
       "get": {
-        "tags": ["orders"],
+        "tags": [
+          "orders"
+        ],
         "summary": "Get order quote",
         "description": "Returns a single order quote by ID.",
         "operationId": "getOrderQuote",
         "parameters": [
-          { "$ref": "#/components/parameters/OrderRequestId" },
-          { "$ref": "#/components/parameters/OrderQuoteId" }
+          {
+            "$ref": "#/components/parameters/OrderRequestId"
+          },
+          {
+            "$ref": "#/components/parameters/OrderQuoteId"
+          }
         ],
         "responses": {
           "200": {
             "description": "The order quote.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/OrderQuote" }
+                "schema": {
+                  "$ref": "#/components/schemas/order/quote.json"
+                }
               }
             }
           },
@@ -642,7 +809,9 @@
             "description": "Order request or quote not found.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -651,7 +820,9 @@
     },
     "/orders": {
       "post": {
-        "tags": ["orders"],
+        "tags": [
+          "orders"
+        ],
         "summary": "Create order",
         "description": "Accept a quote and create an order. The `nonce` field provides idempotency.",
         "operationId": "createOrder",
@@ -659,7 +830,9 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateOrderRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrderRequest"
+              }
             }
           }
         },
@@ -668,7 +841,9 @@
             "description": "Order created.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Order" }
+                "schema": {
+                  "$ref": "#/components/schemas/order/order.json"
+                }
               }
             }
           },
@@ -676,7 +851,9 @@
             "description": "Invalid nonce or quote does not belong to request.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           },
@@ -684,7 +861,9 @@
             "description": "Order request or quote not found.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           },
@@ -692,7 +871,9 @@
             "description": "Duplicate nonce.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -701,19 +882,25 @@
     },
     "/orders/{order_id}": {
       "get": {
-        "tags": ["orders"],
+        "tags": [
+          "orders"
+        ],
         "summary": "Get order",
         "description": "Returns a single order by ID.",
         "operationId": "getOrder",
         "parameters": [
-          { "$ref": "#/components/parameters/OrderId" }
+          {
+            "$ref": "#/components/parameters/OrderId"
+          }
         ],
         "responses": {
           "200": {
             "description": "The order.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Order" }
+                "schema": {
+                  "$ref": "#/components/schemas/order/order.json"
+                }
               }
             }
           },
@@ -721,29 +908,36 @@
             "description": "Order not found.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
         }
       }
     },
-
     "/event-vocabularies/{name}": {
       "get": {
-        "tags": ["events"],
+        "tags": [
+          "events"
+        ],
         "summary": "Get event vocabulary",
         "description": "Returns a delivery event vocabulary by name.",
         "operationId": "getEventVocabulary",
         "parameters": [
-          { "$ref": "#/components/parameters/EventVocabularyName" }
+          {
+            "$ref": "#/components/parameters/EventVocabularyName"
+          }
         ],
         "responses": {
           "200": {
             "description": "The event vocabulary.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/DeliveryEventVocabulary" }
+                "schema": {
+                  "$ref": "#/components/schemas/delivery/events.json"
+                }
               }
             }
           },
@@ -751,17 +945,20 @@
             "description": "Event vocabulary not found.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
         }
       }
     },
-
     "/payment-instruments": {
       "post": {
-        "tags": ["payments"],
+        "tags": [
+          "payments"
+        ],
         "summary": "Register payment instrument",
         "description": "Register a payment instrument for use in order creation.",
         "operationId": "createPaymentInstrument",
@@ -769,7 +966,9 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/EvmAuthCaptureEscrowInstrument" }
+              "schema": {
+                "$ref": "#/components/schemas/payment/evm_auth_capture_escrow_instrument.json"
+              }
             }
           }
         },
@@ -778,7 +977,9 @@
             "description": "Payment instrument registered.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/EvmAuthCaptureEscrowInstrument" }
+                "schema": {
+                  "$ref": "#/components/schemas/payment/evm_auth_capture_escrow_instrument.json"
+                }
               }
             }
           },
@@ -786,7 +987,9 @@
             "description": "Invalid instrument data.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           },
@@ -794,7 +997,9 @@
             "description": "Validation errors.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ValidationErrorResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
               }
             }
           }
@@ -809,63 +1014,82 @@
         "in": "path",
         "required": true,
         "description": "Delivery request identifier.",
-        "schema": { "type": "string" }
+        "schema": {
+          "type": "string"
+        }
       },
       "QuoteId": {
         "name": "quote_id",
         "in": "path",
         "required": true,
         "description": "Quote identifier.",
-        "schema": { "type": "string" }
+        "schema": {
+          "type": "string"
+        }
       },
       "DeliveryId": {
         "name": "delivery_id",
         "in": "path",
         "required": true,
         "description": "Delivery identifier.",
-        "schema": { "type": "string" }
+        "schema": {
+          "type": "string"
+        }
       },
       "MerchantId": {
         "name": "merchant_id",
         "in": "path",
         "required": true,
         "description": "Merchant identifier.",
-        "schema": { "type": "string" }
+        "schema": {
+          "type": "string"
+        }
       },
       "OrderRequestId": {
         "name": "order_request_id",
         "in": "path",
         "required": true,
         "description": "Order request identifier.",
-        "schema": { "type": "string" }
+        "schema": {
+          "type": "string"
+        }
       },
       "OrderQuoteId": {
         "name": "order_quote_id",
         "in": "path",
         "required": true,
         "description": "Order quote identifier.",
-        "schema": { "type": "string" }
+        "schema": {
+          "type": "string"
+        }
       },
       "OrderId": {
         "name": "order_id",
         "in": "path",
         "required": true,
         "description": "Order identifier.",
-        "schema": { "type": "string" }
+        "schema": {
+          "type": "string"
+        }
       },
       "EventVocabularyName": {
         "name": "name",
         "in": "path",
         "required": true,
         "description": "Event vocabulary name in reverse-domain notation (e.g., xyz.localprotocol.delivery.courier).",
-        "schema": { "type": "string" }
+        "schema": {
+          "type": "string"
+        }
       }
     },
     "schemas": {
       "Coordinates": {
         "type": "object",
-        "description": "Geographic coordinates.",
-        "required": ["latitude", "longitude"],
+        "description": "Coordinates",
+        "required": [
+          "latitude",
+          "longitude"
+        ],
         "additionalProperties": false,
         "properties": {
           "latitude": {
@@ -886,20 +1110,47 @@
         "type": "object",
         "title": "Postal Address",
         "properties": {
-          "extended_address": { "type": "string", "description": "Address extension (apartment number, C/O, etc.)." },
-          "street_address": { "type": "string", "description": "The street address." },
-          "address_locality": { "type": "string", "description": "City or locality." },
-          "address_region": { "type": "string", "description": "State, province, or region." },
-          "address_country": { "type": "string", "description": "Country (ISO 3166-1 alpha-2 recommended)." },
-          "postal_code": { "type": "string", "description": "Postal code." },
-          "first_name": { "type": "string", "description": "Contact first name." },
-          "last_name": { "type": "string", "description": "Contact last name." },
-          "phone_number": { "type": "string", "description": "Contact phone number." }
+          "extended_address": {
+            "type": "string",
+            "description": "An address extension such as an apartment number, C/O or alternative name."
+          },
+          "street_address": {
+            "type": "string",
+            "description": "The street address."
+          },
+          "address_locality": {
+            "type": "string",
+            "description": "The locality in which the street address is, and which is in the region. For example, Mountain View."
+          },
+          "address_region": {
+            "type": "string",
+            "description": "The region in which the locality is, and which is in the country. Required for applicable countries (i.e. state in US, province in CA). For example, California or another appropriate first-level Administrative division."
+          },
+          "address_country": {
+            "type": "string",
+            "description": "The country. Recommended to be in 2-letter ISO 3166-1 alpha-2 format, for example \"US\". For backward compatibility, a 3-letter ISO 3166-1 alpha-3 country code such as \"SGP\" or a full country name such as \"Singapore\" can also be used."
+          },
+          "postal_code": {
+            "type": "string",
+            "description": "The postal code. For example, 94043."
+          },
+          "first_name": {
+            "type": "string",
+            "description": "Optional. First name of the contact associated with the address."
+          },
+          "last_name": {
+            "type": "string",
+            "description": "Optional. Last name of the contact associated with the address."
+          },
+          "phone_number": {
+            "type": "string",
+            "description": "Optional. Phone number of the contact associated with the address."
+          }
         }
       },
       "Location": {
         "type": "object",
-        "description": "A location specified by coordinates and/or postal address. At least one must be provided.",
+        "description": "Location",
         "additionalProperties": false,
         "properties": {
           "coordinates": {
@@ -910,14 +1161,29 @@
           }
         },
         "anyOf": [
-          { "required": ["coordinates"] },
-          { "required": ["postal_address"] }
+          {
+            "required": [
+              "postal_address"
+            ]
+          },
+          {
+            "required": [
+              "coordinates"
+            ]
+          }
         ]
       },
       "DeliveryRequest": {
         "type": "object",
-        "description": "A delivery request.",
-        "required": ["id", "nonce", "pickup_location", "dropoff_location", "pickup_time", "dropoff_time"],
+        "description": "DeliveryRequest",
+        "required": [
+          "id",
+          "nonce",
+          "pickup_location",
+          "dropoff_location",
+          "pickup_time",
+          "dropoff_time"
+        ],
         "properties": {
           "id": {
             "type": "string",
@@ -956,8 +1222,18 @@
       },
       "DeliveryQuote": {
         "type": "object",
-        "description": "A delivery quote.",
-        "required": ["id", "nonce", "price", "currency", "pickup_location", "dropoff_location", "pickup_estimate", "dropoff_estimate", "payment"],
+        "description": "DeliveryQuote",
+        "required": [
+          "id",
+          "nonce",
+          "price",
+          "currency",
+          "pickup_location",
+          "dropoff_location",
+          "pickup_estimate",
+          "dropoff_estimate",
+          "payment"
+        ],
         "properties": {
           "id": {
             "type": "string",
@@ -1008,7 +1284,11 @@
       "CreateDeliveryRequest": {
         "type": "object",
         "description": "Body for creating a delivery from an accepted quote.",
-        "required": ["request_id", "quote_id", "nonce"],
+        "required": [
+          "request_id",
+          "quote_id",
+          "nonce"
+        ],
         "additionalProperties": false,
         "properties": {
           "request_id": {
@@ -1024,7 +1304,10 @@
             "description": "Client-generated idempotency key."
           },
           "webhook_url": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "Optional URL to receive delivery event webhook notifications."
           },
           "event_vocabulary": {
@@ -1037,7 +1320,10 @@
       "UpdateEventRequest": {
         "type": "object",
         "description": "Body for updating a delivery event.",
-        "required": ["event", "event_description"],
+        "required": [
+          "event",
+          "event_description"
+        ],
         "additionalProperties": false,
         "properties": {
           "event": {
@@ -1052,8 +1338,18 @@
       },
       "Delivery": {
         "type": "object",
-        "description": "A delivery resource.",
-        "required": ["id", "request_id", "quote_id", "payment_instrument_id", "event", "event_description", "event_vocabulary", "created_at", "updated_at"],
+        "description": "Delivery resource created when a quote is accepted.",
+        "required": [
+          "id",
+          "request_id",
+          "quote_id",
+          "payment_instrument_id",
+          "event",
+          "event_description",
+          "event_vocabulary",
+          "created_at",
+          "updated_at"
+        ],
         "properties": {
           "id": {
             "type": "string",
@@ -1061,7 +1357,7 @@
           },
           "request_id": {
             "type": "string",
-            "description": "Reference to the delivery request."
+            "description": "Reference to the original request."
           },
           "quote_id": {
             "type": "string",
@@ -1084,13 +1380,16 @@
             "description": "Event vocabulary standard in use."
           },
           "webhook_url": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "Registered webhook URL, if any."
           },
           "created_at": {
             "type": "string",
             "format": "date-time",
-            "description": "Creation timestamp (RFC 3339)."
+            "description": "Delivery creation timestamp (RFC 3339)."
           },
           "updated_at": {
             "type": "string",
@@ -1103,7 +1402,12 @@
       "DiscoveryResponse": {
         "type": "object",
         "description": "Service discovery metadata.",
-        "required": ["version", "name", "capabilities", "endpoints"],
+        "required": [
+          "version",
+          "name",
+          "capabilities",
+          "endpoints"
+        ],
         "properties": {
           "version": {
             "type": "string",
@@ -1118,7 +1422,7 @@
             "description": "Supported capabilities by domain.",
             "additionalProperties": {
               "type": "object",
-              "additionalProperties": true
+              "additionalProperties": {}
             }
           },
           "endpoints": {
@@ -1134,7 +1438,9 @@
       "HealthResponse": {
         "type": "object",
         "description": "Health check response.",
-        "required": ["status"],
+        "required": [
+          "status"
+        ],
         "properties": {
           "status": {
             "type": "string",
@@ -1146,7 +1452,9 @@
       "ErrorResponse": {
         "type": "object",
         "description": "Error response with a human-readable detail message.",
-        "required": ["detail"],
+        "required": [
+          "detail"
+        ],
         "properties": {
           "detail": {
             "type": "string",
@@ -1157,27 +1465,33 @@
       "ValidationErrorResponse": {
         "type": "object",
         "description": "Validation error response with a list of field-level errors.",
-        "required": ["detail"],
+        "required": [
+          "detail"
+        ],
         "properties": {
           "detail": {
             "type": "object",
-            "required": ["errors"],
+            "required": [
+              "errors"
+            ],
             "properties": {
               "errors": {
                 "type": "array",
-                "items": { "type": "string" },
+                "items": {
+                  "type": "string"
+                },
                 "description": "List of validation error messages."
               }
             }
           }
         }
       },
-
       "FiatCurrency": {
-
         "type": "object",
         "description": "Fiat currency descriptor.",
-        "required": ["symbol"],
+        "required": [
+          "symbol"
+        ],
         "additionalProperties": false,
         "properties": {
           "symbol": {
@@ -1188,21 +1502,40 @@
         }
       },
       "EvmCurrency": {
-
         "type": "object",
         "description": "EVM token currency descriptor.",
-        "required": ["chain_id", "address", "decimals"],
+        "required": [
+          "chain_id",
+          "address",
+          "decimals"
+        ],
         "additionalProperties": false,
         "properties": {
-          "chain_id": { "type": "integer", "minimum": 1, "description": "EVM chain id." },
-          "address": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "Token contract address." },
-          "decimals": { "type": "integer", "minimum": 0, "maximum": 255, "description": "Decimal places for the token." }
+          "chain_id": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "EVM chain id."
+          },
+          "address": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Token contract address."
+          },
+          "decimals": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255,
+            "description": "Decimal places for the token."
+          }
         }
       },
       "EvmAmount": {
         "type": "object",
         "description": "Amount denominated in an EVM token. Value is in atomic token units.",
-        "required": ["value", "currency"],
+        "required": [
+          "value",
+          "currency"
+        ],
         "additionalProperties": false,
         "properties": {
           "value": {
@@ -1210,288 +1543,601 @@
             "pattern": "^[0-9]+$",
             "description": "Value in atomic token units as an integer string."
           },
-          "currency": { "$ref": "#/components/schemas/EvmCurrency" }
+          "currency": {
+            "$ref": "#/components/schemas/EvmCurrency"
+          }
         }
       },
       "Amount": {
-
         "type": "object",
         "description": "Amount with explicit currency. Value is always in minor units (e.g., cents for USD).",
-        "required": ["value", "currency"],
+        "required": [
+          "value",
+          "currency"
+        ],
         "additionalProperties": false,
         "properties": {
           "value": {
             "type": "string",
             "pattern": "^[0-9]+$",
-            "description": "Value in minor currency units as an integer string."
+            "description": "Value in minor currency units as an integer string (e.g., \"1000\" = $10.00 USD, or atomic units for EVM tokens). Use \"0\" for free items."
           },
           "currency": {
             "description": "Currency descriptor (fiat or EVM token).",
             "oneOf": [
-              { "$ref": "#/components/schemas/FiatCurrency" },
-              { "$ref": "#/components/schemas/EvmCurrency" }
+              {
+                "$ref": "#/components/schemas/FiatCurrency"
+              },
+              {
+                "$ref": "#/components/schemas/EvmCurrency"
+              }
             ]
           }
         }
       },
       "Media": {
-
         "type": "object",
         "description": "Product media item (image, video, etc.).",
-        "required": ["type", "url"],
+        "required": [
+          "type",
+          "url"
+        ],
         "properties": {
-          "type": { "type": "string", "enum": ["image", "video", "model_3d"], "description": "Media type discriminator." },
-          "url": { "type": "string", "format": "uri", "description": "URL to the media resource." },
-          "alt_text": { "type": "string", "description": "Accessibility text describing the media." },
-          "width": { "type": "integer", "minimum": 1, "description": "Width in pixels." },
-          "height": { "type": "integer", "minimum": 1, "description": "Height in pixels." }
+          "type": {
+            "type": "string",
+            "enum": [
+              "image",
+              "video",
+              "model_3d"
+            ],
+            "description": "Media type discriminator."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to the media resource."
+          },
+          "alt_text": {
+            "type": "string",
+            "description": "Accessibility text describing the media."
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Width in pixels (for images/video)."
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Height in pixels (for images/video)."
+          }
         }
       },
-
       "Interval": {
-
         "type": "object",
         "description": "A single time interval for a day of the week or a specific date.",
-        "required": ["from_hour", "from_minute", "to_hour", "to_minute"],
+        "required": [
+          "from_hour",
+          "from_minute",
+          "to_hour",
+          "to_minute"
+        ],
         "additionalProperties": false,
         "properties": {
-          "day": { "type": "string", "description": "Day of week (e.g., Monday, Tuesday)." },
-          "date": { "type": "string", "format": "date", "description": "Calendar date in YYYY-MM-DD." },
-          "from_hour": { "type": "integer", "minimum": 0, "maximum": 23, "description": "Start hour (0-23)." },
-          "from_minute": { "type": "integer", "minimum": 0, "maximum": 59, "description": "Start minute (0-59)." },
-          "to_hour": { "type": "integer", "minimum": 0, "maximum": 23, "description": "End hour (0-23)." },
-          "to_minute": { "type": "integer", "minimum": 0, "maximum": 59, "description": "End minute (0-59)." }
+          "day": {
+            "type": "string",
+            "description": "Day of week (e.g., Monday, Tuesday)."
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Calendar date in YYYY-MM-DD."
+          },
+          "from_hour": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 23,
+            "description": "Start hour (0-23)."
+          },
+          "from_minute": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 59,
+            "description": "Start minute (0-59)."
+          },
+          "to_hour": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 23,
+            "description": "End hour (0-23)."
+          },
+          "to_minute": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 59,
+            "description": "End minute (0-59)."
+          }
         },
         "oneOf": [
-          { "required": ["day"] },
-          { "required": ["date"] }
+          {
+            "required": [
+              "day"
+            ]
+          },
+          {
+            "required": [
+              "date"
+            ]
+          }
         ]
       },
       "Availability": {
-
         "type": "object",
         "description": "Availability schedule for a catalog, category, or item.",
-        "required": ["intervals"],
+        "required": [
+          "intervals"
+        ],
         "additionalProperties": false,
         "properties": {
-          "timezone": { "type": "string", "description": "IANA timezone. Defaults to merchant timezone when omitted." },
+          "timezone": {
+            "type": "string",
+            "description": "IANA timezone for the intervals. Defaults to the merchant timezone when omitted."
+          },
           "intervals": {
             "type": "array",
             "minItems": 1,
-            "items": { "$ref": "#/components/schemas/Interval" },
+            "items": {
+              "$ref": "#/components/schemas/catalog/types/interval.json"
+            },
             "description": "Availability intervals (weekly or date-specific)."
           }
         }
       },
       "ModifierItem": {
-
         "type": "object",
-        "description": "A purchasable modifier item within a modifier group.",
-        "required": ["id", "name", "price"],
+        "description": "A purchasable modifier item that can be selected within a modifier group.",
+        "required": [
+          "id",
+          "name",
+          "price"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "description": "Modifier item identifier." },
-          "name": { "type": "string", "description": "Modifier item name." },
-          "description": { "type": "string", "description": "Optional modifier item description." },
-          "price": { "$ref": "#/components/schemas/Amount", "description": "Price for this modifier item." },
-          "metadata": { "type": "object", "description": "Business-defined custom data.", "additionalProperties": true }
+          "id": {
+            "type": "string",
+            "description": "Modifier item identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "Modifier item name."
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional modifier item description."
+          },
+          "price": {
+            "$ref": "#/components/schemas/Amount",
+            "description": "Price for this modifier item."
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Business-defined custom data extending the modifier item.",
+            "additionalProperties": {}
+          }
         }
       },
       "ModifierOption": {
-
         "type": "object",
         "description": "Selectable option within a modifier group.",
-        "required": ["id", "modifier_item"],
+        "required": [
+          "id",
+          "modifier_item"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "description": "Modifier option identifier." },
-          "modifier_item": { "$ref": "#/components/schemas/ModifierItem", "description": "Modifier item for this option." },
+          "id": {
+            "type": "string",
+            "description": "Modifier option identifier."
+          },
+          "modifier_item": {
+            "$ref": "#/components/schemas/ModifierItem",
+            "description": "Modifier item for this option."
+          },
           "child_modifier_groups": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ModifierGroup" },
+            "items": {
+              "$ref": "#/components/schemas/ModifierGroup"
+            },
             "description": "Nested modifier groups required after selecting this option."
           },
-          "is_default": { "type": "boolean", "description": "Whether this option is selected by default." },
-          "metadata": { "type": "object", "description": "Business-defined custom data.", "additionalProperties": true }
+          "is_default": {
+            "type": "boolean",
+            "description": "Whether this option is selected by default."
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Business-defined custom data.",
+            "additionalProperties": true
+          }
         }
       },
       "ModifierGroup": {
-
         "type": "object",
         "description": "Group of modifier options with selection constraints.",
-        "required": ["id", "name", "modifier_options"],
+        "required": [
+          "id",
+          "name",
+          "modifier_options"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "description": "Modifier group identifier." },
-          "name": { "type": "string", "description": "Display name for the modifier group." },
-          "description": { "type": "string", "description": "Optional modifier group description." },
-          "minimum_selections": { "type": "integer", "minimum": 0, "description": "Minimum selections required." },
-          "maximum_selections": { "type": "integer", "minimum": 0, "description": "Maximum selections allowed." },
-          "allow_quantities": { "type": "boolean", "description": "Whether options can be selected with quantities > 1." },
-          "max_per_modifier": { "type": "integer", "minimum": 0, "default": 1, "description": "Maximum quantity per modifier option." },
+          "id": {
+            "type": "string",
+            "description": "Modifier group identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name for the modifier group."
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional modifier group description."
+          },
+          "minimum_selections": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Minimum selections required."
+          },
+          "maximum_selections": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Maximum selections allowed."
+          },
+          "allow_quantities": {
+            "type": "boolean",
+            "description": "Whether options can be selected with quantities > 1."
+          },
+          "max_per_modifier": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 1,
+            "description": "Maximum quantity per modifier option."
+          },
           "modifier_options": {
             "type": "array",
             "minItems": 1,
-            "items": { "$ref": "#/components/schemas/ModifierOption" },
+            "items": {
+              "$ref": "#/components/schemas/ModifierOption"
+            },
             "description": "Ordered modifier options within this group."
           },
-          "type": { "type": "string", "description": "Modifier group type classification." },
-          "metadata": { "type": "object", "description": "Business-defined custom data.", "additionalProperties": true }
+          "type": {
+            "type": "string",
+            "description": "Modifier group type classification."
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Business-defined custom data.",
+            "additionalProperties": true
+          }
         }
       },
       "CatalogItem": {
-
         "type": "object",
         "description": "A menu item with embedded modifier groups.",
-        "required": ["id", "name", "description", "price"],
+        "required": [
+          "id",
+          "name",
+          "description",
+          "price"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "description": "Item identifier." },
-          "name": { "type": "string", "description": "Item name." },
-          "description": { "type": "string", "description": "Item description." },
-          "price": { "$ref": "#/components/schemas/Amount", "description": "Base price for the item." },
+          "id": {
+            "type": "string",
+            "description": "Item identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "Item name."
+          },
+          "description": {
+            "type": "string",
+            "description": "Item description."
+          },
+          "price": {
+            "$ref": "#/components/schemas/Amount",
+            "description": "Base price for the item."
+          },
           "media": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Media" },
+            "items": {
+              "$ref": "#/components/schemas/shared/media.json"
+            },
             "description": "Item media (images, videos, 3D models)."
           },
           "modifier_groups": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ModifierGroup" },
+            "items": {
+              "$ref": "#/components/schemas/ModifierGroup"
+            },
             "description": "Modifier groups available for this item."
           },
-          "availability": { "$ref": "#/components/schemas/Availability", "description": "Item availability." },
-          "metadata": { "type": "object", "description": "Business-defined custom data.", "additionalProperties": true }
+          "availability": {
+            "$ref": "#/components/schemas/Availability",
+            "description": "Item availability. Ignored when the catalog or category defines availability."
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Business-defined custom data extending the item.",
+            "additionalProperties": {}
+          }
         }
       },
       "CatalogCategory": {
-
         "type": "object",
         "description": "A category grouping items in a catalog.",
-        "required": ["id", "name", "items"],
+        "required": [
+          "id",
+          "name",
+          "items"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "description": "Category identifier." },
-          "name": { "type": "string", "description": "Category display name." },
-          "description": { "type": "string", "description": "Optional category description." },
+          "id": {
+            "type": "string",
+            "description": "Category identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "Category display name."
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional category description."
+          },
           "categories": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/CatalogCategory" },
+            "items": {
+              "$ref": "#/components/schemas/CatalogCategory"
+            },
             "description": "Ordered child categories for nested category trees."
           },
           "items": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/CatalogItem" },
+            "items": {
+              "$ref": "#/components/schemas/CatalogItem"
+            },
             "description": "Ordered items in this category."
           },
-          "availability": { "$ref": "#/components/schemas/Availability", "description": "Category availability." },
-          "metadata": { "type": "object", "description": "Business-defined custom data.", "additionalProperties": true }
+          "availability": {
+            "$ref": "#/components/schemas/Availability",
+            "description": "Category availability."
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Business-defined custom data.",
+            "additionalProperties": true
+          }
         }
       },
       "Catalog": {
-
         "type": "object",
         "description": "A catalog containing embedded categories, items, availability, and fulfillment configuration.",
-        "required": ["id", "name", "categories"],
+        "required": [
+          "id",
+          "name",
+          "categories"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "description": "Catalog identifier." },
-          "name": { "type": "string", "description": "Catalog name." },
-          "description": { "type": "string", "description": "Catalog description." },
+          "id": {
+            "type": "string",
+            "description": "Catalog identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "Catalog name."
+          },
+          "description": {
+            "type": "string",
+            "description": "Catalog description."
+          },
           "categories": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/CatalogCategory" },
-            "description": "Ordered top-level categories."
+            "items": {
+              "$ref": "#/components/schemas/CatalogCategory"
+            },
+            "description": "Ordered top-level categories included in this catalog. Nested categories live under each category's categories array."
           },
           "items": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/CatalogItem" },
-            "description": "Items not assigned to a category."
+            "items": {
+              "$ref": "#/components/schemas/catalog/types/item.json"
+            },
+            "description": "Ordered items included in this catalog that are not assigned to a category. Consumers that require category membership should place these items into a synthetic category."
           },
-          "availability": { "$ref": "#/components/schemas/Availability", "description": "Catalog-wide availability override." },
-          "metadata": { "type": "object", "description": "Business-defined custom data.", "additionalProperties": true }
+          "availability": {
+            "$ref": "#/components/schemas/Availability",
+            "description": "Catalog availability. When present, it overrides category and item availability."
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Business-defined custom data extending the catalog.",
+            "additionalProperties": {}
+          }
         }
       },
       "Merchant": {
-
         "type": "object",
         "description": "Merchant catalog payload containing denormalized catalogs.",
-        "required": ["id", "name", "timezone", "catalogs"],
+        "required": [
+          "id",
+          "name",
+          "timezone",
+          "catalogs"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "description": "Merchant identifier." },
-          "name": { "type": "string", "description": "Merchant name." },
-          "timezone": { "type": "string", "description": "IANA timezone for availability schedules." },
-          "last_updated": { "type": "string", "format": "date-time", "description": "RFC 3339 timestamp of the latest catalog update." },
+          "id": {
+            "type": "string",
+            "description": "Merchant identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "Merchant name."
+          },
+          "timezone": {
+            "type": "string",
+            "description": "IANA timezone for availability schedules."
+          },
+          "last_updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "RFC 3339 timestamp of the latest catalog update."
+          },
           "catalogs": {
             "type": "array",
             "minItems": 1,
-            "items": { "$ref": "#/components/schemas/Catalog" },
+            "items": {
+              "$ref": "#/components/schemas/catalog/catalog.json"
+            },
             "description": "Catalogs available for the merchant."
           },
-          "metadata": { "type": "object", "description": "Business-defined custom data.", "additionalProperties": true }
+          "metadata": {
+            "type": "object",
+            "description": "Business-defined custom data extending the merchant.",
+            "additionalProperties": {}
+          }
         }
       },
-
       "CartItem": {
-
         "type": "object",
-        "description": "An item in a cart.",
-        "required": ["id", "quantity"],
+        "description": "Cart Item",
+        "required": [
+          "id",
+          "quantity"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "description": "Item identifier." },
-          "quantity": { "type": "integer", "minimum": 1, "description": "Quantity requested." }
+          "id": {
+            "type": "string",
+            "description": "Item identifier."
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Quantity requested."
+          }
         }
       },
       "Cart": {
-
         "type": "object",
-        "description": "A shopping cart.",
-        "required": ["id", "intent_id", "nonce", "items"],
+        "description": "Cart",
+        "required": [
+          "id",
+          "intent_id",
+          "nonce",
+          "items"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "description": "Unique cart identifier." },
-          "intent_id": { "type": "string", "description": "Shared intent identifier for tracing Request -> Quote -> Order." },
-          "nonce": { "type": "string", "description": "Client-generated idempotency key." },
+          "id": {
+            "type": "string",
+            "description": "Unique cart identifier."
+          },
+          "intent_id": {
+            "type": "string",
+            "description": "Shared intent identifier for tracing Request → Quote → Order."
+          },
+          "nonce": {
+            "type": "string",
+            "description": "Client-generated idempotency key."
+          },
           "items": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/CartItem" },
+            "items": {
+              "$ref": "#/components/schemas/order/types/cart_item.json"
+            },
             "description": "Items in the cart."
           }
         }
       },
       "OrderRequest": {
-
         "type": "object",
-        "description": "An order request.",
-        "required": ["id", "intent_id", "nonce"],
+        "description": "OrderRequest",
+        "required": [
+          "id",
+          "intent_id",
+          "nonce"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "description": "Unique request identifier." },
-          "intent_id": { "type": "string", "description": "Shared intent identifier for tracing Request -> Quote -> Order." },
-          "nonce": { "type": "string", "description": "Client-generated idempotency key." }
+          "id": {
+            "type": "string",
+            "description": "Unique request identifier."
+          },
+          "intent_id": {
+            "type": "string",
+            "description": "Shared intent identifier for tracing Request → Quote → Order."
+          },
+          "nonce": {
+            "type": "string",
+            "description": "Client-generated idempotency key."
+          }
         }
       },
       "OrderQuote": {
-
         "type": "object",
-        "description": "An order quote.",
-        "required": ["id", "intent_id", "nonce", "price", "ready_at", "expires_at"],
+        "description": "OrderQuote",
+        "required": [
+          "id",
+          "intent_id",
+          "nonce",
+          "price",
+          "ready_at",
+          "expires_at"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "description": "Unique quote identifier." },
-          "intent_id": { "type": "string", "description": "Shared intent identifier for tracing Request -> Quote -> Order." },
-          "nonce": { "type": "string", "description": "Client-generated idempotency key." },
-          "price": { "type": "integer", "minimum": 0, "description": "Price in minor currency units." },
-          "ready_at": { "type": "string", "format": "date-time", "description": "Estimated readiness time (RFC 3339)." },
-          "expires_at": { "type": "string", "format": "date-time", "description": "Quote expiration time (RFC 3339)." }
+          "id": {
+            "type": "string",
+            "description": "Unique quote identifier."
+          },
+          "intent_id": {
+            "type": "string",
+            "description": "Shared intent identifier for tracing Request → Quote → Order."
+          },
+          "nonce": {
+            "type": "string",
+            "description": "Client-generated idempotency key."
+          },
+          "price": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Price in minor currency units."
+          },
+          "ready_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Estimated readiness time (RFC 3339)."
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Quote expiration time (RFC 3339)."
+          }
         }
       },
       "CreateOrderRequest": {
         "type": "object",
         "description": "Body for creating an order from an accepted quote.",
-        "required": ["order_request_id", "order_quote_id", "nonce", "payment_instrument_id"],
+        "required": [
+          "order_request_id",
+          "order_quote_id",
+          "nonce",
+          "payment_instrument_id"
+        ],
         "additionalProperties": false,
         "properties": {
           "order_request_id": {
@@ -1514,66 +2160,176 @@
       },
       "Order": {
         "type": "object",
-        "description": "An order.",
-        "required": ["id", "intent_id", "nonce", "payment_instrument_id"],
+        "description": "Order",
+        "required": [
+          "id",
+          "intent_id",
+          "nonce",
+          "payment_instrument_id"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "description": "Unique order identifier." },
-          "intent_id": { "type": "string", "description": "Shared intent identifier for tracing Request -> Quote -> Order." },
-          "nonce": { "type": "string", "description": "Client-generated idempotency key." },
-          "payment_instrument_id": { "type": "string", "description": "Reference to the payment instrument used." }
+          "id": {
+            "type": "string",
+            "description": "Unique order identifier."
+          },
+          "intent_id": {
+            "type": "string",
+            "description": "Shared intent identifier for tracing Request → Quote → Order."
+          },
+          "nonce": {
+            "type": "string",
+            "description": "Client-generated idempotency key."
+          },
+          "payment_instrument_id": {
+            "type": "string",
+            "description": "Reference to the payment instrument used to create this order."
+          }
         }
       },
-
       "EvmToken": {
-
         "type": "object",
         "description": "EVM token identifier used for auth/capture settlement.",
-        "required": ["symbol", "decimals"],
+        "required": [
+          "symbol",
+          "decimals"
+        ],
         "additionalProperties": false,
         "properties": {
-          "address": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "ERC-20 contract address. Omit for native gas tokens." },
-          "symbol": { "type": "string", "description": "Token symbol (e.g., USDC)." },
-          "decimals": { "type": "integer", "minimum": 0, "maximum": 255, "description": "Token decimals." }
+          "address": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "ERC-20 contract address. Omit for native gas tokens (e.g., ETH, MATIC)."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Token symbol (e.g., USDC)."
+          },
+          "decimals": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255,
+            "description": "Token decimals."
+          }
         }
       },
       "EvmAuthCaptureEscrowConfig": {
         "type": "object",
         "description": "Handler configuration for auth/capture escrow on EVM chains.",
-        "required": ["chain_id", "contract", "operator", "receiver", "accepted_tokens"],
-        "additionalProperties": true,
+        "required": [
+          "chain_id",
+          "contract",
+          "operator",
+          "receiver",
+          "accepted_tokens"
+        ],
+        "additionalProperties": {},
         "properties": {
-          "chain_id": { "type": "integer", "minimum": 1, "description": "EVM chain id for the escrow contract." },
-          "contract": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "Escrow contract address." },
-          "operator": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "Operator address for state transitions." },
-          "receiver": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "Default receiver address for captures." },
+          "chain_id": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "EVM chain id for the escrow contract."
+          },
+          "contract": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Escrow contract address on the target chain."
+          },
+          "operator": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Operator address authorized to drive state transitions."
+          },
+          "receiver": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Default receiver address for captures."
+          },
           "accepted_tokens": {
             "type": "array",
             "minItems": 1,
-            "items": { "$ref": "#/components/schemas/EvmToken" },
+            "items": {
+              "$ref": "#/components/schemas/payment/types/evm_token.json"
+            },
             "description": "Tokens accepted on the escrow contract chain."
           }
         }
       },
       "EvmAuthCaptureEscrowInstrumentDetails": {
         "type": "object",
-        "required": ["payment_info_hash", "operator", "payer", "receiver", "token", "max_amount", "preapproval_expires_at", "authorization_expires_at", "refund_expires_at", "nonce", "chain_id", "contract", "amount"],
+        "required": [
+          "payment_info_hash",
+          "operator",
+          "payer",
+          "receiver",
+          "token",
+          "max_amount",
+          "preapproval_expires_at",
+          "authorization_expires_at",
+          "refund_expires_at",
+          "nonce",
+          "chain_id",
+          "contract",
+          "amount"
+        ],
         "properties": {
-          "payment_info_hash": { "type": "string", "pattern": "^0x[a-fA-F0-9]{64}$", "description": "Hash identifying the on-chain payment authorization." },
-          "operator": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "Operator address." },
-          "payer": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "Payer address." },
-          "chain_id": { "type": "integer", "minimum": 1, "description": "EVM chain id." },
-          "contract": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "Escrow contract address." },
-          "receiver": { "type": "string", "pattern": "^0x[a-fA-F0-9]{40}$", "description": "Receiver address for captures." },
-          "token": { "$ref": "#/components/schemas/EvmToken" },
+          "payment_info_hash": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{64}$",
+            "description": "Hash identifying the on-chain payment authorization."
+          },
+          "operator": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Operator address."
+          },
+          "payer": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Payer address."
+          },
+          "chain_id": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "EVM chain id."
+          },
+          "contract": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Escrow contract address."
+          },
+          "receiver": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Receiver address for captures."
+          },
+          "token": {
+            "$ref": "#/components/schemas/EvmToken"
+          },
           "max_amount": {
             "$ref": "#/components/schemas/EvmAmount",
             "description": "Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
           },
-          "preapproval_expires_at": { "type": "string", "format": "date-time", "description": "Pre-approval expiration (RFC 3339)." },
-          "authorization_expires_at": { "type": "string", "format": "date-time", "description": "Authorization expiration (RFC 3339)." },
-          "refund_expires_at": { "type": "string", "format": "date-time", "description": "Refund expiration (RFC 3339)." },
-          "nonce": { "type": "string", "pattern": "^[0-9]+$", "description": "Unique nonce for payment info hash computation." },
+          "preapproval_expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Pre-approval expiration (RFC 3339)."
+          },
+          "authorization_expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Authorization expiration (RFC 3339)."
+          },
+          "refund_expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Refund expiration (RFC 3339)."
+          },
+          "nonce": {
+            "type": "string",
+            "pattern": "^[0-9]+$",
+            "description": "Unique nonce for payment info hash computation."
+          },
           "amount": {
             "$ref": "#/components/schemas/EvmAmount",
             "description": "Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
@@ -1582,83 +2338,138 @@
         "additionalProperties": true
       },
       "EvmAuthCaptureEscrowInstrument": {
-
         "description": "Payment instrument for auth/capture escrow on EVM chains.",
         "allOf": [
-          { "$ref": "#/components/schemas/PaymentInstrument" },
-          { "$ref": "#/components/schemas/EvmAuthCaptureEscrowInstrumentDetails" },
-          { "required": ["type"], "properties": { "type": { "type": "string", "const": "evm_auth_capture_escrow" } } }
+          {
+            "$ref": "#/components/schemas/ucp/shopping/types/payment_instrument.json"
+          },
+          {
+            "$ref": "#/components/schemas/EvmAuthCaptureEscrowInstrumentDetails"
+          },
+          {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "evm_auth_capture_escrow"
+              }
+            }
+          }
         ]
       },
-
       "PaymentCredential": {
         "type": "object",
-        "description": "Base definition for any payment credential.",
-        "required": ["type"],
-        "additionalProperties": true,
+        "description": "The base definition for any payment credential. Handlers define specific credential types.",
+        "required": [
+          "type"
+        ],
+        "additionalProperties": {},
         "properties": {
-          "type": { "type": "string", "description": "Credential type discriminator." }
+          "type": {
+            "type": "string",
+            "description": "The credential type discriminator. Specific schemas will constrain this to a constant value."
+          }
         }
       },
       "PaymentInstrument": {
         "type": "object",
-        "description": "Base definition for any payment instrument.",
-        "required": ["id", "handler_id", "type"],
+        "description": "The base definition for any payment instrument. It links the instrument to a specific payment handler.",
+        "required": [
+          "id",
+          "handler_id",
+          "type"
+        ],
         "properties": {
-          "id": { "type": "string", "description": "Unique instrument identifier." },
-          "handler_id": { "type": "string", "description": "Handler instance identifier." },
-          "type": { "type": "string", "description": "Instrument category (e.g., 'card', 'tokenized_card')." },
-          "billing_address": { "$ref": "#/components/schemas/PostalAddress", "description": "Billing address." },
-          "credential": { "$ref": "#/components/schemas/PaymentCredential" },
-          "display": { "type": "object", "description": "Display information for the instrument. Each payment instrument schema defines its specific display properties, as outlined by the payment handler.", "additionalProperties": true }
+          "id": {
+            "type": "string",
+            "description": "A unique identifier for this instrument instance, assigned by the platform."
+          },
+          "handler_id": {
+            "type": "string",
+            "description": "The unique identifier for the handler instance that produced this instrument. This corresponds to the 'id' field in the Payment Handler definition."
+          },
+          "type": {
+            "type": "string",
+            "description": "The broad category of the instrument (e.g., 'card', 'tokenized_card'). Specific schemas will constrain this to a constant value."
+          },
+          "billing_address": {
+            "$ref": "#/components/schemas/PostalAddress",
+            "description": "The billing address associated with this payment method."
+          },
+          "credential": {
+            "$ref": "#/components/schemas/ucp/shopping/types/payment_credential.json"
+          },
+          "display": {
+            "type": "object",
+            "description": "Display information for this payment instrument. Each payment instrument schema defines its specific display properties, as outlined by the payment handler.",
+            "additionalProperties": {}
+          }
         }
       },
       "SelectedPaymentInstrumentSelectionState": {
         "type": "object",
         "properties": {
-          "selected": { "type": "boolean", "description": "Whether this instrument is selected by the user." }
+          "selected": {
+            "type": "boolean",
+            "description": "Whether this instrument is selected by the user."
+          }
         }
       },
       "SelectedPaymentInstrument": {
         "description": "A payment instrument with selection state.",
         "allOf": [
-          { "$ref": "#/components/schemas/PaymentInstrument" },
-          { "$ref": "#/components/schemas/SelectedPaymentInstrumentSelectionState" }
+          {
+            "$ref": "#/components/schemas/PaymentInstrument"
+          },
+          {
+            "$ref": "#/components/schemas/SelectedPaymentInstrumentSelectionState"
+          }
         ]
       },
       "Payment": {
         "type": "object",
-        "description": "Payment configuration containing instruments.",
+        "description": "Payment configuration containing handlers.",
         "properties": {
           "instruments": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/SelectedPaymentInstrument" },
-            "description": "Payment instruments available. Each instrument is associated with a handler via handler_id."
+            "items": {
+              "$ref": "#/components/schemas/ucp/shopping/types/payment_instrument.json"
+            },
+            "description": "The payment instruments available for this payment. Each instrument is associated with a specific handler via the handler_id field. Handlers can extend the base payment_instrument schema to add handler-specific fields."
           }
         }
       },
-
       "DeliveryEvent": {
-
         "type": "object",
         "description": "A single delivery event definition.",
-        "required": ["description"],
+        "required": [
+          "description"
+        ],
         "additionalProperties": false,
         "properties": {
-          "description": { "type": "string", "description": "Human-readable description of the event." }
+          "description": {
+            "type": "string",
+            "description": "Human-readable description of the event."
+          }
         }
       },
       "DeliveryEventVocabulary": {
-
         "type": "object",
         "description": "Schema for delivery event vocabularies.",
-        "required": ["name", "version", "title", "events"],
+        "required": [
+          "name",
+          "version",
+          "title",
+          "description"
+        ],
         "additionalProperties": false,
         "properties": {
           "name": {
             "type": "string",
             "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)+$",
-            "description": "Standard identifier in reverse-domain notation."
+            "description": "Standard identifier in reverse-domain notation (e.g., xyz.localprotocol.delivery.courier)."
           },
           "version": {
             "type": "string",
@@ -1674,16 +2485,28 @@
               "type": "string",
               "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)+@\\d{4}-\\d{2}-\\d{2}$"
             },
-            "description": "Parent standard this extends (optional, max one)."
+            "description": "Parent standard this standard extends (optional). Only one parent is allowed; the reference must include a version date. Used for lineage and discovery."
           },
-          "title": { "type": "string", "description": "Human-readable title." },
-          "description": { "type": "string", "description": "Human-readable description." },
-          "spec": { "type": "string", "format": "uri", "description": "URL to specification document." },
+          "title": {
+            "type": "string",
+            "description": "Human-readable title for the standard."
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable description of the standard."
+          },
+          "spec": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to human-readable specification document."
+          },
           "events": {
             "type": "object",
             "minProperties": 1,
-            "additionalProperties": { "$ref": "#/components/schemas/DeliveryEvent" },
-            "description": "Map of event IDs to event definitions."
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DeliveryEvent"
+            },
+            "description": "Map of all event IDs supported by this standard, including inherited events."
           }
         }
       }

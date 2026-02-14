@@ -5,10 +5,22 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
+"@asteasolutions/zod-to-openapi@npm:^8.4.0":
+  version: 8.4.0
+  resolution: "@asteasolutions/zod-to-openapi@npm:8.4.0"
+  dependencies:
+    openapi3-ts: "npm:^4.1.2"
+  peerDependencies:
+    zod: ^4.0.0
+  checksum: 10c0/2099663ed790c732d80009589ca67e73d59162e1b505b8de70ce634f5296e81a097b54feccb6d1256d8618018680625ccd5889c460bfe44ccfbec1d67126a321
+  languageName: node
+  linkType: hard
+
 "@local-protocol/schemas-zod@workspace:.":
   version: 0.0.0-use.local
   resolution: "@local-protocol/schemas-zod@workspace:."
   dependencies:
+    "@asteasolutions/zod-to-openapi": "npm:^8.4.0"
     "@types/node": "npm:^22.0.0"
     typescript: "npm:^5.8.0"
     zod: "npm:^4.0.0"
@@ -21,6 +33,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~6.21.0"
   checksum: 10c0/4b274acf27ec31aa83b50ef22088f83c783e6bcd7dcb40b4834f64f44868b6bf68725214220f15a0c776928f7c0f7f26f03c05cd5868f0526340af3f4af4b58b
+  languageName: node
+  linkType: hard
+
+"openapi3-ts@npm:^4.1.2":
+  version: 4.5.0
+  resolution: "openapi3-ts@npm:4.5.0"
+  dependencies:
+    yaml: "npm:^2.8.0"
+  checksum: 10c0/97de2d24e9ceffb89e1388e137e4a6e17ee57a02dce0c938a5e98b1338ac72b31e8b2ce8dd28945ad43fae8bee2a145892cb548ba5ae60b0930f1b6b79b0747d
   languageName: node
   linkType: hard
 
@@ -48,6 +69,15 @@ __metadata:
   version: 6.21.0
   resolution: "undici-types@npm:6.21.0"
   checksum: 10c0/c01ed51829b10aa72fc3ce64b747f8e74ae9b60eafa19a7b46ef624403508a54c526ffab06a14a26b3120d055e1104d7abe7c9017e83ced038ea5cf52f8d5e04
+  languageName: node
+  linkType: hard
+
+"yaml@npm:^2.8.0":
+  version: 2.8.2
+  resolution: "yaml@npm:2.8.2"
+  bin:
+    yaml: bin.mjs
+  checksum: 10c0/703e4dc1e34b324aa66876d63618dcacb9ed49f7e7fe9b70f1e703645be8d640f68ab84f12b86df8ac960bac37acf5513e115de7c970940617ce0343c8c9cd96
   languageName: node
   linkType: hard
 

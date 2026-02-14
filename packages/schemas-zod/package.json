@@ -14,14 +14,18 @@
   },
   "scripts": {
     "build": "tsc",
-    "generate": "node dist/generate.js",
-    "generate:schemas": "yarn build && yarn generate"
+    "generate": "tsx src/generate.ts",
+    "generate:schemas": "yarn generate",
+    "generate:openapi": "tsx src/openapi/generate-openapi.ts",
+    "generate:openapi:full": "yarn generate:openapi"
   },
   "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^8.4.0",
     "zod": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
     "typescript": "^5.8.0"
   },
   "files": [
