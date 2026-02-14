@@ -1,0 +1,26 @@
+{
+  "name": "@local-protocol/generators",
+  "version": "0.0.1",
+  "description": "Zod schema definitions that generate JSON Schemas via z.toJSONSchema()",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "generate": "yarn generate:schemas && yarn generate:openapi",
+    "generate:schemas": "tsx src/generate-schemas.ts",
+    "generate:openapi": "tsx src/openapi/generate-openapi.ts"
+  },
+  "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^8.4.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}

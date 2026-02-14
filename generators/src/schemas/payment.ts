@@ -1,6 +1,6 @@
 import * as z from "zod";
-import { EvmAmount } from "./shared.js";
-import { PaymentInstrument } from "./ucp.js";
+import { EvmAmount } from "./shared";
+import { PaymentInstrument } from "./ucp";
 
 const META = {
   id: (path: string) => ({ id: path }),

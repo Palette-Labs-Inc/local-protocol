@@ -1,29 +1,18 @@
-# @local-protocol/schemas-zod
+# Generators
 
-Define **Zod** schemas as the source of truth and use **`z.toJSONSchema()`** to generate JSON Schema identical to the ones in [local-protocol/schemas](../schemas).
+Define **Zod** schemas as the source of truth and use **`z.toJSONSchema()`** to generate JSON Schemas
 
 - [Zod JSON Schema docs](https://zod.dev/json-schema)
 
 ## Usage
 
-### Generate JSON Schema from a single Zod schema
-
-```ts
-import { toJSONSchema, Amount } from "@local-protocol/schemas-zod";
-
-const jsonSchema = toJSONSchema(Amount);
-// => draft-2020-12 JSON Schema object (matches schemas/shared/amount.json)
-```
-
-### Generate all schemas and write to `schemas/test/`
+### Generate JSON schemas and write to `local-protocol/schemas/`
 
 All schemas under `local-protocol/schemas/` are generated from Zod (no copying). Run:
 
 ```bash
-yarn generate
+yarn generate:schema
 ```
-
-No build step is required; the script runs TypeScript via `tsx`. From repo root: `yarn workspace @local-protocol/schemas-zod generate`.
 
 This writes one `.json` file per schema under `local-protocol/schemas/`, with `$ref` values relativized so they match the existing multi-file layout.
 
