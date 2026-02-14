@@ -1,8 +1,8 @@
 /// <reference types="node" />
 /**
- * Generate JSON Schema files from Zod schemas and write them under local-protocol/schemas/test.
- * Run from repo root: yarn workspace @local-protocol/schemas-zod generate
- * Or from this package: yarn build && yarn generate
+ * Generate JSON Schema files from Zod schemas and write them under local-protocol/schemas.
+ * Run from this package: yarn generate
+ * Or from repo root: yarn workspace @local-protocol/generators generate
  */
 
 import * as fs from "node:fs";
@@ -79,8 +79,12 @@ registry.add(CatalogCategory, { id: "catalog/types/category.json" });
 registry.add(Catalog, { id: "catalog/catalog.json" });
 registry.add(Merchant, { id: "catalog/merchant.json" });
 
-const SCHEMAS_DIR = path.resolve(process.cwd(), "schemas");
-const PACKAGE_SCHEMAS_DIR = path.resolve(process.cwd(), "..", "..", "schemas");
+// Output always to repo root schemas/ (when run from generators/, cwd is generators so go up one level)
+const REPO_ROOT =
+  path.basename(process.cwd()) === "generators"
+    ? path.resolve(process.cwd(), "..")
+    : process.cwd();
+const SCHEMAS_DIR = path.join(REPO_ROOT, "schemas");
 
 // Schemas that have $id in the original; all others omit it
 const SCHEMAS_WITH_$ID = new Set([
@@ -104,14 +108,8 @@ const SCHEMAS_WITH_$ID = new Set([
   "catalog/merchant.json",
 ]);
 
-function getSchemasDir(): string {
-  if (fs.existsSync(SCHEMAS_DIR)) return SCHEMAS_DIR;
-  if (fs.existsSync(PACKAGE_SCHEMAS_DIR)) return PACKAGE_SCHEMAS_DIR;
-  return SCHEMAS_DIR;
-}
-
 function getOutputDir(): string {
-  return getSchemasDir();
+  return SCHEMAS_DIR;
 }
 
 const ROOT_KEY_ORDER_DEFAULT = ["$schema", "$id", "title", "description", "type", "additionalProperties", "properties", "required", "anyOf", "oneOf"];
@@ -271,7 +269,7 @@ function relativizeRefInSchema(
 }
 
 function main(): void {
-  const schemasDir = getSchemasDir();
+  const schemasDir = SCHEMAS_DIR;
   const outDir = getOutputDir();
   const schemas = toJSONSchemaFromRegistry(registry);
   const ids = new Set(Object.keys(schemas));

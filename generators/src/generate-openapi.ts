@@ -4,10 +4,9 @@
  *
  * Run: yarn generate:openapi (from packages/schemas-zod).
  */
-import "./zod-extend.js";
+import "./openapi/zod-extend";
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { fileURLToPath } from "node:url";
 import { OpenAPIRegistry, OpenApiGeneratorV31 } from "@asteasolutions/zod-to-openapi";
 import z from "zod";
 
@@ -44,7 +43,7 @@ import {
   Catalog,
   Merchant,
   PaymentCredential,
-} from "../index.js";
+} from "./index";
 import {
   DiscoveryResponse,
   HealthResponse,
@@ -53,11 +52,11 @@ import {
   CreateDeliveryRequest,
   UpdateEventRequest,
   CreateOrderRequest,
-} from "./api-schemas.js";
+} from "./openapi/api-schemas";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// This file lives at packages/schemas-zod/src/openapi/ — go up 4 levels to repo root (not packages/)
-const REPO_ROOT = path.resolve(__dirname, "..", "..", "..", "..");
+
+const __dirname = path.dirname(process.argv[1] ?? ".");
+const REPO_ROOT = path.resolve(__dirname, "..", "..", "..");
 const SPEC_PATH = path.join(REPO_ROOT, "openapi", "specs", "local-protocol.v1.openapi.json");
 
 function ensureSpecDir(): string {
