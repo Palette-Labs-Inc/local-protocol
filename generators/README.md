@@ -6,7 +6,7 @@ Define **Zod** schemas as the source of truth and use **`z.toJSONSchema()`** to 
 
 ## Usage
 
-### Generate all schemas and write to `schemas/test/`
+### Generate all schemas and write to `local-protocol/schemas/`
 
 All schemas under `local-protocol/schemas/` are generated from Zod (no copying). Run:
 
