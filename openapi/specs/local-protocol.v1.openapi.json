@@ -157,7 +157,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/delivery/request.json"
+                "$ref": "#/components/schemas/DeliveryRequest"
               }
             }
           }
@@ -168,7 +168,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/delivery/request.json"
+                  "$ref": "#/components/schemas/DeliveryRequest"
                 }
               }
             }
@@ -220,7 +220,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/delivery/request.json"
+                    "$ref": "#/components/schemas/DeliveryRequest"
                   }
                 }
               }
@@ -258,7 +258,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/delivery/request.json"
+                  "$ref": "#/components/schemas/DeliveryRequest"
                 }
               }
             }
@@ -306,7 +306,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/delivery/quote.json"
+                "$ref": "#/components/schemas/DeliveryQuote"
               }
             }
           }
@@ -317,7 +317,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/delivery/quote.json"
+                  "$ref": "#/components/schemas/DeliveryQuote"
                 }
               }
             }
@@ -384,7 +384,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/delivery/quote.json"
+                    "$ref": "#/components/schemas/DeliveryQuote"
                   }
                 }
               }
@@ -425,7 +425,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/delivery/quote.json"
+                  "$ref": "#/components/schemas/DeliveryQuote"
                 }
               }
             }
@@ -484,7 +484,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/delivery/delivery.json"
+                  "$ref": "#/components/schemas/Delivery"
                 }
               }
             }
@@ -536,7 +536,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/delivery/delivery.json"
+                    "$ref": "#/components/schemas/Delivery"
                   }
                 }
               }
@@ -574,7 +574,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/delivery/delivery.json"
+                  "$ref": "#/components/schemas/Delivery"
                 }
               }
             }
@@ -621,7 +621,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/delivery/delivery.json"
+                  "$ref": "#/components/schemas/Delivery"
                 }
               }
             }
@@ -658,7 +658,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/catalog/merchant.json"
+                  "$ref": "#/components/schemas/Merchant"
                 }
               }
             }
@@ -689,7 +689,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/order/cart.json"
+                "$ref": "#/components/schemas/Cart"
               }
             }
           }
@@ -700,7 +700,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/order/request.json"
+                  "$ref": "#/components/schemas/OrderRequest"
                 }
               }
             }
@@ -759,7 +759,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/order/quote.json"
+                    "$ref": "#/components/schemas/OrderQuote"
                   }
                 }
               }
@@ -800,7 +800,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/order/quote.json"
+                  "$ref": "#/components/schemas/OrderQuote"
                 }
               }
             }
@@ -842,7 +842,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/order/order.json"
+                  "$ref": "#/components/schemas/Order"
                 }
               }
             }
@@ -899,7 +899,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/order/order.json"
+                  "$ref": "#/components/schemas/Order"
                 }
               }
             }
@@ -936,7 +936,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/delivery/events.json"
+                  "$ref": "#/components/schemas/DeliveryEventVocabulary"
                 }
               }
             }
@@ -967,7 +967,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/payment/evm_auth_capture_escrow_instrument.json"
+                "$ref": "#/components/schemas/EvmAuthCaptureEscrowInstrument"
               }
             }
           }
@@ -978,7 +978,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/payment/evm_auth_capture_escrow_instrument.json"
+                  "$ref": "#/components/schemas/EvmAuthCaptureEscrowInstrument"
                 }
               }
             }
@@ -1687,7 +1687,7 @@
             "type": "array",
             "minItems": 1,
             "items": {
-              "$ref": "#/components/schemas/catalog/types/interval.json"
+              "$ref": "#/components/schemas/Interval"
             },
             "description": "Availability intervals (weekly or date-specific)."
           }
@@ -1756,8 +1756,8 @@
           },
           "metadata": {
             "type": "object",
-            "description": "Business-defined custom data.",
-            "additionalProperties": true
+            "description": "Business-defined custom data extending the modifier option.",
+            "additionalProperties": {}
           }
         }
       },
@@ -1786,22 +1786,22 @@
           "minimum_selections": {
             "type": "integer",
             "minimum": 0,
-            "description": "Minimum selections required."
+            "description": "Minimum number of selections required from this group."
           },
           "maximum_selections": {
             "type": "integer",
             "minimum": 0,
-            "description": "Maximum selections allowed."
+            "description": "Maximum number of selections allowed from this group."
           },
           "allow_quantities": {
             "type": "boolean",
-            "description": "Whether options can be selected with quantities > 1."
+            "description": "Whether modifier options can be selected with quantities greater than 1."
           },
           "max_per_modifier": {
             "type": "integer",
             "minimum": 0,
             "default": 1,
-            "description": "Maximum quantity per modifier option."
+            "description": "Maximum quantity allowed per modifier option. Defaults to 1 (each modifier can be selected at most once)."
           },
           "modifier_options": {
             "type": "array",
@@ -1809,7 +1809,7 @@
             "items": {
               "$ref": "#/components/schemas/ModifierOption"
             },
-            "description": "Ordered modifier options within this group."
+            "description": "Ordered modifier options within this group. Order should be used for display."
           },
           "type": {
             "type": "string",
@@ -1817,8 +1817,8 @@
           },
           "metadata": {
             "type": "object",
-            "description": "Business-defined custom data.",
-            "additionalProperties": true
+            "description": "Business-defined custom data extending the modifier group.",
+            "additionalProperties": {}
           }
         }
       },
@@ -1852,7 +1852,7 @@
           "media": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/shared/media.json"
+              "$ref": "#/components/schemas/Media"
             },
             "description": "Item media (images, videos, 3D models)."
           },
@@ -1901,23 +1901,23 @@
             "items": {
               "$ref": "#/components/schemas/CatalogCategory"
             },
-            "description": "Ordered child categories for nested category trees."
+            "description": "Ordered list of child categories for nested category trees."
           },
           "items": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/CatalogItem"
             },
-            "description": "Ordered items in this category."
+            "description": "Ordered list of items in this category."
           },
           "availability": {
             "$ref": "#/components/schemas/Availability",
-            "description": "Category availability."
+            "description": "Category availability. Ignored when the catalog defines availability."
           },
           "metadata": {
             "type": "object",
-            "description": "Business-defined custom data.",
-            "additionalProperties": true
+            "description": "Business-defined custom data extending the category.",
+            "additionalProperties": {}
           }
         }
       },
@@ -1953,7 +1953,7 @@
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/catalog/types/item.json"
+              "$ref": "#/components/schemas/CatalogItem"
             },
             "description": "Ordered items included in this catalog that are not assigned to a category. Consumers that require category membership should place these items into a synthetic category."
           },
@@ -2000,7 +2000,7 @@
             "type": "array",
             "minItems": 1,
             "items": {
-              "$ref": "#/components/schemas/catalog/catalog.json"
+              "$ref": "#/components/schemas/Catalog"
             },
             "description": "Catalogs available for the merchant."
           },
@@ -2057,7 +2057,7 @@
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/order/types/cart_item.json"
+              "$ref": "#/components/schemas/CartItem"
             },
             "description": "Items in the cart."
           }
@@ -2249,7 +2249,7 @@
             "type": "array",
             "minItems": 1,
             "items": {
-              "$ref": "#/components/schemas/payment/types/evm_token.json"
+              "$ref": "#/components/schemas/EvmToken"
             },
             "description": "Tokens accepted on the escrow contract chain."
           }
@@ -2341,7 +2341,7 @@
         "description": "Payment instrument for auth/capture escrow on EVM chains.",
         "allOf": [
           {
-            "$ref": "#/components/schemas/ucp/shopping/types/payment_instrument.json"
+            "$ref": "#/components/schemas/PaymentInstrument"
           },
           {
             "$ref": "#/components/schemas/EvmAuthCaptureEscrowInstrumentDetails"
@@ -2399,7 +2399,7 @@
             "description": "The billing address associated with this payment method."
           },
           "credential": {
-            "$ref": "#/components/schemas/ucp/shopping/types/payment_credential.json"
+            "$ref": "#/components/schemas/PaymentCredential"
           },
           "display": {
             "type": "object",
@@ -2435,7 +2435,7 @@
           "instruments": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ucp/shopping/types/payment_instrument.json"
+              "$ref": "#/components/schemas/PaymentInstrument"
             },
             "description": "The payment instruments available for this payment. Each instrument is associated with a specific handler via the handler_id field. Handlers can extend the base payment_instrument schema to add handler-specific fields."
           }

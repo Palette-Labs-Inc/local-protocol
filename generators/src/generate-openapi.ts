@@ -2,7 +2,7 @@
  * Generate OpenAPI 3.1 spec from Zod schemas via @asteasolutions/zod-to-openapi.
  * Post-processes to merge x-codeSamples from the existing spec and reorder keys to match.
  *
- * Run: yarn generate:openapi (from packages/schemas-zod).
+ * Run: yarn generate:openapi (from generators).
  */
 import "./openapi/zod-extend";
 import * as fs from "node:fs";
@@ -56,7 +56,7 @@ import {
 
 
 const __dirname = path.dirname(process.argv[1] ?? ".");
-const REPO_ROOT = path.resolve(__dirname, "..", "..", "..");
+const REPO_ROOT = path.resolve(__dirname, "..", "..");
 const SPEC_PATH = path.join(REPO_ROOT, "openapi", "specs", "local-protocol.v1.openapi.json");
 
 function ensureSpecDir(): string {
@@ -86,6 +86,77 @@ function reorderToMatch(original: unknown, generated: unknown): unknown {
     }
   }
   return result;
+}
+
+// Map path-style $ref (from Zod schema meta id) to OpenAPI component schema names
+const REF_PATH_TO_COMPONENT: Record<string, string> = {
+  "delivery/request.json": "DeliveryRequest",
+  "delivery/quote.json": "DeliveryQuote",
+  "delivery/delivery.json": "Delivery",
+  "delivery/events.json": "DeliveryEventVocabulary",
+  "delivery/types/coordinates.json": "Coordinates",
+  "delivery/types/location.json": "Location",
+  "order/request.json": "OrderRequest",
+  "order/quote.json": "OrderQuote",
+  "order/order.json": "Order",
+  "order/cart.json": "Cart",
+  "order/types/cart_item.json": "CartItem",
+  "catalog/merchant.json": "Merchant",
+  "catalog/catalog.json": "Catalog",
+  "catalog/types/item.json": "CatalogItem",
+  "catalog/types/category.json": "CatalogCategory",
+  "catalog/types/interval.json": "Interval",
+  "catalog/types/availability.json": "Availability",
+  "catalog/types/modifier_item.json": "ModifierItem",
+  "catalog/types/modifier_group.json": "ModifierGroup",
+  "catalog/types/modifier_option.json": "ModifierOption",
+  "shared/media.json": "Media",
+  "shared/fiat_currency.json": "FiatCurrency",
+  "shared/evm_currency.json": "EvmCurrency",
+  "shared/amount.json": "Amount",
+  "shared/evm_amount.json": "EvmAmount",
+  "payment/evm_auth_capture_escrow_instrument.json": "EvmAuthCaptureEscrowInstrument",
+  "payment/types/evm_token.json": "EvmToken",
+  "payment/evm_auth_capture_escrow_config.json": "EvmAuthCaptureEscrowConfig",
+  "ucp/shopping/types/payment_instrument.json": "PaymentInstrument",
+  "ucp/shopping/types/payment_credential.json": "PaymentCredential",
+  "ucp/shopping/types/postal_address.json": "PostalAddress",
+};
+
+function rewriteSchemaRefs(obj: unknown): unknown {
+  if (obj === null || obj === undefined) return obj;
+  if (typeof obj === "object" && "$ref" in obj && typeof (obj as { $ref: string }).$ref === "string") {
+    const ref = (obj as { $ref: string }).$ref;
+    const prefix = "#/components/schemas/";
+    if (ref.startsWith(prefix)) {
+      const path = ref.slice(prefix.length);
+      const component = REF_PATH_TO_COMPONENT[path];
+      if (component) {
+        return { ...(obj as object), $ref: prefix + component };
+      }
+    }
+    return obj;
+  }
+  if (Array.isArray(obj)) return obj.map(rewriteSchemaRefs);
+  if (typeof obj === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(obj)) out[k] = rewriteSchemaRefs(v);
+    return out;
+  }
+  return obj;
+}
+
+/** Rekey components.schemas from path-style keys to component names so $refs resolve. */
+function rekeyComponentSchemas(spec: Record<string, unknown>): void {
+  const components = spec.components as Record<string, unknown> | undefined;
+  const schemas = components?.schemas as Record<string, unknown> | undefined;
+  if (!schemas || typeof schemas !== "object") return;
+  const rekeyed: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(schemas)) {
+    const newKey = REF_PATH_TO_COMPONENT[key] ?? key;
+    rekeyed[newKey] = value;
+  }
+  (components as Record<string, unknown>).schemas = rekeyed;
 }
 
 // Copy x-codeSamples from original into generated for every path operation
@@ -518,6 +589,9 @@ function main(): void {
   const generator = new OpenApiGeneratorV31(registry.definitions);
   let generated = generator.generateDocument(docConfig) as unknown as Record<string, unknown>;
 
+  generated = rewriteSchemaRefs(generated) as Record<string, unknown>;
+  rekeyComponentSchemas(generated);
+
   // Post-process: merge x-codeSamples from existing spec, then reorder to match
   if (fs.existsSync(SPEC_PATH)) {
     const originalJson = fs.readFileSync(SPEC_PATH, "utf8");
@@ -525,6 +599,8 @@ function main(): void {
     mergeCodeSamples(original, generated);
     generated = reorderToMatch(original, generated) as Record<string, unknown>;
   }
+
+  rekeyComponentSchemas(generated);
 
   ensureSpecDir();
   fs.writeFileSync(SPEC_PATH, JSON.stringify(generated, null, 2) + "\n", "utf8");
