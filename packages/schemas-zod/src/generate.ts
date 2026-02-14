@@ -1,3 +1,4 @@
+/// <reference types="node" />
 /**
  * Generate JSON Schema files from Zod schemas and write them under local-protocol/schemas/test.
  * Run from repo root: yarn workspace @local-protocol/schemas-zod generate
@@ -7,8 +8,8 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as z from "zod";
-import { toJSONSchemaFromRegistry } from "./to-json-schema.js";
-import { FiatCurrency, EvmCurrency, Amount, Media, EvmAmount } from "./schemas/shared.js";
+import { toJSONSchemaFromRegistry } from "./to-json-schema";
+import { FiatCurrency, EvmCurrency, Amount, Media, EvmAmount } from "./schemas/shared";
 import {
   PostalAddress,
   PaymentCredential,
@@ -16,7 +17,7 @@ import {
   Payment,
   paymentJsonSchema,
   paymentInstrumentJsonSchema,
-} from "./schemas/ucp.js";
+} from "./schemas/ucp";
 import {
   Coordinates,
   Location,
@@ -24,14 +25,14 @@ import {
   DeliveryRequest,
   DeliveryQuote,
   Delivery,
-} from "./schemas/delivery.js";
+} from "./schemas/delivery";
 import {
   DeliveryEventVocabulary,
   deliveryEventsJsonSchema,
   courierVocabularyData,
-} from "./schemas/delivery-events.js";
-import { CartItem, OrderRequest, OrderQuote, Order, Cart } from "./schemas/order.js";
-import { EvmToken, EvmAuthCaptureEscrowConfig, EvmAuthCaptureEscrowInstrument } from "./schemas/payment.js";
+} from "./schemas/delivery-events";
+import { CartItem, OrderRequest, OrderQuote, Order, Cart } from "./schemas/order";
+import { EvmToken, EvmAuthCaptureEscrowConfig, EvmAuthCaptureEscrowInstrument } from "./schemas/payment";
 import {
   Interval,
   Availability,
@@ -42,7 +43,7 @@ import {
   CatalogCategory,
   Catalog,
   Merchant,
-} from "./schemas/catalog.js";
+} from "./schemas/catalog";
 
 const registry = z.registry<Record<string, unknown>>();
 registry.add(FiatCurrency, { id: "shared/fiat_currency.json" });

@@ -1,6 +1,5 @@
 import * as z from "zod";
-import { Amount } from "./shared.js";
-import { Media } from "./shared.js";
+import { Amount, Media } from "./shared";
 
 const META = {
   id: (path: string) => ({ id: path }),

@@ -1,6 +1,5 @@
 import * as z from "zod";
-import { PostalAddress } from "./ucp.js";
-import { Payment } from "./ucp.js";
+import { PostalAddress, Payment } from "./ucp";
 
 const META = { id: (path: string) => ({ id: path }) };
 

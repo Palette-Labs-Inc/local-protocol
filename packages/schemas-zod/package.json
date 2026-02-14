@@ -1,7 +1,7 @@
 {
   "name": "@local-protocol/schemas-zod",
   "version": "0.0.1",
-  "description": "Zod schema definitions that generate JSON Schema identical to local-protocol/schemas via z.toJSONSchema()",
+  "description": "Zod schema definitions that generate JSON Schemas via z.toJSONSchema()",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,14 +14,14 @@
   },
   "scripts": {
     "build": "tsc",
-    "generate": "node dist/generate.js",
-    "generate:schemas": "yarn build && yarn generate"
+    "generate": "tsx src/generate.ts"
   },
   "dependencies": {
     "zod": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
     "typescript": "^5.8.0"
   },
   "files": [

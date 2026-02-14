@@ -6,15 +6,15 @@
  * @see https://zod.dev/json-schema
  */
 
-export { toJSONSchema, toJSONSchemaFromRegistry } from "./to-json-schema.js";
-export type { ToJSONSchemaOptions } from "./to-json-schema.js";
+export { toJSONSchema, toJSONSchemaFromRegistry } from "./to-json-schema";
+export type { ToJSONSchemaOptions } from "./to-json-schema";
 
-export { FiatCurrency, EvmCurrency, Amount, Media, EvmAmount } from "./schemas/shared.js";
-export { PostalAddress, PaymentCredential, PaymentInstrument, Payment } from "./schemas/ucp.js";
-export { Coordinates, Location, DeliveryRequest, DeliveryQuote, Delivery } from "./schemas/delivery.js";
-export { DeliveryEventVocabulary } from "./schemas/delivery-events.js";
-export { CartItem, OrderRequest, OrderQuote, Order, Cart } from "./schemas/order.js";
-export { EvmToken, EvmAuthCaptureEscrowConfig, EvmAuthCaptureEscrowInstrument } from "./schemas/payment.js";
+export { FiatCurrency, EvmCurrency, Amount, Media, EvmAmount } from "./schemas/shared";
+export { PostalAddress, PaymentCredential, PaymentInstrument, Payment } from "./schemas/ucp";
+export { Coordinates, Location, DeliveryRequest, DeliveryQuote, Delivery } from "./schemas/delivery";
+export { DeliveryEventVocabulary } from "./schemas/delivery-events";
+export { CartItem, OrderRequest, OrderQuote, Order, Cart } from "./schemas/order";
+export { EvmToken, EvmAuthCaptureEscrowConfig, EvmAuthCaptureEscrowInstrument } from "./schemas/payment";
 export {
   Interval,
   Availability,
@@ -25,4 +25,4 @@ export {
   CatalogCategory,
   Catalog,
   Merchant,
-} from "./schemas/catalog.js";
+} from "./schemas/catalog";
