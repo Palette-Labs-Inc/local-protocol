@@ -11,13 +11,20 @@ from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
-_UCP_SERVICE_NAME = "xyz.localprotocol.delivery"
-_UCP_CAPABILITY_NAME = "xyz.localprotocol.delivery"
 _REVERSE_DOMAIN_RE = re.compile(r"^[a-z][a-z0-9]*(?:\.[a-z][a-z0-9_]*)+$")
 _DATE_VERSION_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-_UCP_VERSION_FILE = (
-  Path(__file__).resolve().parents[4] / "schemas" / "ucp" / "VERSION"
+_REPO_ROOT = Path(__file__).resolve().parents[4]
+_SCHEMAS_DIR = _REPO_ROOT / "schemas"
+_UCP_VERSION_FILE = _SCHEMAS_DIR / "ucp" / "VERSION"
+
+_REVERSE_DOMAIN_PREFIX = "xyz.localprotocol"
+_SCHEMA_BASE_URL = "https://localprotocol.xyz/schemas"
+_DOCS_BASE_URL = "https://localprotocol.xyz/docs"
+_OPENAPI_SCHEMA_URL = (
+  "https://localprotocol.xyz/openapi/specs/local-protocol.v1.openapi.json"
 )
+
+_SKIP_SCHEMA_DIRS = frozenset({"ucp", "shared"})
 
 
 def _load_ucp_version() -> str:
@@ -30,34 +37,65 @@ def _load_ucp_version() -> str:
   return version
 
 
+def _discover_capabilities() -> list[tuple[str, str]]:
+  """Discover capabilities by traversing schemas/*/capability.json.
+
+  Returns a list of (reverse_domain_name, schema_dir_name) tuples for every
+  schema subdirectory that contains a ``capability.json`` file.
+  """
+  capabilities: list[tuple[str, str]] = []
+  for child in sorted(_SCHEMAS_DIR.iterdir()):
+    if child.name in _SKIP_SCHEMA_DIRS or not child.is_dir():
+      continue
+    if (child / "capability.json").is_file():
+      name = f"{_REVERSE_DOMAIN_PREFIX}.{child.name}"
+      if not _REVERSE_DOMAIN_RE.fullmatch(name):
+        raise ValueError(
+          f"Derived capability name '{name}' from {child} "
+          "is not a valid reverse-domain identifier."
+        )
+      capabilities.append((name, child.name))
+  if not capabilities:
+    raise ValueError(f"No capability.json files found under {_SCHEMAS_DIR}")
+  return capabilities
+
+
 _UCP_VERSION = _load_ucp_version()
+_UCP_CAPABILITIES = _discover_capabilities()
 
 
 def _build_ucp_payload(base_url: str) -> dict[str, Any]:
-  """Build a canonical UCP discovery payload."""
+  """Build a canonical UCP discovery payload.
+
+  Service and capability names are auto-populated by traversing
+  ``schemas/*/capability.json`` files at startup.
+  """
+  services: dict[str, Any] = {}
+  capabilities: dict[str, Any] = {}
+
+  for rdname, dirname in _UCP_CAPABILITIES:
+    services[rdname] = [
+      {
+        "version": _UCP_VERSION,
+        "spec": f"{_DOCS_BASE_URL}/getting-started/understanding-capabilities/",
+        "transport": "rest",
+        "endpoint": base_url,
+        "schema": _OPENAPI_SCHEMA_URL,
+      }
+    ]
+    capabilities[rdname] = [
+      {
+        "version": _UCP_VERSION,
+        "spec": f"{_DOCS_BASE_URL}/capabilities/{dirname}/overview/",
+        "schema": f"{_SCHEMA_BASE_URL}/{dirname}/capability.json",
+      }
+    ]
+
   return {
     "ucp": {
       "version": _UCP_VERSION,
-      "services": {
-        _UCP_SERVICE_NAME: [
-          {
-            "version": _UCP_VERSION,
-            "spec": "https://localprotocol.xyz/docs/getting-started/understanding-capabilities/",
-            "transport": "rest",
-            "endpoint": base_url,
-            "schema": "https://localprotocol.xyz/openapi/specs/local-protocol.v1.openapi.json",
-          }
-        ]
-      },
-      "capabilities": {
-        _UCP_CAPABILITY_NAME: [
-          {
-            "version": _UCP_VERSION,
-            "spec": "https://localprotocol.xyz/docs/capabilities/delivery/overview/",
-            "schema": "https://localprotocol.xyz/schemas/delivery/capability.json",
-          }
-        ]
-      },
+      "services": services,
+      "capabilities": capabilities,
       "payment_handlers": {},
     }
   }
