@@ -6,9 +6,12 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "generate": "tsx src/generate-schemas.ts"
+    "generate": "yarn generate:schemas && yarn generate:openapi",
+    "generate:schemas": "tsx src/generate-schemas.ts",
+    "generate:openapi": "tsx src/generate-openapi.ts"
   },
   "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^8.4.0",
     "zod": "^4.0.0"
   },
   "devDependencies": {
