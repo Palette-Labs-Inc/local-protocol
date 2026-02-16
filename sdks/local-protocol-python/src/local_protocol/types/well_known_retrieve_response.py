@@ -8,16 +8,14 @@ __all__ = ["WellKnownRetrieveResponse"]
 
 
 class WellKnownRetrieveResponse(BaseModel):
-    """Service discovery metadata."""
+    """Canonical UCP discovery response envelope."""
 
-    capabilities: Dict[str, Dict[str, object]]
-    """Supported capabilities by domain."""
+    ucp: Dict[str, object]
+    """Canonical UCP discovery profile.
 
-    endpoints: Dict[str, str]
-    """Endpoint path map."""
-
-    name: str
-    """Server name."""
-
-    version: str
-    """Protocol version."""
+    Structure:
+    - version: str (YYYY-MM-DD)
+    - services: dict[str, list[dict]]
+    - capabilities: dict[str, list[dict]]
+    - payment_handlers: dict[str, list[dict]]
+    """

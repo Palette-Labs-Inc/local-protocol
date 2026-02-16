@@ -299,7 +299,7 @@ response = client.well_known.with_raw_response.retrieve()
 print(response.headers.get('X-My-Header'))
 
 well_known = response.parse()  # get the object that `well_known.retrieve()` would have returned
-print(well_known.capabilities)
+print(well_known.ucp["capabilities"])
 ```
 
 These methods return an [`APIResponse`](https://github.com/Palette-Labs-Inc/local-protocol-python/tree/main/src/local_protocol/_response.py) object.

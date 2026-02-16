@@ -54,7 +54,7 @@ def _build_ucp_payload(base_url: str) -> dict[str, Any]:
           {
             "version": _UCP_VERSION,
             "spec": "https://localprotocol.xyz/docs/capabilities/delivery/overview/",
-            "schema": "https://localprotocol.xyz/schemas/delivery/quote.json",
+            "schema": "https://localprotocol.xyz/schemas/delivery/capability.json",
           }
         ]
       },

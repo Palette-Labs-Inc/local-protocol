@@ -7,16 +7,12 @@ namespace LocalProtocol\WellKnown;
 use LocalProtocol\Core\Attributes\Required;
 use LocalProtocol\Core\Concerns\SdkModel;
 use LocalProtocol\Core\Contracts\BaseModel;
-use LocalProtocol\Core\Conversion\MapOf;
 
 /**
- * Service discovery metadata.
+ * Canonical UCP discovery response envelope.
  *
  * @phpstan-type WellKnownGetResponseShape = array{
- *   capabilities: array<string,array<string,mixed>>,
- *   endpoints: array<string,string>,
- *   name: string,
- *   version: string,
+ *   ucp: array<string,mixed>,
  * }
  */
 final class WellKnownGetResponse implements BaseModel
@@ -25,32 +21,12 @@ final class WellKnownGetResponse implements BaseModel
     use SdkModel;
 
     /**
-     * Supported capabilities by domain.
+     * Canonical UCP discovery profile.
      *
-     * @var array<string,array<string,mixed>> $capabilities
-     */
-    #[Required(map: new MapOf('mixed'))]
-    public array $capabilities;
-
-    /**
-     * Endpoint path map.
-     *
-     * @var array<string,string> $endpoints
-     */
-    #[Required(map: 'string')]
-    public array $endpoints;
-
-    /**
-     * Server name.
+     * @var array<string,mixed> $ucp
      */
     #[Required]
-    public string $name;
-
-    /**
-     * Protocol version.
-     */
-    #[Required]
-    public string $version;
+    public array $ucp;
 
     /**
      * `new WellKnownGetResponse()` is missing required properties by the API.
@@ -58,7 +34,7 @@ final class WellKnownGetResponse implements BaseModel
      * To enforce required parameters use
      * ```
      * WellKnownGetResponse::with(
-     *   capabilities: ..., endpoints: ..., name: ..., version: ...
+     *   ucp: ...
      * )
      * ```
      *
@@ -66,10 +42,7 @@ final class WellKnownGetResponse implements BaseModel
      *
      * ```
      * (new WellKnownGetResponse)
-     *   ->withCapabilities(...)
-     *   ->withEndpoints(...)
-     *   ->withName(...)
-     *   ->withVersion(...)
+     *   ->withUcp(...)
      * ```
      */
     public function __construct()
@@ -82,69 +55,25 @@ final class WellKnownGetResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string,array<string,mixed>> $capabilities
-     * @param array<string,string> $endpoints
+     * @param array<string,mixed> $ucp
      */
-    public static function with(
-        array $capabilities,
-        array $endpoints,
-        string $name,
-        string $version
-    ): self {
+    public static function with(array $ucp): self {
         $self = new self;
 
-        $self['capabilities'] = $capabilities;
-        $self['endpoints'] = $endpoints;
-        $self['name'] = $name;
-        $self['version'] = $version;
+        $self['ucp'] = $ucp;
 
         return $self;
     }
 
     /**
-     * Supported capabilities by domain.
+     * Canonical UCP discovery profile.
      *
-     * @param array<string,array<string,mixed>> $capabilities
+     * @param array<string,mixed> $ucp
      */
-    public function withCapabilities(array $capabilities): self
+    public function withUcp(array $ucp): self
     {
         $self = clone $this;
-        $self['capabilities'] = $capabilities;
-
-        return $self;
-    }
-
-    /**
-     * Endpoint path map.
-     *
-     * @param array<string,string> $endpoints
-     */
-    public function withEndpoints(array $endpoints): self
-    {
-        $self = clone $this;
-        $self['endpoints'] = $endpoints;
-
-        return $self;
-    }
-
-    /**
-     * Server name.
-     */
-    public function withName(string $name): self
-    {
-        $self = clone $this;
-        $self['name'] = $name;
-
-        return $self;
-    }
-
-    /**
-     * Protocol version.
-     */
-    public function withVersion(string $version): self
-    {
-        $self = clone $this;
-        $self['version'] = $version;
+        $self['ucp'] = $ucp;
 
         return $self;
     }

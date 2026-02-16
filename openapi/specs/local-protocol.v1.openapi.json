@@ -46,96 +46,6 @@
     }
   ],
   "paths": {
-    "/.well-known/ucp": {
-      "get": {
-        "tags": [
-          "discovery"
-        ],
-        "summary": "Service discovery",
-        "description": "Returns server capabilities, supported standards, and endpoint paths.",
-        "operationId": "getDiscovery",
-        "x-codeSamples": [
-          {
-            "lang": "typescript",
-            "label": "TypeScript SDK",
-            "source": "import LocalProtocol from \"local-protocol\";\n\nconst client = new LocalProtocol();\n\nconst discovery = await client.wellKnown.retrieve();\nconsole.log(discovery.capabilities);"
-          },
-          {
-            "lang": "python",
-            "label": "Python SDK",
-            "source": "from local_protocol import LocalProtocol\n\nclient = LocalProtocol()\ndiscovery = client.well_known.retrieve()\nprint(discovery.capabilities)"
-          },
-          {
-            "lang": "shell",
-            "label": "cURL",
-            "source": "curl -sS http://localhost:8000/.well-known/ucp"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Discovery metadata.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "version": {
-                      "type": "string",
-                      "description": "Protocol version."
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "Server name."
-                    },
-                    "capabilities": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "additionalProperties": true
-                      },
-                      "description": "Supported capabilities by domain."
-                    },
-                    "endpoints": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "string"
-                      },
-                      "description": "Endpoint path map."
-                    }
-                  },
-                  "required": [
-                    "version",
-                    "name",
-                    "capabilities",
-                    "endpoints"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "detail": {
-                      "type": "string",
-                      "description": "Error message."
-                    }
-                  },
-                  "required": [
-                    "detail"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/healthz": {
       "get": {
         "tags": [
@@ -1447,6 +1357,79 @@
           }
         }
       }
+    },
+    "/.well-known/local-protocol": {
+      "get": {
+        "tags": [
+          "discovery"
+        ],
+        "summary": "Service discovery",
+        "description": "Returns server capabilities, supported standards, and endpoint paths.",
+        "operationId": "getDiscovery",
+        "responses": {
+          "200": {
+            "description": "Discovery metadata.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "version": {
+                      "type": "string",
+                      "description": "Protocol version."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Server name."
+                    },
+                    "capabilities": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": true
+                      },
+                      "description": "Supported capabilities by domain."
+                    },
+                    "endpoints": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "Endpoint path map."
+                    }
+                  },
+                  "required": [
+                    "version",
+                    "name",
+                    "capabilities",
+                    "endpoints"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "string",
+                      "description": "Error message."
+                    }
+                  },
+                  "required": [
+                    "detail"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1875,18 +1858,18 @@
           },
           "capabilities": {
             "type": "object",
-            "description": "Supported capabilities by domain.",
             "additionalProperties": {
               "type": "object",
               "additionalProperties": true
-            }
+            },
+            "description": "Supported capabilities by domain."
           },
           "endpoints": {
             "type": "object",
-            "description": "Endpoint path map.",
             "additionalProperties": {
               "type": "string"
-            }
+            },
+            "description": "Endpoint path map."
           }
         },
         "additionalProperties": false
@@ -2743,6 +2726,191 @@
           }
         }
       },
+      "EvmAuthCaptureEscrowInstrumentDetails": {
+        "type": "object",
+        "required": [
+          "payment_info_hash",
+          "operator",
+          "payer",
+          "receiver",
+          "token",
+          "max_amount",
+          "preapproval_expires_at",
+          "authorization_expires_at",
+          "refund_expires_at",
+          "nonce",
+          "chain_id",
+          "contract",
+          "amount"
+        ],
+        "properties": {
+          "payment_info_hash": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{64}$",
+            "description": "Hash that identifies the on-chain payment authorization."
+          },
+          "operator": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Operator address used to compute the payment info hash."
+          },
+          "payer": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Payer address used to compute the payment info hash."
+          },
+          "chain_id": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "EVM chain id for the escrow contract."
+          },
+          "contract": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Escrow contract address on the target chain."
+          },
+          "receiver": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Receiver address used for captures."
+          },
+          "token": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$",
+                "description": "ERC-20 contract address. Omit for native gas tokens (e.g., ETH, MATIC)."
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Token symbol (e.g., USDC)."
+              },
+              "decimals": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 255,
+                "description": "Token decimals."
+              }
+            },
+            "required": [
+              "symbol",
+              "decimals"
+            ],
+            "additionalProperties": false,
+            "description": "EVM token."
+          },
+          "max_amount": {
+            "description": "Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.",
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^[0-9]+$",
+                "description": "Value in atomic token units as an integer string."
+              },
+              "currency": {
+                "type": "object",
+                "properties": {
+                  "chain_id": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "EVM chain id."
+                  },
+                  "address": {
+                    "type": "string",
+                    "pattern": "^0x[a-fA-F0-9]{40}$",
+                    "description": "Token contract address."
+                  },
+                  "decimals": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 255,
+                    "description": "Decimal places for the token."
+                  }
+                },
+                "required": [
+                  "chain_id",
+                  "address",
+                  "decimals"
+                ],
+                "additionalProperties": false,
+                "description": "EVM token currency."
+              }
+            },
+            "required": [
+              "value",
+              "currency"
+            ],
+            "additionalProperties": false
+          },
+          "preapproval_expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Pre-approval expiration timestamp (RFC 3339)."
+          },
+          "authorization_expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Authorization expiration timestamp (RFC 3339)."
+          },
+          "refund_expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Refund expiration timestamp (RFC 3339)."
+          },
+          "nonce": {
+            "type": "string",
+            "pattern": "^[0-9]+$",
+            "description": "Unique nonce used to compute the payment info hash."
+          },
+          "amount": {
+            "description": "Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.",
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^[0-9]+$",
+                "description": "Value in atomic token units as an integer string."
+              },
+              "currency": {
+                "type": "object",
+                "properties": {
+                  "chain_id": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "EVM chain id."
+                  },
+                  "address": {
+                    "type": "string",
+                    "pattern": "^0x[a-fA-F0-9]{40}$",
+                    "description": "Token contract address."
+                  },
+                  "decimals": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 255,
+                    "description": "Decimal places for the token."
+                  }
+                },
+                "required": [
+                  "chain_id",
+                  "address",
+                  "decimals"
+                ],
+                "additionalProperties": false,
+                "description": "EVM token currency."
+              }
+            },
+            "required": [
+              "value",
+              "currency"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": true
+      },
       "EvmAuthCaptureEscrowInstrument": {
         "description": "Payment instrument for auth/capture escrow on EVM chains.",
         "allOf": [
@@ -2856,6 +3024,26 @@
         },
         "additionalProperties": true
       },
+      "SelectedPaymentInstrumentSelectionState": {
+        "type": "object",
+        "properties": {
+          "selected": {
+            "type": "boolean",
+            "description": "Whether this instrument is selected by the user."
+          }
+        }
+      },
+      "SelectedPaymentInstrument": {
+        "description": "A payment instrument with selection state.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PaymentInstrument"
+          },
+          {
+            "$ref": "#/components/schemas/SelectedPaymentInstrumentSelectionState"
+          }
+        ]
+      },
       "Payment": {
         "type": "object",
         "description": "Payment configuration containing handlers.",
@@ -2967,211 +3155,6 @@
       "EventVocabularyName": {
         "type": "string",
         "description": "Event vocabulary name in reverse-domain notation (e.g., xyz.localprotocol.delivery.courier)."
-      },
-      "SelectedPaymentInstrumentSelectionState": {
-        "type": "object",
-        "properties": {
-          "selected": {
-            "type": "boolean",
-            "description": "Whether this instrument is selected by the user."
-          }
-        }
-      },
-      "SelectedPaymentInstrument": {
-        "description": "A payment instrument with selection state.",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/PaymentInstrument"
-          },
-          {
-            "$ref": "#/components/schemas/SelectedPaymentInstrumentSelectionState"
-          }
-        ]
-      },
-      "EvmAuthCaptureEscrowInstrumentDetails": {
-        "type": "object",
-        "properties": {
-          "payment_info_hash": {
-            "type": "string",
-            "pattern": "^0x[a-fA-F0-9]{64}$",
-            "description": "Hash that identifies the on-chain payment authorization."
-          },
-          "operator": {
-            "type": "string",
-            "pattern": "^0x[a-fA-F0-9]{40}$",
-            "description": "Operator address used to compute the payment info hash."
-          },
-          "payer": {
-            "type": "string",
-            "pattern": "^0x[a-fA-F0-9]{40}$",
-            "description": "Payer address used to compute the payment info hash."
-          },
-          "receiver": {
-            "type": "string",
-            "pattern": "^0x[a-fA-F0-9]{40}$",
-            "description": "Receiver address used for captures."
-          },
-          "token": {
-            "type": "object",
-            "properties": {
-              "address": {
-                "type": "string",
-                "pattern": "^0x[a-fA-F0-9]{40}$",
-                "description": "ERC-20 contract address. Omit for native gas tokens (e.g., ETH, MATIC)."
-              },
-              "symbol": {
-                "type": "string",
-                "description": "Token symbol (e.g., USDC)."
-              },
-              "decimals": {
-                "type": "integer",
-                "minimum": 0,
-                "maximum": 255,
-                "description": "Token decimals."
-              }
-            },
-            "required": [
-              "symbol",
-              "decimals"
-            ],
-            "additionalProperties": false,
-            "description": "EVM token."
-          },
-          "max_amount": {
-            "type": "object",
-            "properties": {
-              "value": {
-                "type": "string",
-                "pattern": "^[0-9]+$",
-                "description": "Value in atomic token units as an integer string."
-              },
-              "currency": {
-                "type": "object",
-                "properties": {
-                  "chain_id": {
-                    "type": "integer",
-                    "minimum": 1,
-                    "description": "EVM chain id."
-                  },
-                  "address": {
-                    "type": "string",
-                    "pattern": "^0x[a-fA-F0-9]{40}$",
-                    "description": "Token contract address."
-                  },
-                  "decimals": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "maximum": 255,
-                    "description": "Decimal places for the token."
-                  }
-                },
-                "required": [
-                  "chain_id",
-                  "address",
-                  "decimals"
-                ],
-                "additionalProperties": false,
-                "description": "EVM token currency."
-              }
-            },
-            "required": [
-              "value",
-              "currency"
-            ],
-            "additionalProperties": false,
-            "description": "Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
-          },
-          "preapproval_expires_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Pre-approval expiration timestamp (RFC 3339)."
-          },
-          "authorization_expires_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Authorization expiration timestamp (RFC 3339)."
-          },
-          "refund_expires_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Refund expiration timestamp (RFC 3339)."
-          },
-          "nonce": {
-            "type": "string",
-            "pattern": "^[0-9]+$",
-            "description": "Unique nonce used to compute the payment info hash."
-          },
-          "chain_id": {
-            "type": "integer",
-            "minimum": 1,
-            "description": "EVM chain id for the escrow contract."
-          },
-          "contract": {
-            "type": "string",
-            "pattern": "^0x[a-fA-F0-9]{40}$",
-            "description": "Escrow contract address on the target chain."
-          },
-          "amount": {
-            "type": "object",
-            "properties": {
-              "value": {
-                "type": "string",
-                "pattern": "^[0-9]+$",
-                "description": "Value in atomic token units as an integer string."
-              },
-              "currency": {
-                "type": "object",
-                "properties": {
-                  "chain_id": {
-                    "type": "integer",
-                    "minimum": 1,
-                    "description": "EVM chain id."
-                  },
-                  "address": {
-                    "type": "string",
-                    "pattern": "^0x[a-fA-F0-9]{40}$",
-                    "description": "Token contract address."
-                  },
-                  "decimals": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "maximum": 255,
-                    "description": "Decimal places for the token."
-                  }
-                },
-                "required": [
-                  "chain_id",
-                  "address",
-                  "decimals"
-                ],
-                "additionalProperties": false,
-                "description": "EVM token currency."
-              }
-            },
-            "required": [
-              "value",
-              "currency"
-            ],
-            "additionalProperties": false,
-            "description": "Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
-          }
-        },
-        "required": [
-          "payment_info_hash",
-          "operator",
-          "payer",
-          "receiver",
-          "token",
-          "max_amount",
-          "preapproval_expires_at",
-          "authorization_expires_at",
-          "refund_expires_at",
-          "nonce",
-          "chain_id",
-          "contract",
-          "amount"
-        ],
-        "additionalProperties": true
       }
     }
   },

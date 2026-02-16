@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Delivery Capability Root",
+  "description": "Canonical schema root for the Local Protocol delivery capability. This aggregates the primary delivery resources used by this capability.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "request": {
+      "$ref": "request.json",
+      "description": "Delivery request payload schema."
+    },
+    "quote": {
+      "$ref": "quote.json",
+      "description": "Delivery quote payload schema."
+    },
+    "delivery": {
+      "$ref": "delivery.json",
+      "description": "Delivery lifecycle payload schema."
+    }
+  }
+}
