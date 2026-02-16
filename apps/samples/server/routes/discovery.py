@@ -91,6 +91,16 @@ def _validate_ucp_payload(payload: dict[str, Any]) -> None:
       for required in ("version", "spec", "transport"):
         if required not in entry:
           raise ValueError(f"Missing {required} in service {service_name}")
+      _ALLOWED_TRANSPORTS = ("rest", "mcp", "a2a", "embedded")
+      if not isinstance(entry["transport"], str):
+        raise ValueError(
+          f"Invalid transport type in service {service_name}; expected str."
+        )
+      if entry["transport"] not in _ALLOWED_TRANSPORTS:
+        raise ValueError(
+          f"Unknown transport '{entry['transport']}' in service "
+          f"{service_name}; must be one of {_ALLOWED_TRANSPORTS}."
+        )
       if (
         not isinstance(entry["version"], str)
         or not _DATE_VERSION_RE.fullmatch(entry["version"])
