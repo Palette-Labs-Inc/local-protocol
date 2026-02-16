@@ -464,7 +464,7 @@ function main(): void {
   // Paths
   registry.registerPath({
     method: "get",
-    path: "/.well-known/local-protocol",
+    path: "/.well-known/ucp",
     tags: ["discovery"],
     summary: "Service discovery",
     description: "Returns server capabilities, supported standards, and endpoint paths.",
