@@ -67,7 +67,7 @@ function ensureSpecDir(): string {
 
 // Recursively reorder generated to match original key order; use generated values
 function reorderToMatch(original: unknown, generated: unknown): unknown {
-  if (generated === undefined || generated === null) return original;
+  if (generated === undefined || generated === null) return generated;
   if (typeof original !== "object" || original === null) return generated;
   if (Array.isArray(original)) {
     const genArr = Array.isArray(generated) ? generated : [];
@@ -75,19 +75,22 @@ function reorderToMatch(original: unknown, generated: unknown): unknown {
       i < original.length ? reorderToMatch(original[i], genItem) : genItem
     );
   }
+  if (typeof generated !== "object" || generated === null || Array.isArray(generated)) {
+    return generated;
+  }
   const origObj = original as Record<string, unknown>;
   const genObj = generated as Record<string, unknown>;
   const result: Record<string, unknown> = {};
   for (const k of Object.keys(origObj)) {
     if (k in genObj) {
-      result[k] = reorderToMatch(origObj[k], genObj[k]);
-    } else {
-      result[k] = origObj[k];
+      const reordered = reorderToMatch(origObj[k], genObj[k]);
+      if (reordered !== undefined) result[k] = reordered;
     }
   }
   for (const k of Object.keys(genObj)) {
     if (!(k in origObj)) {
-      result[k] = genObj[k];
+      const reordered = reorderToMatch(undefined, genObj[k]);
+      if (reordered !== undefined) result[k] = reordered;
     }
   }
   return result;
