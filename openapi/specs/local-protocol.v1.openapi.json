@@ -77,7 +77,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DiscoveryResponse",
                   "type": "object",
                   "properties": {
                     "version": {
@@ -92,7 +91,7 @@
                       "type": "object",
                       "additionalProperties": {
                         "type": "object",
-                        "additionalProperties": {}
+                        "additionalProperties": true
                       },
                       "description": "Supported capabilities by domain."
                     },
@@ -120,7 +119,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -152,7 +150,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HealthResponse",
                   "type": "object",
                   "properties": {
                     "status": {
@@ -175,7 +172,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -219,7 +215,6 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -244,7 +239,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -264,7 +258,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -284,7 +277,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ValidationErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -338,7 +330,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -385,7 +376,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -429,7 +419,6 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -454,7 +443,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -474,7 +462,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -494,7 +481,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -514,7 +500,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ValidationErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -573,7 +558,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -623,7 +607,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -667,11 +650,9 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateDeliveryRequest",
                 "type": "object",
                 "properties": {
                   "request_id": {
@@ -726,7 +707,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -746,7 +726,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -766,7 +745,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -809,7 +787,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -856,7 +833,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -888,11 +864,9 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateEventRequest",
                 "type": "object",
                 "properties": {
                   "event": {
@@ -929,7 +903,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -976,7 +949,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -1003,7 +975,6 @@
         "description": "Submit a new order request with a cart. The `nonce` field provides idempotency.",
         "operationId": "createOrderRequest",
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -1028,7 +999,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -1048,7 +1018,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -1068,7 +1037,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ValidationErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -1129,7 +1097,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -1179,7 +1146,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -1206,11 +1172,9 @@
         "description": "Accept a quote and create an order. The `nonce` field provides idempotency.",
         "operationId": "createOrder",
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateOrderRequest",
                 "type": "object",
                 "properties": {
                   "order_request_id": {
@@ -1257,7 +1221,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -1277,7 +1240,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -1297,7 +1259,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -1344,7 +1305,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -1391,7 +1351,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -1418,7 +1377,6 @@
         "description": "Register a payment instrument for use in order creation.",
         "operationId": "createPaymentInstrument",
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -1443,7 +1401,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -1463,7 +1420,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ValidationErrorResponse",
                   "type": "object",
                   "properties": {
                     "detail": {
@@ -1501,7 +1457,6 @@
         "required": true,
         "description": "Delivery request identifier.",
         "schema": {
-          "type": "string",
           "$ref": "#/components/schemas/RequestId"
         }
       },
@@ -1511,7 +1466,6 @@
         "required": true,
         "description": "Quote identifier.",
         "schema": {
-          "type": "string",
           "$ref": "#/components/schemas/QuoteId"
         }
       },
@@ -1521,7 +1475,6 @@
         "required": true,
         "description": "Delivery identifier.",
         "schema": {
-          "type": "string",
           "$ref": "#/components/schemas/DeliveryId"
         }
       },
@@ -1531,7 +1484,6 @@
         "required": true,
         "description": "Merchant identifier.",
         "schema": {
-          "type": "string",
           "$ref": "#/components/schemas/MerchantId"
         }
       },
@@ -1541,7 +1493,6 @@
         "required": true,
         "description": "Order request identifier.",
         "schema": {
-          "type": "string",
           "$ref": "#/components/schemas/OrderRequestId"
         }
       },
@@ -1551,7 +1502,6 @@
         "required": true,
         "description": "Order quote identifier.",
         "schema": {
-          "type": "string",
           "$ref": "#/components/schemas/OrderQuoteId"
         }
       },
@@ -1561,7 +1511,6 @@
         "required": true,
         "description": "Order identifier.",
         "schema": {
-          "type": "string",
           "$ref": "#/components/schemas/OrderId"
         }
       },
@@ -1571,7 +1520,6 @@
         "required": true,
         "description": "Event vocabulary name in reverse-domain notation (e.g., xyz.localprotocol.delivery.courier).",
         "schema": {
-          "type": "string",
           "$ref": "#/components/schemas/EventVocabularyName"
         }
       }
@@ -1602,7 +1550,6 @@
       },
       "PostalAddress": {
         "type": "object",
-        "title": "Postal Address",
         "properties": {
           "extended_address": {
             "type": "string",
@@ -1644,17 +1591,7 @@
         "description": "Postal Address"
       },
       "Location": {
-        "type": "object",
         "description": "Location",
-        "additionalProperties": false,
-        "properties": {
-          "coordinates": {
-            "$ref": "#/components/schemas/Coordinates"
-          },
-          "postal_address": {
-            "$ref": "#/components/schemas/PostalAddress"
-          }
-        },
         "anyOf": [
           {
             "required": [
@@ -1669,7 +1606,8 @@
                 "$ref": "#/components/schemas/Coordinates"
               }
             },
-            "additionalProperties": false
+            "additionalProperties": false,
+            "title": "LocationWithPostalAddress"
           },
           {
             "required": [
@@ -1684,7 +1622,8 @@
                 "$ref": "#/components/schemas/PostalAddress"
               }
             },
-            "additionalProperties": false
+            "additionalProperties": false,
+            "title": "LocationWithCoordinates"
           }
         ]
       },
@@ -1710,74 +1649,10 @@
           },
           "pickup_location": {
             "$ref": "#/components/schemas/Location",
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "postal_address": {
-                    "$ref": "#/components/schemas/PostalAddress"
-                  },
-                  "coordinates": {
-                    "$ref": "#/components/schemas/Coordinates"
-                  }
-                },
-                "required": [
-                  "postal_address"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "coordinates": {
-                    "$ref": "#/components/schemas/Coordinates"
-                  },
-                  "postal_address": {
-                    "$ref": "#/components/schemas/PostalAddress"
-                  }
-                },
-                "required": [
-                  "coordinates"
-                ],
-                "additionalProperties": false
-              }
-            ],
             "description": "Pickup location for the delivery."
           },
           "dropoff_location": {
             "$ref": "#/components/schemas/Location",
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "postal_address": {
-                    "$ref": "#/components/schemas/PostalAddress"
-                  },
-                  "coordinates": {
-                    "$ref": "#/components/schemas/Coordinates"
-                  }
-                },
-                "required": [
-                  "postal_address"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "coordinates": {
-                    "$ref": "#/components/schemas/Coordinates"
-                  },
-                  "postal_address": {
-                    "$ref": "#/components/schemas/PostalAddress"
-                  }
-                },
-                "required": [
-                  "coordinates"
-                ],
-                "additionalProperties": false
-              }
-            ],
             "description": "Dropoff location for the delivery."
           },
           "pickup_time": {
@@ -1836,74 +1711,10 @@
           },
           "pickup_location": {
             "$ref": "#/components/schemas/Location",
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "postal_address": {
-                    "$ref": "#/components/schemas/PostalAddress"
-                  },
-                  "coordinates": {
-                    "$ref": "#/components/schemas/Coordinates"
-                  }
-                },
-                "required": [
-                  "postal_address"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "coordinates": {
-                    "$ref": "#/components/schemas/Coordinates"
-                  },
-                  "postal_address": {
-                    "$ref": "#/components/schemas/PostalAddress"
-                  }
-                },
-                "required": [
-                  "coordinates"
-                ],
-                "additionalProperties": false
-              }
-            ],
             "description": "Pickup location for the delivery."
           },
           "dropoff_location": {
             "$ref": "#/components/schemas/Location",
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "postal_address": {
-                    "$ref": "#/components/schemas/PostalAddress"
-                  },
-                  "coordinates": {
-                    "$ref": "#/components/schemas/Coordinates"
-                  }
-                },
-                "required": [
-                  "postal_address"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "coordinates": {
-                    "$ref": "#/components/schemas/Coordinates"
-                  },
-                  "postal_address": {
-                    "$ref": "#/components/schemas/PostalAddress"
-                  }
-                },
-                "required": [
-                  "coordinates"
-                ],
-                "additionalProperties": false
-              }
-            ],
             "description": "Dropoff location for the delivery."
           },
           "pickup_estimate": {
@@ -1923,27 +1734,13 @@
           },
           "payment": {
             "$ref": "#/components/schemas/Payment",
-            "description": "Payment handlers available for accepting this quote.",
-            "type": "object",
-            "properties": {
-              "instruments": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/PaymentInstrument"
-                },
-                "description": "The payment instruments available for this payment. Each instrument is associated with a specific handler via the handler_id field. Handlers can extend the base payment_instrument schema to add handler-specific fields."
-              }
-            },
-            "required": [
-              "instruments"
-            ]
+            "description": "Payment handlers available for accepting this quote."
           }
         },
         "additionalProperties": false
       },
       "CreateDeliveryRequest": {
         "type": "object",
-        "description": "Body for creating a delivery from an accepted quote.",
         "required": [
           "request_id",
           "quote_id",
@@ -1980,7 +1777,6 @@
       },
       "UpdateEventRequest": {
         "type": "object",
-        "description": "Body for updating a delivery event.",
         "required": [
           "event",
           "event_description"
@@ -2062,7 +1858,6 @@
       },
       "DiscoveryResponse": {
         "type": "object",
-        "description": "Service discovery metadata.",
         "required": [
           "version",
           "name",
@@ -2083,7 +1878,7 @@
             "description": "Supported capabilities by domain.",
             "additionalProperties": {
               "type": "object",
-              "additionalProperties": {}
+              "additionalProperties": true
             }
           },
           "endpoints": {
@@ -2098,14 +1893,12 @@
       },
       "HealthResponse": {
         "type": "object",
-        "description": "Health check response.",
         "required": [
           "status"
         ],
         "properties": {
           "status": {
             "type": "string",
-            "const": "ok",
             "enum": [
               "ok"
             ]
@@ -2115,7 +1908,6 @@
       },
       "ErrorResponse": {
         "type": "object",
-        "description": "Error response with a human-readable detail message.",
         "required": [
           "detail"
         ],
@@ -2128,7 +1920,6 @@
       },
       "ValidationErrorResponse": {
         "type": "object",
-        "description": "Validation error response with a list of field-level errors.",
         "required": [
           "detail"
         ],
@@ -2163,8 +1954,7 @@
             "description": "ISO 4217 currency code (e.g., 'USD', 'EUR', 'JPY').",
             "pattern": "^[A-Z0-9_]+$"
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/shared/fiat_currency.json"
+        }
       },
       "EvmCurrency": {
         "type": "object",
@@ -2192,8 +1982,7 @@
             "maximum": 255,
             "description": "Decimal places for the token."
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/shared/evm_currency.json"
+        }
       },
       "EvmAmount": {
         "type": "object",
@@ -2210,7 +1999,6 @@
             "description": "Value in atomic token units as an integer string."
           },
           "currency": {
-            "$ref": "#/components/schemas/EvmCurrency",
             "type": "object",
             "properties": {
               "chain_id": {
@@ -2236,11 +2024,9 @@
               "decimals"
             ],
             "additionalProperties": false,
-            "description": "EVM token currency.",
-            "$id": "https://localprotocol.xyz/schemas/shared/evm_currency.json"
+            "description": "EVM token currency."
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/shared/evm_amount.json"
+        }
       },
       "Amount": {
         "type": "object",
@@ -2258,14 +2044,6 @@
           },
           "currency": {
             "description": "Currency descriptor (fiat or EVM token).",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/FiatCurrency"
-              },
-              {
-                "$ref": "#/components/schemas/EvmCurrency"
-              }
-            ],
             "anyOf": [
               {
                 "$ref": "#/components/schemas/FiatCurrency"
@@ -2275,8 +2053,7 @@
               }
             ]
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/shared/amount.json"
+        }
       },
       "Media": {
         "type": "object",
@@ -2315,8 +2092,7 @@
             "description": "Height in pixels (for images/video)."
           }
         },
-        "additionalProperties": false,
-        "$id": "https://localprotocol.xyz/schemas/shared/media.json"
+        "additionalProperties": false
       },
       "Interval": {
         "type": "object",
@@ -2335,7 +2111,6 @@
           },
           "date": {
             "type": "string",
-            "format": "date",
             "description": "Calendar date in YYYY-MM-DD."
           },
           "from_hour": {
@@ -2362,20 +2137,7 @@
             "maximum": 59,
             "description": "End minute (0-59)."
           }
-        },
-        "oneOf": [
-          {
-            "required": [
-              "day"
-            ]
-          },
-          {
-            "required": [
-              "date"
-            ]
-          }
-        ],
-        "$id": "https://localprotocol.xyz/schemas/catalog/types/interval.json"
+        }
       },
       "Availability": {
         "type": "object",
@@ -2397,8 +2159,7 @@
             },
             "description": "Availability intervals (weekly or date-specific)."
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/catalog/types/availability.json"
+        }
       },
       "ModifierItem": {
         "type": "object",
@@ -2423,7 +2184,6 @@
             "description": "Optional modifier item description."
           },
           "price": {
-            "$ref": "#/components/schemas/Amount",
             "description": "Price for this modifier item.",
             "type": "object",
             "properties": {
@@ -2448,16 +2208,14 @@
               "value",
               "currency"
             ],
-            "additionalProperties": false,
-            "$id": "https://localprotocol.xyz/schemas/shared/amount.json"
+            "additionalProperties": false
           },
           "metadata": {
             "type": "object",
             "description": "Business-defined custom data extending the modifier item.",
-            "additionalProperties": {}
+            "additionalProperties": true
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/catalog/types/modifier_item.json"
+        }
       },
       "ModifierOption": {
         "type": "object",
@@ -2474,62 +2232,7 @@
           },
           "modifier_item": {
             "$ref": "#/components/schemas/ModifierItem",
-            "description": "Modifier item for this option.",
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "Modifier item identifier."
-              },
-              "name": {
-                "type": "string",
-                "description": "Modifier item name."
-              },
-              "description": {
-                "type": "string",
-                "description": "Optional modifier item description."
-              },
-              "price": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "string",
-                    "pattern": "^[0-9]+$",
-                    "description": "Value in minor currency units as an integer string (e.g., \"1000\" = $10.00 USD, or atomic units for EVM tokens). Use \"0\" for free items."
-                  },
-                  "currency": {
-                    "anyOf": [
-                      {
-                        "$ref": "#/components/schemas/FiatCurrency"
-                      },
-                      {
-                        "$ref": "#/components/schemas/EvmCurrency"
-                      }
-                    ],
-                    "description": "Currency descriptor (fiat or EVM token)."
-                  }
-                },
-                "required": [
-                  "value",
-                  "currency"
-                ],
-                "additionalProperties": false,
-                "description": "Price for this modifier item.",
-                "$id": "https://localprotocol.xyz/schemas/shared/amount.json"
-              },
-              "metadata": {
-                "type": "object",
-                "additionalProperties": {},
-                "description": "Business-defined custom data extending the modifier item."
-              }
-            },
-            "required": [
-              "id",
-              "name",
-              "price"
-            ],
-            "additionalProperties": false,
-            "$id": "https://localprotocol.xyz/schemas/catalog/types/modifier_item.json"
+            "description": "Modifier item for this option."
           },
           "child_modifier_groups": {
             "type": "array",
@@ -2545,10 +2248,9 @@
           "metadata": {
             "type": "object",
             "description": "Business-defined custom data extending the modifier option.",
-            "additionalProperties": {}
+            "additionalProperties": true
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/catalog/types/modifier_option.json"
+        }
       },
       "ModifierGroup": {
         "type": "object",
@@ -2589,7 +2291,6 @@
           "max_per_modifier": {
             "type": "integer",
             "minimum": 0,
-            "default": 1,
             "description": "Maximum quantity allowed per modifier option. Defaults to 1 (each modifier can be selected at most once)."
           },
           "modifier_options": {
@@ -2607,10 +2308,9 @@
           "metadata": {
             "type": "object",
             "description": "Business-defined custom data extending the modifier group.",
-            "additionalProperties": {}
+            "additionalProperties": true
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/catalog/types/modifier_group.json"
+        }
       },
       "CatalogItem": {
         "type": "object",
@@ -2637,32 +2337,7 @@
           },
           "price": {
             "$ref": "#/components/schemas/Amount",
-            "description": "Base price for the item.",
-            "type": "object",
-            "properties": {
-              "value": {
-                "type": "string",
-                "pattern": "^[0-9]+$",
-                "description": "Value in minor currency units as an integer string (e.g., \"1000\" = $10.00 USD, or atomic units for EVM tokens). Use \"0\" for free items."
-              },
-              "currency": {
-                "anyOf": [
-                  {
-                    "$ref": "#/components/schemas/FiatCurrency"
-                  },
-                  {
-                    "$ref": "#/components/schemas/EvmCurrency"
-                  }
-                ],
-                "description": "Currency descriptor (fiat or EVM token)."
-              }
-            },
-            "required": [
-              "value",
-              "currency"
-            ],
-            "additionalProperties": false,
-            "$id": "https://localprotocol.xyz/schemas/shared/amount.json"
+            "description": "Base price for the item."
           },
           "media": {
             "type": "array",
@@ -2680,35 +2355,14 @@
           },
           "availability": {
             "$ref": "#/components/schemas/Availability",
-            "description": "Item availability. Ignored when the catalog or category defines availability.",
-            "type": "object",
-            "properties": {
-              "timezone": {
-                "type": "string",
-                "description": "IANA timezone for the intervals. Defaults to the merchant timezone when omitted."
-              },
-              "intervals": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Interval"
-                },
-                "minItems": 1,
-                "description": "Availability intervals (weekly or date-specific)."
-              }
-            },
-            "required": [
-              "intervals"
-            ],
-            "additionalProperties": false,
-            "$id": "https://localprotocol.xyz/schemas/catalog/types/availability.json"
+            "description": "Item availability. Ignored when the catalog or category defines availability."
           },
           "metadata": {
             "type": "object",
             "description": "Business-defined custom data extending the item.",
-            "additionalProperties": {}
+            "additionalProperties": true
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/catalog/types/item.json"
+        }
       },
       "CatalogCategory": {
         "type": "object",
@@ -2748,35 +2402,14 @@
           },
           "availability": {
             "$ref": "#/components/schemas/Availability",
-            "description": "Category availability. Ignored when the catalog defines availability.",
-            "type": "object",
-            "properties": {
-              "timezone": {
-                "type": "string",
-                "description": "IANA timezone for the intervals. Defaults to the merchant timezone when omitted."
-              },
-              "intervals": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Interval"
-                },
-                "minItems": 1,
-                "description": "Availability intervals (weekly or date-specific)."
-              }
-            },
-            "required": [
-              "intervals"
-            ],
-            "additionalProperties": false,
-            "$id": "https://localprotocol.xyz/schemas/catalog/types/availability.json"
+            "description": "Category availability. Ignored when the catalog defines availability."
           },
           "metadata": {
             "type": "object",
             "description": "Business-defined custom data extending the category.",
-            "additionalProperties": {}
+            "additionalProperties": true
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/catalog/types/category.json"
+        }
       },
       "Catalog": {
         "type": "object",
@@ -2816,35 +2449,14 @@
           },
           "availability": {
             "$ref": "#/components/schemas/Availability",
-            "description": "Catalog availability. When present, it overrides category and item availability.",
-            "type": "object",
-            "properties": {
-              "timezone": {
-                "type": "string",
-                "description": "IANA timezone for the intervals. Defaults to the merchant timezone when omitted."
-              },
-              "intervals": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Interval"
-                },
-                "minItems": 1,
-                "description": "Availability intervals (weekly or date-specific)."
-              }
-            },
-            "required": [
-              "intervals"
-            ],
-            "additionalProperties": false,
-            "$id": "https://localprotocol.xyz/schemas/catalog/types/availability.json"
+            "description": "Catalog availability. When present, it overrides category and item availability."
           },
           "metadata": {
             "type": "object",
             "description": "Business-defined custom data extending the catalog.",
-            "additionalProperties": {}
+            "additionalProperties": true
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/catalog/catalog.json"
+        }
       },
       "Merchant": {
         "type": "object",
@@ -2885,10 +2497,9 @@
           "metadata": {
             "type": "object",
             "description": "Business-defined custom data extending the merchant.",
-            "additionalProperties": {}
+            "additionalProperties": true
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/catalog/merchant.json"
+        }
       },
       "CartItem": {
         "type": "object",
@@ -2993,7 +2604,6 @@
           },
           "price": {
             "type": "integer",
-            "minimum": 0,
             "description": "Price in minor currency units."
           },
           "ready_at": {
@@ -3010,7 +2620,6 @@
       },
       "CreateOrderRequest": {
         "type": "object",
-        "description": "Body for creating an order from an accepted quote.",
         "required": [
           "order_request_id",
           "order_quote_id",
@@ -3090,8 +2699,7 @@
             "maximum": 255,
             "description": "Token decimals."
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/payment/types/evm_token.json"
+        }
       },
       "EvmAuthCaptureEscrowConfig": {
         "type": "object",
@@ -3103,7 +2711,7 @@
           "receiver",
           "accepted_tokens"
         ],
-        "additionalProperties": {},
+        "additionalProperties": true,
         "properties": {
           "chain_id": {
             "type": "integer",
@@ -3133,90 +2741,7 @@
             },
             "description": "Tokens accepted on the escrow contract chain."
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/payment/evm_auth_capture_escrow_config.json"
-      },
-      "EvmAuthCaptureEscrowInstrumentDetails": {
-        "type": "object",
-        "required": [
-          "payment_info_hash",
-          "operator",
-          "payer",
-          "receiver",
-          "token",
-          "max_amount",
-          "preapproval_expires_at",
-          "authorization_expires_at",
-          "refund_expires_at",
-          "nonce",
-          "chain_id",
-          "contract",
-          "amount"
-        ],
-        "properties": {
-          "payment_info_hash": {
-            "type": "string",
-            "pattern": "^0x[a-fA-F0-9]{64}$",
-            "description": "Hash identifying the on-chain payment authorization."
-          },
-          "operator": {
-            "type": "string",
-            "pattern": "^0x[a-fA-F0-9]{40}$",
-            "description": "Operator address."
-          },
-          "payer": {
-            "type": "string",
-            "pattern": "^0x[a-fA-F0-9]{40}$",
-            "description": "Payer address."
-          },
-          "chain_id": {
-            "type": "integer",
-            "minimum": 1,
-            "description": "EVM chain id."
-          },
-          "contract": {
-            "type": "string",
-            "pattern": "^0x[a-fA-F0-9]{40}$",
-            "description": "Escrow contract address."
-          },
-          "receiver": {
-            "type": "string",
-            "pattern": "^0x[a-fA-F0-9]{40}$",
-            "description": "Receiver address for captures."
-          },
-          "token": {
-            "$ref": "#/components/schemas/EvmToken"
-          },
-          "max_amount": {
-            "$ref": "#/components/schemas/EvmAmount",
-            "description": "Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
-          },
-          "preapproval_expires_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Pre-approval expiration (RFC 3339)."
-          },
-          "authorization_expires_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Authorization expiration (RFC 3339)."
-          },
-          "refund_expires_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Refund expiration (RFC 3339)."
-          },
-          "nonce": {
-            "type": "string",
-            "pattern": "^[0-9]+$",
-            "description": "Unique nonce for payment info hash computation."
-          },
-          "amount": {
-            "$ref": "#/components/schemas/EvmAmount",
-            "description": "Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
-          }
-        },
-        "additionalProperties": true
+        }
       },
       "EvmAuthCaptureEscrowInstrument": {
         "description": "Payment instrument for auth/capture escrow on EVM chains.",
@@ -3225,195 +2750,7 @@
             "$ref": "#/components/schemas/PaymentInstrument"
           },
           {
-            "$ref": "#/components/schemas/EvmAuthCaptureEscrowInstrumentDetails",
-            "type": "object",
-            "properties": {
-              "payment_info_hash": {
-                "type": "string",
-                "pattern": "^0x[a-fA-F0-9]{64}$",
-                "description": "Hash that identifies the on-chain payment authorization."
-              },
-              "operator": {
-                "type": "string",
-                "pattern": "^0x[a-fA-F0-9]{40}$",
-                "description": "Operator address used to compute the payment info hash."
-              },
-              "payer": {
-                "type": "string",
-                "pattern": "^0x[a-fA-F0-9]{40}$",
-                "description": "Payer address used to compute the payment info hash."
-              },
-              "receiver": {
-                "type": "string",
-                "pattern": "^0x[a-fA-F0-9]{40}$",
-                "description": "Receiver address used for captures."
-              },
-              "token": {
-                "type": "object",
-                "properties": {
-                  "address": {
-                    "type": "string",
-                    "pattern": "^0x[a-fA-F0-9]{40}$",
-                    "description": "ERC-20 contract address. Omit for native gas tokens (e.g., ETH, MATIC)."
-                  },
-                  "symbol": {
-                    "type": "string",
-                    "description": "Token symbol (e.g., USDC)."
-                  },
-                  "decimals": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "maximum": 255,
-                    "description": "Token decimals."
-                  }
-                },
-                "required": [
-                  "symbol",
-                  "decimals"
-                ],
-                "additionalProperties": false,
-                "description": "EVM token.",
-                "$id": "https://localprotocol.xyz/schemas/payment/types/evm_token.json"
-              },
-              "max_amount": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "string",
-                    "pattern": "^[0-9]+$",
-                    "description": "Value in atomic token units as an integer string."
-                  },
-                  "currency": {
-                    "type": "object",
-                    "properties": {
-                      "chain_id": {
-                        "type": "integer",
-                        "minimum": 1,
-                        "description": "EVM chain id."
-                      },
-                      "address": {
-                        "type": "string",
-                        "pattern": "^0x[a-fA-F0-9]{40}$",
-                        "description": "Token contract address."
-                      },
-                      "decimals": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "maximum": 255,
-                        "description": "Decimal places for the token."
-                      }
-                    },
-                    "required": [
-                      "chain_id",
-                      "address",
-                      "decimals"
-                    ],
-                    "additionalProperties": false,
-                    "description": "EVM token currency.",
-                    "$id": "https://localprotocol.xyz/schemas/shared/evm_currency.json"
-                  }
-                },
-                "required": [
-                  "value",
-                  "currency"
-                ],
-                "additionalProperties": false,
-                "description": "Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.",
-                "$id": "https://localprotocol.xyz/schemas/shared/evm_amount.json"
-              },
-              "preapproval_expires_at": {
-                "type": "string",
-                "format": "date-time",
-                "description": "Pre-approval expiration timestamp (RFC 3339)."
-              },
-              "authorization_expires_at": {
-                "type": "string",
-                "format": "date-time",
-                "description": "Authorization expiration timestamp (RFC 3339)."
-              },
-              "refund_expires_at": {
-                "type": "string",
-                "format": "date-time",
-                "description": "Refund expiration timestamp (RFC 3339)."
-              },
-              "nonce": {
-                "type": "string",
-                "pattern": "^[0-9]+$",
-                "description": "Unique nonce used to compute the payment info hash."
-              },
-              "chain_id": {
-                "type": "integer",
-                "minimum": 1,
-                "description": "EVM chain id for the escrow contract."
-              },
-              "contract": {
-                "type": "string",
-                "pattern": "^0x[a-fA-F0-9]{40}$",
-                "description": "Escrow contract address on the target chain."
-              },
-              "amount": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "string",
-                    "pattern": "^[0-9]+$",
-                    "description": "Value in atomic token units as an integer string."
-                  },
-                  "currency": {
-                    "type": "object",
-                    "properties": {
-                      "chain_id": {
-                        "type": "integer",
-                        "minimum": 1,
-                        "description": "EVM chain id."
-                      },
-                      "address": {
-                        "type": "string",
-                        "pattern": "^0x[a-fA-F0-9]{40}$",
-                        "description": "Token contract address."
-                      },
-                      "decimals": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "maximum": 255,
-                        "description": "Decimal places for the token."
-                      }
-                    },
-                    "required": [
-                      "chain_id",
-                      "address",
-                      "decimals"
-                    ],
-                    "additionalProperties": false,
-                    "description": "EVM token currency.",
-                    "$id": "https://localprotocol.xyz/schemas/shared/evm_currency.json"
-                  }
-                },
-                "required": [
-                  "value",
-                  "currency"
-                ],
-                "additionalProperties": false,
-                "description": "Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals.",
-                "$id": "https://localprotocol.xyz/schemas/shared/evm_amount.json"
-              }
-            },
-            "required": [
-              "payment_info_hash",
-              "operator",
-              "payer",
-              "receiver",
-              "token",
-              "max_amount",
-              "preapproval_expires_at",
-              "authorization_expires_at",
-              "refund_expires_at",
-              "nonce",
-              "chain_id",
-              "contract",
-              "amount"
-            ],
-            "additionalProperties": {}
+            "$ref": "#/components/schemas/EvmAuthCaptureEscrowInstrumentDetails"
           },
           {
             "required": [
@@ -3422,7 +2759,6 @@
             "properties": {
               "type": {
                 "type": "string",
-                "const": "evm_auth_capture_escrow",
                 "enum": [
                   "evm_auth_capture_escrow"
                 ]
@@ -3438,7 +2774,7 @@
         "required": [
           "type"
         ],
-        "additionalProperties": {},
+        "additionalProperties": true,
         "properties": {
           "type": {
             "type": "string",
@@ -3468,7 +2804,6 @@
             "description": "The broad category of the instrument (e.g., 'card', 'tokenized_card'). Specific schemas will constrain this to a constant value."
           },
           "billing_address": {
-            "$ref": "#/components/schemas/PostalAddress",
             "description": "The billing address associated with this payment method.",
             "type": "object",
             "properties": {
@@ -3516,30 +2851,10 @@
           "display": {
             "type": "object",
             "description": "Display information for this payment instrument. Each payment instrument schema defines its specific display properties, as outlined by the payment handler.",
-            "additionalProperties": {}
+            "additionalProperties": true
           }
         },
-        "additionalProperties": {}
-      },
-      "SelectedPaymentInstrumentSelectionState": {
-        "type": "object",
-        "properties": {
-          "selected": {
-            "type": "boolean",
-            "description": "Whether this instrument is selected by the user."
-          }
-        }
-      },
-      "SelectedPaymentInstrument": {
-        "description": "A payment instrument with selection state.",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/PaymentInstrument"
-          },
-          {
-            "$ref": "#/components/schemas/SelectedPaymentInstrumentSelectionState"
-          }
-        ]
+        "additionalProperties": true
       },
       "Payment": {
         "type": "object",
@@ -3556,20 +2871,6 @@
         "required": [
           "instruments"
         ]
-      },
-      "DeliveryEvent": {
-        "type": "object",
-        "description": "A single delivery event definition.",
-        "required": [
-          "description"
-        ],
-        "additionalProperties": false,
-        "properties": {
-          "description": {
-            "type": "string",
-            "description": "Human-readable description of the event."
-          }
-        }
       },
       "DeliveryEventVocabulary": {
         "type": "object",
@@ -3597,7 +2898,6 @@
             "type": "array",
             "minItems": 1,
             "maxItems": 1,
-            "uniqueItems": true,
             "items": {
               "type": "string",
               "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)+@\\d{4}-\\d{2}-\\d{2}$"
@@ -3619,9 +2919,7 @@
           },
           "events": {
             "type": "object",
-            "minProperties": 1,
             "additionalProperties": {
-              "$ref": "#/components/schemas/DeliveryEvent",
               "type": "object",
               "properties": {
                 "description": {
@@ -3636,8 +2934,7 @@
             },
             "description": "Map of all event IDs supported by this standard, including inherited events."
           }
-        },
-        "$id": "https://localprotocol.xyz/schemas/delivery/events.json"
+        }
       },
       "RequestId": {
         "type": "string",
@@ -3670,6 +2967,211 @@
       "EventVocabularyName": {
         "type": "string",
         "description": "Event vocabulary name in reverse-domain notation (e.g., xyz.localprotocol.delivery.courier)."
+      },
+      "SelectedPaymentInstrumentSelectionState": {
+        "type": "object",
+        "properties": {
+          "selected": {
+            "type": "boolean",
+            "description": "Whether this instrument is selected by the user."
+          }
+        }
+      },
+      "SelectedPaymentInstrument": {
+        "description": "A payment instrument with selection state.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PaymentInstrument"
+          },
+          {
+            "$ref": "#/components/schemas/SelectedPaymentInstrumentSelectionState"
+          }
+        ]
+      },
+      "EvmAuthCaptureEscrowInstrumentDetails": {
+        "type": "object",
+        "properties": {
+          "payment_info_hash": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{64}$",
+            "description": "Hash that identifies the on-chain payment authorization."
+          },
+          "operator": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Operator address used to compute the payment info hash."
+          },
+          "payer": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Payer address used to compute the payment info hash."
+          },
+          "receiver": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Receiver address used for captures."
+          },
+          "token": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$",
+                "description": "ERC-20 contract address. Omit for native gas tokens (e.g., ETH, MATIC)."
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Token symbol (e.g., USDC)."
+              },
+              "decimals": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 255,
+                "description": "Token decimals."
+              }
+            },
+            "required": [
+              "symbol",
+              "decimals"
+            ],
+            "additionalProperties": false,
+            "description": "EVM token."
+          },
+          "max_amount": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^[0-9]+$",
+                "description": "Value in atomic token units as an integer string."
+              },
+              "currency": {
+                "type": "object",
+                "properties": {
+                  "chain_id": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "EVM chain id."
+                  },
+                  "address": {
+                    "type": "string",
+                    "pattern": "^0x[a-fA-F0-9]{40}$",
+                    "description": "Token contract address."
+                  },
+                  "decimals": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 255,
+                    "description": "Decimal places for the token."
+                  }
+                },
+                "required": [
+                  "chain_id",
+                  "address",
+                  "decimals"
+                ],
+                "additionalProperties": false,
+                "description": "EVM token currency."
+              }
+            },
+            "required": [
+              "value",
+              "currency"
+            ],
+            "additionalProperties": false,
+            "description": "Maximum amount that can be authorized (atomic units). Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
+          },
+          "preapproval_expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Pre-approval expiration timestamp (RFC 3339)."
+          },
+          "authorization_expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Authorization expiration timestamp (RFC 3339)."
+          },
+          "refund_expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Refund expiration timestamp (RFC 3339)."
+          },
+          "nonce": {
+            "type": "string",
+            "pattern": "^[0-9]+$",
+            "description": "Unique nonce used to compute the payment info hash."
+          },
+          "chain_id": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "EVM chain id for the escrow contract."
+          },
+          "contract": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Escrow contract address on the target chain."
+          },
+          "amount": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^[0-9]+$",
+                "description": "Value in atomic token units as an integer string."
+              },
+              "currency": {
+                "type": "object",
+                "properties": {
+                  "chain_id": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "EVM chain id."
+                  },
+                  "address": {
+                    "type": "string",
+                    "pattern": "^0x[a-fA-F0-9]{40}$",
+                    "description": "Token contract address."
+                  },
+                  "decimals": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 255,
+                    "description": "Decimal places for the token."
+                  }
+                },
+                "required": [
+                  "chain_id",
+                  "address",
+                  "decimals"
+                ],
+                "additionalProperties": false,
+                "description": "EVM token currency."
+              }
+            },
+            "required": [
+              "value",
+              "currency"
+            ],
+            "additionalProperties": false,
+            "description": "Amount in atomic units. Currency chain_id MUST match the instrument chain_id; currency address and decimals MUST match token address and decimals."
+          }
+        },
+        "required": [
+          "payment_info_hash",
+          "operator",
+          "payer",
+          "receiver",
+          "token",
+          "max_amount",
+          "preapproval_expires_at",
+          "authorization_expires_at",
+          "refund_expires_at",
+          "nonce",
+          "chain_id",
+          "contract",
+          "amount"
+        ],
+        "additionalProperties": true
       }
     }
   },
