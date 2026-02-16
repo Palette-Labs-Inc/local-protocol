@@ -4,7 +4,11 @@
   "title": "Modifier Item",
   "description": "A purchasable modifier item that can be selected within a modifier group.",
   "type": "object",
-  "required": ["id", "name", "price"],
+  "required": [
+    "id",
+    "name",
+    "price"
+  ],
   "properties": {
     "id": {
       "type": "string",

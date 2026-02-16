@@ -4,7 +4,11 @@
   "title": "Modifier Group",
   "description": "Group of modifier options with selection constraints.",
   "type": "object",
-  "required": ["id", "name", "modifier_options"],
+  "required": [
+    "id",
+    "name",
+    "modifier_options"
+  ],
   "properties": {
     "id": {
       "type": "string",

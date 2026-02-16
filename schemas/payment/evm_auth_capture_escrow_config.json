@@ -36,7 +36,9 @@
       "type": "array",
       "description": "Tokens accepted on the escrow contract chain.",
       "minItems": 1,
-      "items": { "$ref": "types/evm_token.json" }
+      "items": {
+        "$ref": "types/evm_token.json"
+      }
     }
   },
   "additionalProperties": true

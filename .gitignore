@@ -1,6 +1,10 @@
 # MkDocs build output
 site/
 
+# Generated JSON Schema files
+dist/
+schemas/test/
+
 # Dependencies
 node_modules/
 
