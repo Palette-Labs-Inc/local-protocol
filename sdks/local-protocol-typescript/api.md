@@ -6,7 +6,7 @@ Types:
 
 Methods:
 
-- <code title="get /.well-known/local-protocol">client.wellKnown.<a href="./src/resources/well-known.ts">retrieve</a>() -> WellKnownRetrieveResponse</code>
+- <code title="get /.well-known/ucp">client.wellKnown.<a href="./src/resources/well-known.ts">retrieve</a>() -> WellKnownRetrieveResponse</code>
 
 # Healthz
 

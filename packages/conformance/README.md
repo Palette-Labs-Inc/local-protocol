@@ -40,7 +40,7 @@ uv run python delivery_event_test.py --server_url=http://localhost:8000
 ## Test Categories
 
 ### `protocol_test.py`
-- Discovery endpoint tests (`.well-known/local-protocol`)
+- Discovery endpoint tests (`.well-known/ucp`)
 - Request lifecycle (create, get, list)
 - Quote lifecycle (create for request, list)
 - Idempotency behavior via nonce field
@@ -62,6 +62,7 @@ uv run python delivery_event_test.py --server_url=http://localhost:8000
 
 ### `discovery_conformance_test.py`
 - Standard conformance declarations
+- UCP discovery registry shape validation (`services`, `capabilities`, `payment_handlers`)
 - Version format validation (YYYY-MM-DD date format)
 - Courier standard references
 

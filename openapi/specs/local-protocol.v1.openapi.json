@@ -46,7 +46,7 @@
     }
   ],
   "paths": {
-    "/.well-known/local-protocol": {
+    "/.well-known/ucp": {
       "get": {
         "tags": [
           "discovery"
@@ -68,7 +68,7 @@
           {
             "lang": "shell",
             "label": "cURL",
-            "source": "curl -sS http://localhost:8000/.well-known/local-protocol"
+            "source": "curl -sS http://localhost:8000/.well-known/ucp"
           }
         ],
         "responses": {

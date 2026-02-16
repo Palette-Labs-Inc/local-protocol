@@ -8,10 +8,13 @@ from integration_test_utils import IntegrationTestBase
 class DiscoveryTest(IntegrationTestBase):
   """Tests for service discovery endpoints."""
 
-  def test_well_known_endpoint_exists(self) -> None:
-    """Server MUST expose /.well-known/local-protocol."""
-    data = self.sdk.well_known.retrieve()
-    self.assertIsNotNone(data.version)
+  def test_ucp_well_known_endpoint_exists(self) -> None:
+    """Server MUST expose /.well-known/ucp."""
+    response = self.http_client.get("/.well-known/ucp")
+    self.assert_response_status(response, 200)
+    data = response.json()
+    self.assertIn("ucp", data)
+    self.assertIsNotNone(data["ucp"].get("version"))
 
   def test_health_check(self) -> None:
     """Server SHOULD expose /healthz endpoint."""

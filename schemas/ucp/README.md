@@ -4,6 +4,9 @@ This directory contains a subset of UCP (Universal Commerce Protocol) schemas
 vendored locally from the [UCP repository](https://github.com/anthropics/ucp)
 at tag `v2026-01-23`.
 
+Canonical LP UCP interoperability version is defined in `schemas/ucp/VERSION`
+and should track this vendored UCP baseline.
+
 ## Why vendor?
 
 Three Local Protocol schemas reference UCP types:

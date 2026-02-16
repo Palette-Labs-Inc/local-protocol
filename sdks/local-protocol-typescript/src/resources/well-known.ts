@@ -12,7 +12,7 @@ export class WellKnown extends APIResource {
    * Returns server capabilities, supported standards, and endpoint paths.
    */
   retrieve(options?: RequestOptions): APIPromise<WellKnownRetrieveResponse> {
-    return this._client.get('/.well-known/local-protocol', options);
+    return this._client.get('/.well-known/ucp', options);
   }
 }
 

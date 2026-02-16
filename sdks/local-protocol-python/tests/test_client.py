@@ -816,7 +816,7 @@ class TestLocalProtocol:
     @mock.patch("local_protocol._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: LocalProtocol) -> None:
-        respx_mock.get("/.well-known/local-protocol").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.get("/.well-known/ucp").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             client.well_known.with_streaming_response.retrieve().__enter__()
@@ -826,7 +826,7 @@ class TestLocalProtocol:
     @mock.patch("local_protocol._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: LocalProtocol) -> None:
-        respx_mock.get("/.well-known/local-protocol").mock(return_value=httpx.Response(500))
+        respx_mock.get("/.well-known/ucp").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             client.well_known.with_streaming_response.retrieve().__enter__()
@@ -856,7 +856,7 @@ class TestLocalProtocol:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/.well-known/local-protocol").mock(side_effect=retry_handler)
+        respx_mock.get("/.well-known/ucp").mock(side_effect=retry_handler)
 
         response = client.well_known.with_raw_response.retrieve()
 
@@ -880,7 +880,7 @@ class TestLocalProtocol:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/.well-known/local-protocol").mock(side_effect=retry_handler)
+        respx_mock.get("/.well-known/ucp").mock(side_effect=retry_handler)
 
         response = client.well_known.with_raw_response.retrieve(extra_headers={"x-stainless-retry-count": Omit()})
 
@@ -903,7 +903,7 @@ class TestLocalProtocol:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/.well-known/local-protocol").mock(side_effect=retry_handler)
+        respx_mock.get("/.well-known/ucp").mock(side_effect=retry_handler)
 
         response = client.well_known.with_raw_response.retrieve(extra_headers={"x-stainless-retry-count": "42"})
 
@@ -1678,7 +1678,7 @@ class TestAsyncLocalProtocol:
     async def test_retrying_timeout_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncLocalProtocol
     ) -> None:
-        respx_mock.get("/.well-known/local-protocol").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.get("/.well-known/ucp").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await async_client.well_known.with_streaming_response.retrieve().__aenter__()
@@ -1690,7 +1690,7 @@ class TestAsyncLocalProtocol:
     async def test_retrying_status_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncLocalProtocol
     ) -> None:
-        respx_mock.get("/.well-known/local-protocol").mock(return_value=httpx.Response(500))
+        respx_mock.get("/.well-known/ucp").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await async_client.well_known.with_streaming_response.retrieve().__aenter__()
@@ -1720,7 +1720,7 @@ class TestAsyncLocalProtocol:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/.well-known/local-protocol").mock(side_effect=retry_handler)
+        respx_mock.get("/.well-known/ucp").mock(side_effect=retry_handler)
 
         response = await client.well_known.with_raw_response.retrieve()
 
@@ -1744,7 +1744,7 @@ class TestAsyncLocalProtocol:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/.well-known/local-protocol").mock(side_effect=retry_handler)
+        respx_mock.get("/.well-known/ucp").mock(side_effect=retry_handler)
 
         response = await client.well_known.with_raw_response.retrieve(extra_headers={"x-stainless-retry-count": Omit()})
 
@@ -1767,7 +1767,7 @@ class TestAsyncLocalProtocol:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/.well-known/local-protocol").mock(side_effect=retry_handler)
+        respx_mock.get("/.well-known/ucp").mock(side_effect=retry_handler)
 
         response = await client.well_known.with_raw_response.retrieve(extra_headers={"x-stainless-retry-count": "42"})
 

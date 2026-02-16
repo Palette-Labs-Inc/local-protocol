@@ -8,7 +8,7 @@ from local_protocol.types import WellKnownRetrieveResponse
 
 Methods:
 
-- <code title="get /.well-known/local-protocol">client.well_known.<a href="./src/local_protocol/resources/well_known.py">retrieve</a>() -> <a href="./src/local_protocol/types/well_known_retrieve_response.py">WellKnownRetrieveResponse</a></code>
+- <code title="get /.well-known/ucp">client.well_known.<a href="./src/local_protocol/resources/well_known.py">retrieve</a>() -> <a href="./src/local_protocol/types/well_known_retrieve_response.py">WellKnownRetrieveResponse</a></code>
 
 # Healthz
 

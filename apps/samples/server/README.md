@@ -20,7 +20,7 @@ uv run server.py --port 8000
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/.well-known/local-protocol` | Service discovery |
+| GET | `/.well-known/ucp` | Canonical UCP service discovery |
 | GET | `/healthz` | Health check |
 | POST | `/requests` | Create delivery request |
 | GET | `/requests` | List all requests |
