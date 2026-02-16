@@ -71,8 +71,8 @@ function reorderToMatch(original: unknown, generated: unknown): unknown {
   if (typeof original !== "object" || original === null) return generated;
   if (Array.isArray(original)) {
     const genArr = Array.isArray(generated) ? generated : [];
-    return original.map((origItem, i) =>
-      i < genArr.length ? reorderToMatch(origItem, genArr[i]) : origItem
+    return genArr.map((genItem, i) =>
+      i < original.length ? reorderToMatch(original[i], genItem) : genItem
     );
   }
   const origObj = original as Record<string, unknown>;
@@ -83,6 +83,11 @@ function reorderToMatch(original: unknown, generated: unknown): unknown {
       result[k] = reorderToMatch(origObj[k], genObj[k]);
     } else {
       result[k] = origObj[k];
+    }
+  }
+  for (const k of Object.keys(genObj)) {
+    if (!(k in origObj)) {
+      result[k] = genObj[k];
     }
   }
   return result;
