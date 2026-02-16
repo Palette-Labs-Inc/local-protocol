@@ -508,6 +508,58 @@
       }
     },
 
+    "/merchants": {
+      "get": {
+        "tags": ["merchants"],
+        "summary": "List merchants",
+        "description": "Returns merchants with active catalogs.",
+        "operationId": "listMerchants",
+        "responses": {
+          "200": {
+            "description": "List of merchants.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Merchants" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/catalogs": {
+      "get": {
+        "tags": ["merchants"],
+        "summary": "List catalogs",
+        "description": "Returns active catalogs across merchants.",
+        "operationId": "listCatalogs",
+        "responses": {
+          "200": {
+            "description": "List of catalogs.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Catalogs" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
     "/merchants/{merchant_id}": {
       "get": {
         "tags": ["merchants"],
@@ -1412,6 +1464,45 @@
           "metadata": { "type": "object", "description": "Business-defined custom data.", "additionalProperties": true }
         }
       },
+      "Merchants": {
+
+        "type": "array",
+        "description": "List of merchant profiles returned by merchant list operations.",
+        "items": {
+          "type": "object",
+          "required": ["id", "name", "timezone"],
+          "additionalProperties": false,
+          "properties": {
+            "id": { "type": "string", "description": "Merchant identifier." },
+            "name": { "type": "string", "description": "Merchant name." },
+            "timezone": { "type": "string", "description": "IANA timezone for availability schedules." },
+            "last_updated": { "type": "string", "format": "date-time", "description": "RFC 3339 timestamp of the latest merchant update." },
+            "cover_image": { "$ref": "#/components/schemas/Media", "description": "Merchant cover image." },
+            "logo": { "$ref": "#/components/schemas/Media", "description": "Merchant logo image." },
+            "coordinates": { "$ref": "#/components/schemas/Coordinates", "description": "Merchant coordinates." },
+            "postal_address": { "$ref": "#/components/schemas/PostalAddress", "description": "Merchant postal address." },
+            "phone_number": { "type": "string", "description": "Merchant contact phone number." },
+            "email": { "type": "string", "format": "email", "description": "Merchant contact email address." }
+          }
+        }
+      },
+      "Catalogs": {
+
+        "type": "array",
+        "description": "List of catalogs returned by catalog list operations.",
+        "items": {
+          "type": "object",
+          "required": ["id", "merchant_id", "name"],
+          "additionalProperties": false,
+          "properties": {
+            "id": { "type": "string", "description": "Catalog identifier." },
+            "merchant_id": { "type": "string", "description": "Merchant identifier owning this catalog." },
+            "name": { "type": "string", "description": "Catalog name." },
+            "description": { "type": "string", "description": "Catalog description." },
+            "last_updated": { "type": "string", "format": "date-time", "description": "RFC 3339 timestamp of the latest catalog update." }
+          }
+        }
+      },
       "Merchant": {
 
         "type": "object",
@@ -1423,6 +1514,12 @@
           "name": { "type": "string", "description": "Merchant name." },
           "timezone": { "type": "string", "description": "IANA timezone for availability schedules." },
           "last_updated": { "type": "string", "format": "date-time", "description": "RFC 3339 timestamp of the latest catalog update." },
+          "cover_image": { "$ref": "#/components/schemas/Media", "description": "Merchant cover image." },
+          "logo": { "$ref": "#/components/schemas/Media", "description": "Merchant logo image." },
+          "coordinates": { "$ref": "#/components/schemas/Coordinates", "description": "Merchant coordinates." },
+          "postal_address": { "$ref": "#/components/schemas/PostalAddress", "description": "Merchant postal address." },
+          "phone_number": { "type": "string", "description": "Merchant contact phone number." },
+          "email": { "type": "string", "format": "email", "description": "Merchant contact email address." },
           "catalogs": {
             "type": "array",
             "minItems": 1,

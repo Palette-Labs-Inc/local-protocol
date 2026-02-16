@@ -17,6 +17,8 @@ The data model used in this capability is intended to:
 - Items are modified via modifier groups, modifier options, and modifier items.
 
 - `schemas/catalog/merchant.json` is the top-level payload.
+- `schemas/catalog/merchants.json` defines merchant list responses.
+- `schemas/catalog/catalogs.json` defines catalog list responses.
 - `schemas/catalog/catalog.json` defines catalogs and their embedded categories/items.
 - `schemas/catalog/types/category.json` defines categories, child categories, and ordered item membership.
 - `schemas/catalog/types/item.json` defines items and embedded modifier groups.
@@ -43,3 +45,9 @@ The set of operations required to fulfill this capability are:
 - Get all catalogs
 - Get a catalog by id
 - Get all catalogs for a particular merchant
+
+Current API paths:
+
+- `GET /merchants`: List merchants with active catalogs.
+- `GET /merchants/{merchant_id}`: Get a merchant and its full denormalized catalogs.
+- `GET /catalogs`: List active catalogs across merchants.
