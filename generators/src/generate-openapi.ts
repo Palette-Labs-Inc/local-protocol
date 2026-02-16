@@ -74,7 +74,9 @@ function reorderToMatch(original: unknown, generated: unknown): unknown {
   if (generated === undefined || generated === null) return generated;
   if (typeof original !== "object" || original === null) return generated;
   if (Array.isArray(original)) {
-    const genArr = Array.isArray(generated) ? generated : [];
+    // Preserve type changes: if generated is no longer an array, keep generated as-is.
+    if (!Array.isArray(generated)) return generated;
+    const genArr = generated;
     // Drive array shape from generated, not original.
     // This keeps newly generated items and avoids retaining removed ones.
     return genArr.map((genItem, i) =>
