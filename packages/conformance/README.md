@@ -64,7 +64,7 @@ uv run python delivery_event_test.py --server_url=http://localhost:8000
 - Standard conformance declarations
 - UCP discovery registry shape validation (`services`, `capabilities`, `payment_handlers`)
 - Version format validation (YYYY-MM-DD date format)
-- Courier standard references
+- Transport-required service field validation
 
 ### `standard_schema_test.py`
 - Courier standard structure validation
