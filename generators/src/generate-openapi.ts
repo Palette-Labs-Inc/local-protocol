@@ -65,24 +65,43 @@ function ensureSpecDir(): string {
   return dir;
 }
 
-// Recursively reorder generated to match original key order; use generated values
+// Recursively reorder generated to match original key order, but keep generated as source of truth.
+// Why: the previous "original-first" behavior preserved stale schema fragments that looked stable in diffs
+// but produced invalid Stainless diagnostics (especially around inlined schema objects).
 function reorderToMatch(original: unknown, generated: unknown): unknown {
-  if (generated === undefined || generated === null) return original;
+  // If generated intentionally omits a value, we should also omit it in output.
+  // Returning original here would resurrect stale fields from an old spec snapshot.
+  if (generated === undefined || generated === null) return generated;
   if (typeof original !== "object" || original === null) return generated;
   if (Array.isArray(original)) {
-    const genArr = Array.isArray(generated) ? generated : [];
-    return original.map((origItem, i) =>
-      i < genArr.length ? reorderToMatch(origItem, genArr[i]) : origItem
+    // Preserve type changes: if generated is no longer an array, keep generated as-is.
+    if (!Array.isArray(generated)) return generated;
+    const genArr = generated;
+    // Drive array shape from generated, not original.
+    // This keeps newly generated items and avoids retaining removed ones.
+    return genArr.map((genItem, i) =>
+      i < original.length ? reorderToMatch(original[i], genItem) : genItem
     );
+  }
+  if (typeof generated !== "object" || generated === null || Array.isArray(generated)) {
+    return generated;
   }
   const origObj = original as Record<string, unknown>;
   const genObj = generated as Record<string, unknown>;
   const result: Record<string, unknown> = {};
+  // First pass preserves the familiar key order from original for keys that still exist.
   for (const k of Object.keys(origObj)) {
     if (k in genObj) {
-      result[k] = reorderToMatch(origObj[k], genObj[k]);
-    } else {
-      result[k] = origObj[k];
+      const reordered = reorderToMatch(origObj[k], genObj[k]);
+      if (reordered !== undefined) result[k] = reordered;
+    }
+  }
+  // Second pass appends generated-only keys.
+  // Why: without this, new fields from the generator silently disappear.
+  for (const k of Object.keys(genObj)) {
+    if (!(k in origObj)) {
+      const reordered = reorderToMatch(undefined, genObj[k]);
+      if (reordered !== undefined) result[k] = reordered;
     }
   }
   return result;
@@ -123,6 +142,12 @@ const REF_PATH_TO_COMPONENT: Record<string, string> = {
   "ucp/shopping/types/postal_address.json": "PostalAddress",
 };
 
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+// Rewrite path-based refs (from schema meta ids) to named component refs.
+// Why: downstream OpenAPI tools assume component-name refs and can mis-handle path-style refs.
 function rewriteSchemaRefs(obj: unknown): unknown {
   if (obj === null || obj === undefined) return obj;
   if (typeof obj === "object" && "$ref" in obj && typeof (obj as { $ref: string }).$ref === "string") {
@@ -146,6 +171,20 @@ function rewriteSchemaRefs(obj: unknown): unknown {
   return obj;
 }
 
+// Remove JSON-Schema-specific keys that are not needed in OpenAPI component schemas.
+// Keeping these can change ref-resolution behavior in downstream tooling (including Stainless).
+function stripJsonSchemaOnlyKeywords(obj: unknown): unknown {
+  if (Array.isArray(obj)) return obj.map(stripJsonSchemaOnlyKeywords);
+  if (!isPlainObject(obj)) return obj;
+
+  const out: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (key === "$id" || key === "$schema") continue;
+    out[key] = stripJsonSchemaOnlyKeywords(value);
+  }
+  return out;
+}
+
 /** Rekey components.schemas from path-style keys to component names so $refs resolve. */
 function rekeyComponentSchemas(spec: Record<string, unknown>): void {
   const components = spec.components as Record<string, unknown> | undefined;
@@ -157,6 +196,168 @@ function rekeyComponentSchemas(spec: Record<string, unknown>): void {
     rekeyed[newKey] = value;
   }
   (components as Record<string, unknown>).schemas = rekeyed;
+}
+
+function getComponentsSchemas(spec: Record<string, unknown>): Record<string, unknown> | undefined {
+  const components = spec.components;
+  if (!isPlainObject(components)) return undefined;
+  const schemas = components.schemas;
+  return isPlainObject(schemas) ? schemas : undefined;
+}
+
+function getSchemaProperties(schema: Record<string, unknown> | undefined): Record<string, unknown> | undefined {
+  if (!schema) return undefined;
+  const properties = schema.properties;
+  return isPlainObject(properties) ? properties : undefined;
+}
+
+function refSchema(ref: string, description: unknown): Record<string, unknown> {
+  // Preserve description when collapsing an inline schema to a ref so docs remain expressive.
+  if (typeof description === "string" && description.length > 0) {
+    return { $ref: ref, description };
+  }
+  return { $ref: ref };
+}
+
+// Force known component properties back to canonical refs.
+// Why: zod-to-openapi may inline objects where we want stable shared component identity.
+// Canonical refs prevent duplicated inline schemas and keep Stainless diagnostics consistent.
+function normalizeInlinedComponentProperties(spec: Record<string, unknown>): void {
+  const schemas = getComponentsSchemas(spec);
+  if (!schemas) return;
+
+  const refifyProperty = (schemaName: string, propertyName: string, ref: string): void => {
+    const schema = schemas[schemaName];
+    if (!isPlainObject(schema)) return;
+    const properties = getSchemaProperties(schema);
+    if (!properties) return;
+    const current = properties[propertyName];
+    if (!isPlainObject(current)) return;
+    properties[propertyName] = refSchema(ref, current.description);
+  };
+
+  // Delivery models should share the canonical Location/Payment component definitions.
+  refifyProperty("DeliveryRequest", "pickup_location", "#/components/schemas/Location");
+  refifyProperty("DeliveryRequest", "dropoff_location", "#/components/schemas/Location");
+  refifyProperty("DeliveryQuote", "pickup_location", "#/components/schemas/Location");
+  refifyProperty("DeliveryQuote", "dropoff_location", "#/components/schemas/Location");
+  refifyProperty("DeliveryQuote", "payment", "#/components/schemas/Payment");
+
+  // Catalog models should reference shared Amount/Availability components to avoid duplicate inline variants.
+  refifyProperty("CatalogItem", "price", "#/components/schemas/Amount");
+  refifyProperty("CatalogItem", "availability", "#/components/schemas/Availability");
+  refifyProperty("CatalogCategory", "availability", "#/components/schemas/Availability");
+  refifyProperty("Catalog", "availability", "#/components/schemas/Availability");
+
+  // Modifier option should point at the canonical ModifierItem schema.
+  refifyProperty("ModifierOption", "modifier_item", "#/components/schemas/ModifierItem");
+}
+
+// Stainless warns when anonymous union variants cannot be named.
+// Name the two Location variants explicitly so generated SDK types are stable and readable.
+function normalizeLocationUnionVariantNames(spec: Record<string, unknown>): void {
+  const schemas = getComponentsSchemas(spec);
+  if (!schemas) return;
+  const location = schemas.Location;
+  if (!isPlainObject(location)) return;
+  const anyOf = location.anyOf;
+  if (!Array.isArray(anyOf)) return;
+
+  for (const variant of anyOf) {
+    if (!isPlainObject(variant)) continue;
+    const required = variant.required;
+    if (!Array.isArray(required)) continue;
+    if (required.includes("postal_address")) {
+      variant.title = "LocationWithPostalAddress";
+    } else if (required.includes("coordinates")) {
+      variant.title = "LocationWithCoordinates";
+    }
+  }
+}
+
+// Convert `additionalProperties: {}` to `additionalProperties: true`.
+// Why: both mean "allow any additional property", but `{}` is interpreted as an ambiguous
+// schema object by Stainless and emits noisy notes.
+function normalizeOpenAdditionalProperties(obj: unknown): unknown {
+  if (Array.isArray(obj)) return obj.map(normalizeOpenAdditionalProperties);
+  if (!isPlainObject(obj)) return obj;
+
+  const out: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (key === "additionalProperties" && isPlainObject(value) && Object.keys(value).length === 0) {
+      out[key] = true;
+      continue;
+    }
+    out[key] = normalizeOpenAdditionalProperties(value);
+  }
+  return out;
+}
+
+// Ensure components referenced by .stainless/stainless.yml always exist, even when zod-to-openapi
+// chooses a different expansion strategy (inline vs named component).
+// Why: Stainless config references these names directly; missing components produce hard build errors.
+function ensureStainlessCompatibilityComponents(spec: Record<string, unknown>): void {
+  const schemas = getComponentsSchemas(spec);
+  if (!schemas) return;
+
+  const upsertSelectedPaymentInstrumentSelectionState = (): void => {
+    if (schemas.SelectedPaymentInstrumentSelectionState) return;
+    schemas.SelectedPaymentInstrumentSelectionState = {
+      type: "object",
+      properties: {
+        selected: {
+          type: "boolean",
+          description: "Whether this instrument is selected by the user.",
+        },
+      },
+    };
+  };
+
+  const upsertSelectedPaymentInstrument = (): void => {
+    if (schemas.SelectedPaymentInstrument) return;
+    schemas.SelectedPaymentInstrument = {
+      description: "A payment instrument with selection state.",
+      allOf: [
+        { $ref: "#/components/schemas/PaymentInstrument" },
+        { $ref: "#/components/schemas/SelectedPaymentInstrumentSelectionState" },
+      ],
+    };
+  };
+
+  const upsertEscrowInstrumentDetails = (): void => {
+    if (schemas.EvmAuthCaptureEscrowInstrumentDetails) return;
+    const escrow = schemas.EvmAuthCaptureEscrowInstrument;
+    if (!isPlainObject(escrow)) return;
+    const allOf = escrow.allOf;
+    if (!Array.isArray(allOf) || allOf.length < 2) return;
+    const details = allOf[1];
+    if (!isPlainObject(details)) return;
+
+    // Keep a dedicated details component for Stainless model mapping and make the parent
+    // instrument explicitly reference it, mirroring the prior stable shape.
+    schemas.EvmAuthCaptureEscrowInstrumentDetails = details;
+    allOf[1] = { $ref: "#/components/schemas/EvmAuthCaptureEscrowInstrumentDetails" };
+  };
+
+  upsertSelectedPaymentInstrumentSelectionState();
+  upsertSelectedPaymentInstrument();
+  upsertEscrowInstrumentDetails();
+}
+
+function canonicalizeForStainless(spec: Record<string, unknown>): Record<string, unknown> {
+  // Make a sanitized OpenAPI-first representation:
+  // 1) drop JSON Schema-only keywords and
+  // 2) collapse known problematic inline expansions back to component refs and
+  // 3) ensure compatibility components expected by Stainless config are present,
+  // 4) name key anonymous union variants, and
+  // 5) normalize permissive additionalProperties representations.
+  const stripped = stripJsonSchemaOnlyKeywords(spec);
+  if (!isPlainObject(stripped)) return spec;
+  normalizeInlinedComponentProperties(stripped);
+  ensureStainlessCompatibilityComponents(stripped);
+  normalizeLocationUnionVariantNames(stripped);
+  const normalizedAdditionalProperties = normalizeOpenAdditionalProperties(stripped);
+  return isPlainObject(normalizedAdditionalProperties) ? normalizedAdditionalProperties : stripped;
 }
 
 // Copy x-codeSamples from original into generated for every path operation
@@ -591,6 +792,8 @@ function main(): void {
 
   generated = rewriteSchemaRefs(generated) as Record<string, unknown>;
   rekeyComponentSchemas(generated);
+  // Normalize before merging old ordering so stale JSON-Schema artifacts are not reintroduced by merge logic.
+  generated = canonicalizeForStainless(generated);
 
   // Post-process: merge x-codeSamples from existing spec, then reorder to match
   if (fs.existsSync(SPEC_PATH)) {
@@ -601,6 +804,9 @@ function main(): void {
   }
 
   rekeyComponentSchemas(generated);
+  // Run canonicalization again after reorder/merge to guarantee final output consistency.
+  // Why: reorderToMatch can pull nested structure from original ordering positions.
+  generated = canonicalizeForStainless(generated);
 
   ensureSpecDir();
   fs.writeFileSync(SPEC_PATH, JSON.stringify(generated, null, 2) + "\n", "utf8");
