@@ -253,6 +253,73 @@ function normalizeInlinedComponentProperties(spec: Record<string, unknown>): voi
   refifyProperty("ModifierOption", "modifier_item", "#/components/schemas/ModifierItem");
 }
 
+// Replace inline response schemas with $ref to named components so Stainless can generate
+// proper SDK types. Without this, zod-to-openapi inlines api-schemas (DiscoveryResponse, etc.)
+// because they lack .meta({ id }) — unlike the model schemas which carry JSON Schema $id metadata.
+function normalizeInlinedResponseSchemas(spec: Record<string, unknown>): void {
+  const paths = spec.paths;
+  if (!isPlainObject(paths)) return;
+
+  const refMap: Record<string, Record<string, string>> = {
+    "/.well-known/ucp": { get: "#/components/schemas/DiscoveryResponse" },
+  };
+
+  for (const [pathKey, componentRef] of Object.entries(refMap)) {
+    const pathItem = paths[pathKey];
+    if (!isPlainObject(pathItem)) continue;
+    for (const [method, ref] of Object.entries(componentRef)) {
+      const operation = pathItem[method];
+      if (!isPlainObject(operation)) continue;
+      const responses = operation.responses;
+      if (!isPlainObject(responses)) continue;
+      const ok = responses["200"];
+      if (!isPlainObject(ok)) continue;
+      const content = ok.content;
+      if (!isPlainObject(content)) continue;
+      const json = content["application/json"];
+      if (!isPlainObject(json)) continue;
+      json.schema = { $ref: ref };
+    }
+  }
+}
+
+// Name anyOf/oneOf variants inside UCP capability `extends` so Stainless generates readable SDK types.
+function normalizeCapabilityExtendsVariantNames(spec: Record<string, unknown>): void {
+  const schemas = getComponentsSchemas(spec);
+  if (!schemas) return;
+  const discovery = schemas.DiscoveryResponse;
+  if (!isPlainObject(discovery)) return;
+
+  // Traverse into DiscoveryResponse.ucp.capabilities.additionalProperties.items.properties.extends
+  const props = getSchemaProperties(discovery);
+  if (!props) return;
+  const ucp = props.ucp;
+  if (!isPlainObject(ucp)) return;
+  const ucpProps = getSchemaProperties(ucp);
+  if (!ucpProps) return;
+  const capabilities = ucpProps.capabilities;
+  if (!isPlainObject(capabilities)) return;
+  const addlProps = capabilities.additionalProperties;
+  if (!isPlainObject(addlProps)) return;
+  const items = addlProps.items;
+  if (!isPlainObject(items)) return;
+  const itemProps = getSchemaProperties(items);
+  if (!itemProps) return;
+  const extendsField = itemProps.extends;
+  if (!isPlainObject(extendsField)) return;
+
+  const variants = extendsField.anyOf ?? extendsField.oneOf;
+  if (!Array.isArray(variants)) return;
+  for (const variant of variants) {
+    if (!isPlainObject(variant)) continue;
+    if (variant.type === "string") {
+      variant.title = "ExtendsString";
+    } else if (variant.type === "array") {
+      variant.title = "ExtendsArray";
+    }
+  }
+}
+
 // Stainless warns when anonymous union variants cannot be named.
 // Name the two Location variants explicitly so generated SDK types are stable and readable.
 function normalizeLocationUnionVariantNames(spec: Record<string, unknown>): void {
@@ -353,9 +420,11 @@ function canonicalizeForStainless(spec: Record<string, unknown>): Record<string,
   // 5) normalize permissive additionalProperties representations.
   const stripped = stripJsonSchemaOnlyKeywords(spec);
   if (!isPlainObject(stripped)) return spec;
+  normalizeInlinedResponseSchemas(stripped);
   normalizeInlinedComponentProperties(stripped);
   ensureStainlessCompatibilityComponents(stripped);
   normalizeLocationUnionVariantNames(stripped);
+  normalizeCapabilityExtendsVariantNames(stripped);
   const normalizedAdditionalProperties = normalizeOpenAdditionalProperties(stripped);
   return isPlainObject(normalizedAdditionalProperties) ? normalizedAdditionalProperties : stripped;
 }
