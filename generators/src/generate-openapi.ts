@@ -467,7 +467,7 @@ function main(): void {
     path: "/.well-known/ucp",
     tags: ["discovery"],
     summary: "Service discovery",
-    description: "Returns server capabilities, supported standards, and endpoint paths.",
+    description: "Returns UCP discovery profile with services, capabilities, and payment handlers.",
     operationId: "getDiscovery",
     responses: {
       200: { description: "Discovery metadata.", content: { "application/json": { schema: DiscoveryResponse } } },

@@ -1364,7 +1364,7 @@
           "discovery"
         ],
         "summary": "Service discovery",
-        "description": "Returns server capabilities, supported standards, and endpoint paths.",
+        "description": "Returns UCP discovery profile with services, capabilities, and payment handlers.",
         "operationId": "getDiscovery",
         "responses": {
           "200": {
@@ -1374,37 +1374,149 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "version": {
-                      "type": "string",
-                      "description": "Protocol version."
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "Server name."
-                    },
-                    "capabilities": {
+                    "ucp": {
                       "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "additionalProperties": true
+                      "properties": {
+                        "version": {
+                          "type": "string",
+                          "description": "UCP protocol version in YYYY-MM-DD format."
+                        },
+                        "services": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "version": {
+                                  "type": "string",
+                                  "description": "Service version in YYYY-MM-DD format."
+                                },
+                                "spec": {
+                                  "type": "string",
+                                  "description": "URL to service specification document."
+                                },
+                                "transport": {
+                                  "type": "string",
+                                  "enum": [
+                                    "rest",
+                                    "mcp",
+                                    "a2a",
+                                    "embedded"
+                                  ],
+                                  "description": "Transport protocol for this service binding."
+                                },
+                                "endpoint": {
+                                  "type": "string",
+                                  "description": "Endpoint URL for this transport binding. Required for rest, mcp, and a2a transports."
+                                },
+                                "schema": {
+                                  "type": "string",
+                                  "description": "URL to transport contract schema (OpenAPI or OpenRPC). Required for rest, mcp, and embedded transports."
+                                }
+                              },
+                              "required": [
+                                "version",
+                                "spec",
+                                "transport"
+                              ]
+                            }
+                          },
+                          "description": "Service registry keyed by reverse-domain name."
+                        },
+                        "capabilities": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "version": {
+                                  "type": "string",
+                                  "description": "Capability version in YYYY-MM-DD format."
+                                },
+                                "spec": {
+                                  "type": "string",
+                                  "description": "URL to capability specification document."
+                                },
+                                "schema": {
+                                  "type": "string",
+                                  "description": "URL to capability JSON Schema."
+                                },
+                                "extends": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  ],
+                                  "description": "Parent capability or capabilities this extends."
+                                }
+                              },
+                              "required": [
+                                "version",
+                                "spec",
+                                "schema"
+                              ]
+                            }
+                          },
+                          "description": "Capability registry keyed by reverse-domain name."
+                        },
+                        "payment_handlers": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "description": "Unique identifier for this handler instance."
+                                },
+                                "version": {
+                                  "type": "string",
+                                  "description": "Handler version in YYYY-MM-DD format."
+                                },
+                                "spec": {
+                                  "type": "string",
+                                  "description": "URL to handler specification document."
+                                },
+                                "schema": {
+                                  "type": "string",
+                                  "description": "URL to handler JSON Schema."
+                                },
+                                "config": {
+                                  "type": "object",
+                                  "additionalProperties": true,
+                                  "description": "Handler-specific configuration."
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "version"
+                              ]
+                            }
+                          },
+                          "description": "Payment handler registry keyed by reverse-domain name."
+                        }
                       },
-                      "description": "Supported capabilities by domain."
-                    },
-                    "endpoints": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "string"
-                      },
-                      "description": "Endpoint path map."
+                      "required": [
+                        "version",
+                        "services",
+                        "capabilities",
+                        "payment_handlers"
+                      ],
+                      "description": "UCP discovery profile."
                     }
                   },
                   "required": [
-                    "version",
-                    "name",
-                    "capabilities",
-                    "endpoints"
-                  ],
-                  "additionalProperties": false
+                    "ucp"
+                  ]
                 }
               }
             }
@@ -1842,37 +1954,149 @@
       "DiscoveryResponse": {
         "type": "object",
         "required": [
-          "version",
-          "name",
-          "capabilities",
-          "endpoints"
+          "ucp"
         ],
         "properties": {
-          "version": {
-            "type": "string",
-            "description": "Protocol version."
-          },
-          "name": {
-            "type": "string",
-            "description": "Server name."
-          },
-          "capabilities": {
+          "ucp": {
             "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "additionalProperties": true
+            "properties": {
+              "version": {
+                "type": "string",
+                "description": "UCP protocol version in YYYY-MM-DD format."
+              },
+              "services": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "version": {
+                        "type": "string",
+                        "description": "Service version in YYYY-MM-DD format."
+                      },
+                      "spec": {
+                        "type": "string",
+                        "description": "URL to service specification document."
+                      },
+                      "transport": {
+                        "type": "string",
+                        "enum": [
+                          "rest",
+                          "mcp",
+                          "a2a",
+                          "embedded"
+                        ],
+                        "description": "Transport protocol for this service binding."
+                      },
+                      "endpoint": {
+                        "type": "string",
+                        "description": "Endpoint URL for this transport binding. Required for rest, mcp, and a2a transports."
+                      },
+                      "schema": {
+                        "type": "string",
+                        "description": "URL to transport contract schema (OpenAPI or OpenRPC). Required for rest, mcp, and embedded transports."
+                      }
+                    },
+                    "required": [
+                      "version",
+                      "spec",
+                      "transport"
+                    ]
+                  }
+                },
+                "description": "Service registry keyed by reverse-domain name."
+              },
+              "capabilities": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "version": {
+                        "type": "string",
+                        "description": "Capability version in YYYY-MM-DD format."
+                      },
+                      "spec": {
+                        "type": "string",
+                        "description": "URL to capability specification document."
+                      },
+                      "schema": {
+                        "type": "string",
+                        "description": "URL to capability JSON Schema."
+                      },
+                      "extends": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        ],
+                        "description": "Parent capability or capabilities this extends."
+                      }
+                    },
+                    "required": [
+                      "version",
+                      "spec",
+                      "schema"
+                    ]
+                  }
+                },
+                "description": "Capability registry keyed by reverse-domain name."
+              },
+              "payment_handlers": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Unique identifier for this handler instance."
+                      },
+                      "version": {
+                        "type": "string",
+                        "description": "Handler version in YYYY-MM-DD format."
+                      },
+                      "spec": {
+                        "type": "string",
+                        "description": "URL to handler specification document."
+                      },
+                      "schema": {
+                        "type": "string",
+                        "description": "URL to handler JSON Schema."
+                      },
+                      "config": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "description": "Handler-specific configuration."
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "version"
+                    ]
+                  }
+                },
+                "description": "Payment handler registry keyed by reverse-domain name."
+              }
             },
-            "description": "Supported capabilities by domain."
-          },
-          "endpoints": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            },
-            "description": "Endpoint path map."
+            "required": [
+              "version",
+              "services",
+              "capabilities",
+              "payment_handlers"
+            ],
+            "description": "UCP discovery profile."
           }
-        },
-        "additionalProperties": false
+        }
       },
       "HealthResponse": {
         "type": "object",
