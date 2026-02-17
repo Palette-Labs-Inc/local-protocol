@@ -212,6 +212,9 @@ def _discovery_headers(payload: dict[str, Any]) -> dict[str, str]:
 @router.get("/.well-known/ucp")
 async def well_known_ucp(request: Request) -> JSONResponse:
   """Canonical UCP discovery endpoint."""
+  # Dynamically determine the base URL from the incoming request. This avoids hardcoding
+  # and ensures correct URLs regardless of which host or port the server is running on,
+  # which is important since server.py allows overriding host and port at launch time.
   base_url = f"{request.url.scheme}://{request.url.netloc}"
   payload = _build_ucp_payload(base_url)
   _validate_ucp_payload(payload)
