@@ -15,11 +15,11 @@ Publish a UCP discovery profile so platforms can find your services and capabili
 ```json
 {
   "ucp": {
-    "version": "YYYY-MM-DD",
+    "version": "2026-01-11",
     "services": {
-      "dev.example.delivery": [
+      "com.example.delivery": [
         {
-          "version": "YYYY-MM-DD",
+          "version": "2026-01-11",
           "spec": "https://example.com/specs/delivery",
           "transport": "rest",
           "endpoint": "https://api.example.com/delivery",
@@ -30,9 +30,9 @@ Publish a UCP discovery profile so platforms can find your services and capabili
     "capabilities": {
       "com.example.delivery": [
         {
-          "version": "YYYY-MM-DD",
-          "spec": "https://example.com/specs/local-protocol/delivery",
-          "schema": "https://example.com/schemas/local-protocol/delivery/capability.json"
+          "version": "2026-01-11",
+          "spec": "https://example.com/specs/delivery",
+          "schema": "https://example.com/schemas/delivery/delivery.json"
         }
       ]
     },
