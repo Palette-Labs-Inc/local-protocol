@@ -101,11 +101,11 @@ A2A uses an Agent Card to advertise the UCP extension. The business profile poin
 {
   "extensions": [
     {
-      "uri": "https://ucp.dev/specification/reference?v=2026-01-11",
+      "uri": "https://ucp.dev/specification/reference?v=2026-01-23",
       "description": "Business agent supporting UCP",
       "params": {
         "capabilities": {
-          "dev.example.catalog": [{"version": "2026-01-11"}]
+          "dev.example.catalog": [{"version": "2026-01-23"}]
         }
       }
     }

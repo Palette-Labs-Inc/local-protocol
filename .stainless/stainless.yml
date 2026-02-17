@@ -74,7 +74,7 @@ resources:
     #
     # [reference]: https://www.stainless.com/docs/reference/config#method
     methods:
-      retrieve: get /.well-known/local-protocol
+      retrieve: get /.well-known/ucp
 
   healthz:
     description: Check whether the server is currently healthy.
@@ -186,7 +186,7 @@ readme:
   example_requests:
     default:
       type: request
-      endpoint: get /.well-known/local-protocol
+      endpoint: get /.well-known/ucp
       params: {}
     headline:
       type: request

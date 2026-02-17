@@ -12,7 +12,7 @@ export class WellKnown extends APIResource {
    * Returns server capabilities, supported standards, and endpoint paths.
    */
   retrieve(options?: RequestOptions): APIPromise<WellKnownRetrieveResponse> {
-    return this._client.get('/.well-known/local-protocol', options);
+    return this._client.get('/.well-known/ucp', options);
   }
 }
 
@@ -21,26 +21,44 @@ export class WellKnown extends APIResource {
  */
 export interface WellKnownRetrieveResponse {
   /**
-   * Supported capabilities by domain.
+   * Canonical UCP discovery profile.
    */
-  capabilities: { [key: string]: { [key: string]: unknown } };
-
-  /**
-   * Endpoint path map.
-   */
-  endpoints: { [key: string]: string };
-
-  /**
-   * Server name.
-   */
-  name: string;
-
-  /**
-   * Protocol version.
-   */
-  version: string;
+  ucp: WellKnown.Ucp;
 }
 
 export declare namespace WellKnown {
+  export interface Ucp {
+    version: string;
+    services: { [key: string]: Array<WellKnown.UcpServiceEntry> };
+    capabilities: { [key: string]: Array<WellKnown.UcpCapabilityEntry> };
+    payment_handlers: { [key: string]: Array<WellKnown.UcpPaymentHandlerEntry> };
+  }
+
+  export interface UcpServiceEntry {
+    version: string;
+    spec: string;
+    transport: 'rest' | 'mcp' | 'a2a' | 'embedded';
+    endpoint?: string;
+    schema?: string;
+    [k: string]: unknown;
+  }
+
+  export interface UcpCapabilityEntry {
+    version: string;
+    spec: string;
+    schema: string;
+    extends?: string | Array<string>;
+    [k: string]: unknown;
+  }
+
+  export interface UcpPaymentHandlerEntry {
+    id: string;
+    version: string;
+    spec?: string;
+    schema?: string;
+    config?: { [k: string]: unknown };
+    [k: string]: unknown;
+  }
+
   export { type WellKnownRetrieveResponse as WellKnownRetrieveResponse };
 }

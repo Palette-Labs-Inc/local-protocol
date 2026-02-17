@@ -41,7 +41,7 @@ final class WellKnownRawService implements WellKnownRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: '.well-known/local-protocol',
+            path: '.well-known/ucp',
             options: $requestOptions,
             convert: WellKnownGetResponse::class,
         );

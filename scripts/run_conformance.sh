@@ -54,8 +54,8 @@ fi
 echo "Running conformance tests against ${SERVER_URL}..."
 
 # Wait for server to be ready (either endpoint is acceptable)
-if ! wait_for_server "${SERVER_URL}/healthz" && ! wait_for_server "${SERVER_URL}/.well-known/local-protocol"; then
-  echo "Error: server not ready at ${SERVER_URL} (tried /healthz and /.well-known/local-protocol)" >&2
+if ! wait_for_server "${SERVER_URL}/healthz" && ! wait_for_server "${SERVER_URL}/.well-known/ucp"; then
+  echo "Error: server not ready at ${SERVER_URL} (tried /healthz and /.well-known/ucp)" >&2
   exit 1
 fi
 

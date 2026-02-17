@@ -53,7 +53,7 @@ class WellKnownResource(SyncAPIResource):
     ) -> WellKnownRetrieveResponse:
         """Returns server capabilities, supported standards, and endpoint paths."""
         return self._get(
-            "/.well-known/local-protocol",
+            "/.well-known/ucp",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -95,7 +95,7 @@ class AsyncWellKnownResource(AsyncAPIResource):
     ) -> WellKnownRetrieveResponse:
         """Returns server capabilities, supported standards, and endpoint paths."""
         return await self._get(
-            "/.well-known/local-protocol",
+            "/.well-known/ucp",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

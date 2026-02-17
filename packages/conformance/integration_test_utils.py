@@ -162,7 +162,7 @@ class IntegrationTestBase(absltest.TestCase):
     self.base_url = FLAGS.server_url
 
     # SDK client for happy-path tests
-    self.sdk = LocalProtocol(base_url=self.base_url, api_key="test")
+    self.sdk = LocalProtocol(base_url=self.base_url)
 
     # Raw httpx client for error-path tests (invalid payloads, 404s)
     self.http_client = httpx.Client(base_url=self.base_url)
