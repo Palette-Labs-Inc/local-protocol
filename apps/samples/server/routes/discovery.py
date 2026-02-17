@@ -15,7 +15,7 @@ _REVERSE_DOMAIN_RE = re.compile(r"^[a-z][a-z0-9]*(?:\.[a-z][a-z0-9_]*)+$")
 _DATE_VERSION_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 _REPO_ROOT = Path(__file__).resolve().parents[4]
 _SCHEMAS_DIR = _REPO_ROOT / "schemas"
-_UCP_VERSION_FILE = _SCHEMAS_DIR / "ucp" / "VERSION"
+_UCP_METADATA_FILE = _SCHEMAS_DIR / "ucp" / "metadata.json"
 
 _REVERSE_DOMAIN_PREFIX = "xyz.localprotocol"
 _SCHEMA_BASE_URL = "https://localprotocol.xyz/schemas"
@@ -29,10 +29,11 @@ _SKIP_SCHEMA_DIRS = frozenset({"ucp", "shared"})
 
 def _load_ucp_version() -> str:
   """Load canonical UCP version from vendored schema metadata."""
-  version = _UCP_VERSION_FILE.read_text(encoding="utf-8").strip()
+  metadata = json.loads(_UCP_METADATA_FILE.read_text(encoding="utf-8"))
+  version = metadata.get("version", "")
   if not _DATE_VERSION_RE.fullmatch(version):
     raise ValueError(
-      f"Invalid UCP version in {_UCP_VERSION_FILE}; expected YYYY-MM-DD."
+      f"Invalid UCP version in {_UCP_METADATA_FILE}; expected YYYY-MM-DD."
     )
   return version
 
