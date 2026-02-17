@@ -107,6 +107,68 @@ class DiscoveryConformanceTest(IntegrationTestBase):
       self.assertRegex(key, _REVERSE_DOMAIN_RE)
       self.assertIsInstance(value, list)
 
+  # ---------------------------------------------------------------------------
+  # Local-Protocol-specific discovery assertions
+  # ---------------------------------------------------------------------------
+
+  def test_discovery_has_delivery_service(self) -> None:
+    """Discovery MUST declare the delivery service."""
+    ucp = self._get_ucp_payload()
+    self.assertIn(
+      "xyz.localprotocol.delivery",
+      ucp["services"],
+      "Delivery service must be declared in ucp.services",
+    )
+    entries = ucp["services"]["xyz.localprotocol.delivery"]
+    self.assertGreater(
+      len(entries),
+      0,
+      "Delivery service must have at least one entry",
+    )
+
+  def test_discovery_has_delivery_capability(self) -> None:
+    """Discovery MUST declare the delivery capability."""
+    ucp = self._get_ucp_payload()
+    self.assertIn(
+      "xyz.localprotocol.delivery",
+      ucp["capabilities"],
+      "Delivery capability must be declared in ucp.capabilities",
+    )
+    entries = ucp["capabilities"]["xyz.localprotocol.delivery"]
+    self.assertGreater(
+      len(entries),
+      0,
+      "Delivery capability must have at least one entry",
+    )
+
+  def test_delivery_service_declares_rest_transport(self) -> None:
+    """At least one delivery service entry MUST use REST transport."""
+    ucp = self._get_ucp_payload()
+    entries = ucp["services"].get("xyz.localprotocol.delivery", [])
+    has_rest = any(
+      entry.get("transport") == "rest" for entry in entries
+    )
+    self.assertTrue(
+      has_rest,
+      "Delivery service must declare at least one REST transport entry",
+    )
+
+  def test_delivery_capability_has_schema_url(self) -> None:
+    """Delivery capability entries MUST include a schema URL."""
+    ucp = self._get_ucp_payload()
+    entries = ucp["capabilities"].get("xyz.localprotocol.delivery", [])
+    for entry in entries:
+      self.assertIn(
+        "schema",
+        entry,
+        "Delivery capability entry must include a schema URL",
+      )
+      self.assertIsInstance(entry["schema"], str)
+      self.assertTrue(
+        entry["schema"].startswith("http"),
+        f"Delivery capability schema must be a URL, got: {entry['schema']}",
+      )
+
 
 if __name__ == "__main__":
   absltest.main()
