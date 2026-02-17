@@ -38,16 +38,17 @@ def _load_ucp_version() -> str:
 
 
 def _discover_capabilities() -> list[tuple[str, str]]:
-  """Discover capabilities by traversing schemas/*/capability.json.
+  """Discover capabilities by traversing schemas/*/{name}.json.
 
   Returns a list of (reverse_domain_name, schema_dir_name) tuples for every
-  schema subdirectory that contains a ``capability.json`` file.
+  schema subdirectory that contains a root schema file matching its directory
+  name (e.g. ``schemas/delivery/delivery.json``).
   """
   capabilities: list[tuple[str, str]] = []
   for child in sorted(_SCHEMAS_DIR.iterdir()):
     if child.name in _SKIP_SCHEMA_DIRS or not child.is_dir():
       continue
-    if (child / "capability.json").is_file():
+    if (child / f"{child.name}.json").is_file():
       name = f"{_REVERSE_DOMAIN_PREFIX}.{child.name}"
       if not _REVERSE_DOMAIN_RE.fullmatch(name):
         raise ValueError(
@@ -56,7 +57,7 @@ def _discover_capabilities() -> list[tuple[str, str]]:
         )
       capabilities.append((name, child.name))
   if not capabilities:
-    raise ValueError(f"No capability.json files found under {_SCHEMAS_DIR}")
+    raise ValueError(f"No capability schema files found under {_SCHEMAS_DIR}")
   return capabilities
 
 
@@ -68,7 +69,7 @@ def _build_ucp_payload(base_url: str) -> dict[str, Any]:
   """Build a canonical UCP discovery payload.
 
   Service and capability names are auto-populated by traversing
-  ``schemas/*/capability.json`` files at startup.
+  ``schemas/*/{name}.json`` root schema files at startup.
   """
   services: dict[str, Any] = {}
   capabilities: dict[str, Any] = {}
@@ -87,7 +88,7 @@ def _build_ucp_payload(base_url: str) -> dict[str, Any]:
       {
         "version": _UCP_VERSION,
         "spec": f"{_DOCS_BASE_URL}/capabilities/{dirname}/overview/",
-        "schema": f"{_SCHEMA_BASE_URL}/{dirname}/capability.json",
+        "schema": f"{_SCHEMA_BASE_URL}/{dirname}/{dirname}.json",
       }
     ]
 
